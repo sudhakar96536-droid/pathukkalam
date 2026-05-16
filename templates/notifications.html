@@ -1,49 +1,256 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
 
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Notifications - Pathukkalam</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f0f2f5;
+    padding-bottom:80px;
+}
+
+/* HEADER */
+
+.header{
+    background:white;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:26px;
+    font-weight:bold;
+    color:#1877f2;
+}
+
+.header-icons i{
+    font-size:22px;
+    margin-left:18px;
+    color:#444;
+}
+
+/* PAGE TITLE */
+
+.page-title{
+    padding:15px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* NOTIFICATION CARD */
+
+.notify-card{
+    background:white;
+    margin:10px;
+    padding:15px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    box-shadow:0 2px 5px rgba(0,0,0,0.08);
+}
+
+.notify-icon{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#1877f2;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    margin-right:15px;
+}
+
+.notify-text{
+    font-size:15px;
+    line-height:1.5;
+}
+
+.notify-time{
+    font-size:12px;
+    color:gray;
+    margin-top:4px;
+}
+
+/* BOTTOM NAVIGATION */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    padding:10px 0;
+    border-top:1px solid #ddd;
+    z-index:1000;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:gray;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-size:12px;
+}
+
+.nav-item i{
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.active{
+    color:#1877f2;
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div class="navbar">
+<!-- HEADER -->
 
-    <div class="logo">PATHUKKALAM</div>
+<div class="header">
 
-    <div class="menu">
-        <a href="/">Home</a>
-        <a href="/explore">Explore</a>
-        <a href="/notifications">Alerts</a>
-        <a href="/profile">Profile</a>
+    <div class="logo">Pathukkalam</div>
+
+    <div class="header-icons">
+        <i class="fas fa-search"></i>
+        <i class="fas fa-message"></i>
     </div>
 
 </div>
 
-<div class="feed">
+<!-- PAGE TITLE -->
 
-<h2>Notifications</h2>
-
-<div class="post-card">
-    🔔 Arun liked your post.
+<div class="page-title">
+    Notifications 🔔
 </div>
 
-<div class="post-card">
-    🔔 Vijay started following you.
+<!-- NOTIFICATIONS -->
+
+<div class="notify-card">
+
+    <div class="notify-icon">
+        <i class="fas fa-heart"></i>
+    </div>
+
+    <div>
+        <div class="notify-text">
+            Arun liked your post.
+        </div>
+
+        <div class="notify-time">
+            2 mins ago
+        </div>
+    </div>
+
 </div>
 
-<div class="post-card">
-    🔔 Kumar commented on your photo.
+<div class="notify-card">
+
+    <div class="notify-icon">
+        <i class="fas fa-user-plus"></i>
+    </div>
+
+    <div>
+        <div class="notify-text">
+            Vijay started following you.
+        </div>
+
+        <div class="notify-time">
+            10 mins ago
+        </div>
+    </div>
+
 </div>
 
-<div class="post-card">
-    🔔 New trending topic available.
+<div class="notify-card">
+
+    <div class="notify-icon">
+        <i class="fas fa-comment"></i>
+    </div>
+
+    <div>
+        <div class="notify-text">
+            Kumar commented on your photo.
+        </div>
+
+        <div class="notify-time">
+            25 mins ago
+        </div>
+    </div>
+
 </div>
+
+<div class="notify-card">
+
+    <div class="notify-icon">
+        <i class="fas fa-fire"></i>
+    </div>
+
+    <div>
+        <div class="notify-text">
+            New trending topic available.
+        </div>
+
+        <div class="notify-time">
+            1 hour ago
+        </div>
+    </div>
+
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+
+<div class="bottom-nav">
+
+    <a href="/" class="nav-item">
+        <i class="fas fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="/explore" class="nav-item">
+        <i class="fas fa-compass"></i>
+        <span>Explore</span>
+    </a>
+
+    <a href="/notifications" class="nav-item active">
+        <i class="fas fa-bell"></i>
+        <span>Alerts</span>
+    </a>
+
+    <a href="/profile" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+    </a>
 
 </div>
 
