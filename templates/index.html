@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini Social App</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="topbar">
+    Mini Social
+</div>
+
+<div class="container">
+
+    <form action="/add-post" method="POST" class="post-form">
+
+        <input type="text" name="username" placeholder="Your Name" required>
+
+        <textarea name="caption" placeholder="What's on your mind?" required></textarea>
+
+        <button type="submit">Post</button>
+
+    </form>
+
+    {% for post in posts %}
+
+    <div class="post-card">
+
+        <div class="user">{{ post.username }}</div>
+
+        <div class="caption">{{ post.caption }}</div>
+
+        <div class="actions">
+            <button>Like</button>
+            <button>Comment</button>
+            <button>Share</button>
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/static/sw.js');
+}
+</script>
+
+</body>
+</html>
