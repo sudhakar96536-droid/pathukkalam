@@ -1,57 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mini Social App</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+<title>Pathukkalam</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
 
-<div class="topbar">
-    Mini Social
-</div>
+<div class="navbar">
 
-<div class="container">
+    <div class="logo">PATHUKKALAM</div>
 
-    <form action="/add-post" method="POST" class="post-form">
-
-        <input type="text" name="username" placeholder="Your Name" required>
-
-        <textarea name="caption" placeholder="What's on your mind?" required></textarea>
-
-        <button type="submit">Post</button>
-
-    </form>
-
-    {% for post in posts %}
-
-    <div class="post-card">
-
-        <div class="user">{{ post.username }}</div>
-
-        <div class="caption">{{ post.caption }}</div>
-
-        <div class="actions">
-            <button>Like</button>
-            <button>Comment</button>
-            <button>Share</button>
-        </div>
-
+    <div class="menu">
+        <a href="/">Home</a>
+        <a href="/explore">Explore</a>
+        <a href="/notifications">Alerts</a>
+        <a href="/profile">Profile</a>
     </div>
 
-    {% endfor %}
+</div>
+
+<div class="story-wrapper">
+
+    <div class="story">Sudhakar</div>
+    <div class="story">Arun</div>
+    <div class="story">Vijay</div>
+    <div class="story">Kumar</div>
+    <div class="story">Raj</div>
 
 </div>
 
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/static/sw.js');
-}
-</script>
+<div class="feed">
+
+{% for post in posts %}
+
+<div class="post-card">
+
+    <div class="post-top">
+        <img src="https://i.pravatar.cc/100?img={{ loop.index }}">
+
+        <div>
+            <div class="name">{{ post.name }}</div>
+            <div class="username">{{ post.username }}</div>
+        </div>
+    </div>
+
+    <div class="caption">
+        {{ post.caption }}
+    </div>
+
+    <img class="post-image" src="{{ post.image }}">
+
+    <div class="actions">
+        <button>❤️ Like</button>
+        <button>💬 Comment</button>
+        <button>📤 Share</button>
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
 
 </body>
 </html>
