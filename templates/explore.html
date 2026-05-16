@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<title>Explore - Pathukkalam</title>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <div class="logo">PATHUKKALAM</div>
+
+    <div class="menu">
+        <a href="/">Home</a>
+        <a href="/explore">Explore</a>
+        <a href="/notifications">Alerts</a>
+        <a href="/profile">Profile</a>
+    </div>
+
+</div>
+
+<div class="feed">
+
+<h2>Trending Posts</h2>
+
+{% for post in posts %}
+
+<div class="post-card">
+
+    <img class="post-image" src="{{ post.image }}">
+
+    <div class="caption">
+        <strong>{{ post.name }}</strong>
+
+        <br><br>
+
+        {{ post.caption }}
+    </div>
+
+    <div class="actions">
+        <button>❤️ Like</button>
+        <button>💬 Comment</button>
+        <button>📤 Share</button>
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>
