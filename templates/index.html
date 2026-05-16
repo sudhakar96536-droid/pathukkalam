@@ -1,78 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta http-equiv="Content-Language" content="en">
-    
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Pathukkalam</title>
 
-<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+<link rel="manifest" href="manifest.json">
 
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="theme-color" content="#ffffff">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f0f2f5;
+    padding-bottom:80px;
+}
+
+/* TOP HEADER */
+
+.header{
+    background:white;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#1877f2;
+}
+
+.header-icons i{
+    font-size:22px;
+    margin-left:18px;
+    color:#444;
+}
+
+/* STORY SECTION */
+
+.stories{
+    display:flex;
+    overflow-x:auto;
+    background:white;
+    padding:10px;
+    margin-top:10px;
+}
+
+.story{
+    min-width:80px;
+    text-align:center;
+    margin-right:12px;
+}
+
+.story img{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    border:3px solid #1877f2;
+    object-fit:cover;
+}
+
+.story p{
+    font-size:12px;
+    margin-top:5px;
+}
+
+/* POSTS */
+
+.post{
+    background:white;
+    margin-top:10px;
+    padding:12px;
+}
+
+.post-header{
+    display:flex;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.post-header img{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    margin-right:10px;
+}
+
+.post-user{
+    font-weight:bold;
+}
+
+.post-time{
+    font-size:12px;
+    color:gray;
+}
+
+.post-text{
+    margin-bottom:10px;
+    line-height:1.5;
+}
+
+.post-image{
+    width:100%;
+    border-radius:10px;
+}
+
+.post-actions{
+    display:flex;
+    justify-content:space-around;
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid #eee;
+}
+
+.post-actions div{
+    color:#555;
+}
+
+/* BOTTOM NAVIGATION */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    padding:10px 0;
+    border-top:1px solid #ddd;
+    z-index:1000;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:gray;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-size:12px;
+}
+
+.nav-item i{
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.active{
+    color:#1877f2;
+}
+
+</style>
 
 </head>
+
 <body>
 
-<div class="navbar">
+<!-- HEADER -->
 
-    <div class="logo">PATHUKKALAM</div>
+<div class="header">
 
-    <div class="menu">
-        <a href="/">Home</a>
-        <a href="/explore">Explore</a>
-        <a href="/notifications">Alerts</a>
-        <a href="/profile">Profile</a>
+    <div class="logo">Pathukkalam</div>
+
+    <div class="header-icons">
+        <i class="fas fa-search"></i>
+        <i class="fas fa-message"></i>
     </div>
 
 </div>
 
-<div class="story-wrapper">
+<!-- STORIES -->
 
-    <div class="story">Sudhakar</div>
-    <div class="story">Arun</div>
-    <div class="story">Vijay</div>
-    <div class="story">Kumar</div>
-    <div class="story">Raj</div>
+<div class="stories">
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=1">
+        <p>Arun</p>
+    </div>
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=2">
+        <p>Rahul</p>
+    </div>
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=3">
+        <p>Priya</p>
+    </div>
+
+    <div class="story">
+        <img src="https://i.pravatar.cc/150?img=4">
+        <p>Vijay</p>
+    </div>
 
 </div>
 
-<div class="feed">
+<!-- POST -->
 
-{% for post in posts %}
+<div class="post">
 
-<div class="post-card">
+    <div class="post-header">
 
-    <div class="post-top">
-        <img src="https://i.pravatar.cc/100?img={{ loop.index }}">
+        <img src="https://i.pravatar.cc/150?img=5">
 
         <div>
-            <div class="name">{{ post.name }}</div>
-            <div class="username">{{ post.username }}</div>
+            <div class="post-user">Sudhakar</div>
+            <div class="post-time">2 hrs ago</div>
         </div>
+
     </div>
 
-    <div class="caption">
-        {{ post.caption }}
+    <div class="post-text">
+        Welcome to Pathukkalam social media app 🔥
     </div>
 
-    <img class="post-image" src="{{ post.image }}">
+    <img class="post-image"
+    src="https://picsum.photos/500/300">
 
-    <div class="actions">
-        <button>❤️ Like</button>
-        <button>💬 Comment</button>
-        <button>📤 Share</button>
+    <div class="post-actions">
+
+        <div><i class="far fa-thumbs-up"></i> Like</div>
+
+        <div><i class="far fa-comment"></i> Comment</div>
+
+        <div><i class="far fa-share-square"></i> Share</div>
+
     </div>
 
 </div>
 
-{% endfor %}
+<!-- POST -->
+
+<div class="post">
+
+    <div class="post-header">
+
+        <img src="https://i.pravatar.cc/150?img=8">
+
+        <div>
+            <div class="post-user">Karthik</div>
+            <div class="post-time">5 hrs ago</div>
+        </div>
+
+    </div>
+
+    <div class="post-text">
+        New update coming soon 🚀
+    </div>
+
+    <img class="post-image"
+    src="https://picsum.photos/500/301">
+
+    <div class="post-actions">
+
+        <div><i class="far fa-thumbs-up"></i> Like</div>
+
+        <div><i class="far fa-comment"></i> Comment</div>
+
+        <div><i class="far fa-share-square"></i> Share</div>
+
+    </div>
 
 </div>
 
-<script src="{{ url_for('static', filename='app.js') }}"></script>
+<!-- BOTTOM NAVIGATION -->
+
+<div class="bottom-nav">
+
+    <a href="index.html" class="nav-item active">
+        <i class="fas fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="explore.html" class="nav-item">
+        <i class="fas fa-compass"></i>
+        <span>Explore</span>
+    </a>
+
+    <a href="notifications.html" class="nav-item">
+        <i class="fas fa-bell"></i>
+        <span>Alerts</span>
+    </a>
+
+    <a href="profile.html" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+    </a>
+
+</div>
+
+<!-- SERVICE WORKER -->
+
+<script>
+
+if ('serviceWorker' in navigator) {
+
+    window.addEventListener('load', function() {
+
+        navigator.serviceWorker.register('sw.js')
+
+        .then(function(registration) {
+
+            console.log('Service Worker Registered');
+
+        })
+
+        .catch(function(error) {
+
+            console.log('Service Worker Failed', error);
+
+        });
+
+    });
+
+}
+
+</script>
 
 </body>
 </html>
