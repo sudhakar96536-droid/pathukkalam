@@ -4,13 +4,14 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Pathukkalam</title>
 
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
 
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#1877f2">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -26,62 +27,131 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 body{
     background:#f0f2f5;
-    padding-bottom:80px;
+    padding-bottom:85px;
 }
 
-/* TOP HEADER */
+/* HEADER */
 
 .header{
     background:white;
-    padding:15px;
+    padding:14px 16px;
     display:flex;
     justify-content:space-between;
     align-items:center;
     position:sticky;
     top:0;
     z-index:1000;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    box-shadow:0 2px 5px rgba(0,0,0,0.08);
 }
 
-.logo{
-    font-size:28px;
+.logo-section{
+    display:flex;
+    align-items:center;
+}
+
+.logo-img{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    margin-right:10px;
+    object-fit:cover;
+}
+
+.logo-text{
+    font-size:26px;
     font-weight:bold;
     color:#1877f2;
 }
 
-.header-icons i{
-    font-size:22px;
-    margin-left:18px;
-    color:#444;
+.header-icons{
+    display:flex;
+    align-items:center;
 }
 
-/* STORY SECTION */
+.header-icons i{
+    width:40px;
+    height:40px;
+    background:#f0f2f5;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-left:10px;
+    color:#333;
+    font-size:18px;
+}
+
+/* CREATE POST */
+
+.create-post{
+    background:white;
+    margin-top:10px;
+    padding:14px;
+}
+
+.create-top{
+    display:flex;
+    align-items:center;
+}
+
+.create-top img{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    margin-right:10px;
+}
+
+.create-top input{
+    flex:1;
+    border:none;
+    background:#f0f2f5;
+    padding:12px;
+    border-radius:25px;
+    outline:none;
+    font-size:15px;
+}
+
+.create-actions{
+    display:flex;
+    justify-content:space-around;
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px solid #eee;
+}
+
+.create-actions div{
+    font-size:14px;
+    color:#555;
+}
+
+/* STORIES */
 
 .stories{
     display:flex;
     overflow-x:auto;
-    background:white;
     padding:10px;
-    margin-top:10px;
+    gap:10px;
 }
 
 .story{
-    min-width:80px;
-    text-align:center;
-    margin-right:12px;
+    min-width:90px;
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 2px 5px rgba(0,0,0,0.08);
 }
 
 .story img{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    border:3px solid #1877f2;
+    width:100%;
+    height:110px;
     object-fit:cover;
 }
 
 .story p{
-    font-size:12px;
-    margin-top:5px;
+    padding:8px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
 }
 
 /* POSTS */
@@ -99,29 +169,42 @@ body{
 }
 
 .post-header img{
-    width:45px;
-    height:45px;
+    width:48px;
+    height:48px;
     border-radius:50%;
     margin-right:10px;
 }
 
 .post-user{
     font-weight:bold;
+    font-size:15px;
 }
 
 .post-time{
     font-size:12px;
     color:gray;
+    margin-top:2px;
 }
 
 .post-text{
-    margin-bottom:10px;
+    margin-bottom:12px;
     line-height:1.5;
+    color:#222;
 }
 
 .post-image{
     width:100%;
-    border-radius:10px;
+    border-radius:12px;
+    max-height:500px;
+    object-fit:cover;
+}
+
+.post-stats{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    font-size:13px;
+    color:#666;
 }
 
 .post-actions{
@@ -134,9 +217,10 @@ body{
 
 .post-actions div{
     color:#555;
+    font-size:14px;
 }
 
-/* BOTTOM NAVIGATION */
+/* BOTTOM NAV */
 
 .bottom-nav{
     position:fixed;
@@ -179,11 +263,57 @@ body{
 
 <div class="header">
 
-    <div class="logo">Pathukkalam</div>
+    <div class="logo-section">
+
+        <img class="logo-img"
+        src="{{ url_for('static', filename='logo.png') }}">
+
+        <div class="logo-text">
+            Pathukkalam
+        </div>
+
+    </div>
 
     <div class="header-icons">
+
         <i class="fas fa-search"></i>
+
         <i class="fas fa-message"></i>
+
+    </div>
+
+</div>
+
+<!-- CREATE POST -->
+
+<div class="create-post">
+
+    <div class="create-top">
+
+        <img src="https://i.pravatar.cc/150?img=10">
+
+        <input type="text"
+        placeholder="What's happening in Pathukkalam?">
+
+    </div>
+
+    <div class="create-actions">
+
+        <div>
+            <i class="fas fa-video"></i>
+            Live
+        </div>
+
+        <div>
+            <i class="fas fa-image"></i>
+            Photo
+        </div>
+
+        <div>
+            <i class="fas fa-smile"></i>
+            Feeling
+        </div>
+
     </div>
 
 </div>
@@ -193,28 +323,33 @@ body{
 <div class="stories">
 
     <div class="story">
-        <img src="https://i.pravatar.cc/150?img=1">
+        <img src="https://picsum.photos/200/300?1">
         <p>Arun</p>
     </div>
 
     <div class="story">
-        <img src="https://i.pravatar.cc/150?img=2">
+        <img src="https://picsum.photos/200/300?2">
         <p>Rahul</p>
     </div>
 
     <div class="story">
-        <img src="https://i.pravatar.cc/150?img=3">
+        <img src="https://picsum.photos/200/300?3">
         <p>Priya</p>
     </div>
 
     <div class="story">
-        <img src="https://i.pravatar.cc/150?img=4">
+        <img src="https://picsum.photos/200/300?4">
         <p>Vijay</p>
+    </div>
+
+    <div class="story">
+        <img src="https://picsum.photos/200/300?5">
+        <p>Kumar</p>
     </div>
 
 </div>
 
-<!-- POST -->
+<!-- POST 1 -->
 
 <div class="post">
 
@@ -223,32 +358,60 @@ body{
         <img src="https://i.pravatar.cc/150?img=5">
 
         <div>
-            <div class="post-user">Sudhakar</div>
-            <div class="post-time">2 hrs ago</div>
+
+            <div class="post-user">
+                Sudhakar
+            </div>
+
+            <div class="post-time">
+                2 hrs ago
+            </div>
+
         </div>
 
     </div>
 
     <div class="post-text">
-        Welcome to Pathukkalam social media app 🔥
+        Welcome to Pathukkalam social media platform 🔥
     </div>
 
     <img class="post-image"
-    src="https://picsum.photos/500/300">
+    src="https://picsum.photos/600/400?10">
+
+    <div class="post-stats">
+
+        <div>
+            👍 2.5K Likes
+        </div>
+
+        <div>
+            450 Comments
+        </div>
+
+    </div>
 
     <div class="post-actions">
 
-        <div><i class="far fa-thumbs-up"></i> Like</div>
+        <div>
+            <i class="far fa-thumbs-up"></i>
+            Like
+        </div>
 
-        <div><i class="far fa-comment"></i> Comment</div>
+        <div>
+            <i class="far fa-comment"></i>
+            Comment
+        </div>
 
-        <div><i class="far fa-share-square"></i> Share</div>
+        <div>
+            <i class="far fa-share-square"></i>
+            Share
+        </div>
 
     </div>
 
 </div>
 
-<!-- POST -->
+<!-- POST 2 -->
 
 <div class="post">
 
@@ -257,26 +420,54 @@ body{
         <img src="https://i.pravatar.cc/150?img=8">
 
         <div>
-            <div class="post-user">Karthik</div>
-            <div class="post-time">5 hrs ago</div>
+
+            <div class="post-user">
+                Karthik
+            </div>
+
+            <div class="post-time">
+                5 hrs ago
+            </div>
+
         </div>
 
     </div>
 
     <div class="post-text">
-        New update coming soon 🚀
+        Big update coming soon 🚀
     </div>
 
     <img class="post-image"
-    src="https://picsum.photos/500/301">
+    src="https://picsum.photos/600/400?20">
+
+    <div class="post-stats">
+
+        <div>
+            ❤️ 1.2K Likes
+        </div>
+
+        <div>
+            210 Comments
+        </div>
+
+    </div>
 
     <div class="post-actions">
 
-        <div><i class="far fa-thumbs-up"></i> Like</div>
+        <div>
+            <i class="far fa-thumbs-up"></i>
+            Like
+        </div>
 
-        <div><i class="far fa-comment"></i> Comment</div>
+        <div>
+            <i class="far fa-comment"></i>
+            Comment
+        </div>
 
-        <div><i class="far fa-share-square"></i> Share</div>
+        <div>
+            <i class="far fa-share-square"></i>
+            Share
+        </div>
 
     </div>
 
@@ -286,7 +477,7 @@ body{
 
 <div class="bottom-nav">
 
-    <a href="/index" class="nav-item active">
+    <a href="/" class="nav-item active">
         <i class="fas fa-house"></i>
         <span>Home</span>
     </a>
@@ -316,7 +507,7 @@ if ('serviceWorker' in navigator) {
 
     window.addEventListener('load', function() {
 
-        navigator.serviceWorker.register('sw.js')
+        navigator.serviceWorker.register('/static/sw.js')
 
         .then(function(registration) {
 
