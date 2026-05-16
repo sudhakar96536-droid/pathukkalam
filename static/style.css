@@ -1,62 +1,66 @@
 body {
-    margin: 0;
-    font-family: Arial;
-    background: #f0f2f5;
+    padding: 0 15px 15px;
+    line-height: 1.5;
 }
 
-.topbar {
-    background: #1877f2;
-    color: white;
-    padding: 15px;
-    font-size: 22px;
-    font-weight: bold;
-    position: sticky;
-    top: 0;
-}
-
-.container {
-    max-width: 600px;
-    margin: auto;
-    padding: 15px;
-}
-
-.post-form,
-.post-card {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-input,
-textarea {
+.post-image {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
-    background: #1877f2;
-    color: white;
-    cursor: pointer;
-}
-
-.user {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.caption {
-    margin-bottom: 15px;
+    display: block;
 }
 
 .actions {
     display: flex;
-    gap: 10px;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.actions button {
+    border: none;
+    background: #f0f2f5;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.profile-cover {
+    height: 220px;
+    background: linear-gradient(45deg,#1877f2,#42a5f5);
+}
+
+.profile-box {
+    max-width: 600px;
+    margin: auto;
+    margin-top: -80px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid white;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+@media(max-width:768px){
+
+.menu {
+    gap: 8px;
+    font-size: 13px;
+}
+
+.story {
+    min-width: 80px;
+    height: 120px;
+}
+
 }
