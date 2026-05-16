@@ -1,1 +1,4 @@
-pip install flask psycopg2-binary cloudinary
+flask
+psycopg2-binary
+cloudinary
+gunicorn
