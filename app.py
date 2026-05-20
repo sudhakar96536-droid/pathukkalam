@@ -32,7 +32,10 @@ def home():
 def explore():
     return render_template('explore.html')
 
-
+@app.route('/new-post')
+def new_post():
+    return render_template('new_post.html')
+    
 @app.route('/notifications')
 def notifications():
     return render_template('notifications.html')
