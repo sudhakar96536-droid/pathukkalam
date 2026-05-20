@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Post - Pathukkalam</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f0f2f5;
+    padding-bottom:120px;
+}
+
+/* HEADER */
+
+.header{
+    background:white;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 5px rgba(0,0,0,0.08);
+}
+
+.header-title{
+    font-size:22px;
+    font-weight:bold;
+    color:#1877f2;
+}
+
+.cancel-btn{
+    text-decoration:none;
+    color:#444;
+    font-weight:bold;
+    font-size:15px;
+}
+
+/* PROFILE */
+
+.user-box{
+    background:white;
+    margin-top:10px;
+    padding:15px;
+    display:flex;
+    align-items:center;
+}
+
+.user-box img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    margin-right:12px;
+}
+
+.user-name{
+    font-weight:bold;
+    font-size:16px;
+}
+
+/* TEXT AREA */
+
+.post-box{
+    background:white;
+    padding:15px;
+}
+
+.post-box textarea{
+    width:100%;
+    min-height:220px;
+    border:none;
+    resize:none;
+    outline:none;
+    font-size:18px;
+    background:white;
+    color:#222;
+}
+
+/* BOTTOM TOOLS */
+
+.bottom-tools{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:white;
+    border-top:1px solid #ddd;
+    padding:15px;
+    z-index:1000;
+}
+
+.tool-options{
+    display:flex;
+    justify-content:space-around;
+    margin-bottom:15px;
+}
+
+.tool-btn{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-size:13px;
+    color:#444;
+}
+
+.tool-btn i{
+    font-size:24px;
+    margin-bottom:6px;
+}
+
+.post-submit{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#1877f2;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.post-submit:active{
+    transform:scale(0.98);
+}
+
+.hidden-input{
+    display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <a href="/" class="cancel-btn">
+        Cancel
+    </a>
+
+    <div class="header-title">
+        Create Post
+    </div>
+
+    <div style="width:55px;"></div>
+
+</div>
+
+<!-- USER -->
+
+<div class="user-box">
+
+    <img src="https://i.pravatar.cc/150?img=10">
+
+    <div class="user-name">
+        Sudhakar
+    </div>
+
+</div>
+
+<!-- POST AREA -->
+
+<div class="post-box">
+
+    <textarea
+    placeholder="What's happening in Pathukkalam?"></textarea>
+
+</div>
+
+<!-- BOTTOM OPTIONS -->
+
+<div class="bottom-tools">
+
+    <div class="tool-options">
+
+        <label class="tool-btn">
+
+            <i class="fas fa-image"></i>
+
+            <span>Photo</span>
+
+            <input type="file"
+            accept="image/*"
+            class="hidden-input">
+
+        </label>
+
+        <label class="tool-btn">
+
+            <i class="fas fa-video"></i>
+
+            <span>Video</span>
+
+            <input type="file"
+            accept="video/*"
+            class="hidden-input">
+
+        </label>
+
+        <label class="tool-btn">
+
+            <i class="fas fa-file"></i>
+
+            <span>Document</span>
+
+            <input type="file"
+            class="hidden-input">
+
+        </label>
+
+    </div>
+
+    <button class="post-submit">
+        Post Now
+    </button>
+
+</div>
+
+</body>
+</html>
