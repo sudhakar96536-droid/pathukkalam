@@ -5,13 +5,16 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Pathukkalam</title>
 
-<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+<link rel="manifest"
+href="{{ url_for('static', filename='manifest.json') }}">
 
-<meta name="theme-color" content="#1877f2">
+<meta name="theme-color"
+content="#1877f2">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -27,7 +30,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 body{
     background:#f0f2f5;
-    padding-bottom:85px;
+    padding-bottom:90px;
 }
 
 /* HEADER */
@@ -111,17 +114,30 @@ body{
     font-size:15px;
 }
 
-.create-actions{
+/* QUICK MENU */
+
+.quick-menu{
     display:flex;
-    justify-content:space-around;
-    margin-top:12px;
-    padding-top:10px;
-    border-top:1px solid #eee;
+    overflow-x:auto;
+    gap:10px;
+    padding:12px;
 }
 
-.create-actions div{
-    font-size:14px;
-    color:#555;
+.quick-card{
+    min-width:120px;
+    background:white;
+    border-radius:14px;
+    padding:18px 10px;
+    text-align:center;
+    text-decoration:none;
+    color:#333;
+    box-shadow:0 2px 5px rgba(0,0,0,0.08);
+}
+
+.quick-card i{
+    font-size:28px;
+    color:#1877f2;
+    margin-bottom:10px;
 }
 
 /* STORIES */
@@ -199,14 +215,6 @@ body{
     object-fit:cover;
 }
 
-.post-stats{
-    display:flex;
-    justify-content:space-between;
-    margin-top:10px;
-    font-size:13px;
-    color:#666;
-}
-
 .post-actions{
     display:flex;
     justify-content:space-around;
@@ -219,7 +227,8 @@ body{
     color:#555;
     font-size:14px;
 }
-/* FLOATING NEW POST BUTTON */
+
+/* FLOATING BUTTON */
 
 .new-post-btn{
     position:fixed;
@@ -241,9 +250,6 @@ body{
     border:4px solid white;
 }
 
-.new-post-btn:active{
-    transform:translateX(-50%) scale(0.95);
-}
 /* BOTTOM NAV */
 
 .bottom-nav{
@@ -303,7 +309,12 @@ body{
 
         <i class="fas fa-search"></i>
 
-        <i class="fas fa-message"></i>
+        <a href="/messages"
+        style="text-decoration:none;color:inherit;">
+
+            <i class="fas fa-message"></i>
+
+        </a>
 
     </div>
 
@@ -322,24 +333,43 @@ body{
 
     </div>
 
-    <div class="create-actions">
+</div>
 
-        <div>
-            <i class="fas fa-video"></i>
-            Live
-        </div>
+<!-- QUICK MENU -->
 
-        <div>
-            <i class="fas fa-image"></i>
-            Photo
-        </div>
+<div class="quick-menu">
 
-        <div>
-            <i class="fas fa-smile"></i>
-            Feeling
-        </div>
+    <a href="/rides" class="quick-card">
 
-    </div>
+        <i class="fas fa-car"></i>
+
+        <div>Ride Share</div>
+
+    </a>
+
+    <a href="/marketplace" class="quick-card">
+
+        <i class="fas fa-store"></i>
+
+        <div>Marketplace</div>
+
+    </a>
+
+    <a href="/reels" class="quick-card">
+
+        <i class="fas fa-video"></i>
+
+        <div>Reels</div>
+
+    </a>
+
+    <a href="/jobs" class="quick-card">
+
+        <i class="fas fa-briefcase"></i>
+
+        <div>Jobs</div>
+
+    </a>
 
 </div>
 
@@ -367,29 +397,26 @@ body{
         <p>Vijay</p>
     </div>
 
-    <div class="story">
-        <img src="https://picsum.photos/200/300?5">
-        <p>Kumar</p>
-    </div>
-
 </div>
 
-<!-- POST 1 -->
+<!-- POSTS -->
+
+{% for post in posts %}
 
 <div class="post">
 
     <div class="post-header">
 
-        <img src="https://i.pravatar.cc/150?img=5">
+        <img src="{{ post.profile }}">
 
         <div>
 
             <div class="post-user">
-                Sudhakar
+                {{ post.name }}
             </div>
 
             <div class="post-time">
-                2 hrs ago
+                Trending Now
             </div>
 
         </div>
@@ -397,23 +424,11 @@ body{
     </div>
 
     <div class="post-text">
-        Welcome to Pathukkalam social media platform 🔥
+        {{ post.caption }}
     </div>
 
     <img class="post-image"
-    src="https://picsum.photos/600/400?10">
-
-    <div class="post-stats">
-
-        <div>
-            👍 2.5K Likes
-        </div>
-
-        <div>
-            450 Comments
-        </div>
-
-    </div>
+    src="{{ post.image }}">
 
     <div class="post-actions">
 
@@ -436,95 +451,50 @@ body{
 
 </div>
 
-<!-- POST 2 -->
+{% endfor %}
 
-<div class="post">
+<!-- FLOATING BUTTON -->
 
-    <div class="post-header">
+<a href="/new-post" class="new-post-btn">
 
-        <img src="https://i.pravatar.cc/150?img=8">
+    <i class="fas fa-plus"></i>
 
-        <div>
+</a>
 
-            <div class="post-user">
-                Karthik
-            </div>
-
-            <div class="post-time">
-                5 hrs ago
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="post-text">
-        Big update coming soon 🚀
-    </div>
-
-    <img class="post-image"
-    src="https://picsum.photos/600/400?20">
-
-    <div class="post-stats">
-
-        <div>
-            ❤️ 1.2K Likes
-        </div>
-
-        <div>
-            210 Comments
-        </div>
-
-    </div>
-
-    <div class="post-actions">
-
-        <div>
-            <i class="far fa-thumbs-up"></i>
-            Like
-        </div>
-
-        <div>
-            <i class="far fa-comment"></i>
-            Comment
-        </div>
-
-        <div>
-            <i class="far fa-share-square"></i>
-            Share
-        </div>
-
-    </div>
-
-</div>
-<!-- FLOATING POST BUTTON -->
-
-<a href="/new-post" class="new-post-btn">+</a>
-    
 <!-- BOTTOM NAVIGATION -->
 
 <div class="bottom-nav">
 
     <a href="/" class="nav-item active">
+
         <i class="fas fa-house"></i>
+
         <span>Home</span>
+
     </a>
 
     <a href="/explore" class="nav-item">
+
         <i class="fas fa-compass"></i>
+
         <span>Explore</span>
+
     </a>
-    
-    <div style="width:70px;"></div>
-    
+
     <a href="/notifications" class="nav-item">
+
         <i class="fas fa-bell"></i>
+
         <span>Alerts</span>
+
     </a>
 
     <a href="/profile" class="nav-item">
+
         <i class="fas fa-user"></i>
+
         <span>Profile</span>
+
     </a>
 
 </div>
