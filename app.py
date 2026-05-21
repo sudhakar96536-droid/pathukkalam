@@ -50,5 +50,24 @@ def profile():
 def register():
     return render_template('register.html')
 
+@app.route('/rides')
+def rides():
+    return render_template('rides.html')
+
+
+@app.route('/reels')
+def reels():
+    return render_template('reels.html')
+
+
+@app.route('/marketplace')
+def marketplace():
+    return render_template('marketplace.html')
+
+
+@app.route('/jobs')
+def jobs():
+    return render_template('jobs.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
