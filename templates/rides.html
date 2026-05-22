@@ -7,55 +7,106 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ride Share</title>
+<title>Pathukkalam Lift Share</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 
-body{
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
     font-family:Arial;
+}
+
+body{
     background:#f0f2f5;
+    padding-bottom:20px;
 }
 
 .header{
     background:#1877f2;
     color:white;
     padding:18px;
-    font-size:22px;
+    font-size:24px;
     font-weight:bold;
     text-align:center;
+    position:sticky;
+    top:0;
 }
 
 .ride-card{
     background:white;
     margin:15px;
     padding:18px;
-    border-radius:15px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.08);
+    border-radius:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
-.location{
+.profile{
+    display:flex;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.profile img{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    margin-right:12px;
+    object-fit:cover;
+}
+
+.name{
     font-size:18px;
-    margin-bottom:10px;
     font-weight:bold;
 }
 
-.price{
-    color:green;
-    font-size:22px;
-    font-weight:bold;
+.details{
+    color:#666;
+    margin-top:4px;
+    font-size:14px;
+}
+
+.route{
+    background:#f5f7ff;
+    padding:12px;
+    border-radius:12px;
     margin-top:10px;
 }
 
-.book-btn{
+.city{
+    font-size:17px;
+    font-weight:bold;
+    color:#1877f2;
+    margin-bottom:8px;
+}
+
+.bus-stop{
+    font-size:15px;
+    color:#333;
+    line-height:1.6;
+}
+
+.time{
+    margin-top:12px;
+    font-size:15px;
+    color:#444;
+    font-weight:bold;
+}
+
+.request-btn{
     width:100%;
     padding:14px;
     border:none;
     background:#1877f2;
     color:white;
-    border-radius:10px;
-    margin-top:15px;
+    border-radius:12px;
+    margin-top:16px;
     font-size:16px;
+    font-weight:bold;
 }
 
 </style>
@@ -65,45 +116,225 @@ body{
 <body>
 
 <div class="header">
-    🚖 Pathukkalam Ride Share
+    🚖 Pathukkalam Lift Share
 </div>
+
+<!-- CARD 1 -->
 
 <div class="ride-card">
 
-    <div class="location">
-        Chennai → Tambaram
+    <div class="profile">
+
+        <img src="https://i.pravatar.cc/150?img=11">
+
+        <div>
+
+            <div class="name">
+                Arun Kumar
+            </div>
+
+            <div class="details">
+                27 yrs • TCS • Software Engineer
+            </div>
+
+        </div>
+
     </div>
 
-    <div>
-        Driver: Arun
+    <div class="route">
+
+        <div class="city">
+            Chennai
+        </div>
+
+        <div class="bus-stop">
+            Velappanchavadi → Koyambedu
+        </div>
+
     </div>
 
-    <div class="price">
-        ₹120
+    <div class="time">
+        ⏰ 8:00 AM at pickup point
     </div>
 
-    <button class="book-btn">
-        Book Ride
+    <button class="request-btn">
+        Request Lift
     </button>
 
 </div>
 
+<!-- CARD 2 -->
+
 <div class="ride-card">
 
-    <div class="location">
-        Velachery → T Nagar
+    <div class="profile">
+
+        <img src="https://i.pravatar.cc/150?img=12">
+
+        <div>
+
+            <div class="name">
+                Vijay Raj
+            </div>
+
+            <div class="details">
+                30 yrs • Infosys • Team Lead
+            </div>
+
+        </div>
+
     </div>
 
-    <div>
-        Driver: Vijay
+    <div class="route">
+
+        <div class="city">
+            Chennai
+        </div>
+
+        <div class="bus-stop">
+            Tambaram → Guindy
+        </div>
+
     </div>
 
-    <div class="price">
-        ₹90
+    <div class="time">
+        ⏰ 9:15 AM at pickup point
     </div>
 
-    <button class="book-btn">
-        Book Ride
+    <button class="request-btn">
+        Request Lift
+    </button>
+
+</div>
+
+<!-- CARD 3 -->
+
+<div class="ride-card">
+
+    <div class="profile">
+
+        <img src="https://i.pravatar.cc/150?img=13">
+
+        <div>
+
+            <div class="name">
+                Priya Sharma
+            </div>
+
+            <div class="details">
+                25 yrs • Wipro • HR Manager
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="route">
+
+        <div class="city">
+            Kanchipuram
+        </div>
+
+        <div class="bus-stop">
+            Oragadam → Sriperumbudur
+        </div>
+
+    </div>
+
+    <div class="time">
+        ⏰ 7:45 AM at pickup point
+    </div>
+
+    <button class="request-btn">
+        Request Lift
+    </button>
+
+</div>
+
+<!-- CARD 4 -->
+
+<div class="ride-card">
+
+    <div class="profile">
+
+        <img src="https://i.pravatar.cc/150?img=14">
+
+        <div>
+
+            <div class="name">
+                Dinesh Kumar
+            </div>
+
+            <div class="details">
+                29 yrs • Zoho • UI Designer
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="route">
+
+        <div class="city">
+            Chennai
+        </div>
+
+        <div class="bus-stop">
+            Porur → Vadapalani
+        </div>
+
+    </div>
+
+    <div class="time">
+        ⏰ 8:30 AM at pickup point
+    </div>
+
+    <button class="request-btn">
+        Request Lift
+    </button>
+
+</div>
+
+<!-- CARD 5 -->
+
+<div class="ride-card">
+
+    <div class="profile">
+
+        <img src="https://i.pravatar.cc/150?img=15">
+
+        <div>
+
+            <div class="name">
+                Karthik S
+            </div>
+
+            <div class="details">
+                26 yrs • HCL • Network Engineer
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="route">
+
+        <div class="city">
+            Chennai
+        </div>
+
+        <div class="bus-stop">
+            Poonamallee → Koyambedu
+        </div>
+
+    </div>
+
+    <div class="time">
+        ⏰ 7:30 AM at pickup point
+    </div>
+
+    <button class="request-btn">
+        Request Lift
     </button>
 
 </div>
