@@ -61,6 +61,25 @@ body{
     font-size:15px;
 }
 
+/* TOP ACTION */
+
+.top-action{
+    padding:0 15px;
+}
+
+.show-form-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#1877f2;
+    color:white;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:bold;
+    margin-top:10px;
+    cursor:pointer;
+}
+
 /* NEW RIDE FORM */
 
 .new-ride-form{
@@ -69,6 +88,7 @@ body{
     padding:18px;
     border-radius:18px;
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    display:none;
 }
 
 .form-title{
@@ -118,6 +138,7 @@ body{
     border-radius:12px;
     font-size:15px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .draft-btn{
@@ -129,6 +150,7 @@ body{
     border-radius:12px;
     font-size:15px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 /* CARD */
@@ -231,6 +253,7 @@ body{
     margin-top:16px;
     font-size:16px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .no-result{
@@ -262,12 +285,26 @@ body{
 
 </div>
 
-<!-- NEW RIDE POST FORM -->
+<!-- POST BUTTON -->
 
-<div class="new-ride-form">
+<div class="top-action">
+
+    <button class="show-form-btn"
+    onclick="toggleForm()">
+
+        ➕ Post New Lift
+
+    </button>
+
+</div>
+
+<!-- NEW RIDE FORM -->
+
+<div class="new-ride-form"
+id="rideForm">
 
     <div class="form-title">
-        Post New Lift
+        Share Your Lift
     </div>
 
     <div class="form-group">
@@ -387,7 +424,7 @@ body{
 
 </div>
 
-<!-- SAMPLE CARD -->
+<!-- CARD 1 -->
 
 <div class="ride-card">
 
@@ -439,7 +476,7 @@ body{
 
 </div>
 
-<!-- SAMPLE CARD -->
+<!-- CARD 2 -->
 
 <div class="ride-card">
 
@@ -491,6 +528,110 @@ body{
 
 </div>
 
+<!-- CARD 3 -->
+
+<div class="ride-card">
+
+    <div class="profile">
+
+        <img src="https://i.pravatar.cc/150?img=13">
+
+        <div>
+
+            <div class="name">
+                Priya Sharma
+            </div>
+
+            <div class="details">
+                25 yrs • Wipro • HR Manager
+            </div>
+
+            <div class="gender">
+                👩 Women Only
+            </div>
+
+            <div class="vehicle">
+                🚗 Car
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="route">
+
+        <div class="city">
+            Kanchipuram
+        </div>
+
+        <div class="bus-stop">
+            Oragadam → Sriperumbudur
+        </div>
+
+    </div>
+
+    <div class="time">
+        ⏰ 7:45 AM at pickup point
+    </div>
+
+    <button class="request-btn">
+        Request Lift
+    </button>
+
+</div>
+
+<!-- CARD 4 -->
+
+<div class="ride-card">
+
+    <div class="profile">
+
+        <img src="https://i.pravatar.cc/150?img=14">
+
+        <div>
+
+            <div class="name">
+                Dinesh Kumar
+            </div>
+
+            <div class="details">
+                29 yrs • Zoho • UI Designer
+            </div>
+
+            <div class="gender">
+                ⚧ Others Welcome
+            </div>
+
+            <div class="vehicle">
+                🏍 Bike
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="route">
+
+        <div class="city">
+            Chennai
+        </div>
+
+        <div class="bus-stop">
+            Porur → Vadapalani
+        </div>
+
+    </div>
+
+    <div class="time">
+        ⏰ 8:30 AM at pickup point
+    </div>
+
+    <button class="request-btn">
+        Request Lift
+    </button>
+
+</div>
+
 <div class="no-result"
 id="noResult">
 
@@ -499,6 +640,22 @@ id="noResult">
 </div>
 
 <script>
+
+function toggleForm(){
+
+    let form =
+    document.getElementById("rideForm");
+
+    if(form.style.display === "block"){
+
+        form.style.display = "none";
+
+    }else{
+
+        form.style.display = "block";
+
+    }
+}
 
 function searchRide() {
 
