@@ -1,50 +1,786 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Marketplace</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Pathukkalam Marketplace</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
-body{
+
+*{
     margin:0;
-    background:#f0f2f5;
+    padding:0;
+    box-sizing:border-box;
     font-family:Arial;
 }
+
+body{
+    background:#f0f2f5;
+    padding-bottom:100px;
+}
+
+/* HEADER */
 
 .header{
     background:#1877f2;
     color:white;
     padding:18px;
-    font-size:22px;
+    font-size:24px;
+    font-weight:bold;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
+
+/* SEARCH */
+
+.search-box{
+    background:white;
+    padding:15px;
+    position:sticky;
+    top:66px;
+    z-index:999;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#f0f2f5;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+}
+
+/* POST BUTTON */
+
+.top-action{
+    padding:0 15px;
+}
+
+.show-form-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#1877f2;
+    color:white;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:bold;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+/* PRODUCT FORM */
+
+.sell-form{
+    background:white;
+    margin:15px;
+    padding:18px;
+    border-radius:18px;
+    display:none;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.form-title{
+    font-size:20px;
+    font-weight:bold;
+    color:#1877f2;
+    margin-bottom:15px;
+}
+
+.form-group{
+    margin-bottom:14px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:13px;
+    border:none;
+    background:#f0f2f5;
+    border-radius:12px;
+    outline:none;
+    font-size:14px;
+}
+
+textarea{
+    resize:none;
+    height:90px;
+}
+
+.btn-group{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.post-btn{
+    flex:1;
+    padding:14px;
+    border:none;
+    background:#1877f2;
+    color:white;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.draft-btn{
+    flex:1;
+    padding:14px;
+    border:none;
+    background:#ddd;
+    color:#333;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:bold;
+}
+
+/* PRODUCTS */
 
 .product{
     background:white;
     margin:15px;
-    padding:15px;
-    border-radius:12px;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
 .product img{
     width:100%;
-    border-radius:10px;
+    height:220px;
+    object-fit:cover;
 }
+
+.product-details{
+    padding:15px;
+}
+
+.product-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.condition{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.new{
+    background:#e7f8ea;
+    color:green;
+}
+
+.used{
+    background:#fff4e5;
+    color:#ff8800;
+}
+
+.rebuild{
+    background:#e8f1ff;
+    color:#1877f2;
+}
+
+.price-row{
+    margin-top:8px;
+}
+
+.mrp{
+    text-decoration:line-through;
+    color:gray;
+    margin-right:10px;
+}
+
+.offer{
+    color:green;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.location{
+    margin-top:10px;
+    color:#666;
+    font-size:14px;
+}
+
+.buy-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#1877f2;
+    color:white;
+    border-radius:12px;
+    margin-top:14px;
+    font-size:15px;
+    font-weight:bold;
+}
+
 </style>
+
 </head>
+
 <body>
 
 <div class="header">
-    Marketplace
+    🛒 Pathukkalam Marketplace
 </div>
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+    <input type="text"
+    placeholder="Search products like iPhone, Bike, Laptop">
+
+</div>
+
+<!-- POST BUTTON -->
+
+<div class="top-action">
+
+    <button class="show-form-btn"
+    onclick="toggleSellForm()">
+
+        ➕ Sell New Product
+
+    </button>
+
+</div>
+
+<!-- SELL FORM -->
+
+<div class="sell-form"
+id="sellForm">
+
+    <div class="form-title">
+        Create Product Post
+    </div>
+
+    <div class="form-group">
+
+        <label>Product Name</label>
+
+        <input type="text"
+        placeholder="iPhone 14">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Product Condition</label>
+
+        <select>
+
+            <option>🟢 New</option>
+
+            <option>🟠 Used</option>
+
+            <option>🔵 Rebuild</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>MRP Price</label>
+
+        <input type="number"
+        placeholder="60000">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Offer Price</label>
+
+        <input type="number"
+        placeholder="45000">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Location</label>
+
+        <input type="text"
+        placeholder="Chennai">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Description</label>
+
+        <textarea
+        placeholder="Product details"></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Upload Product Image</label>
+
+        <input type="file">
+
+    </div>
+
+    <div class="btn-group">
+
+        <button class="post-btn">
+            Post Product
+        </button>
+
+        <button class="draft-btn">
+            Save Draft
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 1 -->
 
 <div class="product">
 
     <img src="https://picsum.photos/500/300?phone">
 
-    <h3>iPhone 14</h3>
+    <div class="product-details">
 
-    <p>₹45,000</p>
+        <div class="product-title">
+            iPhone 14
+        </div>
+
+        <div class="condition new">
+            🟢 New
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹60,000
+            </span>
+
+            <span class="offer">
+                ₹45,000
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 Chennai
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
 
 </div>
 
+<!-- PRODUCT 2 -->
+
+<div class="product">
+
+    <img src="https://picsum.photos/500/300?laptop">
+
+    <div class="product-details">
+
+        <div class="product-title">
+            Dell Gaming Laptop
+        </div>
+
+        <div class="condition used">
+            🟠 Used
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹85,000
+            </span>
+
+            <span class="offer">
+                ₹52,000
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 Tambaram
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 3 -->
+
+<div class="product">
+
+    <img src="https://picsum.photos/500/300?bike">
+
+    <div class="product-details">
+
+        <div class="product-title">
+            Royal Enfield Classic
+        </div>
+
+        <div class="condition rebuild">
+            🔵 Rebuild
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹2,10,000
+            </span>
+
+            <span class="offer">
+                ₹1,45,000
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 Kanchipuram
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 4 -->
+
+<div class="product">
+
+    <img src="https://picsum.photos/500/300?tv">
+
+    <div class="product-details">
+
+        <div class="product-title">
+            Samsung Smart TV
+        </div>
+
+        <div class="condition used">
+            🟠 Used
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹48,000
+            </span>
+
+            <span class="offer">
+                ₹28,000
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 Porur
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 5 -->
+
+<div class="product">
+
+    <img src="https://picsum.photos/500/300?watch">
+
+    <div class="product-details">
+
+        <div class="product-title">
+            Apple Watch
+        </div>
+
+        <div class="condition new">
+            🟢 New
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹35,000
+            </span>
+
+            <span class="offer">
+                ₹26,000
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 Guindy
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 6 -->
+
+<div class="product">
+
+    <img src="https://picsum.photos/500/300?camera">
+
+    <div class="product-details">
+
+        <div class="product-title">
+            Canon DSLR Camera
+        </div>
+
+        <div class="condition used">
+            🟠 Used
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹75,000
+            </span>
+
+            <span class="offer">
+                ₹42,000
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 Velachery
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 7 -->
+
+<div class="product">
+
+    <img src="https://picsum.photos/500/300?sofa">
+
+    <div class="product-details">
+
+        <div class="product-title">
+            Wooden Sofa Set
+        </div>
+
+        <div class="condition rebuild">
+            🔵 Rebuild
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹55,000
+            </span>
+
+            <span class="offer">
+                ₹29,000
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 Avadi
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 8 -->
+
+<div class="product">
+
+    <img src="https://picsum.photos/500/300?tablet">
+
+    <div class="product-details">
+
+        <div class="product-title">
+            iPad Air
+        </div>
+
+        <div class="condition new">
+            🟢 New
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹68,000
+            </span>
+
+            <span class="offer">
+                ₹54,000
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 Anna Nagar
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 9 -->
+
+<div class="product">
+
+    <img src="https://picsum.photos/500/300?headphone">
+
+    <div class="product-details">
+
+        <div class="product-title">
+            Sony Headphones
+        </div>
+
+        <div class="condition used">
+            🟠 Used
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹18,000
+            </span>
+
+            <span class="offer">
+                ₹9,500
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 T Nagar
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 10 -->
+
+<div class="product">
+
+    <img src="https://picsum.photos/500/300?car">
+
+    <div class="product-details">
+
+        <div class="product-title">
+            Hyundai i20
+        </div>
+
+        <div class="condition rebuild">
+            🔵 Rebuild
+        </div>
+
+        <div class="price-row">
+
+            <span class="mrp">
+                ₹8,50,000
+            </span>
+
+            <span class="offer">
+                ₹5,90,000
+            </span>
+
+        </div>
+
+        <div class="location">
+            📍 Chennai
+        </div>
+
+        <button class="buy-btn">
+            View Details
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+function toggleSellForm(){
+
+    let form =
+    document.getElementById("sellForm");
+
+    if(form.style.display === "block"){
+
+        form.style.display = "none";
+
+    }else{
+
+        form.style.display = "block";
+
+    }
+}
+
+</script>
+
 </body>
+
 </html>
