@@ -35,7 +35,30 @@ body{
     text-align:center;
     position:sticky;
     top:0;
+    z-index:1000;
 }
+
+/* SEARCH */
+
+.search-box{
+    padding:15px;
+    background:white;
+    position:sticky;
+    top:68px;
+    z-index:999;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#f0f2f5;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+}
+
+/* CARD */
 
 .ride-card{
     background:white;
@@ -70,6 +93,21 @@ body{
     font-size:14px;
 }
 
+/* GENDER TAG */
+
+.gender{
+    margin-top:8px;
+    display:inline-block;
+    background:#e8f1ff;
+    color:#1877f2;
+    padding:7px 12px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+/* ROUTE */
+
 .route{
     background:#f5f7ff;
     padding:12px;
@@ -88,6 +126,7 @@ body{
     font-size:15px;
     color:#333;
     line-height:1.6;
+    font-weight:bold;
 }
 
 .time{
@@ -109,6 +148,14 @@ body{
     font-weight:bold;
 }
 
+.no-result{
+    text-align:center;
+    color:gray;
+    margin-top:40px;
+    font-size:18px;
+    display:none;
+}
+
 </style>
 
 </head>
@@ -117,6 +164,17 @@ body{
 
 <div class="header">
     🚖 Pathukkalam Lift Share
+</div>
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+    <input type="text"
+    id="searchInput"
+    placeholder="Search destination like Koyambedu"
+    onkeyup="searchRide()">
+
 </div>
 
 <!-- CARD 1 -->
@@ -135,6 +193,10 @@ body{
 
             <div class="details">
                 27 yrs • TCS • Software Engineer
+            </div>
+
+            <div class="gender">
+                🌍 Accepting Anyone
             </div>
 
         </div>
@@ -181,6 +243,10 @@ body{
                 30 yrs • Infosys • Team Lead
             </div>
 
+            <div class="gender">
+                👨 Men Only
+            </div>
+
         </div>
 
     </div>
@@ -223,6 +289,10 @@ body{
 
             <div class="details">
                 25 yrs • Wipro • HR Manager
+            </div>
+
+            <div class="gender">
+                👩 Women Only
             </div>
 
         </div>
@@ -269,6 +339,10 @@ body{
                 29 yrs • Zoho • UI Designer
             </div>
 
+            <div class="gender">
+                ⚧ Others Welcome
+            </div>
+
         </div>
 
     </div>
@@ -313,6 +387,10 @@ body{
                 26 yrs • HCL • Network Engineer
             </div>
 
+            <div class="gender">
+                🌍 Accepting Anyone
+            </div>
+
         </div>
 
     </div>
@@ -338,6 +416,53 @@ body{
     </button>
 
 </div>
+
+<div class="no-result" id="noResult">
+    No lift providers found
+</div>
+
+<script>
+
+function searchRide() {
+
+    let input =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+    let cards =
+    document.querySelectorAll(".ride-card");
+
+    let found = false;
+
+    cards.forEach(card => {
+
+        let route =
+        card.querySelector(".bus-stop")
+        .innerText
+        .toLowerCase();
+
+        let destination =
+        route.split("→")[1].trim();
+
+        if(destination.includes(input)){
+
+            card.style.display = "block";
+            found = true;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+    document.getElementById("noResult")
+    .style.display = found ? "none" : "block";
+}
+
+</script>
 
 </body>
 
