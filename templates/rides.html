@@ -5,7 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Pathukkalam Lift Share</title>
 
@@ -23,8 +24,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 body{
     background:#f0f2f5;
-    padding-bottom:20px;
+    padding-bottom:120px;
 }
+
+/* HEADER */
 
 .header{
     background:#1877f2;
@@ -56,6 +59,76 @@ body{
     border-radius:12px;
     outline:none;
     font-size:15px;
+}
+
+/* NEW RIDE FORM */
+
+.new-ride-form{
+    background:white;
+    margin:15px;
+    padding:18px;
+    border-radius:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.form-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:15px;
+    color:#1877f2;
+}
+
+.form-group{
+    margin-bottom:14px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+    font-weight:bold;
+    color:#333;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:13px;
+    border:none;
+    background:#f0f2f5;
+    border-radius:12px;
+    outline:none;
+    font-size:14px;
+}
+
+/* BUTTONS */
+
+.btn-group{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.post-btn{
+    flex:1;
+    padding:14px;
+    border:none;
+    background:#1877f2;
+    color:white;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.draft-btn{
+    flex:1;
+    padding:14px;
+    border:none;
+    background:#ddd;
+    color:#333;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:bold;
 }
 
 /* CARD */
@@ -158,7 +231,6 @@ body{
     margin-top:16px;
     font-size:16px;
     font-weight:bold;
-    cursor:pointer;
 }
 
 .no-result{
@@ -190,7 +262,132 @@ body{
 
 </div>
 
-<!-- CARD 1 -->
+<!-- NEW RIDE POST FORM -->
+
+<div class="new-ride-form">
+
+    <div class="form-title">
+        Post New Lift
+    </div>
+
+    <div class="form-group">
+
+        <label>Full Name</label>
+
+        <input type="text"
+        placeholder="Enter your name">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Age</label>
+
+        <input type="number"
+        placeholder="Enter age">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Company Name</label>
+
+        <input type="text"
+        placeholder="TCS / Infosys / HCL">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Profession</label>
+
+        <input type="text"
+        placeholder="Software Engineer">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>City</label>
+
+        <input type="text"
+        placeholder="Chennai">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Pickup Point</label>
+
+        <input type="text"
+        placeholder="Velappanchavadi">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Destination</label>
+
+        <input type="text"
+        placeholder="Koyambedu">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Pickup Time</label>
+
+        <input type="time">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Vehicle Type</label>
+
+        <select>
+
+            <option>🏍 Bike</option>
+
+            <option>🚗 Car</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Accepting Gender</label>
+
+        <select>
+
+            <option>🌍 Anyone</option>
+
+            <option>👨 Men Only</option>
+
+            <option>👩 Women Only</option>
+
+            <option>⚧ Others Welcome</option>
+
+        </select>
+
+    </div>
+
+    <div class="btn-group">
+
+        <button class="post-btn">
+            Share Lift Post
+        </button>
+
+        <button class="draft-btn">
+            Save Draft
+        </button>
+
+    </div>
+
+</div>
+
+<!-- SAMPLE CARD -->
 
 <div class="ride-card">
 
@@ -242,7 +439,7 @@ body{
 
 </div>
 
-<!-- CARD 2 -->
+<!-- SAMPLE CARD -->
 
 <div class="ride-card">
 
@@ -294,164 +491,11 @@ body{
 
 </div>
 
-<!-- CARD 3 -->
+<div class="no-result"
+id="noResult">
 
-<div class="ride-card">
-
-    <div class="profile">
-
-        <img src="https://i.pravatar.cc/150?img=13">
-
-        <div>
-
-            <div class="name">
-                Priya Sharma
-            </div>
-
-            <div class="details">
-                25 yrs • Wipro • HR Manager
-            </div>
-
-            <div class="gender">
-                👩 Women Only
-            </div>
-
-            <div class="vehicle">
-                🚗 Car
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="route">
-
-        <div class="city">
-            Kanchipuram
-        </div>
-
-        <div class="bus-stop">
-            Oragadam → Sriperumbudur
-        </div>
-
-    </div>
-
-    <div class="time">
-        ⏰ 7:45 AM at pickup point
-    </div>
-
-    <button class="request-btn">
-        Request Lift
-    </button>
-
-</div>
-
-<!-- CARD 4 -->
-
-<div class="ride-card">
-
-    <div class="profile">
-
-        <img src="https://i.pravatar.cc/150?img=14">
-
-        <div>
-
-            <div class="name">
-                Dinesh Kumar
-            </div>
-
-            <div class="details">
-                29 yrs • Zoho • UI Designer
-            </div>
-
-            <div class="gender">
-                ⚧ Others Welcome
-            </div>
-
-            <div class="vehicle">
-                🏍 Bike
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="route">
-
-        <div class="city">
-            Chennai
-        </div>
-
-        <div class="bus-stop">
-            Porur → Vadapalani
-        </div>
-
-    </div>
-
-    <div class="time">
-        ⏰ 8:30 AM at pickup point
-    </div>
-
-    <button class="request-btn">
-        Request Lift
-    </button>
-
-</div>
-
-<!-- CARD 5 -->
-
-<div class="ride-card">
-
-    <div class="profile">
-
-        <img src="https://i.pravatar.cc/150?img=15">
-
-        <div>
-
-            <div class="name">
-                Karthik S
-            </div>
-
-            <div class="details">
-                26 yrs • HCL • Network Engineer
-            </div>
-
-            <div class="gender">
-                🌍 Accepting Anyone
-            </div>
-
-            <div class="vehicle">
-                🚗 Car
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="route">
-
-        <div class="city">
-            Chennai
-        </div>
-
-        <div class="bus-stop">
-            Poonamallee → Koyambedu
-        </div>
-
-    </div>
-
-    <div class="time">
-        ⏰ 7:30 AM at pickup point
-    </div>
-
-    <button class="request-btn">
-        Request Lift
-    </button>
-
-</div>
-
-<div class="no-result" id="noResult">
     No lift providers found
+
 </div>
 
 <script>
@@ -492,7 +536,8 @@ function searchRide() {
     });
 
     document.getElementById("noResult")
-    .style.display = found ? "none" : "block";
+    .style.display =
+    found ? "none" : "block";
 }
 
 </script>
