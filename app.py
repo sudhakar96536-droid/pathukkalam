@@ -99,6 +99,10 @@ def marketplace():
 def jobs():
     return render_template('jobs.html')
 
+@app.route('/news')
+def news():
+    return render_template('news.html')
+
 @app.route("/profile/<username>")
 def user_profile(username):
 
