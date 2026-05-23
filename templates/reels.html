@@ -1,30 +1,192 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Reels</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Pathukkalam Reels</title>
+
 <style>
-body{
+
+*{
     margin:0;
-    background:black;
-    color:white;
+    padding:0;
+    box-sizing:border-box;
     font-family:Arial;
 }
 
-.reel{
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:black;
+}
+
+/* FULL PAGE */
+
+.reels-container{
+    width:100%;
     height:100vh;
+    position:relative;
+}
+
+/* YOUTUBE SHORTS */
+
+.reels-frame{
+    width:100%;
+    height:100%;
+    border:none;
+}
+
+/* TOP HEADER */
+
+.top-bar{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    padding:18px;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+    z-index:1000;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#ffcc00;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.live{
+    background:red;
+    color:white;
+    padding:8px 14px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+/* BOTTOM TEXT */
+
+.bottom-overlay{
+    position:absolute;
+    bottom:25px;
+    left:15px;
+    z-index:1000;
+}
+
+.bottom-overlay h2{
+    font-size:24px;
+    margin-bottom:8px;
+}
+
+.bottom-overlay p{
+    font-size:14px;
+    color:#ddd;
+    line-height:1.5;
+}
+
+/* RIGHT ICONS */
+
+.side-icons{
+    position:absolute;
+    right:12px;
+    bottom:120px;
+    z-index:1000;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.icon-btn{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(5px);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:30px;
+    color:white;
+    font-size:24px;
+    text-decoration:none;
 }
+
 </style>
+
 </head>
+
 <body>
 
-<div class="reel">
-    Pathukkalam Reels 🔥
+<div class="reels-container">
+
+    <!-- TOP -->
+
+    <div class="top-bar">
+
+        <div class="logo">
+            ✨ Pathukkalam Reels
+        </div>
+
+        <div class="live">
+            LIVE
+        </div>
+
+    </div>
+
+    <!-- YOUTUBE SHORTS FULL PAGE -->
+
+    <iframe
+    class="reels-frame"
+    src="https://www.youtube.com/embed/u31qwQUeGuM?autoplay=1&mute=1&controls=0&loop=1&playlist=u31qwQUeGuM"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+    </iframe>
+
+    <!-- RIGHT ICONS -->
+
+    <div class="side-icons">
+
+        <a href="#"
+        class="icon-btn">
+            ❤️
+        </a>
+
+        <a href="#"
+        class="icon-btn">
+            💬
+        </a>
+
+        <a href="#"
+        class="icon-btn">
+            🔗
+        </a>
+
+    </div>
+
+    <!-- BOTTOM -->
+
+    <div class="bottom-overlay">
+
+        <h2>
+            Pathukkalam Trending Reels 🔥
+        </h2>
+
+        <p>
+            Swipe reels experience inside your app •
+            YouTube Shorts Full Screen Mode
+        </p>
+
+    </div>
+
 </div>
 
 </body>
+
 </html>
