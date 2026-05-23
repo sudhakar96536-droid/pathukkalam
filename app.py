@@ -3,27 +3,31 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 posts = [
+
     {
         "name": "Sudhakar",
-        "username": "@sudhakar",
+        "username": "sudhakar",
         "caption": "Welcome to Pathukkalam 🚀",
         "image": "https://picsum.photos/500/300",
         "profile": "https://i.pravatar.cc/150?img=10"
     },
+
     {
         "name": "Arun",
-        "username": "@arun",
+        "username": "arun",
         "caption": "Modern PWA app running in Flask",
         "image": "https://picsum.photos/500/301",
         "profile": "https://i.pravatar.cc/150?img=11"
     },
+
     {
         "name": "Vijay",
-        "username": "@vijay",
+        "username": "vijay",
         "caption": "Installable Android-like web app",
         "image": "https://picsum.photos/500/302",
         "profile": "https://i.pravatar.cc/150?img=12"
     }
+
 ]
 
 @app.route('/')
@@ -44,7 +48,36 @@ def notifications():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+
+    users = {
+
+        "sudhakar": {
+            "name": "Sudhakar",
+            "bio": "Welcome to my Pathukkalam profile 🚀 Web App Developer • Tech Lover",
+            "profile": "https://i.pravatar.cc/300?img=10",
+            "cover": "https://picsum.photos/800/300?1",
+            "posts": 120,
+            "followers": "5K",
+            "following": 500,
+
+            "photos": [
+                "https://picsum.photos/300/300?1",
+                "https://picsum.photos/300/300?2",
+                "https://picsum.photos/300/300?3",
+                "https://picsum.photos/300/300?4",
+                "https://picsum.photos/300/300?5",
+                "https://picsum.photos/300/300?6"
+            ]
+        }
+
+    }
+
+    return render_template(
+        "profile.html",
+        user=users["sudhakar"],
+        username="sudhakar",
+        is_own_profile=True
+    )
 
 @app.route('/register')
 def register():
@@ -54,16 +87,13 @@ def register():
 def rides():
     return render_template('rides.html')
 
-
 @app.route('/reels')
 def reels():
     return render_template('reels.html')
 
-
 @app.route('/marketplace')
 def marketplace():
     return render_template('marketplace.html')
-
 
 @app.route('/jobs')
 def jobs():
@@ -109,6 +139,25 @@ def user_profile(username):
                 "https://picsum.photos/300/300?14",
                 "https://picsum.photos/300/300?15",
                 "https://picsum.photos/300/300?16"
+            ]
+        },
+
+        "vijay": {
+            "name": "Vijay",
+            "bio": "Tech Creator 💻",
+            "profile": "https://i.pravatar.cc/300?img=13",
+            "cover": "https://picsum.photos/800/300?3",
+            "posts": 88,
+            "followers": "3K",
+            "following": 220,
+
+            "photos": [
+                "https://picsum.photos/300/300?21",
+                "https://picsum.photos/300/300?22",
+                "https://picsum.photos/300/300?23",
+                "https://picsum.photos/300/300?24",
+                "https://picsum.photos/300/300?25",
+                "https://picsum.photos/300/300?26"
             ]
         }
 
