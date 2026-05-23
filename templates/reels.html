@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
@@ -12,18 +12,25 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
-html,body{
+body{
     margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
     background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial;
 }
 
-iframe{
-    width:100%;
-    height:100vh;
+.open-btn{
+    background:red;
+    color:white;
+    padding:18px 30px;
     border:none;
+    border-radius:14px;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 </style>
@@ -32,10 +39,23 @@ iframe{
 
 <body>
 
-<iframe
-src="https://www.youtube.com/shorts/"
-allowfullscreen>
-</iframe>
+<button class="open-btn"
+onclick="openShorts()">
+
+    ▶ Open YouTube Shorts
+
+</button>
+
+<script>
+
+function openShorts(){
+
+    window.location.href =
+    "https://m.youtube.com/shorts/";
+
+}
+
+</script>
 
 </body>
 
