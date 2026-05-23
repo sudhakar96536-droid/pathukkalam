@@ -61,7 +61,7 @@ body{
     font-size:15px;
 }
 
-/* CATEGORY */
+/* CATEGORY BUTTONS */
 
 .category-row{
     display:flex;
@@ -79,7 +79,7 @@ body{
     border:none;
     background:#1877f2;
     color:white;
-    padding:11px 16px;
+    padding:11px 15px;
     border-radius:12px;
     font-size:13px;
     font-weight:bold;
@@ -125,7 +125,6 @@ body{
     font-weight:bold;
     line-height:1.5;
     margin-bottom:10px;
-    color:black;
 }
 
 .news-desc{
@@ -187,7 +186,7 @@ body{
 
 .loader{
     text-align:center;
-    padding:30px;
+    padding:40px;
     color:gray;
     font-size:18px;
 }
@@ -266,9 +265,11 @@ body{
 
 <script>
 
-let API_KEY = "d32690832ecd40b39bd6853a2e44927f";
+let API_KEY =
+"d32690832ecd40b39bd6853a2e44927f";
 
-let currentCategory = "technology";
+let currentCategory =
+"technology";
 
 async function loadNews(category){
 
@@ -277,9 +278,11 @@ async function loadNews(category){
 
     container.innerHTML = `
 
-        <div class="loader">
-            Loading latest news...
-        </div>
+    <div class="loader">
+
+        Loading latest news...
+
+    </div>
 
     `;
 
@@ -288,22 +291,41 @@ async function loadNews(category){
         let response =
         await fetch(
 
-            `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=${API_KEY}`
+        `https://newsapi.org/v2/top-headlines?country=in&category=${category}&pageSize=20&apiKey=${API_KEY}`
 
         );
 
         let data =
         await response.json();
 
+        console.log(data);
+
         container.innerHTML = "";
+
+        if(data.status !== "ok"){
+
+            container.innerHTML = `
+
+            <div class="loader">
+
+                Failed to load news
+
+            </div>
+
+            `;
+
+            return;
+        }
 
         if(data.articles.length === 0){
 
             container.innerHTML = `
 
-                <div class="loader">
-                    No news found
-                </div>
+            <div class="loader">
+
+                No news available
+
+            </div>
 
             `;
 
@@ -312,43 +334,72 @@ async function loadNews(category){
 
         data.articles.forEach(article => {
 
-            let card = `
+            let image =
+            article.urlToImage
+            ? article.urlToImage
+            : "https://picsum.photos/500/300";
+
+            let title =
+            article.title
+            ? article.title
+            : "No title";
+
+            let desc =
+            article.description
+            ? article.description
+            : "No description";
+
+            let source =
+            article.source.name
+            ? article.source.name
+            : "News Source";
+
+            let date =
+            article.publishedAt
+            ? new Date(article.publishedAt)
+            .toLocaleString()
+            : "";
+
+            let url =
+            article.url;
+
+            container.innerHTML += `
 
             <div class="news-card searchable">
 
                 <img class="news-image"
-                src="${article.urlToImage || 'https://picsum.photos/500/300'}">
+                src="${image}">
 
                 <div class="news-content">
 
                     <div class="news-source">
 
-                        ${article.source.name}
+                        ${source}
 
                     </div>
 
                     <div class="news-title">
 
-                        ${article.title || ''}
+                        ${title}
 
                     </div>
 
                     <div class="news-desc">
 
-                        ${article.description || ''}
+                        ${desc}
 
                     </div>
 
                     <div class="news-date">
 
-                        ${new Date(article.publishedAt).toLocaleString()}
+                        ${date}
 
                     </div>
 
                     <div class="action-row">
 
                         <button class="read-btn"
-                        onclick="openNews('${article.url}')">
+                        onclick="openNews('${url}')">
 
                             Read News
 
@@ -361,14 +412,14 @@ async function loadNews(category){
                         </button>
 
                         <button class="icon-btn share-btn"
-                        onclick="shareNews('${article.url}')">
+                        onclick="shareNews('${url}')">
 
                             <i class="fa-solid fa-share"></i>
 
                         </button>
 
                         <button class="icon-btn whatsapp-btn"
-                        onclick="whatsappShare('${article.url}')">
+                        onclick="whatsappShare('${url}')">
 
                             <i class="fa-brands fa-whatsapp"></i>
 
@@ -382,17 +433,19 @@ async function loadNews(category){
 
             `;
 
-            container.innerHTML += card;
-
         });
 
     }catch(error){
 
+        console.log(error);
+
         container.innerHTML = `
 
-            <div class="loader">
-                Failed to load news
-            </div>
+        <div class="loader">
+
+            Failed to load news
+
+        </div>
 
         `;
 
@@ -402,7 +455,7 @@ async function loadNews(category){
 
 function openNews(url){
 
-    window.location.href = url;
+    window.open(url, "_self");
 
 }
 
@@ -429,9 +482,10 @@ function whatsappShare(url){
 
     window.open(
 
-        `https://wa.me/?text=${encodeURIComponent(url)}`,
+    "https://wa.me/?text=" +
+    encodeURIComponent(url),
 
-        "_blank"
+    "_blank"
 
     );
 
@@ -485,9 +539,12 @@ function searchNews(){
 
 }
 
+/* LOAD DEFAULT NEWS */
+
 loadNews(currentCategory);
 
 </script>
 
 </body>
+
 </html>
