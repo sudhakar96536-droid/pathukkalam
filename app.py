@@ -70,7 +70,7 @@ def jobs():
     return render_template('jobs.html')
 
 @app.route("/profile/<username>")
-def profile(username):
+def user_profile(username):
 
     users = {
 
