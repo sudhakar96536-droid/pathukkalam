@@ -3,8 +3,8 @@
   "short_name": "Pathukkalam",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1877f2",
+  "background_color": "#FFC107",
+  "theme_color": "#FFC107",
   "orientation": "portrait",
   "icons": [
     {
