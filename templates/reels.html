@@ -8,131 +8,22 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Pathukkalam Reels</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<title>YouTube Shorts</title>
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial;
-}
-
 html,body{
+    margin:0;
     width:100%;
     height:100%;
     overflow:hidden;
     background:black;
 }
 
-/* MAIN */
-
-.reels-container{
+iframe{
     width:100%;
     height:100vh;
-    overflow-y:scroll;
-    scroll-snap-type:y mandatory;
-}
-
-/* EACH REEL */
-
-.reel{
-    width:100%;
-    height:100vh;
-    position:relative;
-    scroll-snap-align:start;
-    background:black;
-}
-
-/* YOUTUBE */
-
-.reel iframe{
-    width:100%;
-    height:100%;
     border:none;
-}
-
-/* TOP */
-
-.top-bar{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    padding:18px;
-    z-index:9999;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:linear-gradient(to bottom,
-    rgba(0,0,0,0.7),
-    transparent);
-}
-
-.logo{
-    color:#ffcc00;
-    font-size:24px;
-    font-weight:bold;
-}
-
-.powered{
-    color:white;
-    font-size:13px;
-    background:rgba(255,255,255,0.15);
-    padding:8px 12px;
-    border-radius:20px;
-    backdrop-filter:blur(4px);
-}
-
-/* RIGHT ICONS */
-
-.side-icons{
-    position:absolute;
-    right:12px;
-    bottom:120px;
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-    z-index:100;
-}
-
-.icon-btn{
-    width:55px;
-    height:55px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.18);
-    backdrop-filter:blur(5px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:24px;
-    text-decoration:none;
-}
-
-/* BOTTOM TEXT */
-
-.bottom-overlay{
-    position:absolute;
-    bottom:30px;
-    left:15px;
-    z-index:100;
-    color:white;
-}
-
-.bottom-overlay h2{
-    font-size:22px;
-    margin-bottom:8px;
-}
-
-.bottom-overlay p{
-    font-size:14px;
-    color:#ddd;
-    line-height:1.5;
 }
 
 </style>
@@ -141,154 +32,10 @@ html,body{
 
 <body>
 
-<!-- TOP HEADER -->
-
-<div class="top-bar">
-
-    <div class="logo">
-        ✨ Pathukkalam Reels
-    </div>
-
-    <div class="powered">
-        Powered by YouTube
-    </div>
-
-</div>
-
-<!-- REELS -->
-
-<div class="reels-container">
-
-    <!-- REEL 1 -->
-
-    <div class="reel">
-
-        <iframe
-        src="https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=1&mute=1&playsinline=1"
-        allowfullscreen
-        allow="autoplay">
-        </iframe>
-
-        <div class="side-icons">
-
-            <a href="#"
-            class="icon-btn">
-                ❤️
-            </a>
-
-            <a href="#"
-            class="icon-btn">
-                💬
-            </a>
-
-            <a href="#"
-            class="icon-btn">
-                🔗
-            </a>
-
-        </div>
-
-        <div class="bottom-overlay">
-
-            <h2>
-                Trending Reel 🔥
-            </h2>
-
-            <p>
-                Swipe up for next video
-            </p>
-
-        </div>
-
-    </div>
-
-    <!-- REEL 2 -->
-
-    <div class="reel">
-
-        <iframe
-        src="https://www.youtube.com/embed/jNQXAC9IVRw?autoplay=0&mute=1&playsinline=1"
-        allowfullscreen
-        allow="autoplay">
-        </iframe>
-
-        <div class="side-icons">
-
-            <a href="#"
-            class="icon-btn">
-                ❤️
-            </a>
-
-            <a href="#"
-            class="icon-btn">
-                💬
-            </a>
-
-            <a href="#"
-            class="icon-btn">
-                🔗
-            </a>
-
-        </div>
-
-        <div class="bottom-overlay">
-
-            <h2>
-                Viral Shorts 🚀
-            </h2>
-
-            <p>
-                Pathukkalam YouTube Reels
-            </p>
-
-        </div>
-
-    </div>
-
-    <!-- REEL 3 -->
-
-    <div class="reel">
-
-        <iframe
-        src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=0&mute=1&playsinline=1"
-        allowfullscreen
-        allow="autoplay">
-        </iframe>
-
-        <div class="side-icons">
-
-            <a href="#"
-            class="icon-btn">
-                ❤️
-            </a>
-
-            <a href="#"
-            class="icon-btn">
-                💬
-            </a>
-
-            <a href="#"
-            class="icon-btn">
-                🔗
-            </a>
-
-        </div>
-
-        <div class="bottom-overlay">
-
-            <h2>
-                Swipe More Videos 🎬
-            </h2>
-
-            <p>
-                Full screen reels experience
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
+<iframe
+src="https://www.youtube.com/shorts/"
+allowfullscreen>
+</iframe>
 
 </body>
 
