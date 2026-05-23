@@ -61,17 +61,34 @@ body{
     font-size:15px;
 }
 
-/* TOP ACTION */
+/* TOP ACTION BUTTONS */
 
-.top-action{
+.top-action-buttons{
+    display:flex;
+    gap:10px;
     padding:0 15px;
 }
 
 .show-form-btn{
+    flex:1;
     width:100%;
     padding:15px;
     border:none;
     background:#1877f2;
+    color:white;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:bold;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.my-request-btn{
+    flex:1;
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#00a86b;
     color:white;
     border-radius:14px;
     font-size:16px;
@@ -256,6 +273,20 @@ body{
     cursor:pointer;
 }
 
+/* REQUEST SECTION */
+
+.request-section{
+    display:none;
+    margin:15px;
+}
+
+.request-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:15px;
+    color:#00a86b;
+}
+
 .no-result{
     text-align:center;
     color:gray;
@@ -285,14 +316,21 @@ body{
 
 </div>
 
-<!-- POST BUTTON -->
+<!-- TOP BUTTONS -->
 
-<div class="top-action">
+<div class="top-action-buttons">
 
     <button class="show-form-btn"
     onclick="toggleForm()">
 
         ➕ Post New Lift
+
+    </button>
+
+    <button class="my-request-btn"
+    onclick="toggleRequests()">
+
+        📩 My Lift Requests
 
     </button>
 
@@ -632,6 +670,72 @@ id="rideForm">
 
 </div>
 
+<!-- MY REQUESTS -->
+
+<div class="request-section"
+id="requestSection">
+
+    <div class="request-title">
+
+        📩 Below is your requests
+
+    </div>
+
+    <div class="ride-card">
+
+        <div class="profile">
+
+            <img src="https://i.pravatar.cc/150?img=12">
+
+            <div>
+
+                <div class="name">
+                    Vijay Raj
+                </div>
+
+                <div class="details">
+                    30 yrs • Infosys • Team Lead
+                </div>
+
+                <div class="gender">
+                    👨 Men Only
+                </div>
+
+                <div class="vehicle">
+                    🚗 Car
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="route">
+
+            <div class="city">
+                Chennai
+            </div>
+
+            <div class="bus-stop">
+                Tambaram → Guindy
+            </div>
+
+        </div>
+
+        <div class="time">
+            ⏰ 9:15 AM at pickup point
+        </div>
+
+        <button class="request-btn"
+        style="background:#00a86b;">
+
+            Requested Successfully
+
+        </button>
+
+    </div>
+
+</div>
+
 <div class="no-result"
 id="noResult">
 
@@ -640,6 +744,23 @@ id="noResult">
 </div>
 
 <script>
+
+function toggleRequests(){
+
+    let section =
+    document.getElementById("requestSection");
+
+    if(section.style.display === "block"){
+
+        section.style.display = "none";
+
+    }else{
+
+        section.style.display = "block";
+
+    }
+
+}
 
 function toggleForm(){
 
