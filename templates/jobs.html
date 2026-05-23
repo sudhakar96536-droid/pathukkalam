@@ -52,10 +52,10 @@ body{
 
 .search-box input{
     width:100%;
-    padding:15px;
+    padding:14px;
     border:none;
-    border-radius:14px;
     background:#f0f2f5;
+    border-radius:12px;
     outline:none;
     font-size:15px;
 }
@@ -63,42 +63,42 @@ body{
 /* TOP BUTTONS */
 
 .top-buttons{
+    background:white;
+    padding:12px;
     display:flex;
     gap:10px;
-    overflow-x:auto;
-    padding:15px;
+    overflow:auto;
+    position:sticky;
+    top:136px;
+    z-index:998;
 }
 
-.top-buttons::-webkit-scrollbar{
-    display:none;
-}
-
-.top-btn{
-    min-width:170px;
-    padding:16px;
+.top-buttons button{
     border:none;
-    border-radius:16px;
-    background:#ffcc00;
-    color:black;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.active-btn{
     background:#1877f2;
     color:white;
-    transform:scale(1.03);
+    padding:15px 18px;
+    border-radius:14px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+    white-space:nowrap;
+    min-width:max-content;
+}
+
+.top-buttons button.active{
+    background:#ffd400;
+    color:black;
 }
 
 /* JOB FORM */
 
 .job-form{
-    display:none;
     background:white;
     margin:15px;
     padding:18px;
     border-radius:18px;
+    display:none;
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -121,32 +121,69 @@ body{
 }
 
 .form-group input,
-.form-group textarea,
-.form-group select{
+.form-group select,
+.form-group textarea{
     width:100%;
-    padding:14px;
+    padding:13px;
     border:none;
-    border-radius:12px;
     background:#f0f2f5;
+    border-radius:12px;
     outline:none;
     font-size:14px;
 }
 
 textarea{
     resize:none;
-    height:100px;
+    height:90px;
+}
+
+.btn-group{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
 }
 
 .post-btn{
-    width:100%;
-    padding:15px;
+    flex:1;
+    padding:14px;
     border:none;
     background:#1877f2;
     color:white;
-    border-radius:14px;
-    font-size:16px;
+    border-radius:12px;
+    font-size:15px;
     font-weight:bold;
     cursor:pointer;
+}
+
+.draft-btn{
+    flex:1;
+    padding:14px;
+    border:none;
+    background:#ddd;
+    color:#333;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* SECTION */
+
+.section{
+    display:none;
+}
+
+.section-title{
+    font-size:22px;
+    font-weight:bold;
+    margin:20px 15px 5px;
+    color:#1877f2;
+}
+
+.section-subtitle{
+    margin:0 15px 15px;
+    color:gray;
+    font-size:14px;
 }
 
 /* JOB CARD */
@@ -159,113 +196,114 @@ textarea{
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
-.company-row{
+.job-top{
     display:flex;
-    align-items:center;
-    margin-bottom:12px;
-}
-
-.company-row img{
-    width:60px;
-    height:60px;
-    border-radius:14px;
-    margin-right:12px;
-    object-fit:cover;
-}
-
-.job-title{
-    font-size:21px;
-    font-weight:bold;
+    justify-content:space-between;
+    align-items:flex-start;
 }
 
 .company{
-    color:#666;
+    font-size:22px;
+    font-weight:bold;
+    color:#1877f2;
+}
+
+.role{
     margin-top:5px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.location{
+    margin-top:8px;
+    color:#555;
     font-size:14px;
 }
 
-.job-details{
-    margin-top:10px;
-    line-height:1.8;
-    color:#333;
-    font-size:15px;
+.salary{
+    margin-top:8px;
+    color:green;
+    font-size:18px;
+    font-weight:bold;
 }
 
-.post-date{
-    margin-top:10px;
-    color:#888;
+.posted{
+    margin-top:8px;
+    color:gray;
+    font-size:13px;
+}
+
+.type{
+    background:#e8f1ff;
+    color:#1877f2;
+    padding:7px 12px;
+    border-radius:20px;
     font-size:13px;
     font-weight:bold;
 }
 
-/* ACTION BUTTONS */
-
-.action-row{
+.actions{
     display:flex;
-    gap:8px;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
     margin-top:18px;
-    flex-wrap:wrap;
 }
 
-.action-btn{
-    flex:1;
-    min-width:70px;
-    padding:13px;
-    border:none;
-    border-radius:12px;
-    font-size:14px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.apply-btn{
-    background:#1877f2;
-    color:white;
-}
-
-.interested-btn{
-    background:#ffcc00;
-    color:black;
+.left-icons{
+    display:flex;
+    gap:10px;
 }
 
 .icon-btn{
-    width:50px;
+    width:42px;
+    height:42px;
     border:none;
-    border-radius:12px;
+    border-radius:50%;
     color:white;
-    font-size:20px;
+    font-size:18px;
     cursor:pointer;
 }
 
-.like-btn{
+.like{
     background:#ff4d6d;
 }
 
-.share-btn{
-    background:#00a86b;
+.share{
+    background:#1877f2;
 }
 
-.whatsapp-btn{
+.whatsapp{
     background:#25d366;
 }
 
-/* SECTION */
-
-.section{
-    display:none;
+.right-buttons{
+    display:flex;
+    gap:10px;
+    flex:1;
+    justify-content:flex-end;
 }
 
-.section-title{
-    margin:20px 15px 5px;
-    font-size:22px;
-    color:#1877f2;
-    font-weight:bold;
-}
-
-.section-subtitle{
-    margin:0 15px 15px;
-    color:gray;
+.apply-btn{
+    border:none;
+    background:#ffd400;
+    color:black;
+    padding:12px 18px;
+    border-radius:12px;
     font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.view-btn{
+    border:none;
+    background:#1877f2;
+    color:white;
+    padding:12px 18px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 </style>
@@ -284,7 +322,7 @@ textarea{
 
     <input type="text"
     id="searchInput"
-    placeholder="Search jobs like Python, Flutter, Designer"
+    placeholder="Search jobs like Python Developer"
     onkeyup="searchJobs()">
 
 </div>
@@ -293,94 +331,100 @@ textarea{
 
 <div class="top-buttons">
 
-    <button class="top-btn active-btn"
-    onclick="toggleSection('postForm',this)">
+    <button id="newPostBtn"
+    onclick="toggleJobForm()">
 
         ➕ New Job Post
 
     </button>
 
-    <button class="top-btn"
-    onclick="toggleSection('postedJobs',this)">
+    <button id="postedBtn"
+    onclick="toggleSection('postedJobs','postedBtn')">
 
         📢 Jobs Posted By Me
 
     </button>
 
-    <button class="top-btn"
-    onclick="toggleSection('likedJobs',this)">
+    <button id="likedBtn"
+    onclick="toggleSection('likedJobs','likedBtn')">
 
         ❤️ Liked Jobs
 
     </button>
 
-    <button class="top-btn"
-    onclick="toggleSection('appliedJobs',this)">
+    <button id="appliedBtn"
+    onclick="toggleSection('appliedJobs','appliedBtn')">
 
-        📄 Applied Jobs
+        ✅ Applied Jobs
 
     </button>
 
 </div>
 
-<!-- JOB POST FORM -->
+<!-- JOB FORM -->
 
-<div class="job-form section"
-id="postForm"
-style="display:block;">
+<div class="job-form"
+id="jobForm">
 
     <div class="form-title">
-        Create Job Post
+        Create New Job Post
     </div>
 
     <div class="form-group">
+        <label>Company Name</label>
+        <input type="text"
+        placeholder="Google">
+    </div>
 
-        <label>Job Title</label>
-
+    <div class="form-group">
+        <label>Job Role</label>
         <input type="text"
         placeholder="Python Developer">
-
     </div>
 
     <div class="form-group">
-
-        <label>Company Name</label>
-
-        <input type="text"
-        placeholder="Infosys">
-
-    </div>
-
-    <div class="form-group">
-
         <label>Location</label>
-
         <input type="text"
         placeholder="Chennai">
-
     </div>
 
     <div class="form-group">
-
-        <label>Salary</label>
-
+        <label>Salary Package</label>
         <input type="text"
         placeholder="₹8 LPA">
+    </div>
+
+    <div class="form-group">
+        <label>Job Type</label>
+
+        <select>
+            <option>Full Time</option>
+            <option>Part Time</option>
+            <option>Remote</option>
+            <option>Internship</option>
+        </select>
 
     </div>
 
     <div class="form-group">
-
-        <label>Job Description</label>
+        <label>Description</label>
 
         <textarea
-        placeholder="Enter full job description"></textarea>
+        placeholder="Job description"></textarea>
 
     </div>
 
-    <button class="post-btn">
-        Post Job
-    </button>
+    <div class="btn-group">
+
+        <button class="post-btn">
+            Post Job
+        </button>
+
+        <button class="draft-btn">
+            Save Draft
+        </button>
+
+    </div>
 
 </div>
 
@@ -394,7 +438,71 @@ id="postedJobs">
     </div>
 
     <div class="section-subtitle">
-        Below are jobs you posted
+        Below are your posted jobs
+    </div>
+
+    <div class="job">
+
+        <div class="job-top">
+
+            <div>
+
+                <div class="company">
+                    Pathukkalam
+                </div>
+
+                <div class="role">
+                    Flask Developer
+                </div>
+
+                <div class="location">
+                    📍 Chennai
+                </div>
+
+                <div class="salary">
+                    ₹6 LPA
+                </div>
+
+                <div class="posted">
+                    Posted 2 days ago
+                </div>
+
+            </div>
+
+            <div class="type">
+                Full Time
+            </div>
+
+        </div>
+
+        <div class="actions">
+
+            <div class="left-icons">
+
+                <button class="icon-btn like">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+
+                <button class="icon-btn share">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+
+                <button class="icon-btn whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </button>
+
+            </div>
+
+            <div class="right-buttons">
+
+                <button class="view-btn">
+                    Manage
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>
@@ -409,7 +517,75 @@ id="likedJobs">
     </div>
 
     <div class="section-subtitle">
-        Below are jobs liked by you
+        Jobs you liked are shown below
+    </div>
+
+    <div class="job">
+
+        <div class="job-top">
+
+            <div>
+
+                <div class="company">
+                    Zoho
+                </div>
+
+                <div class="role">
+                    UI UX Designer
+                </div>
+
+                <div class="location">
+                    📍 Chennai
+                </div>
+
+                <div class="salary">
+                    ₹7 LPA
+                </div>
+
+                <div class="posted">
+                    Posted today
+                </div>
+
+            </div>
+
+            <div class="type">
+                Remote
+            </div>
+
+        </div>
+
+        <div class="actions">
+
+            <div class="left-icons">
+
+                <button class="icon-btn like">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+
+                <button class="icon-btn share">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+
+                <button class="icon-btn whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </button>
+
+            </div>
+
+            <div class="right-buttons">
+
+                <button class="apply-btn">
+                    Apply
+                </button>
+
+                <button class="view-btn">
+                    View
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>
@@ -420,386 +596,829 @@ id="likedJobs">
 id="appliedJobs">
 
     <div class="section-title">
-        📄 Applied Jobs
+        ✅ Applied Jobs
     </div>
 
     <div class="section-subtitle">
-        Below are jobs you applied for
+        Jobs applied by you are shown below
+    </div>
+
+    <div class="job">
+
+        <div class="job-top">
+
+            <div>
+
+                <div class="company">
+                    Infosys
+                </div>
+
+                <div class="role">
+                    Python Backend Developer
+                </div>
+
+                <div class="location">
+                    📍 Remote
+                </div>
+
+                <div class="salary">
+                    ₹9 LPA
+                </div>
+
+                <div class="posted">
+                    Posted yesterday
+                </div>
+
+            </div>
+
+            <div class="type">
+                Full Time
+            </div>
+
+        </div>
+
+        <div class="actions">
+
+            <div class="left-icons">
+
+                <button class="icon-btn like">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+
+                <button class="icon-btn share">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+
+                <button class="icon-btn whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </button>
+
+            </div>
+
+            <div class="right-buttons">
+
+                <button class="view-btn">
+                    Applied
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>
 
-<!-- JOB 1 -->
+<!-- MAIN JOBS -->
 
-<div class="job searchable">
+<div class="job">
 
-    <div class="company-row">
-
-        <img src="https://picsum.photos/100?1">
+    <div class="job-top">
 
         <div>
 
-            <div class="job-title">
+            <div class="company">
+                Google
+            </div>
+
+            <div class="role">
                 Python Developer
             </div>
 
-            <div class="company">
-                Infosys • Chennai
+            <div class="location">
+                📍 Chennai
             </div>
+
+            <div class="salary">
+                ₹12 LPA
+            </div>
+
+            <div class="posted">
+                Posted today
+            </div>
+
+        </div>
+
+        <div class="type">
+            Full Time
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
 
         </div>
 
     </div>
 
-    <div class="job-details">
-        💰 ₹8 LPA <br>
-        🧑 Experience: 2 Years <br>
-        🏢 Full Time
-    </div>
-
-    <div class="post-date">
-        Posted 1 day ago
-    </div>
-
-    <div class="action-row">
-
-        <button class="action-btn apply-btn">
-            Apply
-        </button>
-
-        <button class="action-btn interested-btn">
-            Interested
-        </button>
-
-        <button class="icon-btn like-btn">
-            ❤️
-        </button>
-
-        <button class="icon-btn share-btn">
-            🔗
-        </button>
-
-        <button class="icon-btn whatsapp-btn">
-            <i class="fab fa-whatsapp"></i>
-        </button>
-
-    </div>
-
 </div>
 
-<!-- JOB 2 -->
+<div class="job">
 
-<div class="job searchable">
-
-    <div class="company-row">
-
-        <img src="https://picsum.photos/100?2">
+    <div class="job-top">
 
         <div>
 
-            <div class="job-title">
+            <div class="company">
+                Microsoft
+            </div>
+
+            <div class="role">
                 Flutter Developer
             </div>
 
-            <div class="company">
-                Zoho • Remote
+            <div class="location">
+                📍 Bangalore
             </div>
+
+            <div class="salary">
+                ₹10 LPA
+            </div>
+
+            <div class="posted">
+                Posted 1 day ago
+            </div>
+
+        </div>
+
+        <div class="type">
+            Remote
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
 
         </div>
 
     </div>
 
-    <div class="job-details">
-        💰 ₹10 LPA <br>
-        🧑 Experience: 3 Years <br>
-        🏢 Hybrid
-    </div>
-
-    <div class="post-date">
-        Posted 2 days ago
-    </div>
-
-    <div class="action-row">
-
-        <button class="action-btn apply-btn">
-            Apply
-        </button>
-
-        <button class="action-btn interested-btn">
-            Interested
-        </button>
-
-        <button class="icon-btn like-btn">
-            ❤️
-        </button>
-
-        <button class="icon-btn share-btn">
-            🔗
-        </button>
-
-        <button class="icon-btn whatsapp-btn">
-            <i class="fab fa-whatsapp"></i>
-        </button>
-
-    </div>
-
 </div>
 
-<!-- JOB 3 -->
+<div class="job">
 
-<div class="job searchable">
-
-    <div class="company-row">
-
-        <img src="https://picsum.photos/100?3">
+    <div class="job-top">
 
         <div>
 
-            <div class="job-title">
-                UI UX Designer
+            <div class="company">
+                Amazon
             </div>
 
-            <div class="company">
-                TCS • Bangalore
+            <div class="role">
+                React Developer
             </div>
+
+            <div class="location">
+                📍 Hyderabad
+            </div>
+
+            <div class="salary">
+                ₹11 LPA
+            </div>
+
+            <div class="posted">
+                Posted 2 days ago
+            </div>
+
+        </div>
+
+        <div class="type">
+            Hybrid
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
 
         </div>
 
     </div>
 
-    <div class="job-details">
-        💰 ₹7 LPA <br>
-        🧑 Experience: 1 Year <br>
-        🏢 Full Time
+</div>
+
+<div class="job">
+
+    <div class="job-top">
+
+        <div>
+
+            <div class="company">
+                Zoho
+            </div>
+
+            <div class="role">
+                UI Designer
+            </div>
+
+            <div class="location">
+                📍 Chennai
+            </div>
+
+            <div class="salary">
+                ₹8 LPA
+            </div>
+
+            <div class="posted">
+                Posted 3 days ago
+            </div>
+
+        </div>
+
+        <div class="type">
+            Full Time
+        </div>
+
     </div>
 
-    <div class="post-date">
-        Posted 3 days ago
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="action-row">
+</div>
 
-        <button class="action-btn apply-btn">
-            Apply
-        </button>
+<div class="job">
 
-        <button class="action-btn interested-btn">
-            Interested
-        </button>
+    <div class="job-top">
 
-        <button class="icon-btn like-btn">
-            ❤️
-        </button>
+        <div>
 
-        <button class="icon-btn share-btn">
-            🔗
-        </button>
+            <div class="company">
+                TCS
+            </div>
 
-        <button class="icon-btn whatsapp-btn">
-            <i class="fab fa-whatsapp"></i>
-        </button>
+            <div class="role">
+                Java Developer
+            </div>
+
+            <div class="location">
+                📍 Pune
+            </div>
+
+            <div class="salary">
+                ₹7 LPA
+            </div>
+
+            <div class="posted">
+                Posted 5 days ago
+            </div>
+
+        </div>
+
+        <div class="type">
+            Full Time
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
+
+        </div>
 
     </div>
 
 </div>
 
-<!-- JOB 4 -->
+<div class="job">
 
-<div class="job searchable">
-<div class="company-row">
-<img src="https://picsum.photos/100?4">
-<div>
-<div class="job-title">React Developer</div>
-<div class="company">Wipro • Chennai</div>
-</div>
-</div>
-<div class="job-details">
-💰 ₹9 LPA <br>
-🧑 Experience: 2 Years <br>
-🏢 Full Time
-</div>
-<div class="post-date">Posted 4 days ago</div>
-<div class="action-row">
-<button class="action-btn apply-btn">Apply</button>
-<button class="action-btn interested-btn">Interested</button>
-<button class="icon-btn like-btn">❤️</button>
-<button class="icon-btn share-btn">🔗</button>
-<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
-</div>
-</div>
+    <div class="job-top">
 
-<!-- JOB 5 -->
+        <div>
 
-<div class="job searchable">
-<div class="company-row">
-<img src="https://picsum.photos/100?5">
-<div>
-<div class="job-title">Node JS Developer</div>
-<div class="company">Freshworks • Remote</div>
-</div>
-</div>
-<div class="job-details">
-💰 ₹11 LPA <br>
-🧑 Experience: 4 Years <br>
-🏢 Remote
-</div>
-<div class="post-date">Posted 5 days ago</div>
-<div class="action-row">
-<button class="action-btn apply-btn">Apply</button>
-<button class="action-btn interested-btn">Interested</button>
-<button class="icon-btn like-btn">❤️</button>
-<button class="icon-btn share-btn">🔗</button>
-<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
-</div>
-</div>
+            <div class="company">
+                Wipro
+            </div>
 
-<!-- JOB 6 -->
+            <div class="role">
+                QA Engineer
+            </div>
 
-<div class="job searchable">
-<div class="company-row">
-<img src="https://picsum.photos/100?6">
-<div>
-<div class="job-title">Java Developer</div>
-<div class="company">HCL • Chennai</div>
-</div>
-</div>
-<div class="job-details">
-💰 ₹8.5 LPA <br>
-🧑 Experience: 2 Years <br>
-🏢 Hybrid
-</div>
-<div class="post-date">Posted 1 week ago</div>
-<div class="action-row">
-<button class="action-btn apply-btn">Apply</button>
-<button class="action-btn interested-btn">Interested</button>
-<button class="icon-btn like-btn">❤️</button>
-<button class="icon-btn share-btn">🔗</button>
-<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
-</div>
+            <div class="location">
+                📍 Chennai
+            </div>
+
+            <div class="salary">
+                ₹6 LPA
+            </div>
+
+            <div class="posted">
+                Posted 6 days ago
+            </div>
+
+        </div>
+
+        <div class="type">
+            Hybrid
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
-<!-- JOB 7 -->
+<div class="job">
 
-<div class="job searchable">
-<div class="company-row">
-<img src="https://picsum.photos/100?7">
-<div>
-<div class="job-title">AWS Cloud Engineer</div>
-<div class="company">Amazon • Hyderabad</div>
-</div>
-</div>
-<div class="job-details">
-💰 ₹18 LPA <br>
-🧑 Experience: 5 Years <br>
-🏢 Full Time
-</div>
-<div class="post-date">Posted today</div>
-<div class="action-row">
-<button class="action-btn apply-btn">Apply</button>
-<button class="action-btn interested-btn">Interested</button>
-<button class="icon-btn like-btn">❤️</button>
-<button class="icon-btn share-btn">🔗</button>
-<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
-</div>
-</div>
+    <div class="job-top">
 
-<!-- JOB 8 -->
+        <div>
 
-<div class="job searchable">
-<div class="company-row">
-<img src="https://picsum.photos/100?8">
-<div>
-<div class="job-title">Graphic Designer</div>
-<div class="company">Canva • Remote</div>
-</div>
-</div>
-<div class="job-details">
-💰 ₹6 LPA <br>
-🧑 Experience: 1 Year <br>
-🏢 Remote
-</div>
-<div class="post-date">Posted today</div>
-<div class="action-row">
-<button class="action-btn apply-btn">Apply</button>
-<button class="action-btn interested-btn">Interested</button>
-<button class="icon-btn like-btn">❤️</button>
-<button class="icon-btn share-btn">🔗</button>
-<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
-</div>
-</div>
+            <div class="company">
+                HCL
+            </div>
 
-<!-- JOB 9 -->
+            <div class="role">
+                Data Analyst
+            </div>
 
-<div class="job searchable">
-<div class="company-row">
-<img src="https://picsum.photos/100?9">
-<div>
-<div class="job-title">DevOps Engineer</div>
-<div class="company">Google • Bangalore</div>
-</div>
-</div>
-<div class="job-details">
-💰 ₹22 LPA <br>
-🧑 Experience: 6 Years <br>
-🏢 Full Time
-</div>
-<div class="post-date">Posted 2 hours ago</div>
-<div class="action-row">
-<button class="action-btn apply-btn">Apply</button>
-<button class="action-btn interested-btn">Interested</button>
-<button class="icon-btn like-btn">❤️</button>
-<button class="icon-btn share-btn">🔗</button>
-<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
-</div>
+            <div class="location">
+                📍 Noida
+            </div>
+
+            <div class="salary">
+                ₹8 LPA
+            </div>
+
+            <div class="posted">
+                Posted 1 week ago
+            </div>
+
+        </div>
+
+        <div class="type">
+            Full Time
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
-<!-- JOB 10 -->
+<div class="job">
 
-<div class="job searchable">
-<div class="company-row">
-<img src="https://picsum.photos/100?10">
-<div>
-<div class="job-title">Data Analyst</div>
-<div class="company">Accenture • Pune</div>
+    <div class="job-top">
+
+        <div>
+
+            <div class="company">
+                Infosys
+            </div>
+
+            <div class="role">
+                Backend Engineer
+            </div>
+
+            <div class="location">
+                📍 Remote
+            </div>
+
+            <div class="salary">
+                ₹9 LPA
+            </div>
+
+            <div class="posted">
+                Posted 2 weeks ago
+            </div>
+
+        </div>
+
+        <div class="type">
+            Remote
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
+
+<div class="job">
+
+    <div class="job-top">
+
+        <div>
+
+            <div class="company">
+                Freshworks
+            </div>
+
+            <div class="role">
+                Product Designer
+            </div>
+
+            <div class="location">
+                📍 Chennai
+            </div>
+
+            <div class="salary">
+                ₹10 LPA
+            </div>
+
+            <div class="posted">
+                Posted 3 weeks ago
+            </div>
+
+        </div>
+
+        <div class="type">
+            Full Time
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
-<div class="job-details">
-💰 ₹7.5 LPA <br>
-🧑 Experience: Fresher <br>
-🏢 Hybrid
-</div>
-<div class="post-date">Posted yesterday</div>
-<div class="action-row">
-<button class="action-btn apply-btn">Apply</button>
-<button class="action-btn interested-btn">Interested</button>
-<button class="icon-btn like-btn">❤️</button>
-<button class="icon-btn share-btn">🔗</button>
-<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
-</div>
+
+<div class="job">
+
+    <div class="job-top">
+
+        <div>
+
+            <div class="company">
+                Capgemini
+            </div>
+
+            <div class="role">
+                DevOps Engineer
+            </div>
+
+            <div class="location">
+                📍 Bangalore
+            </div>
+
+            <div class="salary">
+                ₹11 LPA
+            </div>
+
+            <div class="posted">
+                Posted 1 month ago
+            </div>
+
+        </div>
+
+        <div class="type">
+            Hybrid
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <div class="left-icons">
+
+            <button class="icon-btn like">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <button class="icon-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+        <div class="right-buttons">
+
+            <button class="apply-btn">
+                Apply
+            </button>
+
+            <button class="view-btn">
+                View
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
 <script>
 
-function toggleSection(id,btn){
+function resetButtons(){
 
-    let sections =
-    document.querySelectorAll(".section");
+    document
+    .querySelectorAll(".top-buttons button")
+    .forEach(btn => {
 
-    sections.forEach(section=>{
-        section.style.display="none";
+        btn.classList.remove("active");
+
     });
 
-    let buttons =
-    document.querySelectorAll(".top-btn");
+}
 
-    buttons.forEach(button=>{
-        button.classList.remove("active-btn");
-    });
+function toggleJobForm(){
 
-    document.getElementById(id)
-    .style.display="block";
+    let form =
+    document.getElementById("jobForm");
 
-    btn.classList.add("active-btn");
+    let btn =
+    document.getElementById("newPostBtn");
+
+    if(form.style.display === "block"){
+
+        form.style.display = "none";
+        btn.classList.remove("active");
+
+    }else{
+
+        form.style.display = "block";
+
+        resetButtons();
+
+        btn.classList.add("active");
+
+    }
+}
+
+function toggleSection(id,btnId){
+
+    let section =
+    document.getElementById(id);
+
+    let btn =
+    document.getElementById(btnId);
+
+    if(section.style.display === "block"){
+
+        section.style.display = "none";
+        btn.classList.remove("active");
+
+    }else{
+
+        resetButtons();
+
+        document
+        .querySelectorAll(".section")
+        .forEach(sec => {
+
+            sec.style.display = "none";
+
+        });
+
+        section.style.display = "block";
+
+        btn.classList.add("active");
+
+    }
 }
 
 function searchJobs(){
@@ -810,20 +1429,20 @@ function searchJobs(){
     .toLowerCase();
 
     let jobs =
-    document.querySelectorAll(".searchable");
+    document.querySelectorAll(".job");
 
-    jobs.forEach(job=>{
+    jobs.forEach(job => {
 
         let text =
         job.innerText.toLowerCase();
 
         if(text.includes(input)){
 
-            job.style.display="block";
+            job.style.display = "block";
 
         }else{
 
-            job.style.display="none";
+            job.style.display = "none";
 
         }
 
