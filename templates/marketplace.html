@@ -60,22 +60,50 @@ body{
     font-size:15px;
 }
 
-/* POST BUTTON */
+/* TOP ACTION */
 
 .top-action{
     padding:0 15px;
+    display:flex;
+    gap:10px;
+    margin-top:10px;
 }
 
+/* BUTTONS */
+
 .show-form-btn{
-    width:100%;
+    flex:1;
     padding:15px;
     border:none;
     background:#1877f2;
     color:white;
     border-radius:14px;
-    font-size:16px;
+    font-size:15px;
     font-weight:bold;
-    margin-top:10px;
+    cursor:pointer;
+}
+
+.listed-btn{
+    flex:1;
+    padding:15px;
+    border:none;
+    background:#00a86b;
+    color:white;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.liked-btn{
+    flex:1;
+    padding:15px;
+    border:none;
+    background:#ff4d6d;
+    color:white;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:bold;
     cursor:pointer;
 }
 
@@ -237,6 +265,26 @@ textarea{
     font-weight:bold;
 }
 
+/* SECTIONS */
+
+.my-listed-section,
+.liked-products-section{
+    display:none;
+}
+
+.section-title{
+    font-size:22px;
+    font-weight:bold;
+    margin:20px 15px 5px;
+    color:#1877f2;
+}
+
+.section-subtitle{
+    margin:0 15px 15px;
+    color:gray;
+    font-size:14px;
+}
+
 </style>
 
 </head>
@@ -256,7 +304,7 @@ textarea{
 
 </div>
 
-<!-- POST BUTTON -->
+<!-- TOP BUTTONS -->
 
 <div class="top-action">
 
@@ -264,6 +312,20 @@ textarea{
     onclick="toggleSellForm()">
 
         ➕ Sell New Product
+
+    </button>
+
+    <button class="listed-btn"
+    onclick="toggleListedProducts()">
+
+        📦 My Listed Products
+
+    </button>
+
+    <button class="liked-btn"
+    onclick="toggleLikedProducts()">
+
+        ❤️ Products Liked By Me
 
     </button>
 
@@ -356,6 +418,196 @@ id="sellForm">
         <button class="draft-btn">
             Save Draft
         </button>
+
+    </div>
+
+</div>
+
+<!-- MY LISTED PRODUCTS -->
+
+<div class="my-listed-section"
+id="listedProducts">
+
+    <div class="section-title">
+        📦 My Listed Products
+    </div>
+
+    <div class="section-subtitle">
+        Below are your marketplace product listings
+    </div>
+
+    <!-- MY PRODUCT 1 -->
+
+    <div class="product">
+
+        <img src="https://picsum.photos/500/300?macbook">
+
+        <div class="product-details">
+
+            <div class="product-title">
+                MacBook Pro M2
+            </div>
+
+            <div class="condition used">
+                🟠 Used
+            </div>
+
+            <div class="price-row">
+
+                <span class="mrp">
+                    ₹1,45,000
+                </span>
+
+                <span class="offer">
+                    ₹95,000
+                </span>
+
+            </div>
+
+            <div class="location">
+                📍 Chennai
+            </div>
+
+            <button class="buy-btn">
+                Manage Listing
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- MY PRODUCT 2 -->
+
+    <div class="product">
+
+        <img src="https://picsum.photos/500/300?iphone">
+
+        <div class="product-details">
+
+            <div class="product-title">
+                iPhone 15 Pro
+            </div>
+
+            <div class="condition new">
+                🟢 New
+            </div>
+
+            <div class="price-row">
+
+                <span class="mrp">
+                    ₹1,30,000
+                </span>
+
+                <span class="offer">
+                    ₹1,08,000
+                </span>
+
+            </div>
+
+            <div class="location">
+                📍 Tambaram
+            </div>
+
+            <button class="buy-btn">
+                Manage Listing
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- LIKED PRODUCTS -->
+
+<div class="liked-products-section"
+id="likedProducts">
+
+    <div class="section-title">
+        ❤️ Products Liked By Me
+    </div>
+
+    <div class="section-subtitle">
+        Below are products you liked
+    </div>
+
+    <!-- LIKED PRODUCT 1 -->
+
+    <div class="product">
+
+        <img src="https://picsum.photos/500/300?gaming">
+
+        <div class="product-details">
+
+            <div class="product-title">
+                Gaming PC Setup
+            </div>
+
+            <div class="condition rebuild">
+                🔵 Rebuild
+            </div>
+
+            <div class="price-row">
+
+                <span class="mrp">
+                    ₹1,20,000
+                </span>
+
+                <span class="offer">
+                    ₹75,000
+                </span>
+
+            </div>
+
+            <div class="location">
+                📍 Velachery
+            </div>
+
+            <button class="buy-btn">
+                View Details
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- LIKED PRODUCT 2 -->
+
+    <div class="product">
+
+        <img src="https://picsum.photos/500/300?camera">
+
+        <div class="product-details">
+
+            <div class="product-title">
+                Sony Alpha Camera
+            </div>
+
+            <div class="condition used">
+                🟠 Used
+            </div>
+
+            <div class="price-row">
+
+                <span class="mrp">
+                    ₹98,000
+                </span>
+
+                <span class="offer">
+                    ₹61,000
+                </span>
+
+            </div>
+
+            <div class="location">
+                📍 Guindy
+            </div>
+
+            <button class="buy-btn">
+                View Details
+            </button>
+
+        </div>
 
     </div>
 
@@ -775,6 +1027,38 @@ function toggleSellForm(){
     }else{
 
         form.style.display = "block";
+
+    }
+}
+
+function toggleListedProducts(){
+
+    let section =
+    document.getElementById("listedProducts");
+
+    if(section.style.display === "block"){
+
+        section.style.display = "none";
+
+    }else{
+
+        section.style.display = "block";
+
+    }
+}
+
+function toggleLikedProducts(){
+
+    let section =
+    document.getElementById("likedProducts");
+
+    if(section.style.display === "block"){
+
+        section.style.display = "none";
+
+    }else{
+
+        section.style.display = "block";
 
     }
 }
