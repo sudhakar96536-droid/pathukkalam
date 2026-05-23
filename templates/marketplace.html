@@ -24,7 +24,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 body{
     background:#f0f2f5;
-    padding-bottom:100px;
+    padding-bottom:120px;
 }
 
 /* HEADER */
@@ -38,6 +38,7 @@ body{
     position:sticky;
     top:0;
     z-index:1000;
+    text-align:center;
 }
 
 /* SEARCH */
@@ -52,10 +53,10 @@ body{
 
 .search-box input{
     width:100%;
-    padding:14px;
+    padding:15px;
     border:none;
     background:#f0f2f5;
-    border-radius:12px;
+    border-radius:14px;
     outline:none;
     font-size:15px;
 }
@@ -66,45 +67,28 @@ body{
     padding:0 15px;
     display:flex;
     gap:10px;
-    margin-top:10px;
+    margin-top:12px;
 }
 
 /* BUTTONS */
 
-.show-form-btn{
+.top-btn{
     flex:1;
-    padding:15px;
+    padding:16px;
     border:none;
     background:#1877f2;
     color:white;
-    border-radius:14px;
-    font-size:15px;
+    border-radius:16px;
+    font-size:14px;
     font-weight:bold;
     cursor:pointer;
+    transition:0.3s;
 }
 
-.listed-btn{
-    flex:1;
-    padding:15px;
-    border:none;
-    background:#00a86b;
-    color:white;
-    border-radius:14px;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.liked-btn{
-    flex:1;
-    padding:15px;
-    border:none;
-    background:#ff4d6d;
-    color:white;
-    border-radius:14px;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
+.top-btn.active{
+    background:#ffb400;
+    color:#000;
+    transform:scale(1.03);
 }
 
 /* PRODUCT FORM */
@@ -168,6 +152,7 @@ textarea{
     border-radius:12px;
     font-size:15px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .draft-btn{
@@ -179,6 +164,7 @@ textarea{
     border-radius:12px;
     font-size:15px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 /* PRODUCTS */
@@ -186,7 +172,7 @@ textarea{
 .product{
     background:white;
     margin:15px;
-    border-radius:16px;
+    border-radius:18px;
     overflow:hidden;
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
@@ -253,16 +239,55 @@ textarea{
     font-size:14px;
 }
 
-.buy-btn{
-    width:100%;
-    padding:14px;
+/* ACTION BUTTONS */
+
+.product-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.action-btn{
+    padding:13px;
     border:none;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.view-btn{
     background:#1877f2;
     color:white;
+}
+
+.like-btn{
+    background:#ff4d6d;
+    color:white;
+}
+
+.interested-btn{
+    background:#00a86b;
+    color:white;
+}
+
+.share-btn{
+    background:#ffb400;
+    color:black;
+}
+
+.whatsapp-btn{
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:none;
     border-radius:12px;
-    margin-top:14px;
-    font-size:15px;
+    background:#25d366;
+    color:white;
+    font-size:16px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 /* SECTIONS */
@@ -285,6 +310,14 @@ textarea{
     font-size:14px;
 }
 
+.no-result{
+    text-align:center;
+    color:gray;
+    font-size:20px;
+    margin-top:40px;
+    display:none;
+}
+
 </style>
 
 </head>
@@ -300,7 +333,9 @@ textarea{
 <div class="search-box">
 
     <input type="text"
-    placeholder="Search products like iPhone, Bike, Laptop">
+    id="searchInput"
+    placeholder="Search products like iPhone, Bike, Laptop"
+    onkeyup="searchProducts()">
 
 </div>
 
@@ -308,24 +343,27 @@ textarea{
 
 <div class="top-action">
 
-    <button class="show-form-btn"
+    <button class="top-btn"
+    id="sellBtn"
     onclick="toggleSellForm()">
 
-        ➕ Sell New Product
+        ➕ Sell Product
 
     </button>
 
-    <button class="listed-btn"
+    <button class="top-btn"
+    id="listedBtn"
     onclick="toggleListedProducts()">
 
-        📦 My Listed Products
+        📦 My Listings
 
     </button>
 
-    <button class="liked-btn"
+    <button class="top-btn"
+    id="likedBtn"
     onclick="toggleLikedProducts()">
 
-        ❤️ Products Liked By Me
+        ❤️ Liked
 
     </button>
 
@@ -436,9 +474,7 @@ id="listedProducts">
         Below are your marketplace product listings
     </div>
 
-    <!-- MY PRODUCT 1 -->
-
-    <div class="product">
+    <div class="product product-card">
 
         <img src="https://picsum.photos/500/300?macbook">
 
@@ -468,48 +504,30 @@ id="listedProducts">
                 📍 Chennai
             </div>
 
-            <button class="buy-btn">
-                Manage Listing
-            </button>
+            <div class="product-actions">
 
-        </div>
+                <button class="action-btn view-btn">
+                    View
+                </button>
 
-    </div>
+                <button class="action-btn interested-btn">
+                    Interested
+                </button>
 
-    <!-- MY PRODUCT 2 -->
+                <button class="action-btn like-btn"
+                onclick="toggleLike(this)">
+                    ❤️ Like
+                </button>
 
-    <div class="product">
-
-        <img src="https://picsum.photos/500/300?iphone">
-
-        <div class="product-details">
-
-            <div class="product-title">
-                iPhone 15 Pro
-            </div>
-
-            <div class="condition new">
-                🟢 New
-            </div>
-
-            <div class="price-row">
-
-                <span class="mrp">
-                    ₹1,30,000
-                </span>
-
-                <span class="offer">
-                    ₹1,08,000
-                </span>
+                <button class="action-btn share-btn">
+                    Share
+                </button>
 
             </div>
 
-            <div class="location">
-                📍 Tambaram
-            </div>
-
-            <button class="buy-btn">
-                Manage Listing
+            <button class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i>
+                WhatsApp Seller
             </button>
 
         </div>
@@ -528,12 +546,10 @@ id="likedProducts">
     </div>
 
     <div class="section-subtitle">
-        Below are products you liked
+        Below are products liked by you
     </div>
 
-    <!-- LIKED PRODUCT 1 -->
-
-    <div class="product">
+    <div class="product product-card">
 
         <img src="https://picsum.photos/500/300?gaming">
 
@@ -563,48 +579,30 @@ id="likedProducts">
                 📍 Velachery
             </div>
 
-            <button class="buy-btn">
-                View Details
-            </button>
+            <div class="product-actions">
 
-        </div>
+                <button class="action-btn view-btn">
+                    View
+                </button>
 
-    </div>
+                <button class="action-btn interested-btn">
+                    Interested
+                </button>
 
-    <!-- LIKED PRODUCT 2 -->
+                <button class="action-btn like-btn"
+                onclick="toggleLike(this)">
+                    ❤️ Liked
+                </button>
 
-    <div class="product">
-
-        <img src="https://picsum.photos/500/300?camera">
-
-        <div class="product-details">
-
-            <div class="product-title">
-                Sony Alpha Camera
-            </div>
-
-            <div class="condition used">
-                🟠 Used
-            </div>
-
-            <div class="price-row">
-
-                <span class="mrp">
-                    ₹98,000
-                </span>
-
-                <span class="offer">
-                    ₹61,000
-                </span>
+                <button class="action-btn share-btn">
+                    Share
+                </button>
 
             </div>
 
-            <div class="location">
-                📍 Guindy
-            </div>
-
-            <button class="buy-btn">
-                View Details
+            <button class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i>
+                WhatsApp Seller
             </button>
 
         </div>
@@ -613,9 +611,9 @@ id="likedProducts">
 
 </div>
 
-<!-- PRODUCT 1 -->
+<!-- PRODUCTS -->
 
-<div class="product">
+<div class="product product-card">
 
     <img src="https://picsum.photos/500/300?phone">
 
@@ -645,17 +643,37 @@ id="likedProducts">
             📍 Chennai
         </div>
 
-        <button class="buy-btn">
-            View Details
+        <div class="product-actions">
+
+            <button class="action-btn view-btn">
+                View
+            </button>
+
+            <button class="action-btn interested-btn">
+                Interested
+            </button>
+
+            <button class="action-btn like-btn"
+            onclick="toggleLike(this)">
+                ❤️ Like
+            </button>
+
+            <button class="action-btn share-btn">
+                Share
+            </button>
+
+        </div>
+
+        <button class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp Seller
         </button>
 
     </div>
 
 </div>
 
-<!-- PRODUCT 2 -->
-
-<div class="product">
+<div class="product product-card">
 
     <img src="https://picsum.photos/500/300?laptop">
 
@@ -685,17 +703,37 @@ id="likedProducts">
             📍 Tambaram
         </div>
 
-        <button class="buy-btn">
-            View Details
+        <div class="product-actions">
+
+            <button class="action-btn view-btn">
+                View
+            </button>
+
+            <button class="action-btn interested-btn">
+                Interested
+            </button>
+
+            <button class="action-btn like-btn"
+            onclick="toggleLike(this)">
+                ❤️ Like
+            </button>
+
+            <button class="action-btn share-btn">
+                Share
+            </button>
+
+        </div>
+
+        <button class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp Seller
         </button>
 
     </div>
 
 </div>
 
-<!-- PRODUCT 3 -->
-
-<div class="product">
+<div class="product product-card">
 
     <img src="https://picsum.photos/500/300?bike">
 
@@ -725,295 +763,56 @@ id="likedProducts">
             📍 Kanchipuram
         </div>
 
-        <button class="buy-btn">
-            View Details
+        <div class="product-actions">
+
+            <button class="action-btn view-btn">
+                View
+            </button>
+
+            <button class="action-btn interested-btn">
+                Interested
+            </button>
+
+            <button class="action-btn like-btn"
+            onclick="toggleLike(this)">
+                ❤️ Like
+            </button>
+
+            <button class="action-btn share-btn">
+                Share
+            </button>
+
+        </div>
+
+        <button class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp Seller
         </button>
 
     </div>
 
 </div>
 
-<!-- PRODUCT 4 -->
+<div class="no-result"
+id="noResult">
 
-<div class="product">
-
-    <img src="https://picsum.photos/500/300?tv">
-
-    <div class="product-details">
-
-        <div class="product-title">
-            Samsung Smart TV
-        </div>
-
-        <div class="condition used">
-            🟠 Used
-        </div>
-
-        <div class="price-row">
-
-            <span class="mrp">
-                ₹48,000
-            </span>
-
-            <span class="offer">
-                ₹28,000
-            </span>
-
-        </div>
-
-        <div class="location">
-            📍 Porur
-        </div>
-
-        <button class="buy-btn">
-            View Details
-        </button>
-
-    </div>
-
-</div>
-
-<!-- PRODUCT 5 -->
-
-<div class="product">
-
-    <img src="https://picsum.photos/500/300?watch">
-
-    <div class="product-details">
-
-        <div class="product-title">
-            Apple Watch
-        </div>
-
-        <div class="condition new">
-            🟢 New
-        </div>
-
-        <div class="price-row">
-
-            <span class="mrp">
-                ₹35,000
-            </span>
-
-            <span class="offer">
-                ₹26,000
-            </span>
-
-        </div>
-
-        <div class="location">
-            📍 Guindy
-        </div>
-
-        <button class="buy-btn">
-            View Details
-        </button>
-
-    </div>
-
-</div>
-
-<!-- PRODUCT 6 -->
-
-<div class="product">
-
-    <img src="https://picsum.photos/500/300?camera">
-
-    <div class="product-details">
-
-        <div class="product-title">
-            Canon DSLR Camera
-        </div>
-
-        <div class="condition used">
-            🟠 Used
-        </div>
-
-        <div class="price-row">
-
-            <span class="mrp">
-                ₹75,000
-            </span>
-
-            <span class="offer">
-                ₹42,000
-            </span>
-
-        </div>
-
-        <div class="location">
-            📍 Velachery
-        </div>
-
-        <button class="buy-btn">
-            View Details
-        </button>
-
-    </div>
-
-</div>
-
-<!-- PRODUCT 7 -->
-
-<div class="product">
-
-    <img src="https://picsum.photos/500/300?sofa">
-
-    <div class="product-details">
-
-        <div class="product-title">
-            Wooden Sofa Set
-        </div>
-
-        <div class="condition rebuild">
-            🔵 Rebuild
-        </div>
-
-        <div class="price-row">
-
-            <span class="mrp">
-                ₹55,000
-            </span>
-
-            <span class="offer">
-                ₹29,000
-            </span>
-
-        </div>
-
-        <div class="location">
-            📍 Avadi
-        </div>
-
-        <button class="buy-btn">
-            View Details
-        </button>
-
-    </div>
-
-</div>
-
-<!-- PRODUCT 8 -->
-
-<div class="product">
-
-    <img src="https://picsum.photos/500/300?tablet">
-
-    <div class="product-details">
-
-        <div class="product-title">
-            iPad Air
-        </div>
-
-        <div class="condition new">
-            🟢 New
-        </div>
-
-        <div class="price-row">
-
-            <span class="mrp">
-                ₹68,000
-            </span>
-
-            <span class="offer">
-                ₹54,000
-            </span>
-
-        </div>
-
-        <div class="location">
-            📍 Anna Nagar
-        </div>
-
-        <button class="buy-btn">
-            View Details
-        </button>
-
-    </div>
-
-</div>
-
-<!-- PRODUCT 9 -->
-
-<div class="product">
-
-    <img src="https://picsum.photos/500/300?headphone">
-
-    <div class="product-details">
-
-        <div class="product-title">
-            Sony Headphones
-        </div>
-
-        <div class="condition used">
-            🟠 Used
-        </div>
-
-        <div class="price-row">
-
-            <span class="mrp">
-                ₹18,000
-            </span>
-
-            <span class="offer">
-                ₹9,500
-            </span>
-
-        </div>
-
-        <div class="location">
-            📍 T Nagar
-        </div>
-
-        <button class="buy-btn">
-            View Details
-        </button>
-
-    </div>
-
-</div>
-
-<!-- PRODUCT 10 -->
-
-<div class="product">
-
-    <img src="https://picsum.photos/500/300?car">
-
-    <div class="product-details">
-
-        <div class="product-title">
-            Hyundai i20
-        </div>
-
-        <div class="condition rebuild">
-            🔵 Rebuild
-        </div>
-
-        <div class="price-row">
-
-            <span class="mrp">
-                ₹8,50,000
-            </span>
-
-            <span class="offer">
-                ₹5,90,000
-            </span>
-
-        </div>
-
-        <div class="location">
-            📍 Chennai
-        </div>
-
-        <button class="buy-btn">
-            View Details
-        </button>
-
-    </div>
+    No products found
 
 </div>
 
 <script>
+
+function removeActiveButtons(){
+
+    document.getElementById("sellBtn")
+    .classList.remove("active");
+
+    document.getElementById("listedBtn")
+    .classList.remove("active");
+
+    document.getElementById("likedBtn")
+    .classList.remove("active");
+}
 
 function toggleSellForm(){
 
@@ -1023,11 +822,22 @@ function toggleSellForm(){
     if(form.style.display === "block"){
 
         form.style.display = "none";
+        removeActiveButtons();
 
     }else{
 
         form.style.display = "block";
 
+        document.getElementById("listedProducts")
+        .style.display = "none";
+
+        document.getElementById("likedProducts")
+        .style.display = "none";
+
+        removeActiveButtons();
+
+        document.getElementById("sellBtn")
+        .classList.add("active");
     }
 }
 
@@ -1039,11 +849,22 @@ function toggleListedProducts(){
     if(section.style.display === "block"){
 
         section.style.display = "none";
+        removeActiveButtons();
 
     }else{
 
         section.style.display = "block";
 
+        document.getElementById("sellForm")
+        .style.display = "none";
+
+        document.getElementById("likedProducts")
+        .style.display = "none";
+
+        removeActiveButtons();
+
+        document.getElementById("listedBtn")
+        .classList.add("active");
     }
 }
 
@@ -1055,12 +876,82 @@ function toggleLikedProducts(){
     if(section.style.display === "block"){
 
         section.style.display = "none";
+        removeActiveButtons();
 
     }else{
 
         section.style.display = "block";
 
+        document.getElementById("sellForm")
+        .style.display = "none";
+
+        document.getElementById("listedProducts")
+        .style.display = "none";
+
+        removeActiveButtons();
+
+        document.getElementById("likedBtn")
+        .classList.add("active");
     }
+}
+
+function toggleLike(button){
+
+    if(button.innerHTML.includes("Like")){
+
+        button.innerHTML = "❤️ Liked";
+
+    }else{
+
+        button.innerHTML = "❤️ Like";
+
+    }
+}
+
+function searchProducts(){
+
+    let input =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+    let products =
+    document.querySelectorAll(".product-card");
+
+    let found = false;
+
+    products.forEach(product => {
+
+        let title =
+        product.querySelector(".product-title")
+        .innerText
+        .toLowerCase();
+
+        let location =
+        product.querySelector(".location")
+        .innerText
+        .toLowerCase();
+
+        if(
+            title.includes(input)
+            ||
+            location.includes(input)
+        ){
+
+            product.style.display = "block";
+            found = true;
+
+        }else{
+
+            product.style.display = "none";
+
+        }
+
+    });
+
+    document.getElementById("noResult")
+    .style.display =
+    found ? "none" : "block";
 }
 
 </script>
