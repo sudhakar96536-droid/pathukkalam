@@ -1,3 +1,5 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -124,18 +126,17 @@ body{
 }
 
 .quick-card{
-    background:none;
-    box-shadow:none;
-    min-width:auto;
-    padding:5px;
+    text-decoration:none;
+    color:#333;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-size:12px;
 }
 
 .quick-card i{
     font-size:22px;
-}
-
-.quick-card div{
-    font-size:12px;
+    margin-bottom:5px;
 }
 
 /* STORIES */
@@ -340,7 +341,6 @@ body{
     <a href="/rides" class="quick-card">
 
         <i class="fas fa-car-side"></i>
-        <i class="fas fa-motorcycle"></i>
 
         <div>Ride Share</div>
 
@@ -406,13 +406,22 @@ body{
 
     <div class="post-header">
 
-        <img src="{{ post.profile }}">
+        <a href="/profile/{{ post.username }}">
+
+            <img src="{{ post.profile }}">
+
+        </a>
 
         <div>
 
-            <div class="post-user">
-                {{ post.name }}
-            </div>
+            <a href="/profile/{{ post.username }}"
+            style="text-decoration:none;color:inherit;">
+
+                <div class="post-user">
+                    {{ post.name }}
+                </div>
+
+            </a>
 
             <div class="post-time">
                 Trending Now
@@ -488,7 +497,7 @@ body{
 
     </a>
 
-    <a href="/profile" class="nav-item">
+    <a href="/profile/sudhakar" class="nav-item">
 
         <i class="fas fa-user"></i>
 
