@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Pathukkalam News</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f0f2f5;
+    padding-bottom:100px;
+}
+
+/* HEADER */
+
+.header{
+    background:#1877f2;
+    color:white;
+    padding:18px;
+    font-size:24px;
+    font-weight:bold;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+/* SEARCH */
+
+.search-box{
+    background:white;
+    padding:15px;
+    position:sticky;
+    top:66px;
+    z-index:999;
+    box-shadow:0 2px 5px rgba(0,0,0,0.05);
+}
+
+.search-box input{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#f0f2f5;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+}
+
+/* CATEGORY */
+
+.category-row{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    margin-top:12px;
+    scrollbar-width:none;
+}
+
+.category-row::-webkit-scrollbar{
+    display:none;
+}
+
+.category-btn{
+    border:none;
+    background:#1877f2;
+    color:white;
+    padding:11px 16px;
+    border-radius:12px;
+    font-size:13px;
+    font-weight:bold;
+    white-space:nowrap;
+    cursor:pointer;
+    flex-shrink:0;
+}
+
+.category-btn.active{
+    background:#FFD600;
+    color:black;
+}
+
+/* NEWS CARD */
+
+.news-card{
+    background:white;
+    margin:15px;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.news-image{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.news-content{
+    padding:16px;
+}
+
+.news-source{
+    color:#1877f2;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.news-title{
+    font-size:20px;
+    font-weight:bold;
+    line-height:1.5;
+    margin-bottom:10px;
+    color:black;
+}
+
+.news-desc{
+    color:#555;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.news-date{
+    margin-top:12px;
+    color:gray;
+    font-size:13px;
+}
+
+/* ACTIONS */
+
+.action-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:16px;
+}
+
+.read-btn{
+    flex:1;
+    border:none;
+    background:#1877f2;
+    color:white;
+    padding:13px;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.icon-btn{
+    width:46px;
+    height:46px;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    color:white;
+    cursor:pointer;
+}
+
+.like-btn{
+    background:#ff4d6d;
+}
+
+.share-btn{
+    background:#1877f2;
+}
+
+.whatsapp-btn{
+    background:#25D366;
+}
+
+/* LOADER */
+
+.loader{
+    text-align:center;
+    padding:30px;
+    color:gray;
+    font-size:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    📰 Pathukkalam News
+</div>
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+    <input type="text"
+    id="searchInput"
+    placeholder="Search news like AI, India, Sports"
+    onkeyup="searchNews()">
+
+    <!-- CATEGORY -->
+
+    <div class="category-row">
+
+        <button class="category-btn active"
+        onclick="changeCategory('technology', this)">
+
+            💻 Technology
+
+        </button>
+
+        <button class="category-btn"
+        onclick="changeCategory('business', this)">
+
+            💼 Business
+
+        </button>
+
+        <button class="category-btn"
+        onclick="changeCategory('sports', this)">
+
+            ⚽ Sports
+
+        </button>
+
+        <button class="category-btn"
+        onclick="changeCategory('entertainment', this)">
+
+            🎬 Cinema
+
+        </button>
+
+        <button class="category-btn"
+        onclick="changeCategory('health', this)">
+
+            🏥 Health
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- NEWS CONTAINER -->
+
+<div id="newsContainer">
+
+    <div class="loader">
+        Loading latest news...
+    </div>
+
+</div>
+
+<script>
+
+let API_KEY = "d32690832ecd40b39bd6853a2e44927f";
+
+let currentCategory = "technology";
+
+async function loadNews(category){
+
+    let container =
+    document.getElementById("newsContainer");
+
+    container.innerHTML = `
+
+        <div class="loader">
+            Loading latest news...
+        </div>
+
+    `;
+
+    try{
+
+        let response =
+        await fetch(
+
+            `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=${API_KEY}`
+
+        );
+
+        let data =
+        await response.json();
+
+        container.innerHTML = "";
+
+        if(data.articles.length === 0){
+
+            container.innerHTML = `
+
+                <div class="loader">
+                    No news found
+                </div>
+
+            `;
+
+            return;
+        }
+
+        data.articles.forEach(article => {
+
+            let card = `
+
+            <div class="news-card searchable">
+
+                <img class="news-image"
+                src="${article.urlToImage || 'https://picsum.photos/500/300'}">
+
+                <div class="news-content">
+
+                    <div class="news-source">
+
+                        ${article.source.name}
+
+                    </div>
+
+                    <div class="news-title">
+
+                        ${article.title || ''}
+
+                    </div>
+
+                    <div class="news-desc">
+
+                        ${article.description || ''}
+
+                    </div>
+
+                    <div class="news-date">
+
+                        ${new Date(article.publishedAt).toLocaleString()}
+
+                    </div>
+
+                    <div class="action-row">
+
+                        <button class="read-btn"
+                        onclick="openNews('${article.url}')">
+
+                            Read News
+
+                        </button>
+
+                        <button class="icon-btn like-btn">
+
+                            <i class="fa-solid fa-heart"></i>
+
+                        </button>
+
+                        <button class="icon-btn share-btn"
+                        onclick="shareNews('${article.url}')">
+
+                            <i class="fa-solid fa-share"></i>
+
+                        </button>
+
+                        <button class="icon-btn whatsapp-btn"
+                        onclick="whatsappShare('${article.url}')">
+
+                            <i class="fa-brands fa-whatsapp"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+
+            container.innerHTML += card;
+
+        });
+
+    }catch(error){
+
+        container.innerHTML = `
+
+            <div class="loader">
+                Failed to load news
+            </div>
+
+        `;
+
+    }
+
+}
+
+function openNews(url){
+
+    window.location.href = url;
+
+}
+
+function shareNews(url){
+
+    if(navigator.share){
+
+        navigator.share({
+
+            title:"Pathukkalam News",
+            url:url
+
+        });
+
+    }else{
+
+        window.open(url);
+
+    }
+
+}
+
+function whatsappShare(url){
+
+    window.open(
+
+        `https://wa.me/?text=${encodeURIComponent(url)}`,
+
+        "_blank"
+
+    );
+
+}
+
+function changeCategory(category, button){
+
+    currentCategory = category;
+
+    let buttons =
+    document.querySelectorAll(".category-btn");
+
+    buttons.forEach(btn => {
+
+        btn.classList.remove("active");
+
+    });
+
+    button.classList.add("active");
+
+    loadNews(category);
+
+}
+
+function searchNews(){
+
+    let input =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+    let cards =
+    document.querySelectorAll(".searchable");
+
+    cards.forEach(card => {
+
+        let text =
+        card.innerText.toLowerCase();
+
+        if(text.includes(input)){
+
+            card.style.display = "block";
+
+        }else{
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+loadNews(currentCategory);
+
+</script>
+
+</body>
+</html>
