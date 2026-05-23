@@ -10,6 +10,9 @@ content="width=device-width, initial-scale=1.0">
 
 <title>Pathukkalam Reels</title>
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
 
 *{
@@ -26,35 +29,48 @@ html,body{
     background:black;
 }
 
-/* FULL PAGE */
+/* MAIN */
 
 .reels-container{
     width:100%;
     height:100vh;
-    position:relative;
+    overflow-y:scroll;
+    scroll-snap-type:y mandatory;
 }
 
-/* YOUTUBE SHORTS */
+/* EACH REEL */
 
-.reels-frame{
+.reel{
+    width:100%;
+    height:100vh;
+    position:relative;
+    scroll-snap-align:start;
+    background:black;
+}
+
+/* YOUTUBE */
+
+.reel iframe{
     width:100%;
     height:100%;
     border:none;
 }
 
-/* TOP HEADER */
+/* TOP */
 
 .top-bar{
-    position:absolute;
+    position:fixed;
     top:0;
     left:0;
     width:100%;
     padding:18px;
-    background:linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
-    z-index:1000;
+    z-index:9999;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    background:linear-gradient(to bottom,
+    rgba(0,0,0,0.7),
+    transparent);
 }
 
 .logo{
@@ -63,33 +79,13 @@ html,body{
     font-weight:bold;
 }
 
-.live{
-    background:red;
+.powered{
     color:white;
-    padding:8px 14px;
-    border-radius:30px;
     font-size:13px;
-    font-weight:bold;
-}
-
-/* BOTTOM TEXT */
-
-.bottom-overlay{
-    position:absolute;
-    bottom:25px;
-    left:15px;
-    z-index:1000;
-}
-
-.bottom-overlay h2{
-    font-size:24px;
-    margin-bottom:8px;
-}
-
-.bottom-overlay p{
-    font-size:14px;
-    color:#ddd;
-    line-height:1.5;
+    background:rgba(255,255,255,0.15);
+    padding:8px 12px;
+    border-radius:20px;
+    backdrop-filter:blur(4px);
 }
 
 /* RIGHT ICONS */
@@ -98,17 +94,17 @@ html,body{
     position:absolute;
     right:12px;
     bottom:120px;
-    z-index:1000;
     display:flex;
     flex-direction:column;
     gap:18px;
+    z-index:100;
 }
 
 .icon-btn{
     width:55px;
     height:55px;
     border-radius:50%;
-    background:rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.18);
     backdrop-filter:blur(5px);
     display:flex;
     align-items:center;
@@ -118,70 +114,177 @@ html,body{
     text-decoration:none;
 }
 
+/* BOTTOM TEXT */
+
+.bottom-overlay{
+    position:absolute;
+    bottom:30px;
+    left:15px;
+    z-index:100;
+    color:white;
+}
+
+.bottom-overlay h2{
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.bottom-overlay p{
+    font-size:14px;
+    color:#ddd;
+    line-height:1.5;
+}
+
 </style>
 
 </head>
 
 <body>
 
+<!-- TOP HEADER -->
+
+<div class="top-bar">
+
+    <div class="logo">
+        ✨ Pathukkalam Reels
+    </div>
+
+    <div class="powered">
+        Powered by YouTube
+    </div>
+
+</div>
+
+<!-- REELS -->
+
 <div class="reels-container">
 
-    <!-- TOP -->
+    <!-- REEL 1 -->
 
-    <div class="top-bar">
+    <div class="reel">
 
-        <div class="logo">
-            ✨ Pathukkalam Reels
+        <iframe
+        src="https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=1&mute=1&playsinline=1"
+        allowfullscreen
+        allow="autoplay">
+        </iframe>
+
+        <div class="side-icons">
+
+            <a href="#"
+            class="icon-btn">
+                ❤️
+            </a>
+
+            <a href="#"
+            class="icon-btn">
+                💬
+            </a>
+
+            <a href="#"
+            class="icon-btn">
+                🔗
+            </a>
+
         </div>
 
-        <div class="live">
-            LIVE
+        <div class="bottom-overlay">
+
+            <h2>
+                Trending Reel 🔥
+            </h2>
+
+            <p>
+                Swipe up for next video
+            </p>
+
         </div>
 
     </div>
 
-    <!-- YOUTUBE SHORTS FULL PAGE -->
+    <!-- REEL 2 -->
 
-    <iframe
-    class="reels-frame"
-    src="https://www.youtube.com/embed/u31qwQUeGuM?autoplay=1&mute=1&controls=0&loop=1&playlist=u31qwQUeGuM"
-    allow="autoplay; encrypted-media"
-    allowfullscreen>
-    </iframe>
+    <div class="reel">
 
-    <!-- RIGHT ICONS -->
+        <iframe
+        src="https://www.youtube.com/embed/jNQXAC9IVRw?autoplay=0&mute=1&playsinline=1"
+        allowfullscreen
+        allow="autoplay">
+        </iframe>
 
-    <div class="side-icons">
+        <div class="side-icons">
 
-        <a href="#"
-        class="icon-btn">
-            ❤️
-        </a>
+            <a href="#"
+            class="icon-btn">
+                ❤️
+            </a>
 
-        <a href="#"
-        class="icon-btn">
-            💬
-        </a>
+            <a href="#"
+            class="icon-btn">
+                💬
+            </a>
 
-        <a href="#"
-        class="icon-btn">
-            🔗
-        </a>
+            <a href="#"
+            class="icon-btn">
+                🔗
+            </a>
+
+        </div>
+
+        <div class="bottom-overlay">
+
+            <h2>
+                Viral Shorts 🚀
+            </h2>
+
+            <p>
+                Pathukkalam YouTube Reels
+            </p>
+
+        </div>
 
     </div>
 
-    <!-- BOTTOM -->
+    <!-- REEL 3 -->
 
-    <div class="bottom-overlay">
+    <div class="reel">
 
-        <h2>
-            Pathukkalam Trending Reels 🔥
-        </h2>
+        <iframe
+        src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=0&mute=1&playsinline=1"
+        allowfullscreen
+        allow="autoplay">
+        </iframe>
 
-        <p>
-            Swipe reels experience inside your app •
-            YouTube Shorts Full Screen Mode
-        </p>
+        <div class="side-icons">
+
+            <a href="#"
+            class="icon-btn">
+                ❤️
+            </a>
+
+            <a href="#"
+            class="icon-btn">
+                💬
+            </a>
+
+            <a href="#"
+            class="icon-btn">
+                🔗
+            </a>
+
+        </div>
+
+        <div class="bottom-overlay">
+
+            <h2>
+                Swipe More Videos 🎬
+            </h2>
+
+            <p>
+                Full screen reels experience
+            </p>
+
+        </div>
 
     </div>
 
