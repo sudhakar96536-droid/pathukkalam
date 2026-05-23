@@ -3,7 +3,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Pathukkalam News</title>
 
@@ -24,6 +26,8 @@ body{
     padding-bottom:100px;
 }
 
+/* HEADER */
+
 .header{
     background:#1877f2;
     color:white;
@@ -35,15 +39,13 @@ body{
     z-index:1000;
 }
 
-.news-container{
-    padding:15px;
-}
+/* NEWS CARD */
 
 .news-card{
     background:white;
+    margin:15px;
     border-radius:18px;
     overflow:hidden;
-    margin-bottom:18px;
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -58,45 +60,65 @@ body{
 }
 
 .news-title{
-    font-size:19px;
+    font-size:20px;
     font-weight:bold;
+    line-height:1.5;
     margin-bottom:10px;
-    line-height:1.4;
 }
 
 .news-desc{
     color:#555;
     font-size:14px;
-    line-height:1.6;
-    margin-bottom:14px;
-}
-
-.news-footer{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    line-height:1.7;
+    margin-bottom:15px;
 }
 
 .news-date{
     color:gray;
     font-size:13px;
+    margin-bottom:15px;
+}
+
+/* BUTTONS */
+
+.news-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
 .read-btn{
+    flex:1;
+    padding:12px;
+    border:none;
     background:#ffcc00;
     color:black;
-    border:none;
-    padding:10px 14px;
-    border-radius:10px;
+    border-radius:12px;
+    font-size:15px;
     font-weight:bold;
     cursor:pointer;
 }
 
-.loader{
-    text-align:center;
-    margin-top:50px;
+.icon-btn{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:12px;
+    color:white;
     font-size:18px;
-    color:gray;
+    cursor:pointer;
+}
+
+.like-btn{
+    background:#ff4d6d;
+}
+
+.share-btn{
+    background:#1877f2;
+}
+
+.whatsapp-btn{
+    background:#25d366;
 }
 
 </style>
@@ -106,99 +128,448 @@ body{
 <body>
 
 <div class="header">
-    📰 Pathukkalam News
+    📰 Pathukkalam Tamil Politics
 </div>
 
-<div class="news-container"
-id="newsContainer">
+<!-- NEWS 1 -->
 
-    <div class="loader">
-        Loading latest news...
+<div class="news-card">
+
+    <img src="https://picsum.photos/600/350?1">
+
+    <div class="news-content">
+
+        <div class="news-title">
+            Vijay CM campaign meeting gets huge public response in Chennai
+        </div>
+
+        <div class="news-desc">
+            Thousands of supporters gathered in Chennai as Vijay discussed youth employment, education and corruption-free governance during his latest public speech.
+        </div>
+
+        <div class="news-date">
+            📅 Posted: Today • Chennai
+        </div>
+
+        <div class="news-actions">
+
+            <button class="read-btn">
+                Read Full News
+            </button>
+
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
+
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
     </div>
 
 </div>
 
-<script>
+<!-- NEWS 2 -->
 
-async function loadNews(){
+<div class="news-card">
 
-    let container =
-    document.getElementById("newsContainer");
+    <img src="https://picsum.photos/600/350?2">
 
-    try{
+    <div class="news-content">
 
-        let response = await fetch(
-        "https://gnews.io/api/v4/top-headlines?lang=en&country=in&max=10&apikey=3d7b0c1f3d8b4b66aef3f5f9f3e5d111"
-        );
-
-        let data = await response.json();
-
-        container.innerHTML = "";
-
-        data.articles.forEach(news => {
-
-            container.innerHTML += `
-
-            <div class="news-card">
-
-                <img src="${news.image || 'https://picsum.photos/500/300'}">
-
-                <div class="news-content">
-
-                    <div class="news-title">
-                        ${news.title}
-                    </div>
-
-                    <div class="news-desc">
-                        ${news.description || 'No description available'}
-                    </div>
-
-                    <div class="news-footer">
-
-                        <div class="news-date">
-                            ${new Date(news.publishedAt).toDateString()}
-                        </div>
-
-                        <button class="read-btn"
-                        onclick="openNews('${news.url}')">
-
-                            Read News
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            `;
-
-        });
-
-    }catch(error){
-
-        container.innerHTML = `
-
-        <div class="loader">
-            Failed to load news
+        <div class="news-title">
+            TVK party members begin district-level political discussions
         </div>
 
-        `;
+        <div class="news-desc">
+            Tamilaga Vettri Kazhagam volunteers started district-level meetings focusing on booth setup and youth participation ahead of upcoming elections.
+        </div>
 
-    }
+        <div class="news-date">
+            📅 Posted: Today • Madurai
+        </div>
 
-}
+        <div class="news-actions">
 
-function openNews(url){
+            <button class="read-btn">
+                Read Full News
+            </button>
 
-    window.location.href = url;
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
 
-}
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
 
-loadNews();
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
 
-</script>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NEWS 3 -->
+
+<div class="news-card">
+
+    <img src="https://picsum.photos/600/350?3">
+
+    <div class="news-content">
+
+        <div class="news-title">
+            Vijay promises transparent governance model for Tamil Nadu
+        </div>
+
+        <div class="news-desc">
+            Vijay stated that digital transparency and public accountability will become key pillars of governance if his party comes to power.
+        </div>
+
+        <div class="news-date">
+            📅 Posted: Yesterday • Coimbatore
+        </div>
+
+        <div class="news-actions">
+
+            <button class="read-btn">
+                Read Full News
+            </button>
+
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
+
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NEWS 4 -->
+
+<div class="news-card">
+
+    <img src="https://picsum.photos/600/350?4">
+
+    <div class="news-content">
+
+        <div class="news-title">
+            Youth supporters celebrate Vijay political growth across Tamil Nadu
+        </div>
+
+        <div class="news-desc">
+            College students and first-time voters are actively participating in TVK events and online campaigns supporting Vijay's political journey.
+        </div>
+
+        <div class="news-date">
+            📅 Posted: Yesterday • Trichy
+        </div>
+
+        <div class="news-actions">
+
+            <button class="read-btn">
+                Read Full News
+            </button>
+
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
+
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NEWS 5 -->
+
+<div class="news-card">
+
+    <img src="https://picsum.photos/600/350?5">
+
+    <div class="news-content">
+
+        <div class="news-title">
+            Vijay discusses startup support and AI future in Tamil Nadu
+        </div>
+
+        <div class="news-desc">
+            During a business interaction session, Vijay highlighted startup growth, artificial intelligence and employment opportunities for young professionals.
+        </div>
+
+        <div class="news-date">
+            📅 Posted: 2 days ago • Chennai
+        </div>
+
+        <div class="news-actions">
+
+            <button class="read-btn">
+                Read Full News
+            </button>
+
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
+
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NEWS 6 -->
+
+<div class="news-card">
+
+    <img src="https://picsum.photos/600/350?6">
+
+    <div class="news-content">
+
+        <div class="news-title">
+            TVK announces major public welfare consultation programs
+        </div>
+
+        <div class="news-desc">
+            Public consultation events are planned across districts to collect direct feedback from citizens regarding infrastructure and education.
+        </div>
+
+        <div class="news-date">
+            📅 Posted: 2 days ago • Salem
+        </div>
+
+        <div class="news-actions">
+
+            <button class="read-btn">
+                Read Full News
+            </button>
+
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
+
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NEWS 7 -->
+
+<div class="news-card">
+
+    <img src="https://picsum.photos/600/350?7">
+
+    <div class="news-content">
+
+        <div class="news-title">
+            Vijay supporters trend social media hashtags across Tamil Nadu
+        </div>
+
+        <div class="news-desc">
+            Supporters created multiple trending hashtags supporting Vijay’s leadership vision and upcoming public rallies.
+        </div>
+
+        <div class="news-date">
+            📅 Posted: 3 days ago • Online
+        </div>
+
+        <div class="news-actions">
+
+            <button class="read-btn">
+                Read Full News
+            </button>
+
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
+
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NEWS 8 -->
+
+<div class="news-card">
+
+    <img src="https://picsum.photos/600/350?8">
+
+    <div class="news-content">
+
+        <div class="news-title">
+            Political analysts discuss Vijay’s impact on youth voters
+        </div>
+
+        <div class="news-desc">
+            Analysts say Vijay’s popularity among first-time voters may influence political campaigning styles across Tamil Nadu.
+        </div>
+
+        <div class="news-date">
+            📅 Posted: 3 days ago • Chennai
+        </div>
+
+        <div class="news-actions">
+
+            <button class="read-btn">
+                Read Full News
+            </button>
+
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
+
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NEWS 9 -->
+
+<div class="news-card">
+
+    <img src="https://picsum.photos/600/350?9">
+
+    <div class="news-content">
+
+        <div class="news-title">
+            Vijay fans organize welfare activities in multiple districts
+        </div>
+
+        <div class="news-desc">
+            Volunteers conducted blood donation camps, food distribution and student support activities under TVK welfare programs.
+        </div>
+
+        <div class="news-date">
+            📅 Posted: 4 days ago • Erode
+        </div>
+
+        <div class="news-actions">
+
+            <button class="read-btn">
+                Read Full News
+            </button>
+
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
+
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NEWS 10 -->
+
+<div class="news-card">
+
+    <img src="https://picsum.photos/600/350?10">
+
+    <div class="news-content">
+
+        <div class="news-title">
+            Vijay says people-centric politics is the future of Tamil Nadu
+        </div>
+
+        <div class="news-desc">
+            Vijay emphasized transparent leadership, people participation and modern governance during his latest interview.
+        </div>
+
+        <div class="news-date">
+            📅 Posted: 5 days ago • Chennai
+        </div>
+
+        <div class="news-actions">
+
+            <button class="read-btn">
+                Read Full News
+            </button>
+
+            <button class="icon-btn like-btn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="icon-btn share-btn">
+                <i class="fa-solid fa-share"></i>
+            </button>
+
+            <button class="icon-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>
