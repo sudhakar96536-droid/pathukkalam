@@ -1,3 +1,5 @@
+<!-- profile.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +9,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Profile - Pathukkalam</title>
+<title>{{ user.name }} - Pathukkalam</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -40,7 +42,20 @@ body{
     box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
-.logo{
+.logo-section{
+    display:flex;
+    align-items:center;
+}
+
+.logo-img{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    margin-right:10px;
+    object-fit:cover;
+}
+
+.logo-text{
     font-size:26px;
     font-weight:bold;
     color:#1877f2;
@@ -57,8 +72,8 @@ body{
 .profile-cover{
     width:100%;
     height:220px;
-    background:url('https://picsum.photos/800/300') center/cover;
-    position:relative;
+    background-size:cover !important;
+    background-position:center !important;
 }
 
 /* PROFILE CARD */
@@ -166,7 +181,8 @@ body{
     object-fit:cover;
     border-radius:8px;
 }
-/* FLOATING NEW POST BUTTON */
+
+/* FLOATING BUTTON */
 
 .new-post-btn{
     position:fixed;
@@ -188,10 +204,6 @@ body{
     border:4px solid white;
 }
 
-.new-post-btn:active{
-    transform:translateX(-50%) scale(0.95);
-}
-    
 /* BOTTOM NAVIGATION */
 
 .bottom-nav{
@@ -225,24 +237,7 @@ body{
 .active{
     color:#1877f2;
 }
-.logo-section{
-    display:flex;
-    align-items:center;
-}
 
-.logo-img{
-    width:42px;
-    height:42px;
-    border-radius:12px;
-    margin-right:10px;
-    object-fit:cover;
-}
-
-.logo-text{
-    font-size:26px;
-    font-weight:bold;
-    color:#1877f2;
-}
 </style>
 
 </head>
@@ -273,27 +268,30 @@ body{
 
 <!-- COVER -->
 
-<div class="profile-cover"></div>
+<div class="profile-cover"
+style="background:url('{{ user.cover }}') center/cover;">
+</div>
 
 <!-- PROFILE -->
 
 <div class="profile-box">
 
     <img class="profile-avatar"
-    src="https://i.pravatar.cc/300">
+    src="{{ user.profile }}">
 
     <div class="profile-name">
-        Sudhakar
+        {{ user.name }}
     </div>
 
     <div class="profile-id">
-        @sudhakar
+        @{{ username }}
     </div>
 
     <div class="profile-bio">
-        Welcome to my Pathukkalam profile 🚀<br>
-        Web App Developer • Tech Lover
+        {{ user.bio }}
     </div>
+
+    {% if not is_own_profile %}
 
     <div class="profile-buttons">
 
@@ -307,20 +305,22 @@ body{
 
     </div>
 
+    {% endif %}
+
     <div class="profile-stats">
 
         <div>
-            <h3>120</h3>
+            <h3>{{ user.posts }}</h3>
             <p>Posts</p>
         </div>
 
         <div>
-            <h3>5K</h3>
+            <h3>{{ user.followers }}</h3>
             <p>Followers</p>
         </div>
 
         <div>
-            <h3>500</h3>
+            <h3>{{ user.following }}</h3>
             <p>Following</p>
         </div>
 
@@ -336,23 +336,22 @@ body{
 
 <div class="post-grid">
 
-    <img src="https://picsum.photos/300/300?1">
+    {% for photo in user.photos %}
 
-    <img src="https://picsum.photos/300/300?2">
+    <img src="{{ photo }}">
 
-    <img src="https://picsum.photos/300/300?3">
-
-    <img src="https://picsum.photos/300/300?4">
-
-    <img src="https://picsum.photos/300/300?5">
-
-    <img src="https://picsum.photos/300/300?6">
+    {% endfor %}
 
 </div>
-<!-- FLOATING POST BUTTON -->
 
-<a href="/new-post" class="new-post-btn">+</a>
-    
+<!-- FLOATING BUTTON -->
+
+<a href="/new-post" class="new-post-btn">
+
+    <i class="fas fa-plus"></i>
+
+</a>
+
 <!-- BOTTOM NAVIGATION -->
 
 <div class="bottom-nav">
@@ -366,15 +365,13 @@ body{
         <i class="fas fa-compass"></i>
         <span>Explore</span>
     </a>
-    
-    <div style="width:70px;"></div>
-    
+
     <a href="/notifications" class="nav-item">
         <i class="fas fa-bell"></i>
         <span>Alerts</span>
     </a>
 
-    <a href="/profile" class="nav-item active">
+    <a href="/profile/sudhakar" class="nav-item active">
         <i class="fas fa-user"></i>
         <span>Profile</span>
     </a>
