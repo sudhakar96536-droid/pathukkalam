@@ -1,33 +1,838 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Jobs</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Pathukkalam Jobs</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
-body{
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
     font-family:Arial;
-    background:#f0f2f5;
 }
+
+body{
+    background:#f0f2f5;
+    padding-bottom:120px;
+}
+
+/* HEADER */
+
+.header{
+    background:#1877f2;
+    color:white;
+    padding:18px;
+    font-size:24px;
+    font-weight:bold;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+/* SEARCH */
+
+.search-box{
+    background:white;
+    padding:15px;
+    position:sticky;
+    top:66px;
+    z-index:999;
+}
+
+.search-box input{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:#f0f2f5;
+    outline:none;
+    font-size:15px;
+}
+
+/* TOP BUTTONS */
+
+.top-buttons{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:15px;
+}
+
+.top-buttons::-webkit-scrollbar{
+    display:none;
+}
+
+.top-btn{
+    min-width:170px;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    background:#ffcc00;
+    color:black;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.active-btn{
+    background:#1877f2;
+    color:white;
+    transform:scale(1.03);
+}
+
+/* JOB FORM */
+
+.job-form{
+    display:none;
+    background:white;
+    margin:15px;
+    padding:18px;
+    border-radius:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.form-title{
+    font-size:22px;
+    font-weight:bold;
+    color:#1877f2;
+    margin-bottom:15px;
+}
+
+.form-group{
+    margin-bottom:14px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#f0f2f5;
+    outline:none;
+    font-size:14px;
+}
+
+textarea{
+    resize:none;
+    height:100px;
+}
+
+.post-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#1877f2;
+    color:white;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* JOB CARD */
 
 .job{
     background:white;
     margin:15px;
-    padding:15px;
-    border-radius:12px;
+    padding:18px;
+    border-radius:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
+
+.company-row{
+    display:flex;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.company-row img{
+    width:60px;
+    height:60px;
+    border-radius:14px;
+    margin-right:12px;
+    object-fit:cover;
+}
+
+.job-title{
+    font-size:21px;
+    font-weight:bold;
+}
+
+.company{
+    color:#666;
+    margin-top:5px;
+    font-size:14px;
+}
+
+.job-details{
+    margin-top:10px;
+    line-height:1.8;
+    color:#333;
+    font-size:15px;
+}
+
+.post-date{
+    margin-top:10px;
+    color:#888;
+    font-size:13px;
+    font-weight:bold;
+}
+
+/* ACTION BUTTONS */
+
+.action-row{
+    display:flex;
+    gap:8px;
+    margin-top:18px;
+    flex-wrap:wrap;
+}
+
+.action-btn{
+    flex:1;
+    min-width:70px;
+    padding:13px;
+    border:none;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.apply-btn{
+    background:#1877f2;
+    color:white;
+}
+
+.interested-btn{
+    background:#ffcc00;
+    color:black;
+}
+
+.icon-btn{
+    width:50px;
+    border:none;
+    border-radius:12px;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.like-btn{
+    background:#ff4d6d;
+}
+
+.share-btn{
+    background:#00a86b;
+}
+
+.whatsapp-btn{
+    background:#25d366;
+}
+
+/* SECTION */
+
+.section{
+    display:none;
+}
+
+.section-title{
+    margin:20px 15px 5px;
+    font-size:22px;
+    color:#1877f2;
+    font-weight:bold;
+}
+
+.section-subtitle{
+    margin:0 15px 15px;
+    color:gray;
+    font-size:14px;
+}
+
 </style>
+
 </head>
+
 <body>
 
-<div class="job">
-    <h3>Python Developer</h3>
-    <p>Chennai</p>
+<div class="header">
+    💼 Pathukkalam Jobs
 </div>
 
-<div class="job">
-    <h3>Flutter Developer</h3>
-    <p>Remote</p>
+<!-- SEARCH -->
+
+<div class="search-box">
+
+    <input type="text"
+    id="searchInput"
+    placeholder="Search jobs like Python, Flutter, Designer"
+    onkeyup="searchJobs()">
+
 </div>
+
+<!-- TOP BUTTONS -->
+
+<div class="top-buttons">
+
+    <button class="top-btn active-btn"
+    onclick="toggleSection('postForm',this)">
+
+        ➕ New Job Post
+
+    </button>
+
+    <button class="top-btn"
+    onclick="toggleSection('postedJobs',this)">
+
+        📢 Jobs Posted By Me
+
+    </button>
+
+    <button class="top-btn"
+    onclick="toggleSection('likedJobs',this)">
+
+        ❤️ Liked Jobs
+
+    </button>
+
+    <button class="top-btn"
+    onclick="toggleSection('appliedJobs',this)">
+
+        📄 Applied Jobs
+
+    </button>
+
+</div>
+
+<!-- JOB POST FORM -->
+
+<div class="job-form section"
+id="postForm"
+style="display:block;">
+
+    <div class="form-title">
+        Create Job Post
+    </div>
+
+    <div class="form-group">
+
+        <label>Job Title</label>
+
+        <input type="text"
+        placeholder="Python Developer">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Company Name</label>
+
+        <input type="text"
+        placeholder="Infosys">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Location</label>
+
+        <input type="text"
+        placeholder="Chennai">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Salary</label>
+
+        <input type="text"
+        placeholder="₹8 LPA">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Job Description</label>
+
+        <textarea
+        placeholder="Enter full job description"></textarea>
+
+    </div>
+
+    <button class="post-btn">
+        Post Job
+    </button>
+
+</div>
+
+<!-- POSTED JOBS -->
+
+<div class="section"
+id="postedJobs">
+
+    <div class="section-title">
+        📢 Jobs Posted By Me
+    </div>
+
+    <div class="section-subtitle">
+        Below are jobs you posted
+    </div>
+
+</div>
+
+<!-- LIKED JOBS -->
+
+<div class="section"
+id="likedJobs">
+
+    <div class="section-title">
+        ❤️ Liked Jobs
+    </div>
+
+    <div class="section-subtitle">
+        Below are jobs liked by you
+    </div>
+
+</div>
+
+<!-- APPLIED JOBS -->
+
+<div class="section"
+id="appliedJobs">
+
+    <div class="section-title">
+        📄 Applied Jobs
+    </div>
+
+    <div class="section-subtitle">
+        Below are jobs you applied for
+    </div>
+
+</div>
+
+<!-- JOB 1 -->
+
+<div class="job searchable">
+
+    <div class="company-row">
+
+        <img src="https://picsum.photos/100?1">
+
+        <div>
+
+            <div class="job-title">
+                Python Developer
+            </div>
+
+            <div class="company">
+                Infosys • Chennai
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="job-details">
+        💰 ₹8 LPA <br>
+        🧑 Experience: 2 Years <br>
+        🏢 Full Time
+    </div>
+
+    <div class="post-date">
+        Posted 1 day ago
+    </div>
+
+    <div class="action-row">
+
+        <button class="action-btn apply-btn">
+            Apply
+        </button>
+
+        <button class="action-btn interested-btn">
+            Interested
+        </button>
+
+        <button class="icon-btn like-btn">
+            ❤️
+        </button>
+
+        <button class="icon-btn share-btn">
+            🔗
+        </button>
+
+        <button class="icon-btn whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+
+    </div>
+
+</div>
+
+<!-- JOB 2 -->
+
+<div class="job searchable">
+
+    <div class="company-row">
+
+        <img src="https://picsum.photos/100?2">
+
+        <div>
+
+            <div class="job-title">
+                Flutter Developer
+            </div>
+
+            <div class="company">
+                Zoho • Remote
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="job-details">
+        💰 ₹10 LPA <br>
+        🧑 Experience: 3 Years <br>
+        🏢 Hybrid
+    </div>
+
+    <div class="post-date">
+        Posted 2 days ago
+    </div>
+
+    <div class="action-row">
+
+        <button class="action-btn apply-btn">
+            Apply
+        </button>
+
+        <button class="action-btn interested-btn">
+            Interested
+        </button>
+
+        <button class="icon-btn like-btn">
+            ❤️
+        </button>
+
+        <button class="icon-btn share-btn">
+            🔗
+        </button>
+
+        <button class="icon-btn whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+
+    </div>
+
+</div>
+
+<!-- JOB 3 -->
+
+<div class="job searchable">
+
+    <div class="company-row">
+
+        <img src="https://picsum.photos/100?3">
+
+        <div>
+
+            <div class="job-title">
+                UI UX Designer
+            </div>
+
+            <div class="company">
+                TCS • Bangalore
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="job-details">
+        💰 ₹7 LPA <br>
+        🧑 Experience: 1 Year <br>
+        🏢 Full Time
+    </div>
+
+    <div class="post-date">
+        Posted 3 days ago
+    </div>
+
+    <div class="action-row">
+
+        <button class="action-btn apply-btn">
+            Apply
+        </button>
+
+        <button class="action-btn interested-btn">
+            Interested
+        </button>
+
+        <button class="icon-btn like-btn">
+            ❤️
+        </button>
+
+        <button class="icon-btn share-btn">
+            🔗
+        </button>
+
+        <button class="icon-btn whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+
+    </div>
+
+</div>
+
+<!-- JOB 4 -->
+
+<div class="job searchable">
+<div class="company-row">
+<img src="https://picsum.photos/100?4">
+<div>
+<div class="job-title">React Developer</div>
+<div class="company">Wipro • Chennai</div>
+</div>
+</div>
+<div class="job-details">
+💰 ₹9 LPA <br>
+🧑 Experience: 2 Years <br>
+🏢 Full Time
+</div>
+<div class="post-date">Posted 4 days ago</div>
+<div class="action-row">
+<button class="action-btn apply-btn">Apply</button>
+<button class="action-btn interested-btn">Interested</button>
+<button class="icon-btn like-btn">❤️</button>
+<button class="icon-btn share-btn">🔗</button>
+<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
+</div>
+</div>
+
+<!-- JOB 5 -->
+
+<div class="job searchable">
+<div class="company-row">
+<img src="https://picsum.photos/100?5">
+<div>
+<div class="job-title">Node JS Developer</div>
+<div class="company">Freshworks • Remote</div>
+</div>
+</div>
+<div class="job-details">
+💰 ₹11 LPA <br>
+🧑 Experience: 4 Years <br>
+🏢 Remote
+</div>
+<div class="post-date">Posted 5 days ago</div>
+<div class="action-row">
+<button class="action-btn apply-btn">Apply</button>
+<button class="action-btn interested-btn">Interested</button>
+<button class="icon-btn like-btn">❤️</button>
+<button class="icon-btn share-btn">🔗</button>
+<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
+</div>
+</div>
+
+<!-- JOB 6 -->
+
+<div class="job searchable">
+<div class="company-row">
+<img src="https://picsum.photos/100?6">
+<div>
+<div class="job-title">Java Developer</div>
+<div class="company">HCL • Chennai</div>
+</div>
+</div>
+<div class="job-details">
+💰 ₹8.5 LPA <br>
+🧑 Experience: 2 Years <br>
+🏢 Hybrid
+</div>
+<div class="post-date">Posted 1 week ago</div>
+<div class="action-row">
+<button class="action-btn apply-btn">Apply</button>
+<button class="action-btn interested-btn">Interested</button>
+<button class="icon-btn like-btn">❤️</button>
+<button class="icon-btn share-btn">🔗</button>
+<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
+</div>
+</div>
+
+<!-- JOB 7 -->
+
+<div class="job searchable">
+<div class="company-row">
+<img src="https://picsum.photos/100?7">
+<div>
+<div class="job-title">AWS Cloud Engineer</div>
+<div class="company">Amazon • Hyderabad</div>
+</div>
+</div>
+<div class="job-details">
+💰 ₹18 LPA <br>
+🧑 Experience: 5 Years <br>
+🏢 Full Time
+</div>
+<div class="post-date">Posted today</div>
+<div class="action-row">
+<button class="action-btn apply-btn">Apply</button>
+<button class="action-btn interested-btn">Interested</button>
+<button class="icon-btn like-btn">❤️</button>
+<button class="icon-btn share-btn">🔗</button>
+<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
+</div>
+</div>
+
+<!-- JOB 8 -->
+
+<div class="job searchable">
+<div class="company-row">
+<img src="https://picsum.photos/100?8">
+<div>
+<div class="job-title">Graphic Designer</div>
+<div class="company">Canva • Remote</div>
+</div>
+</div>
+<div class="job-details">
+💰 ₹6 LPA <br>
+🧑 Experience: 1 Year <br>
+🏢 Remote
+</div>
+<div class="post-date">Posted today</div>
+<div class="action-row">
+<button class="action-btn apply-btn">Apply</button>
+<button class="action-btn interested-btn">Interested</button>
+<button class="icon-btn like-btn">❤️</button>
+<button class="icon-btn share-btn">🔗</button>
+<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
+</div>
+</div>
+
+<!-- JOB 9 -->
+
+<div class="job searchable">
+<div class="company-row">
+<img src="https://picsum.photos/100?9">
+<div>
+<div class="job-title">DevOps Engineer</div>
+<div class="company">Google • Bangalore</div>
+</div>
+</div>
+<div class="job-details">
+💰 ₹22 LPA <br>
+🧑 Experience: 6 Years <br>
+🏢 Full Time
+</div>
+<div class="post-date">Posted 2 hours ago</div>
+<div class="action-row">
+<button class="action-btn apply-btn">Apply</button>
+<button class="action-btn interested-btn">Interested</button>
+<button class="icon-btn like-btn">❤️</button>
+<button class="icon-btn share-btn">🔗</button>
+<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
+</div>
+</div>
+
+<!-- JOB 10 -->
+
+<div class="job searchable">
+<div class="company-row">
+<img src="https://picsum.photos/100?10">
+<div>
+<div class="job-title">Data Analyst</div>
+<div class="company">Accenture • Pune</div>
+</div>
+</div>
+<div class="job-details">
+💰 ₹7.5 LPA <br>
+🧑 Experience: Fresher <br>
+🏢 Hybrid
+</div>
+<div class="post-date">Posted yesterday</div>
+<div class="action-row">
+<button class="action-btn apply-btn">Apply</button>
+<button class="action-btn interested-btn">Interested</button>
+<button class="icon-btn like-btn">❤️</button>
+<button class="icon-btn share-btn">🔗</button>
+<button class="icon-btn whatsapp-btn"><i class="fab fa-whatsapp"></i></button>
+</div>
+</div>
+
+<script>
+
+function toggleSection(id,btn){
+
+    let sections =
+    document.querySelectorAll(".section");
+
+    sections.forEach(section=>{
+        section.style.display="none";
+    });
+
+    let buttons =
+    document.querySelectorAll(".top-btn");
+
+    buttons.forEach(button=>{
+        button.classList.remove("active-btn");
+    });
+
+    document.getElementById(id)
+    .style.display="block";
+
+    btn.classList.add("active-btn");
+}
+
+function searchJobs(){
+
+    let input =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+    let jobs =
+    document.querySelectorAll(".searchable");
+
+    jobs.forEach(job=>{
+
+        let text =
+        job.innerText.toLowerCase();
+
+        if(text.includes(input)){
+
+            job.style.display="block";
+
+        }else{
+
+            job.style.display="none";
+
+        }
+
+    });
+
+}
+
+</script>
 
 </body>
+
 </html>
