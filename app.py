@@ -69,5 +69,66 @@ def marketplace():
 def jobs():
     return render_template('jobs.html')
 
+@app.route("/profile/<username>")
+def profile(username):
+
+    users = {
+
+        "sudhakar": {
+            "name": "Sudhakar",
+            "bio": "Welcome to my Pathukkalam profile 🚀 Web App Developer • Tech Lover",
+            "profile": "https://i.pravatar.cc/300?img=10",
+            "cover": "https://picsum.photos/800/300?1",
+            "posts": 120,
+            "followers": "5K",
+            "following": 500,
+
+            "photos": [
+                "https://picsum.photos/300/300?1",
+                "https://picsum.photos/300/300?2",
+                "https://picsum.photos/300/300?3",
+                "https://picsum.photos/300/300?4",
+                "https://picsum.photos/300/300?5",
+                "https://picsum.photos/300/300?6"
+            ]
+        },
+
+        "arun": {
+            "name": "Arun",
+            "bio": "Traveler ✈️ Nature Lover 🌿",
+            "profile": "https://i.pravatar.cc/300?img=12",
+            "cover": "https://picsum.photos/800/300?2",
+            "posts": 55,
+            "followers": "2K",
+            "following": 180,
+
+            "photos": [
+                "https://picsum.photos/300/300?11",
+                "https://picsum.photos/300/300?12",
+                "https://picsum.photos/300/300?13",
+                "https://picsum.photos/300/300?14",
+                "https://picsum.photos/300/300?15",
+                "https://picsum.photos/300/300?16"
+            ]
+        }
+
+    }
+
+    user = users.get(username)
+
+    if not user:
+        return "User not found"
+
+    current_user = "sudhakar"
+
+    is_own_profile = username == current_user
+
+    return render_template(
+        "profile.html",
+        user=user,
+        username=username,
+        is_own_profile=is_own_profile
+    )
+
 if __name__ == '__main__':
     app.run(debug=True)
