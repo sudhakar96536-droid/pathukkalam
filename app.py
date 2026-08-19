@@ -1,6 +1,15 @@
+import os
+import psycopg2
+
 from flask import Flask, render_template
 
 app = Flask(__name__)
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+
+def get_db_connection():
+    return psycopg2.connect(DATABASE_URL)
 
 posts = [
 
@@ -182,6 +191,29 @@ def user_profile(username):
         username=username,
         is_own_profile=is_own_profile
     )
+
+@app.route('/db-test')
+def db_test():
+
+    try:
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT current_database();")
+
+        database_name = cursor.fetchone()[0]
+
+        cursor.close()
+        conn.close()
+
+        return f"Database connected successfully: {database_name}"
+
+    except Exception as e:
+
+        return f"Database connection failed: {e}"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
