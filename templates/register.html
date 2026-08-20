@@ -152,57 +152,82 @@ body{
 
     </div>
 
-    <form>
-
+    <form id="registerForm">
+    
         <div class="input-box">
-
+    
             <label>Full Name</label>
-
-            <input type="text"
-            placeholder="Enter your full name">
-
+    
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Enter your full name"
+                required>
+    
         </div>
-
+    
         <div class="input-box">
-
+    
             <label>Username</label>
-
-            <input type="text"
-            placeholder="@username">
-
+    
+            <input
+                type="text"
+                id="username"
+                placeholder="@username"
+                required>
+    
         </div>
-
+    
         <div class="input-box">
-
+    
             <label>Mobile Number</label>
-
-            <input type="text"
-            placeholder="Enter mobile number">
-
+    
+            <input
+                type="text"
+                id="mobile"
+                placeholder="Enter mobile number"
+                required>
+    
         </div>
-
+    
         <div class="input-box">
-
+    
             <label>Email Address</label>
-
-            <input type="email"
-            placeholder="Enter email">
-
+    
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter email"
+                required>
+    
         </div>
-
+    
         <div class="input-box">
-
+    
             <label>Password</label>
-
-            <input type="password"
-            placeholder="Create password">
-
+    
+            <input
+                type="password"
+                id="password"
+                placeholder="Create password"
+                required
+                minlength="6">
+    
         </div>
-
-        <button class="register-btn">
+    
+        <button
+            type="submit"
+            class="register-btn"
+            id="registerBtn">
+    
             Create Account
+    
         </button>
-
+    
+        <p id="registerMessage"
+           style="text-align:center;margin-top:15px;">
+        </p>
+    
     </form>
 
     <div class="features">
@@ -246,5 +271,122 @@ body{
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL = "https://jxpvkamxtedgzztozonl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+
+document.getElementById("registerForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        const fullName =
+            document.getElementById("fullName").value.trim();
+
+        const username =
+            document.getElementById("username").value.trim()
+            .replace("@", "")
+            .toLowerCase();
+
+        const mobile =
+            document.getElementById("mobile").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const button =
+            document.getElementById("registerBtn");
+
+        const message =
+            document.getElementById("registerMessage");
+
+
+        button.disabled = true;
+
+        button.innerText = "Creating Account...";
+
+        message.innerText = "";
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.auth.signUp({
+
+                    email: email,
+
+                    password: password,
+
+                    options: {
+
+                        emailRedirectTo:
+                            "http://127.0.0.1:5000/",
+
+                        data: {
+
+                            full_name: fullName,
+
+                            username: username,
+
+                            mobile: mobile
+
+                        }
+
+                    }
+
+                });
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            message.style.color = "green";
+
+            message.innerText =
+                "Account created successfully!";
+
+
+            console.log("Supabase user:", data.user);
+
+
+        } catch (error) {
+
+            message.style.color = "red";
+
+            message.innerText = error.message;
+
+        }
+
+
+        button.disabled = false;
+
+        button.innerText = "Create Account";
+
+    }
+
+);
+
+</script>
+
+    
 </body>
 </html>
