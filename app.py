@@ -9,6 +9,12 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 def get_db_connection():
+
+    if not DATABASE_URL:
+        raise RuntimeError(
+            "DATABASE_URL environment variable is not set"
+        )
+
     return psycopg2.connect(DATABASE_URL)
 
 posts = [
@@ -91,6 +97,10 @@ def profile():
 @app.route('/register')
 def register():
     return render_template('register.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 @app.route('/rides')
 def rides():
@@ -214,6 +224,75 @@ def db_test():
 
         return f"Database connection failed: {e}"
 
+@app.route('/api/user-email/<username>')
+def get_user_email(username):
+
+    try:
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            SELECT id
+            FROM public.profiles
+            WHERE LOWER(username) = LOWER(%s)
+            """,
+            (username,)
+        )
+
+        user = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        if not user:
+
+            return {
+                "error": "Username not found"
+            }, 404
+
+
+        user_id = user[0]
+
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            SELECT email
+            FROM auth.users
+            WHERE id = %s
+            """,
+            (str(user_id),)
+        )
+
+        result = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+
+        if not result:
+
+            return {
+                "error": "User account not found"
+            }, 404
+
+
+        return {
+            "email": result[0]
+        }
+
+
+    except Exception as e:
+
+        return {
+            "error": str(e)
+        }, 500
 
 if __name__ == '__main__':
     app.run(debug=True)
