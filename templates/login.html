@@ -213,6 +213,9 @@ const supabaseClient =
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
+    
+console.log("Supabase client ready");
+    
 
 
 document.getElementById("loginForm").addEventListener(
@@ -290,27 +293,27 @@ document.getElementById("loginForm").addEventListener(
 
 
             if(error){
-
+            
                 throw error;
-
+            
             }
-
-
+            
+            
+            console.log("Logged in user:", data.user);
+            
+            console.log("Session:", data.session);
+            
+            
             message.style.color = "green";
-
+            
             message.innerText =
                 "Login successful!";
-
-
-            /*
-             Give Supabase a moment to
-             establish the session.
-            */
-
+            
+            
             setTimeout(function(){
-
+            
                 window.location.href = "/";
-
+            
             }, 500);
 
 
