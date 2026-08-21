@@ -125,83 +125,83 @@ def news():
 @app.route("/profile/<username>")
 def user_profile(username):
 
-    users = {
+    try:
 
-        "sudhakar": {
-            "name": "Sudhakar",
-            "bio": "Welcome to my Pathukkalam profile 🚀 Web App Developer • Tech Lover",
-            "profile": "https://i.pravatar.cc/300?img=10",
-            "cover": "https://picsum.photos/800/300?1",
-            "posts": 120,
-            "followers": "5K",
-            "following": 500,
+        conn = get_db_connection()
 
-            "photos": [
-                "https://picsum.photos/300/300?1",
-                "https://picsum.photos/300/300?2",
-                "https://picsum.photos/300/300?3",
-                "https://picsum.photos/300/300?4",
-                "https://picsum.photos/300/300?5",
-                "https://picsum.photos/300/300?6"
-            ]
-        },
+        cursor = conn.cursor()
 
-        "arun": {
-            "name": "Arun",
-            "bio": "Traveler ✈️ Nature Lover 🌿",
-            "profile": "https://i.pravatar.cc/300?img=12",
-            "cover": "https://picsum.photos/800/300?2",
-            "posts": 55,
-            "followers": "2K",
-            "following": 180,
+        cursor.execute(
+            """
+            SELECT
+                id,
+                username,
+                name,
+                bio,
+                profile_url,
+                cover_url,
+                mobile
+            FROM public.profiles
+            WHERE LOWER(username) = LOWER(%s)
+            """,
+            (username,)
+        )
 
-            "photos": [
-                "https://picsum.photos/300/300?11",
-                "https://picsum.photos/300/300?12",
-                "https://picsum.photos/300/300?13",
-                "https://picsum.photos/300/300?14",
-                "https://picsum.photos/300/300?15",
-                "https://picsum.photos/300/300?16"
-            ]
-        },
+        result = cursor.fetchone()
 
-        "vijay": {
-            "name": "Vijay",
-            "bio": "Tech Creator 💻",
-            "profile": "https://i.pravatar.cc/300?img=13",
-            "cover": "https://picsum.photos/800/300?3",
-            "posts": 88,
-            "followers": "3K",
-            "following": 220,
+        cursor.close()
+        conn.close()
 
-            "photos": [
-                "https://picsum.photos/300/300?21",
-                "https://picsum.photos/300/300?22",
-                "https://picsum.photos/300/300?23",
-                "https://picsum.photos/300/300?24",
-                "https://picsum.photos/300/300?25",
-                "https://picsum.photos/300/300?26"
-            ]
+
+        if not result:
+
+            return "User not found", 404
+
+
+        user = {
+
+            "id": result[0],
+
+            "username": result[1],
+
+            "name": result[2],
+
+            "bio": result[3],
+
+            "profile": result[4],
+
+            "cover": result[5],
+
+            "mobile": result[6],
+
+            "posts": 0,
+
+            "followers": 0,
+
+            "following": 0,
+
+            "photos": []
+
         }
 
-    }
 
-    user = users.get(username)
+        current_user = None
 
-    if not user:
-        return "User not found"
+        is_own_profile = False
 
-    current_user = "sudhakar"
 
-    is_own_profile = username == current_user
+        return render_template(
+            "profile.html",
+            user=user,
+            username=username,
+            is_own_profile=is_own_profile
+        )
 
-    return render_template(
-        "profile.html",
-        user=user,
-        username=username,
-        is_own_profile=is_own_profile
-    )
 
+    except Exception as e:
+
+        return f"Profile loading failed: {e}", 500
+        
 @app.route('/db-test')
 def db_test():
 
