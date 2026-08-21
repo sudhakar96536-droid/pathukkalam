@@ -131,6 +131,11 @@ def user_profile(username):
 
         cursor = conn.cursor()
 
+
+        # -----------------------------------------
+        # 1. GET PROFILE
+        # -----------------------------------------
+
         cursor.execute(
             """
             SELECT
@@ -149,18 +154,99 @@ def user_profile(username):
 
         result = cursor.fetchone()
 
-        cursor.close()
-        conn.close()
-
 
         if not result:
+
+            cursor.close()
+            conn.close()
 
             return "User not found", 404
 
 
+        user_id = result[0]
+
+
+        # -----------------------------------------
+        # 2. GET POST COUNT
+        # -----------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(*)
+            FROM public.posts
+            WHERE user_id = %s
+            """,
+            (user_id,)
+        )
+
+        posts_count = cursor.fetchone()[0]
+
+
+        # -----------------------------------------
+        # 3. GET FOLLOWERS COUNT
+        # -----------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(*)
+            FROM public.followers
+            WHERE following_id = %s
+            """,
+            (user_id,)
+        )
+
+        followers_count = cursor.fetchone()[0]
+
+
+        # -----------------------------------------
+        # 4. GET FOLLOWING COUNT
+        # -----------------------------------------
+
+        cursor.execute(
+            """
+            SELECT COUNT(*)
+            FROM public.followers
+            WHERE follower_id = %s
+            """,
+            (user_id,)
+        )
+
+        following_count = cursor.fetchone()[0]
+
+
+        # -----------------------------------------
+        # 5. GET PROFILE PHOTOS
+        # -----------------------------------------
+
+        cursor.execute(
+            """
+            SELECT photo_url
+            FROM public.profile_photos
+            WHERE user_id = %s
+            ORDER BY sort_order ASC, created_at ASC
+            """,
+            (user_id,)
+        )
+
+        photo_rows = cursor.fetchall()
+
+        photos = [
+            row[0]
+            for row in photo_rows
+        ]
+
+
+        cursor.close()
+        conn.close()
+
+
+        # -----------------------------------------
+        # 6. CREATE TEMPLATE USER OBJECT
+        # -----------------------------------------
+
         user = {
 
-            "id": result[0],
+            "id": user_id,
 
             "username": result[1],
 
@@ -174,18 +260,26 @@ def user_profile(username):
 
             "mobile": result[6],
 
-            "posts": 0,
+            "posts": posts_count,
 
-            "followers": 0,
+            "followers": followers_count,
 
-            "following": 0,
+            "following": following_count,
 
-            "photos": []
+            "photos": photos
 
         }
 
 
-        current_user = None
+        # -----------------------------------------
+        # 7. CURRENT USER
+        # -----------------------------------------
+        #
+        # For now we don't yet identify the
+        # logged-in Supabase user inside Flask.
+        #
+        # So keep this false temporarily.
+        #
 
         is_own_profile = False
 
@@ -193,7 +287,7 @@ def user_profile(username):
         return render_template(
             "profile.html",
             user=user,
-            username=username,
+            username=user["username"],
             is_own_profile=is_own_profile
         )
 
