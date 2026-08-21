@@ -5,7 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Create Post - Pathukkalam</title>
 
@@ -75,7 +76,7 @@ body{
     font-size:16px;
 }
 
-/* TEXT AREA */
+/* POST AREA */
 
 .post-box{
     background:white;
@@ -91,6 +92,20 @@ body{
     font-size:18px;
     background:white;
     color:#222;
+}
+
+/* IMAGE PREVIEW */
+
+.image-preview{
+    display:none;
+    margin-top:15px;
+}
+
+.image-preview img{
+    width:100%;
+    max-height:400px;
+    object-fit:cover;
+    border-radius:12px;
 }
 
 /* BOTTOM TOOLS */
@@ -118,6 +133,7 @@ body{
     align-items:center;
     font-size:13px;
     color:#444;
+    cursor:pointer;
 }
 
 .tool-btn i{
@@ -134,10 +150,17 @@ body{
     color:white;
     font-size:17px;
     font-weight:bold;
+    cursor:pointer;
 }
 
-.post-submit:active{
-    transform:scale(0.98);
+.post-submit:disabled{
+    opacity:0.6;
+}
+
+.message{
+    text-align:center;
+    margin-top:12px;
+    font-size:14px;
 }
 
 .hidden-input{
@@ -166,41 +189,63 @@ body{
 
 </div>
 
+
 <!-- USER -->
 
 <div class="user-box">
 
-    <img src="https://i.pravatar.cc/150?img=10">
+    <img
+        id="userProfile"
+        src="https://i.pravatar.cc/150?img=10">
 
-    <div class="user-name">
-        Sudhakar
+    <div
+        class="user-name"
+        id="userName">
+
+        Loading...
+
     </div>
 
 </div>
+
 
 <!-- POST AREA -->
 
 <div class="post-box">
 
-    <form method="POST" enctype="multipart/form-data">
-    
-        <textarea
-        name="caption"
-        placeholder="What's happening in Pathukkalam?"></textarea>
-    
-        <input type="file"
-        name="image"
+    <textarea
+        id="caption"
+        placeholder="What's happening in Pathukkalam?">
+    </textarea>
+
+
+    <!-- IMAGE PREVIEW -->
+
+    <div
+        id="imagePreview"
+        class="image-preview">
+
+        <img
+            id="previewImage"
+            src="">
+
+    </div>
+
+
+    <input
+        type="file"
+        id="imageInput"
+        class="hidden-input"
         accept="image/*">
-    
-        <br><br>
-    
-        <button class="post-submit">
-            Post Now
-        </button>
-    
-    </form>
+
+
+    <div
+        id="message"
+        class="message">
+    </div>
 
 </div>
+
 
 <!-- BOTTOM OPTIONS -->
 
@@ -208,17 +253,16 @@ body{
 
     <div class="tool-options">
 
-        <label class="tool-btn">
+        <label
+            class="tool-btn"
+            for="imageInput">
 
             <i class="fas fa-image"></i>
 
             <span>Photo</span>
 
-            <input type="file"
-            accept="image/*"
-            class="hidden-input">
-
         </label>
+
 
         <label class="tool-btn">
 
@@ -226,11 +270,8 @@ body{
 
             <span>Video</span>
 
-            <input type="file"
-            accept="video/*"
-            class="hidden-input">
-
         </label>
+
 
         <label class="tool-btn">
 
@@ -238,18 +279,335 @@ body{
 
             <span>Document</span>
 
-            <input type="file"
-            class="hidden-input">
-
         </label>
 
     </div>
 
-    <button class="post-submit">
+
+    <button
+        id="postButton"
+        class="post-submit">
+
         Post Now
+
     </button>
 
 </div>
 
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* -----------------------------------------
+   LOAD CURRENT USER
+----------------------------------------- */
+
+async function loadUser(){
+
+    const {
+        data: {
+            user
+        }
+    } =
+    await supabaseClient.auth.getUser();
+
+
+    if(!user){
+
+        window.location.href = "/login";
+
+        return;
+
+    }
+
+
+    console.log(
+        "Logged in user:",
+        user
+    );
+
+
+    /* Get profile */
+
+    const {
+        data: profile,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "name, username, profile_url"
+        )
+        .eq(
+            "id",
+            user.id
+        )
+        .single();
+
+
+    if(error){
+
+        console.error(
+            "Profile loading error:",
+            error
+        );
+
+        document.getElementById(
+            "userName"
+        ).innerText =
+            user.email;
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "userName"
+    ).innerText =
+        profile.name || profile.username;
+
+
+    if(profile.profile_url){
+
+        document.getElementById(
+            "userProfile"
+        ).src =
+            profile.profile_url;
+
+    }
+
+}
+
+
+/* -----------------------------------------
+   IMAGE PREVIEW
+----------------------------------------- */
+
+document.getElementById(
+    "imageInput"
+).addEventListener(
+    "change",
+    function(){
+
+        const file =
+            this.files[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(event){
+
+                document.getElementById(
+                    "previewImage"
+                ).src =
+                    event.target.result;
+
+
+                document.getElementById(
+                    "imagePreview"
+                ).style.display =
+                    "block";
+
+            };
+
+
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+/* -----------------------------------------
+   CREATE POST
+----------------------------------------- */
+
+document.getElementById(
+    "postButton"
+).addEventListener(
+    "click",
+    async function(){
+
+        const button =
+            document.getElementById(
+                "postButton"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        const caption =
+            document.getElementById(
+                "caption"
+            ).value.trim();
+
+
+        if(!caption){
+
+            message.style.color =
+                "red";
+
+            message.innerText =
+                "Please write something first.";
+
+            return;
+
+        }
+
+
+        button.disabled = true;
+
+        button.innerText =
+            "Posting...";
+
+
+        message.innerText = "";
+
+
+        try{
+
+            /* Get logged in user */
+
+            const {
+                data: {
+                    user
+                }
+            } =
+            await supabaseClient.auth.getUser();
+
+
+            if(!user){
+
+                throw new Error(
+                    "Please login first."
+                );
+
+            }
+
+
+            /*
+             Insert post into
+             Supabase
+            */
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient
+                .from("posts")
+                .insert({
+
+                    user_id:
+                        user.id,
+
+                    caption:
+                        caption,
+
+                    image_url:
+                        null
+
+                })
+                .select()
+                .single();
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            console.log(
+                "Post created:",
+                data
+            );
+
+
+            message.style.color =
+                "green";
+
+            message.innerText =
+                "Post created successfully!";
+
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                        "/";
+
+                },
+                800
+            );
+
+
+        }
+        catch(error){
+
+            console.error(
+                "Post creation error:",
+                error
+            );
+
+
+            message.style.color =
+                "red";
+
+            message.innerText =
+                error.message;
+
+        }
+
+
+        button.disabled = false;
+
+        button.innerText =
+            "Post Now";
+
+    }
+);
+
+
+/* Load user */
+
+loadUser();
+
+</script>
+
 </body>
+
 </html>
