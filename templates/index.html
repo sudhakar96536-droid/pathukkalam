@@ -324,12 +324,16 @@ body{
 <div class="create-post">
 
     <div class="create-top">
-
-        <img src="https://i.pravatar.cc/150?img=10">
-
-        <input type="text"
-        placeholder="What's happening in Pathukkalam?">
-
+    
+        <img
+            class="current-user-profile"
+            src="https://i.pravatar.cc/150?img=10"
+            alt="Profile">
+    
+        <input
+            type="text"
+            placeholder="What's happening in Pathukkalam?">
+    
     </div>
 
 </div>
@@ -511,7 +515,9 @@ body{
 
     </a>
 
-    <a href="/profile/sudhakar" class="nav-item">
+    <a
+        href="/profile/sudhakar"
+        class="nav-item current-user-profile-link">
 
         <i class="fas fa-user"></i>
 
@@ -520,7 +526,169 @@ body{
     </a>
 
 </div>
+<!-- SUPABASE AUTH -->
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+async function loadCurrentUser() {
+
+    try {
+
+        /*
+         Get currently logged-in user
+        */
+
+        const {
+            data: {
+                user
+            },
+            error
+        } = await supabaseClient.auth.getUser();
+
+
+        /*
+         If there is no valid login,
+         send user to login page.
+        */
+
+        if (error || !user) {
+
+            window.location.href = "/login";
+
+            return;
+
+        }
+
+
+        console.log("Logged in Supabase user:", user);
+
+
+        /*
+         Get user's profile
+         from public.profiles
+        */
+
+        const {
+            data: profile,
+            error: profileError
+        } = await supabaseClient
+            .from("profiles")
+            .select("id, username, name, mobile, bio, profile")
+            .eq("id", user.id)
+            .single();
+
+
+        if (profileError) {
+
+            console.error(
+                "Profile loading error:",
+                profileError
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "Current Pathukkalam profile:",
+            profile
+        );
+
+
+        /*
+         Update profile picture
+        */
+
+        const profileImages =
+            document.querySelectorAll(
+                ".current-user-profile"
+            );
+
+
+        profileImages.forEach(function(img) {
+
+            if (profile.profile) {
+
+                img.src = profile.profile;
+
+            }
+
+        });
+
+
+        /*
+         Update current user's name
+        */
+
+        const currentUserNames =
+            document.querySelectorAll(
+                ".current-user-name"
+            );
+
+
+        currentUserNames.forEach(function(element) {
+
+            element.innerText =
+                profile.name || profile.username;
+
+        });
+
+
+        /*
+         Update profile links
+        */
+
+        const currentUserLinks =
+            document.querySelectorAll(
+                ".current-user-profile-link"
+            );
+
+
+        currentUserLinks.forEach(function(link) {
+
+            link.href =
+                "/profile/" +
+                encodeURIComponent(profile.username);
+
+        });
+
+
+    }
+    catch(error) {
+
+        console.error(
+            "User loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+/*
+Run after page loads
+*/
+
+loadCurrentUser();
+
+</script>
 <!-- SERVICE WORKER -->
 
 <script>
