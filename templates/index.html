@@ -449,12 +449,17 @@ body{
 
     </div>
 
-    <div class="post-text">
-        {{ post.caption }}
-    </div>
+<div class="post-text">
+    {{ post.caption }}
+</div>
 
-    <img class="post-image"
-    src="{{ post.image }}">
+{% if post.image %}
+
+<img class="post-image"
+     src="{{ post.image }}"
+     alt="Post image">
+
+{% endif %}
 
     <div class="post-actions">
     
