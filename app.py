@@ -47,7 +47,77 @@ posts = [
 
 @app.route('/')
 def home():
-    return render_template('index.html', posts=posts)
+
+    try:
+
+        conn = get_db_connection()
+
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            SELECT
+                p.id,
+                p.caption,
+                p.image_url,
+                p.created_at,
+
+                pr.username,
+                pr.name,
+                pr.profile_url
+
+            FROM public.posts p
+
+            LEFT JOIN public.profiles pr
+                ON p.user_id = pr.id
+
+            ORDER BY p.created_at DESC
+            """
+        )
+
+        rows = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+
+        posts = []
+
+        for row in rows:
+
+            posts.append({
+
+                "id": row[0],
+
+                "caption": row[1],
+
+                "image": row[2],
+
+                "created_at": row[3],
+
+                "username": row[4],
+
+                "name": row[5],
+
+                "profile": row[6]
+
+            })
+
+
+        return render_template(
+            'index.html',
+            posts=posts
+        )
+
+
+    except Exception as e:
+
+        print("Home posts loading error:", e)
+
+        return render_template(
+            'index.html',
+            posts=[]
+        )
 
 @app.route('/explore')
 def explore():
