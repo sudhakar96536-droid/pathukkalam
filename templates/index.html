@@ -410,7 +410,7 @@ body{
 
 
 /* ==========================================
-   COMMENT BOTTOM SHEET OVERLAY
+   COMMENT BOTTOM SHEET
 ========================================== */
 
 .comment-overlay{
@@ -430,11 +430,6 @@ body{
 
     display:block;
 }
-
-
-/* ==========================================
-   COMMENT SHEET
-========================================== */
 
 .comment-sheet{
 
@@ -763,10 +758,7 @@ body{
 
         <img
             class="logo-img"
-            src="{{ url_for(
-                'static',
-                filename='icon-192.png'
-            ) }}">
+            src="{{ url_for('static', filename='icon-192.png') }}">
 
         <div class="logo-text">
             Pathukkalam
@@ -1045,9 +1037,7 @@ body{
 
             <i class="far fa-thumbs-up"></i>
 
-            <span>
-                Like
-            </span>
+
 
             <span class="like-count">
                 0
@@ -1065,7 +1055,6 @@ body{
 
             <i class="far fa-comment"></i>
 
-
             <span class="comment-count">
                 0
             </span>
@@ -1075,13 +1064,13 @@ body{
 
         <!-- SHARE -->
 
-        <div style="cursor:pointer;">
+        <div
+            class="share-btn"
+            data-post-id="{{ post.id }}"
+            data-post-username="{{ post.username }}"
+            style="cursor:pointer;">
 
             <i class="far fa-share-square"></i>
-
-            <span>
-                Share
-            </span>
 
         </div>
 
@@ -1335,8 +1324,6 @@ async function loadCurrentUser(){
         );
 
 
-        /* LOAD PROFILE */
-
         const {
 
             data:profile,
@@ -1381,8 +1368,6 @@ async function loadCurrentUser(){
         );
 
 
-        /* PROFILE IMAGE */
-
         const profileImages =
             document.querySelectorAll(
                 ".current-user-profile"
@@ -1405,8 +1390,6 @@ async function loadCurrentUser(){
         );
 
 
-        /* CURRENT USER NAME */
-
         const currentUserNames =
             document.querySelectorAll(
                 ".current-user-name"
@@ -1423,8 +1406,6 @@ async function loadCurrentUser(){
             }
         );
 
-
-        /* PROFILE LINK */
 
         const currentUserLinks =
             document.querySelectorAll(
@@ -1489,8 +1470,6 @@ async function loadLikes(){
             button.dataset.postId;
 
 
-        /* TOTAL LIKES */
-
         const {
 
             count,
@@ -1540,8 +1519,6 @@ async function loadLikes(){
 
         }
 
-
-        /* CURRENT USER LIKE */
 
         const {
 
@@ -1661,8 +1638,6 @@ document.addEventListener(
         try{
 
 
-            /* CHECK EXISTING LIKE */
-
             const {
 
                 data:existingLike,
@@ -1695,8 +1670,6 @@ document.addEventListener(
             }
 
 
-            /* UNLIKE */
-
             if(existingLike){
 
                 const {
@@ -1721,9 +1694,6 @@ document.addEventListener(
                 }
 
             }
-
-
-            /* LIKE */
 
             else{
 
@@ -1908,8 +1878,6 @@ async function loadComments(
 
     }
 
-
-    /* GET COMMENTER PROFILES */
 
     const userIds =
         data.map(
@@ -2374,6 +2342,124 @@ document.getElementById(
             event.preventDefault();
 
             submitComment();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   SHARE POST
+========================================== */
+
+document.addEventListener(
+    "click",
+    async function(event){
+
+        const button =
+            event.target.closest(
+                ".share-btn"
+            );
+
+
+        if(!button){
+
+            return;
+
+        }
+
+
+        const postId =
+            button.dataset.postId;
+
+
+        /*
+        Real Pathukkalam
+        post URL
+        */
+
+        const shareUrl =
+            window.location.origin +
+            "/post/" +
+            postId;
+
+
+        const shareTitle =
+            "Pathukkalam";
+
+
+        const shareText =
+            "Check out this post on Pathukkalam 🚀";
+
+
+        try{
+
+
+            /*
+            Native mobile sharing
+            */
+
+            if(
+                navigator.share
+            ){
+
+                await navigator.share({
+
+                    title:
+                        shareTitle,
+
+                    text:
+                        shareText,
+
+                    url:
+                        shareUrl
+
+                });
+
+
+                console.log(
+                    "Post shared successfully"
+                );
+
+            }
+
+
+            /*
+            Desktop fallback
+            */
+
+            else{
+
+                await navigator.clipboard.writeText(
+                    shareUrl
+                );
+
+
+                alert(
+                    "Post link copied! 🔗"
+                );
+
+            }
+
+        }
+        catch(error){
+
+            /*
+            User cancelled sharing.
+            */
+
+            if(
+                error.name !==
+                "AbortError"
+            ){
+
+                console.error(
+                    "Share error:",
+                    error
+                );
+
+            }
 
         }
 
