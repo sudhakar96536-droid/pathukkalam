@@ -283,6 +283,62 @@ body{
     color:#1877f2;
 }
 
+.comments-section{
+    margin-top:12px;
+    border-top:1px solid #eee;
+    padding-top:10px;
+}
+
+.comments-list{
+    margin-bottom:10px;
+}
+
+.comment-item{
+    background:#f0f2f5;
+    border-radius:12px;
+    padding:8px 12px;
+    margin-bottom:7px;
+}
+
+.comment-user{
+    font-weight:bold;
+    font-size:13px;
+}
+
+.comment-text{
+    margin-top:3px;
+    font-size:14px;
+    color:#333;
+    word-break:break-word;
+}
+
+.comment-input-row{
+    display:flex;
+    gap:8px;
+}
+
+.comment-input{
+    flex:1;
+    border:1px solid #ddd;
+    border-radius:20px;
+    padding:10px 14px;
+    outline:none;
+}
+
+.comment-submit{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#1877f2;
+    color:white;
+    cursor:pointer;
+}
+
+.comment-submit:disabled{
+    opacity:0.6;
+}
+
 </style>
 
 </head>
@@ -476,12 +532,43 @@ body{
     
         </div>
     
-        <div style="cursor:pointer;">
-    
+        <div
+            class="comment-btn"
+            data-post-id="{{ post.id }}"
+            style="cursor:pointer;">
+        
             <i class="far fa-comment"></i>
-    
+        
             <span>Comment</span>
-    
+        
+            <span class="comment-count">0</span>
+        
+        </div>
+
+        <div
+            class="comments-section"
+            data-post-id="{{ post.id }}"
+            style="display:none;">
+        
+            <div class="comments-list"></div>
+        
+            <div class="comment-input-row">
+        
+                <input
+                    type="text"
+                    class="comment-input"
+                    placeholder="Write a comment..."
+                    maxlength="500">
+        
+                <button
+                    class="comment-submit">
+        
+                    <i class="fas fa-paper-plane"></i>
+        
+                </button>
+        
+            </div>
+        
         </div>
     
         <div style="cursor:pointer;">
@@ -1042,7 +1129,492 @@ document.addEventListener(
     }
 );
 
+/* ==========================================
+   COMMENTS
+========================================== */
 
+async function loadComments(postId, section) {
+
+    const list =
+        section.querySelector(
+            ".comments-list"
+        );
+
+
+    list.innerHTML =
+        "Loading comments...";
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("comments")
+        .select(`
+            id,
+            comment,
+            created_at,
+            user_id
+        `)
+        .eq(
+            "post_id",
+            postId
+        )
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Comments loading error:",
+            error
+        );
+
+        list.innerHTML =
+            "Unable to load comments.";
+
+        return;
+
+    }
+
+
+    if(!data.length){
+
+        list.innerHTML =
+            "<div style='color:gray;font-size:13px;'>No comments yet.</div>";
+
+        return;
+
+    }
+
+
+    /*
+    Get profile information
+    for commenters
+    */
+
+    const userIds =
+        data.map(
+            comment => comment.user_id
+        );
+
+
+    const {
+        data: profiles,
+        error: profileError
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "id, username, name, profile_url"
+        )
+        .in(
+            "id",
+            userIds
+        );
+
+
+    if(profileError){
+
+        console.error(
+            "Comment profile error:",
+            profileError
+        );
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    data.forEach(function(comment){
+
+        const profile =
+            profiles?.find(
+                p =>
+                    p.id ===
+                    comment.user_id
+            );
+
+
+        const name =
+            profile?.name ||
+            profile?.username ||
+            "User";
+
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+
+        item.className =
+            "comment-item";
+
+
+        item.innerHTML = `
+
+            <div class="comment-user">
+                ${escapeHtml(name)}
+            </div>
+
+            <div class="comment-text">
+                ${escapeHtml(comment.comment)}
+            </div>
+
+        `;
+
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+/* ==========================================
+   COMMENT COUNT
+========================================== */
+
+async function loadCommentCounts(){
+
+    const buttons =
+        document.querySelectorAll(
+            ".comment-btn"
+        );
+
+
+    for(const button of buttons){
+
+        const postId =
+            button.dataset.postId;
+
+
+        const {
+            count,
+            error
+        } =
+        await supabaseClient
+            .from("comments")
+            .select(
+                "*",
+                {
+                    count:"exact",
+                    head:true
+                }
+            )
+            .eq(
+                "post_id",
+                postId
+            );
+
+
+        if(error){
+
+            console.error(
+                "Comment count error:",
+                error
+            );
+
+            continue;
+
+        }
+
+
+        const countElement =
+            button.querySelector(
+                ".comment-count"
+            );
+
+
+        if(countElement){
+
+            countElement.innerText =
+                count || 0;
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================
+   OPEN / CLOSE COMMENTS
+========================================== */
+
+document.addEventListener(
+    "click",
+    async function(event){
+
+        const button =
+            event.target.closest(
+                ".comment-btn"
+            );
+
+
+        if(!button){
+
+            return;
+
+        }
+
+
+        const postId =
+            button.dataset.postId;
+
+
+        const section =
+            document.querySelector(
+                `.comments-section[data-post-id="${postId}"]`
+            );
+
+
+        if(!section){
+
+            return;
+
+        }
+
+
+        if(
+            section.style.display ===
+            "none"
+        ){
+
+            section.style.display =
+                "block";
+
+
+            await loadComments(
+                postId,
+                section
+            );
+
+        }
+        else{
+
+            section.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   SUBMIT COMMENT
+========================================== */
+
+document.addEventListener(
+    "click",
+    async function(event){
+
+        const button =
+            event.target.closest(
+                ".comment-submit"
+            );
+
+
+        if(!button){
+
+            return;
+
+        }
+
+
+        if(!currentUser){
+
+            alert(
+                "Please login to comment."
+            );
+
+            return;
+
+        }
+
+
+        const section =
+            button.closest(
+                ".comments-section"
+            );
+
+
+        const postId =
+            section.dataset.postId;
+
+
+        const input =
+            section.querySelector(
+                ".comment-input"
+            );
+
+
+        const commentText =
+            input.value.trim();
+
+
+        if(!commentText){
+
+            return;
+
+        }
+
+
+        button.disabled =
+            true;
+
+
+        try{
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient
+                .from("comments")
+                .insert({
+
+                    post_id:
+                        Number(postId),
+
+                    user_id:
+                        currentUser.id,
+
+                    comment:
+                        commentText
+
+                })
+                .select()
+                .single();
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            console.log(
+                "Comment created:",
+                data
+            );
+
+
+            input.value = "";
+
+
+            await loadComments(
+                postId,
+                section
+            );
+
+
+            await loadCommentCounts();
+
+        }
+        catch(error){
+
+            console.error(
+                "Comment error:",
+                error
+            );
+
+
+            alert(
+                "Unable to add comment: " +
+                error.message
+            );
+
+        }
+        finally{
+
+            button.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   ENTER KEY
+========================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key !==
+            "Enter"
+        ){
+
+            return;
+
+        }
+
+
+        if(
+            event.target.classList.contains(
+                "comment-input"
+            )
+        ){
+
+            event.preventDefault();
+
+
+            const section =
+                event.target.closest(
+                    ".comments-section"
+                );
+
+
+            const button =
+                section.querySelector(
+                    ".comment-submit"
+                );
+
+
+            button.click();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   HTML SAFETY
+========================================== */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value;
+
+
+    return div.innerHTML;
+
+}
+
+    
 /* ==========================================
    START
 ========================================== */
@@ -1052,6 +1624,8 @@ async function initializePage() {
     await loadCurrentUser();
 
     await loadLikes();
+
+    await loadCommentCounts();
 
 }
 
