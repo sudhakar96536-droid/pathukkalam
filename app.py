@@ -17,33 +17,7 @@ def get_db_connection():
 
     return psycopg2.connect(DATABASE_URL)
 
-posts = [
 
-    {
-        "name": "Sudhakar",
-        "username": "sudhakar",
-        "caption": "Welcome to Pathukkalam 🚀",
-        "image": "https://picsum.photos/500/300",
-        "profile": "https://i.pravatar.cc/150?img=10"
-    },
-
-    {
-        "name": "Arun",
-        "username": "arun",
-        "caption": "Modern PWA app running in Flask",
-        "image": "https://picsum.photos/500/301",
-        "profile": "https://i.pravatar.cc/150?img=11"
-    },
-
-    {
-        "name": "Vijay",
-        "username": "vijay",
-        "caption": "Installable Android-like web app",
-        "image": "https://picsum.photos/500/302",
-        "profile": "https://i.pravatar.cc/150?img=12"
-    }
-
-]
 
 @app.route('/')
 def home():
