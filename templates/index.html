@@ -21,7 +21,12 @@ content="#1877f2">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+
 <style>
+
+/* ==========================================
+   GLOBAL
+========================================== */
 
 *{
     margin:0;
@@ -35,17 +40,24 @@ body{
     padding-bottom:90px;
 }
 
-/* HEADER */
+
+/* ==========================================
+   HEADER
+========================================== */
 
 .header{
     background:white;
     padding:14px 16px;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
+
     position:sticky;
     top:0;
+
     z-index:1000;
+
     box-shadow:0 2px 5px rgba(0,0,0,0.08);
 }
 
@@ -57,8 +69,11 @@ body{
 .logo-img{
     width:42px;
     height:42px;
+
     border-radius:12px;
+
     margin-right:10px;
+
     object-fit:cover;
 }
 
@@ -76,17 +91,26 @@ body{
 .header-icons i{
     width:40px;
     height:40px;
+
     background:#f0f2f5;
+
     border-radius:50%;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     margin-left:10px;
+
     color:#333;
+
     font-size:18px;
 }
 
-/* CREATE POST */
+
+/* ==========================================
+   CREATE POST
+========================================== */
 
 .create-post{
     background:white;
@@ -102,180 +126,281 @@ body{
 .create-top img{
     width:45px;
     height:45px;
+
     border-radius:50%;
+
     margin-right:10px;
 }
 
 .create-top input{
     flex:1;
+
     border:none;
+
     background:#f0f2f5;
+
     padding:12px;
+
     border-radius:25px;
+
     outline:none;
+
     font-size:15px;
 }
 
-/* QUICK MENU */
+
+/* ==========================================
+   QUICK MENU
+========================================== */
 
 .quick-menu{
     display:flex;
     justify-content:space-around;
+
     padding:10px 5px;
+
     gap:5px;
 }
 
 .quick-card{
     text-decoration:none;
+
     color:#333;
+
     display:flex;
     flex-direction:column;
+
     align-items:center;
+
     font-size:12px;
 }
 
 .quick-card i{
     font-size:22px;
+
     margin-bottom:5px;
 }
 
-/* STORIES */
+
+/* ==========================================
+   STORIES
+========================================== */
 
 .stories{
     display:flex;
+
     overflow-x:auto;
+
     padding:10px;
+
     gap:10px;
 }
 
 .story{
     min-width:90px;
+
     background:white;
+
     border-radius:15px;
+
     overflow:hidden;
+
     box-shadow:0 2px 5px rgba(0,0,0,0.08);
 }
 
 .story img{
     width:100%;
     height:110px;
+
     object-fit:cover;
 }
 
 .story p{
     padding:8px;
+
     text-align:center;
+
     font-size:13px;
+
     font-weight:bold;
 }
 
-/* POSTS */
+
+/* ==========================================
+   POSTS
+========================================== */
 
 .post{
     background:white;
+
     margin-top:10px;
+
     padding:12px;
 }
 
 .post-header{
     display:flex;
+
     align-items:center;
+
     margin-bottom:10px;
 }
 
 .post-header img{
     width:48px;
     height:48px;
+
     border-radius:50%;
+
     margin-right:10px;
 }
 
 .post-user{
     font-weight:bold;
+
     font-size:15px;
 }
 
 .post-time{
     font-size:12px;
+
     color:gray;
+
     margin-top:2px;
 }
 
 .post-text{
     margin-bottom:12px;
+
     line-height:1.5;
+
     color:#222;
 }
 
 .post-image{
     width:100%;
+
     border-radius:12px;
+
     max-height:500px;
+
     object-fit:cover;
 }
 
+
+/* ==========================================
+   POST ACTIONS
+========================================== */
+
 .post-actions{
     display:flex;
+
     justify-content:space-around;
+
     margin-top:10px;
+
     padding-top:10px;
+
     border-top:1px solid #eee;
 }
 
 .post-actions div{
     color:#555;
+
     font-size:14px;
 }
 
-/* FLOATING BUTTON */
+
+/* ==========================================
+   FLOATING BUTTON
+========================================== */
 
 .new-post-btn{
     position:fixed;
+
     bottom:28px;
+
     left:50%;
+
     transform:translateX(-50%);
+
     width:62px;
     height:62px;
+
     border-radius:50%;
-    background:linear-gradient(135deg,#1877f2,#42a5ff);
+
+    background:
+        linear-gradient(
+            135deg,
+            #1877f2,
+            #42a5ff
+        );
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     color:white;
+
     font-size:28px;
+
     text-decoration:none;
-    box-shadow:0 5px 15px rgba(24,119,242,0.4);
+
+    box-shadow:
+        0 5px 15px
+        rgba(24,119,242,0.4);
+
     z-index:2000;
+
     border:4px solid white;
 }
 
-/* BOTTOM NAV */
+
+/* ==========================================
+   BOTTOM NAVIGATION
+========================================== */
 
 .bottom-nav{
     position:fixed;
+
     bottom:0;
     left:0;
+
     width:100%;
+
     background:white;
+
     display:flex;
+
     justify-content:space-evenly;
+
     align-items:center;
+
     padding:10px 0;
+
     border-top:1px solid #ddd;
+
     z-index:1000;
 }
 
 .nav-item{
     text-decoration:none;
+
     color:gray;
+
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
+
     font-size:12px;
 }
 
 .nav-item i{
     font-size:22px;
+
     margin-bottom:4px;
 }
 
@@ -283,76 +408,365 @@ body{
     color:#1877f2;
 }
 
-.comments-section{
-    margin-top:12px;
-    border-top:1px solid #eee;
-    padding-top:10px;
+
+/* ==========================================
+   COMMENT BOTTOM SHEET OVERLAY
+========================================== */
+
+.comment-overlay{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.45);
+
+    z-index:5000;
 }
 
-.comments-list{
-    margin-bottom:10px;
+.comment-overlay.active{
+
+    display:block;
 }
+
+
+/* ==========================================
+   COMMENT SHEET
+========================================== */
+
+.comment-sheet{
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    width:100%;
+
+    max-width:650px;
+
+    margin:auto;
+
+    height:min(75vh,650px);
+
+    background:white;
+
+    border-radius:
+        22px 22px 0 0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    box-shadow:
+        0 -5px 30px
+        rgba(0,0,0,0.18);
+
+    animation:
+        commentSheetUp
+        0.25s ease;
+}
+
+
+@keyframes commentSheetUp{
+
+    from{
+
+        transform:
+            translateY(100%);
+
+    }
+
+    to{
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================
+   COMMENT HEADER
+========================================== */
+
+.comment-sheet-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:16px 18px;
+
+    border-bottom:1px solid #eee;
+
+    flex-shrink:0;
+}
+
+.comment-sheet-title{
+
+    font-size:18px;
+
+    font-weight:bold;
+}
+
+.comment-close{
+
+    width:36px;
+    height:36px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f0f2f5;
+
+    color:#444;
+
+    font-size:17px;
+
+    cursor:pointer;
+}
+
+
+/* ==========================================
+   COMMENT LIST
+========================================== */
+
+.comment-sheet-list{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:15px 16px;
+}
+
+
+/* ==========================================
+   COMMENT ITEM
+========================================== */
 
 .comment-item{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-bottom:15px;
+}
+
+.comment-avatar{
+
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    flex-shrink:0;
+}
+
+.comment-content{
+
     background:#f0f2f5;
-    border-radius:12px;
-    padding:8px 12px;
-    margin-bottom:7px;
+
+    border-radius:16px;
+
+    padding:9px 13px;
+
+    max-width:
+        calc(100% - 50px);
 }
 
 .comment-user{
+
     font-weight:bold;
+
     font-size:13px;
+
+    color:#222;
 }
 
 .comment-text{
-    margin-top:3px;
+
+    margin-top:4px;
+
     font-size:14px;
+
+    line-height:1.4;
+
     color:#333;
+
     word-break:break-word;
 }
 
-.comment-input-row{
+
+/* ==========================================
+   NO COMMENTS
+========================================== */
+
+.no-comments{
+
+    height:100%;
+
     display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#888;
+
+    text-align:center;
+}
+
+.no-comments i{
+
+    font-size:42px;
+
+    margin-bottom:12px;
+
+    color:#bbb;
+}
+
+.no-comments-title{
+
+    font-weight:bold;
+
+    color:#555;
+
+    font-size:16px;
+}
+
+.no-comments-text{
+
+    margin-top:5px;
+
+    font-size:13px;
+}
+
+
+/* ==========================================
+   COMMENT INPUT
+========================================== */
+
+.comment-input-area{
+
+    padding:12px 14px;
+
+    border-top:1px solid #eee;
+
+    background:white;
+
+    flex-shrink:0;
+}
+
+.comment-input-row{
+
+    display:flex;
+
+    align-items:center;
+
     gap:8px;
 }
 
 .comment-input{
+
     flex:1;
-    border:1px solid #ddd;
-    border-radius:20px;
-    padding:10px 14px;
+
+    min-width:0;
+
+    border:none;
+
     outline:none;
+
+    background:#f0f2f5;
+
+    border-radius:22px;
+
+    padding:12px 15px;
+
+    font-size:14px;
 }
 
 .comment-submit{
+
     width:42px;
     height:42px;
+
     border:none;
+
     border-radius:50%;
+
     background:#1877f2;
+
     color:white;
+
     cursor:pointer;
+
+    flex-shrink:0;
+}
+
+.comment-submit:active{
+
+    transform:scale(0.94);
 }
 
 .comment-submit:disabled{
+
     opacity:0.6;
+}
+
+
+/* ==========================================
+   MOBILE COMMENT SHEET
+========================================== */
+
+@media(max-width:600px){
+
+    .comment-sheet{
+
+        height:78vh;
+
+        border-radius:
+            20px 20px 0 0;
+
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
 
-<!-- HEADER -->
+
+<!-- ==========================================
+     HEADER
+========================================== -->
 
 <div class="header">
 
     <div class="logo-section">
 
-        <img class="logo-img"
-        src="{{ url_for('static', filename='icon-192.png') }}">
+        <img
+            class="logo-img"
+            src="{{ url_for(
+                'static',
+                filename='icon-192.png'
+            ) }}">
 
         <div class="logo-text">
             Pathukkalam
@@ -360,12 +774,18 @@ body{
 
     </div>
 
+
     <div class="header-icons">
 
         <i class="fas fa-search"></i>
 
-        <a href="/messages"
-        style="text-decoration:none;color:inherit;">
+
+        <a
+            href="/messages"
+            style="
+                text-decoration:none;
+                color:inherit;
+            ">
 
             <i class="fas fa-message"></i>
 
@@ -375,274 +795,490 @@ body{
 
 </div>
 
-<!-- CREATE POST -->
+
+<!-- ==========================================
+     CREATE POST
+========================================== -->
 
 <div class="create-post">
 
     <div class="create-top">
-    
+
         <img
             class="current-user-profile"
             src="https://i.pravatar.cc/150?img=10"
             alt="Profile">
-    
+
         <input
             type="text"
             placeholder="What's happening in Pathukkalam?">
-    
+
     </div>
 
 </div>
 
-<!-- QUICK MENU -->
+
+<!-- ==========================================
+     QUICK MENU
+========================================== -->
 
 <div class="quick-menu">
 
-    <a href="/rides" class="quick-card">
-    
-        <div style="display:flex;gap:4px;align-items:center;">
-    
+
+    <a
+        href="/rides"
+        class="quick-card">
+
+        <div
+            style="
+                display:flex;
+                gap:4px;
+                align-items:center;
+            ">
+
             <i class="fas fa-car-side"></i>
-    
+
             <i class="fas fa-motorcycle"></i>
-    
+
         </div>
-    
-        <div>Ride Share</div>
-    
+
+        <div>
+            Ride Share
+        </div>
+
     </a>
 
-    <a href="/marketplace" class="quick-card">
+
+    <a
+        href="/marketplace"
+        class="quick-card">
 
         <i class="fas fa-store"></i>
 
-        <div>Marketplace</div>
+        <div>
+            Marketplace
+        </div>
 
     </a>
 
-    <a href="/reels" class="quick-card">
+
+    <a
+        href="/reels"
+        class="quick-card">
 
         <i class="fas fa-video"></i>
 
-        <div>Reels</div>
+        <div>
+            Reels
+        </div>
 
     </a>
 
-    <a href="/jobs" class="quick-card">
+
+    <a
+        href="/jobs"
+        class="quick-card">
 
         <i class="fas fa-briefcase"></i>
 
-        <div>Jobs</div>
+        <div>
+            Jobs
+        </div>
 
     </a>
-    <a href="/news" class="quick-card">
+
+
+    <a
+        href="/news"
+        class="quick-card">
 
         <i class="fas fa-newspaper"></i>
 
-    <div>News</div>
+        <div>
+            News
+        </div>
 
-</a>
-</a>
+    </a>
 
 </div>
 
-<!-- STORIES -->
+
+<!-- ==========================================
+     STORIES
+========================================== -->
 
 <div class="stories">
 
     <div class="story">
-        <img src="https://picsum.photos/200/300?1">
-        <p>Arun</p>
+
+        <img
+            src="https://picsum.photos/200/300?1">
+
+        <p>
+            Arun
+        </p>
+
     </div>
 
-    <div class="story">
-        <img src="https://picsum.photos/200/300?2">
-        <p>Rahul</p>
-    </div>
 
     <div class="story">
-        <img src="https://picsum.photos/200/300?3">
-        <p>Priya</p>
+
+        <img
+            src="https://picsum.photos/200/300?2">
+
+        <p>
+            Rahul
+        </p>
+
     </div>
 
+
     <div class="story">
-        <img src="https://picsum.photos/200/300?4">
-        <p>Vijay</p>
+
+        <img
+            src="https://picsum.photos/200/300?3">
+
+        <p>
+            Priya
+        </p>
+
+    </div>
+
+
+    <div class="story">
+
+        <img
+            src="https://picsum.photos/200/300?4">
+
+        <p>
+            Vijay
+        </p>
+
     </div>
 
 </div>
 
-<!-- POSTS -->
+
+<!-- ==========================================
+     POSTS
+========================================== -->
 
 {% for post in posts %}
 
 <div class="post">
 
+
+    <!-- POST HEADER -->
+
     <div class="post-header">
 
-        <a href="/profile/{{ post.username }}">
+        <a
+            href="/profile/{{ post.username }}">
 
-            <img src="{{ post.profile }}">
+            <img
+                src="{{ post.profile }}">
 
         </a>
 
+
         <div>
 
-            <a href="/profile/{{ post.username }}"
-            style="text-decoration:none;color:inherit;">
+            <a
+                href="/profile/{{ post.username }}"
+                style="
+                    text-decoration:none;
+                    color:inherit;
+                ">
 
                 <div class="post-user">
+
                     {{ post.name }}
+
                 </div>
 
             </a>
 
+
             <div class="post-time">
+
                 Trending Now
+
             </div>
 
         </div>
 
     </div>
 
-<div class="post-text">
-    {{ post.caption }}
-</div>
 
-{% if post.image %}
+    <!-- POST TEXT -->
 
-<img class="post-image"
-     src="{{ post.image }}"
-     alt="Post image">
+    <div class="post-text">
 
-{% endif %}
+        {{ post.caption }}
+
+    </div>
+
+
+    <!-- POST IMAGE -->
+
+    {% if post.image %}
+
+    <img
+        class="post-image"
+        src="{{ post.image }}"
+        alt="Post image">
+
+    {% endif %}
+
+
+    <!-- POST ACTIONS -->
 
     <div class="post-actions">
-    
+
+
+        <!-- LIKE -->
+
         <div
             class="like-btn"
             data-post-id="{{ post.id }}"
             style="cursor:pointer;">
-    
+
             <i class="far fa-thumbs-up"></i>
-    
-            <span>Like</span>
-    
-            <span class="like-count">0</span>
-    
+
+            <span>
+                Like
+            </span>
+
+            <span class="like-count">
+                0
+            </span>
+
         </div>
-    
+
+
+        <!-- COMMENT -->
+
         <div
             class="comment-btn"
             data-post-id="{{ post.id }}"
             style="cursor:pointer;">
-        
+
             <i class="far fa-comment"></i>
-        
-            <span>Comment</span>
-        
-            <span class="comment-count">0</span>
-        
+
+            <span>
+                Comment
+            </span>
+
+            <span class="comment-count">
+                0
+            </span>
+
         </div>
 
-        <div
-            class="comments-section"
-            data-post-id="{{ post.id }}"
-            style="display:none;">
-        
-            <div class="comments-list"></div>
-        
-            <div class="comment-input-row">
-        
-                <input
-                    type="text"
-                    class="comment-input"
-                    placeholder="Write a comment..."
-                    maxlength="500">
-        
-                <button
-                    class="comment-submit">
-        
-                    <i class="fas fa-paper-plane"></i>
-        
-                </button>
-        
-            </div>
-        
-        </div>
-    
+
+        <!-- SHARE -->
+
         <div style="cursor:pointer;">
-    
+
             <i class="far fa-share-square"></i>
-    
-            <span>Share</span>
-    
+
+            <span>
+                Share
+            </span>
+
         </div>
-    
+
     </div>
 
 </div>
 
 {% endfor %}
 
-<!-- FLOATING BUTTON -->
 
-<a href="/new-post" class="new-post-btn">
+<!-- ==========================================
+     COMMENT BOTTOM SHEET
+========================================== -->
+
+<div
+    id="commentOverlay"
+    class="comment-overlay">
+
+
+    <div
+        class="comment-sheet"
+        onclick="event.stopPropagation()">
+
+
+        <!-- COMMENT HEADER -->
+
+        <div class="comment-sheet-header">
+
+            <div class="comment-sheet-title">
+
+                <i class="far fa-comment"></i>
+
+                Comments
+
+                <span
+                    id="sheetCommentCount"
+                    style="
+                        color:#888;
+                        font-size:14px;
+                    ">
+
+                    0
+
+                </span>
+
+            </div>
+
+
+            <button
+                class="comment-close"
+                id="commentClose">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- COMMENTS LIST -->
+
+        <div
+            id="commentSheetList"
+            class="comment-sheet-list">
+
+        </div>
+
+
+        <!-- COMMENT INPUT -->
+
+        <div class="comment-input-area">
+
+            <div class="comment-input-row">
+
+                <input
+                    type="text"
+                    id="commentInput"
+                    class="comment-input"
+                    placeholder="Write a comment..."
+                    maxlength="500"
+                    autocomplete="off">
+
+
+                <button
+                    id="commentSubmit"
+                    class="comment-submit">
+
+                    <i class="fas fa-paper-plane"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     FLOATING BUTTON
+========================================== -->
+
+<a
+    href="/new-post"
+    class="new-post-btn">
 
     <i class="fas fa-plus"></i>
 
 </a>
 
-<!-- BOTTOM NAVIGATION -->
+
+<!-- ==========================================
+     BOTTOM NAVIGATION
+========================================== -->
 
 <div class="bottom-nav">
 
-    <a href="/" class="nav-item active">
+
+    <a
+        href="/"
+        class="nav-item active">
 
         <i class="fas fa-house"></i>
 
-        <span>Home</span>
+        <span>
+            Home
+        </span>
 
     </a>
 
-    <a href="/explore" class="nav-item">
+
+    <a
+        href="/explore"
+        class="nav-item">
 
         <i class="fas fa-compass"></i>
 
-        <span>Explore</span>
+        <span>
+            Explore
+        </span>
 
     </a>
 
-    <a href="/notifications" class="nav-item">
+
+    <a
+        href="/notifications"
+        class="nav-item">
 
         <i class="fas fa-bell"></i>
 
-        <span>Alerts</span>
+        <span>
+            Alerts
+        </span>
 
     </a>
 
+
     <a
         href="/profile/sudhakar"
-        class="nav-item current-user-profile-link">
+        class="
+            nav-item
+            current-user-profile-link
+        ">
 
         <i class="fas fa-user"></i>
 
-        <span>Profile</span>
+        <span>
+            Profile
+        </span>
 
     </a>
 
 </div>
-<!-- SUPABASE -->
+
+
+<!-- ==========================================
+     SUPABASE
+========================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
+
 
 const SUPABASE_URL =
     "https://jxpvkamxtedgzztozonl.supabase.co";
 
+
 const SUPABASE_ANON_KEY =
     "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
 
 const supabaseClient =
     supabase.createClient(
@@ -660,29 +1296,40 @@ let currentUser = null;
 let currentProfile = null;
 
 
-async function loadCurrentUser() {
+async function loadCurrentUser(){
 
-    try {
+    try{
+
 
         const {
-            data: {
+
+            data:{
                 user
             },
+
             error
+
         } =
-        await supabaseClient.auth.getUser();
+        await supabaseClient
+            .auth
+            .getUser();
 
 
-        if (error || !user) {
+        if(
+            error ||
+            !user
+        ){
 
-            window.location.href = "/login";
+            window.location.href =
+                "/login";
 
             return;
 
         }
 
 
-        currentUser = user;
+        currentUser =
+            user;
 
 
         console.log(
@@ -691,27 +1338,31 @@ async function loadCurrentUser() {
         );
 
 
-        /*
-        Load Pathukkalam profile
-        */
+        /* LOAD PROFILE */
 
         const {
-            data: profile,
-            error: profileError
+
+            data:profile,
+            error:profileError
+
         } =
         await supabaseClient
+
             .from("profiles")
+
             .select(
                 "id, username, name, mobile, bio, profile_url, cover_url"
             )
+
             .eq(
                 "id",
                 user.id
             )
+
             .single();
 
 
-        if (profileError) {
+        if(profileError){
 
             console.error(
                 "Profile loading error:",
@@ -723,7 +1374,8 @@ async function loadCurrentUser() {
         }
 
 
-        currentProfile = profile;
+        currentProfile =
+            profile;
 
 
         console.log(
@@ -732,9 +1384,7 @@ async function loadCurrentUser() {
         );
 
 
-        /*
-        Update current user's profile image
-        */
+        /* PROFILE IMAGE */
 
         const profileImages =
             document.querySelectorAll(
@@ -742,21 +1392,23 @@ async function loadCurrentUser() {
             );
 
 
-        profileImages.forEach(function(img) {
+        profileImages.forEach(
+            function(img){
 
-            if (profile.profile_url) {
+                if(
+                    profile.profile_url
+                ){
 
-                img.src =
-                    profile.profile_url;
+                    img.src =
+                        profile.profile_url;
+
+                }
 
             }
+        );
 
-        });
 
-
-        /*
-        Update current user's name
-        */
+        /* CURRENT USER NAME */
 
         const currentUserNames =
             document.querySelectorAll(
@@ -764,18 +1416,18 @@ async function loadCurrentUser() {
             );
 
 
-        currentUserNames.forEach(function(element) {
+        currentUserNames.forEach(
+            function(element){
 
-            element.innerText =
-                profile.name ||
-                profile.username;
+                element.innerText =
+                    profile.name ||
+                    profile.username;
 
-        });
+            }
+        );
 
 
-        /*
-        Update current user's profile link
-        */
+        /* PROFILE LINK */
 
         const currentUserLinks =
             document.querySelectorAll(
@@ -783,19 +1435,21 @@ async function loadCurrentUser() {
             );
 
 
-        currentUserLinks.forEach(function(link) {
+        currentUserLinks.forEach(
+            function(link){
 
-            link.href =
-                "/profile/" +
-                encodeURIComponent(
-                    profile.username
-                );
+                link.href =
+                    "/profile/" +
+                    encodeURIComponent(
+                        profile.username
+                    );
 
-        });
+            }
+        );
 
 
     }
-    catch(error) {
+    catch(error){
 
         console.error(
             "User loading error:",
@@ -811,7 +1465,7 @@ async function loadCurrentUser() {
    LOAD LIKE COUNTS
 ========================================== */
 
-async function loadLikes() {
+async function loadLikes(){
 
     const likeButtons =
         document.querySelectorAll(
@@ -819,50 +1473,52 @@ async function loadLikes() {
         );
 
 
-    if (!likeButtons.length) {
+    if(
+        !likeButtons.length ||
+        !currentUser
+    ){
 
         return;
 
     }
 
 
-    if (!currentUser) {
-
-        return;
-
-    }
-
-
-    for (const button of likeButtons) {
+    for(
+        const button
+        of likeButtons
+    ){
 
         const postId =
             button.dataset.postId;
 
 
-        /*
-        Get total likes
-        */
+        /* TOTAL LIKES */
 
         const {
+
             count,
-            error: countError
+            error:countError
+
         } =
         await supabaseClient
+
             .from("likes")
+
             .select(
                 "*",
                 {
-                    count: "exact",
-                    head: true
+                    count:"exact",
+                    head:true
                 }
             )
+
             .eq(
                 "post_id",
                 postId
             );
 
 
-        if (countError) {
+        if(countError){
 
             console.error(
                 "Like count error:",
@@ -880,7 +1536,7 @@ async function loadLikes() {
             );
 
 
-        if (countElement) {
+        if(countElement){
 
             countElement.innerText =
                 count || 0;
@@ -888,30 +1544,34 @@ async function loadLikes() {
         }
 
 
-        /*
-        Check whether current user
-        already liked this post
-        */
+        /* CURRENT USER LIKE */
 
         const {
-            data: myLike,
-            error: myLikeError
+
+            data:myLike,
+            error:myLikeError
+
         } =
         await supabaseClient
+
             .from("likes")
+
             .select("id")
+
             .eq(
                 "post_id",
                 postId
             )
+
             .eq(
                 "user_id",
                 currentUser.id
             )
+
             .maybeSingle();
 
 
-        if (myLikeError) {
+        if(myLikeError){
 
             console.error(
                 "My like check error:",
@@ -927,7 +1587,7 @@ async function loadLikes() {
             button.querySelector("i");
 
 
-        if (myLike) {
+        if(myLike){
 
             icon.className =
                 "fas fa-thumbs-up";
@@ -936,7 +1596,7 @@ async function loadLikes() {
                 "#1877f2";
 
         }
-        else {
+        else{
 
             icon.className =
                 "far fa-thumbs-up";
@@ -957,7 +1617,7 @@ async function loadLikes() {
 
 document.addEventListener(
     "click",
-    async function(event) {
+    async function(event){
 
         const button =
             event.target.closest(
@@ -965,18 +1625,14 @@ document.addEventListener(
             );
 
 
-        if (!button) {
+        if(!button){
 
             return;
 
         }
 
 
-        /*
-        User must be logged in
-        */
-
-        if (!currentUser) {
+        if(!currentUser){
 
             alert(
                 "Please login to like this post."
@@ -991,13 +1647,10 @@ document.addEventListener(
             button.dataset.postId;
 
 
-        /*
-        Prevent double-click
-        */
-
-        if (
-            button.dataset.processing === "true"
-        ) {
+        if(
+            button.dataset.processing ===
+            "true"
+        ){
 
             return;
 
@@ -1008,56 +1661,63 @@ document.addEventListener(
             "true";
 
 
-        try {
+        try{
 
-            /*
-            Check existing like
-            */
+
+            /* CHECK EXISTING LIKE */
 
             const {
-                data: existingLike,
-                error: checkError
+
+                data:existingLike,
+                error:checkError
+
             } =
             await supabaseClient
+
                 .from("likes")
+
                 .select("id")
+
                 .eq(
                     "post_id",
                     postId
                 )
+
                 .eq(
                     "user_id",
                     currentUser.id
                 )
+
                 .maybeSingle();
 
 
-            if (checkError) {
+            if(checkError){
 
                 throw checkError;
 
             }
 
 
-            /*
-            UNLIKE
-            */
+            /* UNLIKE */
 
-            if (existingLike) {
+            if(existingLike){
 
                 const {
                     error
                 } =
                 await supabaseClient
+
                     .from("likes")
+
                     .delete()
+
                     .eq(
                         "id",
                         existingLike.id
                     );
 
 
-                if (error) {
+                if(error){
 
                     throw error;
 
@@ -1066,17 +1726,17 @@ document.addEventListener(
             }
 
 
-            /*
-            LIKE
-            */
+            /* LIKE */
 
-            else {
+            else{
 
                 const {
                     error
                 } =
                 await supabaseClient
+
                     .from("likes")
+
                     .insert({
 
                         post_id:
@@ -1088,7 +1748,7 @@ document.addEventListener(
                     });
 
 
-                if (error) {
+                if(error){
 
                     throw error;
 
@@ -1097,15 +1757,10 @@ document.addEventListener(
             }
 
 
-            /*
-            Refresh counts and
-            button status
-            */
-
             await loadLikes();
 
         }
-        catch(error) {
+        catch(error){
 
             console.error(
                 "Like error:",
@@ -1119,7 +1774,7 @@ document.addEventListener(
             );
 
         }
-        finally {
+        finally{
 
             button.dataset.processing =
                 "false";
@@ -1129,42 +1784,70 @@ document.addEventListener(
     }
 );
 
+
 /* ==========================================
    COMMENTS
 ========================================== */
 
-async function loadComments(postId, section) {
+let activeCommentPostId =
+    null;
+
+
+/* ==========================================
+   LOAD COMMENTS
+========================================== */
+
+async function loadComments(
+    postId
+){
 
     const list =
-        section.querySelector(
-            ".comments-list"
+        document.getElementById(
+            "commentSheetList"
         );
 
 
-    list.innerHTML =
-        "Loading comments...";
+    list.innerHTML = `
+
+        <div class="no-comments">
+
+            <i class="far fa-comment"></i>
+
+            <div class="no-comments-title">
+                Loading comments...
+            </div>
+
+        </div>
+
+    `;
 
 
     const {
+
         data,
         error
+
     } =
     await supabaseClient
+
         .from("comments")
+
         .select(`
             id,
             comment,
             created_at,
             user_id
         `)
+
         .eq(
             "post_id",
             postId
         )
+
         .order(
             "created_at",
             {
-                ascending: true
+                ascending:true
             }
         );
 
@@ -1176,44 +1859,82 @@ async function loadComments(postId, section) {
             error
         );
 
-        list.innerHTML =
-            "Unable to load comments.";
+
+        list.innerHTML = `
+
+            <div class="no-comments">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                <div class="no-comments-title">
+                    Unable to load comments
+                </div>
+
+            </div>
+
+        `;
 
         return;
 
     }
 
 
-    if(!data.length){
+    document.getElementById(
+        "sheetCommentCount"
+    ).innerText =
+        data.length;
 
-        list.innerHTML =
-            "<div style='color:gray;font-size:13px;'>No comments yet.</div>";
+
+    if(
+        !data.length
+    ){
+
+        list.innerHTML = `
+
+            <div class="no-comments">
+
+                <i class="far fa-comment-dots"></i>
+
+                <div class="no-comments-title">
+                    No comments yet
+                </div>
+
+                <div class="no-comments-text">
+                    Be the first to comment
+                </div>
+
+            </div>
+
+        `;
 
         return;
 
     }
 
 
-    /*
-    Get profile information
-    for commenters
-    */
+    /* GET COMMENTER PROFILES */
 
     const userIds =
         data.map(
-            comment => comment.user_id
+            comment =>
+                comment.user_id
         );
 
 
     const {
-        data: profiles,
-        error: profileError
+
+        data:profiles,
+        error:profileError
+
     } =
     await supabaseClient
+
         .from("profiles")
+
         .select(
             "id, username, name, profile_url"
         )
+
         .in(
             "id",
             userIds
@@ -1233,54 +1954,80 @@ async function loadComments(postId, section) {
     list.innerHTML = "";
 
 
-    data.forEach(function(comment){
+    data.forEach(
+        function(comment){
 
-        const profile =
-            profiles?.find(
-                p =>
-                    p.id ===
-                    comment.user_id
+            const profile =
+                profiles?.find(
+                    p =>
+                        p.id ===
+                        comment.user_id
+                );
+
+
+            const name =
+                profile?.name ||
+                profile?.username ||
+                "User";
+
+
+            const avatar =
+                profile?.profile_url ||
+                "https://i.pravatar.cc/100";
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "comment-item";
+
+
+            item.innerHTML = `
+
+                <img
+                    class="comment-avatar"
+                    src="${escapeHtml(avatar)}"
+                    alt="Profile">
+
+
+                <div class="comment-content">
+
+                    <div class="comment-user">
+
+                        ${escapeHtml(name)}
+
+                    </div>
+
+
+                    <div class="comment-text">
+
+                        ${escapeHtml(
+                            comment.comment
+                        )}
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            list.appendChild(
+                item
             );
 
-
-        const name =
-            profile?.name ||
-            profile?.username ||
-            "User";
-
-
-        const item =
-            document.createElement(
-                "div"
-            );
-
-
-        item.className =
-            "comment-item";
-
-
-        item.innerHTML = `
-
-            <div class="comment-user">
-                ${escapeHtml(name)}
-            </div>
-
-            <div class="comment-text">
-                ${escapeHtml(comment.comment)}
-            </div>
-
-        `;
-
-
-        list.appendChild(item);
-
-    });
+        }
+    );
 
 }
 
 
 /* ==========================================
-   COMMENT COUNT
+   COMMENT COUNTS
 ========================================== */
 
 async function loadCommentCounts(){
@@ -1291,18 +2038,25 @@ async function loadCommentCounts(){
         );
 
 
-    for(const button of buttons){
+    for(
+        const button
+        of buttons
+    ){
 
         const postId =
             button.dataset.postId;
 
 
         const {
+
             count,
             error
+
         } =
         await supabaseClient
+
             .from("comments")
+
             .select(
                 "*",
                 {
@@ -1310,6 +2064,7 @@ async function loadCommentCounts(){
                     head:true
                 }
             )
+
             .eq(
                 "post_id",
                 postId
@@ -1347,7 +2102,7 @@ async function loadCommentCounts(){
 
 
 /* ==========================================
-   OPEN / CLOSE COMMENTS
+   OPEN COMMENT SHEET
 ========================================== */
 
 document.addEventListener(
@@ -1367,42 +2122,97 @@ document.addEventListener(
         }
 
 
-        const postId =
+        activeCommentPostId =
             button.dataset.postId;
 
 
-        const section =
-            document.querySelector(
-                `.comments-section[data-post-id="${postId}"]`
+        const overlay =
+            document.getElementById(
+                "commentOverlay"
             );
 
 
-        if(!section){
+        overlay.classList.add(
+            "active"
+        );
 
-            return;
 
-        }
+        document.body.style.overflow =
+            "hidden";
 
+
+        document.getElementById(
+            "commentInput"
+        ).value = "";
+
+
+        await loadComments(
+            activeCommentPostId
+        );
+
+
+        setTimeout(
+            function(){
+
+                document.getElementById(
+                    "commentInput"
+                ).focus();
+
+            },
+            300
+        );
+
+    }
+);
+
+
+/* ==========================================
+   CLOSE COMMENT SHEET
+========================================== */
+
+function closeCommentSheet(){
+
+    const overlay =
+        document.getElementById(
+            "commentOverlay"
+        );
+
+
+    overlay.classList.remove(
+        "active"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+
+    activeCommentPostId =
+        null;
+
+}
+
+
+document.getElementById(
+    "commentClose"
+).addEventListener(
+    "click",
+    closeCommentSheet
+);
+
+
+document.getElementById(
+    "commentOverlay"
+).addEventListener(
+    "click",
+    function(event){
 
         if(
-            section.style.display ===
-            "none"
+            event.target ===
+            this
         ){
 
-            section.style.display =
-                "block";
-
-
-            await loadComments(
-                postId,
-                section
-            );
-
-        }
-        else{
-
-            section.style.display =
-                "none";
+            closeCommentSheet();
 
         }
 
@@ -1414,179 +2224,159 @@ document.addEventListener(
    SUBMIT COMMENT
 ========================================== */
 
-document.addEventListener(
-    "click",
-    async function(event){
+async function submitComment(){
 
-        const button =
-            event.target.closest(
-                ".comment-submit"
-            );
+    if(!currentUser){
 
+        alert(
+            "Please login to comment."
+        );
 
-        if(!button){
-
-            return;
-
-        }
-
-
-        if(!currentUser){
-
-            alert(
-                "Please login to comment."
-            );
-
-            return;
-
-        }
-
-
-        const section =
-            button.closest(
-                ".comments-section"
-            );
-
-
-        const postId =
-            section.dataset.postId;
-
-
-        const input =
-            section.querySelector(
-                ".comment-input"
-            );
-
-
-        const commentText =
-            input.value.trim();
-
-
-        if(!commentText){
-
-            return;
-
-        }
-
-
-        button.disabled =
-            true;
-
-
-        try{
-
-            const {
-                data,
-                error
-            } =
-            await supabaseClient
-                .from("comments")
-                .insert({
-
-                    post_id:
-                        Number(postId),
-
-                    user_id:
-                        currentUser.id,
-
-                    comment:
-                        commentText
-
-                })
-                .select()
-                .single();
-
-
-            if(error){
-
-                throw error;
-
-            }
-
-
-            console.log(
-                "Comment created:",
-                data
-            );
-
-
-            input.value = "";
-
-
-            await loadComments(
-                postId,
-                section
-            );
-
-
-            await loadCommentCounts();
-
-        }
-        catch(error){
-
-            console.error(
-                "Comment error:",
-                error
-            );
-
-
-            alert(
-                "Unable to add comment: " +
-                error.message
-            );
-
-        }
-        finally{
-
-            button.disabled =
-                false;
-
-        }
+        return;
 
     }
+
+
+    if(!activeCommentPostId){
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "commentInput"
+        );
+
+
+    const button =
+        document.getElementById(
+            "commentSubmit"
+        );
+
+
+    const commentText =
+        input.value.trim();
+
+
+    if(!commentText){
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+
+    try{
+
+        const {
+
+            data,
+            error
+
+        } =
+        await supabaseClient
+
+            .from("comments")
+
+            .insert({
+
+                post_id:
+                    Number(
+                        activeCommentPostId
+                    ),
+
+                user_id:
+                    currentUser.id,
+
+                comment:
+                    commentText
+
+            })
+
+            .select()
+
+            .single();
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        console.log(
+            "Comment created:",
+            data
+        );
+
+
+        input.value = "";
+
+
+        await loadComments(
+            activeCommentPostId
+        );
+
+
+        await loadCommentCounts();
+
+    }
+    catch(error){
+
+        console.error(
+            "Comment error:",
+            error
+        );
+
+
+        alert(
+            "Unable to add comment: " +
+            error.message
+        );
+
+    }
+    finally{
+
+        button.disabled =
+            false;
+
+    }
+
+}
+
+
+document.getElementById(
+    "commentSubmit"
+).addEventListener(
+    "click",
+    submitComment
 );
 
 
 /* ==========================================
-   ENTER KEY
+   ENTER TO SEND COMMENT
 ========================================== */
 
-document.addEventListener(
+document.getElementById(
+    "commentInput"
+).addEventListener(
     "keydown",
     function(event){
 
         if(
-            event.key !==
+            event.key ===
             "Enter"
-        ){
-
-            return;
-
-        }
-
-
-        if(
-            event.target.classList.contains(
-                "comment-input"
-            )
         ){
 
             event.preventDefault();
 
-
-            const section =
-                event.target.closest(
-                    ".comments-section"
-                );
-
-
-            const button =
-                section.querySelector(
-                    ".comment-submit"
-                );
-
-
-            button.click();
+            submitComment();
 
         }
 
@@ -1614,12 +2404,12 @@ function escapeHtml(value){
 
 }
 
-    
+
 /* ==========================================
    START
 ========================================== */
 
-async function initializePage() {
+async function initializePage(){
 
     await loadCurrentUser();
 
@@ -1633,34 +2423,60 @@ async function initializePage() {
 initializePage();
 
 </script>
-    
-<!-- SERVICE WORKER -->
+
+
+<!-- ==========================================
+     SERVICE WORKER
+========================================== -->
 
 <script>
 
-if ('serviceWorker' in navigator) {
+if(
+    'serviceWorker'
+    in navigator
+){
 
-    window.addEventListener('load', function() {
+    window.addEventListener(
+        'load',
+        function(){
 
-        navigator.serviceWorker.register('/static/sw.js')
+            navigator
+                .serviceWorker
+                .register(
+                    '/static/sw.js'
+                )
 
-        .then(function(registration) {
+                .then(
+                    function(
+                        registration
+                    ){
 
-            console.log('Service Worker Registered');
+                        console.log(
+                            'Service Worker Registered'
+                        );
 
-        })
+                    }
+                )
 
-        .catch(function(error) {
+                .catch(
+                    function(error){
 
-            console.log('Service Worker Failed', error);
+                        console.log(
+                            'Service Worker Failed',
+                            error
+                        );
 
-        });
+                    }
+                );
 
-    });
+        }
+    );
 
 }
 
 </script>
 
+
 </body>
+
 </html>
