@@ -457,22 +457,36 @@ body{
     src="{{ post.image }}">
 
     <div class="post-actions">
-
-        <div>
+    
+        <div
+            class="like-btn"
+            data-post-id="{{ post.id }}"
+            style="cursor:pointer;">
+    
             <i class="far fa-thumbs-up"></i>
-            Like
+    
+            <span>Like</span>
+    
+            <span class="like-count">0</span>
+    
         </div>
-
-        <div>
+    
+        <div style="cursor:pointer;">
+    
             <i class="far fa-comment"></i>
-            Comment
+    
+            <span>Comment</span>
+    
         </div>
-
-        <div>
+    
+        <div style="cursor:pointer;">
+    
             <i class="far fa-share-square"></i>
-            Share
+    
+            <span>Share</span>
+    
         </div>
-
+    
     </div>
 
 </div>
@@ -526,7 +540,7 @@ body{
     </a>
 
 </div>
-<!-- SUPABASE AUTH -->
+<!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -545,26 +559,27 @@ const supabaseClient =
     );
 
 
+/* ==========================================
+   CURRENT USER
+========================================== */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+
 async function loadCurrentUser() {
 
     try {
-
-        /*
-         Get currently logged-in user
-        */
 
         const {
             data: {
                 user
             },
             error
-        } = await supabaseClient.auth.getUser();
+        } =
+        await supabaseClient.auth.getUser();
 
-
-        /*
-         If there is no valid login,
-         send user to login page.
-        */
 
         if (error || !user) {
 
@@ -575,21 +590,32 @@ async function loadCurrentUser() {
         }
 
 
-        console.log("Logged in Supabase user:", user);
+        currentUser = user;
+
+
+        console.log(
+            "Logged in Supabase user:",
+            user
+        );
 
 
         /*
-         Get user's profile
-         from public.profiles
+        Load Pathukkalam profile
         */
 
         const {
             data: profile,
             error: profileError
-        } = await supabaseClient
+        } =
+        await supabaseClient
             .from("profiles")
-            .select("id, username, name, mobile, bio, profile_url, cover_url")
-            .eq("id", user.id)
+            .select(
+                "id, username, name, mobile, bio, profile_url, cover_url"
+            )
+            .eq(
+                "id",
+                user.id
+            )
             .single();
 
 
@@ -605,6 +631,9 @@ async function loadCurrentUser() {
         }
 
 
+        currentProfile = profile;
+
+
         console.log(
             "Current Pathukkalam profile:",
             profile
@@ -612,7 +641,7 @@ async function loadCurrentUser() {
 
 
         /*
-         Update profile picture
+        Update current user's profile image
         */
 
         const profileImages =
@@ -623,9 +652,10 @@ async function loadCurrentUser() {
 
         profileImages.forEach(function(img) {
 
-            if (profile.profile) {
+            if (profile.profile_url) {
 
-                img.src = profile.profile_url;
+                img.src =
+                    profile.profile_url;
 
             }
 
@@ -633,7 +663,7 @@ async function loadCurrentUser() {
 
 
         /*
-         Update current user's name
+        Update current user's name
         */
 
         const currentUserNames =
@@ -645,13 +675,14 @@ async function loadCurrentUser() {
         currentUserNames.forEach(function(element) {
 
             element.innerText =
-                profile.name || profile.username;
+                profile.name ||
+                profile.username;
 
         });
 
 
         /*
-         Update profile links
+        Update current user's profile link
         */
 
         const currentUserLinks =
@@ -664,7 +695,9 @@ async function loadCurrentUser() {
 
             link.href =
                 "/profile/" +
-                encodeURIComponent(profile.username);
+                encodeURIComponent(
+                    profile.username
+                );
 
         });
 
@@ -682,13 +715,346 @@ async function loadCurrentUser() {
 }
 
 
-/*
-Run after page loads
-*/
+/* ==========================================
+   LOAD LIKE COUNTS
+========================================== */
 
-loadCurrentUser();
+async function loadLikes() {
+
+    const likeButtons =
+        document.querySelectorAll(
+            ".like-btn"
+        );
+
+
+    if (!likeButtons.length) {
+
+        return;
+
+    }
+
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    for (const button of likeButtons) {
+
+        const postId =
+            button.dataset.postId;
+
+
+        /*
+        Get total likes
+        */
+
+        const {
+            count,
+            error: countError
+        } =
+        await supabaseClient
+            .from("likes")
+            .select(
+                "*",
+                {
+                    count: "exact",
+                    head: true
+                }
+            )
+            .eq(
+                "post_id",
+                postId
+            );
+
+
+        if (countError) {
+
+            console.error(
+                "Like count error:",
+                countError
+            );
+
+            continue;
+
+        }
+
+
+        const countElement =
+            button.querySelector(
+                ".like-count"
+            );
+
+
+        if (countElement) {
+
+            countElement.innerText =
+                count || 0;
+
+        }
+
+
+        /*
+        Check whether current user
+        already liked this post
+        */
+
+        const {
+            data: myLike,
+            error: myLikeError
+        } =
+        await supabaseClient
+            .from("likes")
+            .select("id")
+            .eq(
+                "post_id",
+                postId
+            )
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+
+        if (myLikeError) {
+
+            console.error(
+                "My like check error:",
+                myLikeError
+            );
+
+            continue;
+
+        }
+
+
+        const icon =
+            button.querySelector("i");
+
+
+        if (myLike) {
+
+            icon.className =
+                "fas fa-thumbs-up";
+
+            button.style.color =
+                "#1877f2";
+
+        }
+        else {
+
+            icon.className =
+                "far fa-thumbs-up";
+
+            button.style.color =
+                "#555";
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================
+   LIKE / UNLIKE
+========================================== */
+
+document.addEventListener(
+    "click",
+    async function(event) {
+
+        const button =
+            event.target.closest(
+                ".like-btn"
+            );
+
+
+        if (!button) {
+
+            return;
+
+        }
+
+
+        /*
+        User must be logged in
+        */
+
+        if (!currentUser) {
+
+            alert(
+                "Please login to like this post."
+            );
+
+            return;
+
+        }
+
+
+        const postId =
+            button.dataset.postId;
+
+
+        /*
+        Prevent double-click
+        */
+
+        if (
+            button.dataset.processing === "true"
+        ) {
+
+            return;
+
+        }
+
+
+        button.dataset.processing =
+            "true";
+
+
+        try {
+
+            /*
+            Check existing like
+            */
+
+            const {
+                data: existingLike,
+                error: checkError
+            } =
+            await supabaseClient
+                .from("likes")
+                .select("id")
+                .eq(
+                    "post_id",
+                    postId
+                )
+                .eq(
+                    "user_id",
+                    currentUser.id
+                )
+                .maybeSingle();
+
+
+            if (checkError) {
+
+                throw checkError;
+
+            }
+
+
+            /*
+            UNLIKE
+            */
+
+            if (existingLike) {
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                    .from("likes")
+                    .delete()
+                    .eq(
+                        "id",
+                        existingLike.id
+                    );
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+            }
+
+
+            /*
+            LIKE
+            */
+
+            else {
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                    .from("likes")
+                    .insert({
+
+                        post_id:
+                            Number(postId),
+
+                        user_id:
+                            currentUser.id
+
+                    });
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+            }
+
+
+            /*
+            Refresh counts and
+            button status
+            */
+
+            await loadLikes();
+
+        }
+        catch(error) {
+
+            console.error(
+                "Like error:",
+                error
+            );
+
+
+            alert(
+                "Unable to update Like: " +
+                error.message
+            );
+
+        }
+        finally {
+
+            button.dataset.processing =
+                "false";
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   START
+========================================== */
+
+async function initializePage() {
+
+    await loadCurrentUser();
+
+    await loadLikes();
+
+}
+
+
+initializePage();
 
 </script>
+    
 <!-- SERVICE WORKER -->
 
 <script>
