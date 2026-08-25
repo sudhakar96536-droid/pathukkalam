@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
+{% block title %}
+{{ post.name }} - Pathukkalam
+{% endblock %}
 
-<meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>{{ post.name }} - Pathukkalam</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+{% block head %}
 
 <style>
 
@@ -407,10 +401,10 @@ body{
 
 </style>
 
-</head>
+{% endblock %}
 
 
-<body>
+{% block content %}
 
 
 <!-- ==========================================
@@ -526,9 +520,11 @@ body{
             </i>
 
             <span>
+
                 <span id="likeCount">
                     0
                 </span>
+
             </span>
 
         </div>
@@ -668,6 +664,11 @@ body{
 
 </div>
 
+
+{% endblock %}
+
+
+{% block scripts %}
 
 <!-- ==========================================
      SUPABASE
@@ -1690,6 +1691,4 @@ initializePage();
 
 </script>
 
-</body>
-
-</html>
+{% endblock %}
