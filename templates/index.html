@@ -1,26 +1,12 @@
 <!-- index.html -->
 
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
+{% block title %}
+Pathukkalam
+{% endblock %}
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Pathukkalam</title>
-
-<link rel="manifest"
-href="{{ url_for('static', filename='manifest.json') }}">
-
-<meta name="theme-color"
-content="#1877f2">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+{% block head %}
 
 <style>
 
@@ -715,11 +701,13 @@ body{
 .comment-submit:active{
 
     transform:scale(0.94);
+
 }
 
 .comment-submit:disabled{
 
     opacity:0.6;
+
 }
 
 
@@ -804,10 +792,10 @@ body{
 
 </style>
 
-</head>
+{% endblock %}
 
 
-<body>
+{% block content %}
 
 
 <!-- ==========================================
@@ -2741,13 +2729,6 @@ document.addEventListener(
                         error
                     );
 
-
-                    /*
-                    The actual share already
-                    happened, so don't tell
-                    user that sharing failed.
-                    */
-
                 }
                 else{
 
@@ -2833,59 +2814,4 @@ initializePage();
 
 </script>
 
-
-<!-- ==========================================
-     SERVICE WORKER
-========================================== -->
-
-<script>
-
-if(
-    'serviceWorker'
-    in navigator
-){
-
-    window.addEventListener(
-        'load',
-        function(){
-
-            navigator
-                .serviceWorker
-                .register(
-                    '/static/sw.js'
-                )
-
-                .then(
-                    function(
-                        registration
-                    ){
-
-                        console.log(
-                            'Service Worker Registered'
-                        );
-
-                    }
-                )
-
-                .catch(
-                    function(error){
-
-                        console.log(
-                            'Service Worker Failed',
-                            error
-                        );
-
-                    }
-                );
-
-        }
-    );
-
-}
-
-</script>
-
-<script src="{{ url_for('static', filename='pwa-install.js') }}"></script>
-</body>
-
-</html>
+{% endblock %}
