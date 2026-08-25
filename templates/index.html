@@ -724,7 +724,7 @@ body{
 
 
 /* ==========================================
-   SHARE
+   SHARE BUTTON
 ========================================== */
 
 .share-btn{
@@ -739,7 +739,7 @@ body{
 
     gap:5px;
 
-    min-width:70px;
+    min-width:60px;
 
     padding:8px;
 
@@ -753,16 +753,19 @@ body{
 .share-btn:hover{
 
     background:#f0f2f5;
+
 }
 
 .share-btn:active{
 
     transform:scale(0.94);
+
 }
 
 .share-btn i{
 
     font-size:17px;
+
 }
 
 .share-count{
@@ -770,6 +773,7 @@ body{
     font-size:14px;
 
     color:#555;
+
 }
 
 .share-btn.processing{
@@ -777,6 +781,7 @@ body{
     opacity:0.6;
 
     pointer-events:none;
+
 }
 
 
@@ -1124,10 +1129,6 @@ body{
             data-post-id="{{ post.id }}">
 
             <i class="far fa-share-square"></i>
-
-            <span>
-                Share
-            </span>
 
             <span class="share-count">
                 0
