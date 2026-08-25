@@ -142,6 +142,8 @@ body{
     gap:7px;
 
     backdrop-filter:blur(5px);
+
+    z-index:10;
 }
 
 .cover-edit-btn:hover{
@@ -260,6 +262,8 @@ body{
     box-shadow:
         0 2px 8px
         rgba(0,0,0,0.25);
+
+    z-index:10;
 }
 
 .profile-photo-edit-btn:hover{
@@ -633,12 +637,18 @@ body{
     style="background:url('{{ user.cover }}') center/cover;">
 
 
-    <!-- COVER CHANGE BUTTON -->
+    <!-- ======================================
+         COVER CHANGE BUTTON
+         DIRECTLY VISIBLE FOR OWN PROFILE
+    ======================================= -->
 
     <button
         type="button"
         id="changeCoverBtn"
-        class="cover-edit-btn">
+        class="cover-edit-btn"
+        {% if is_own_profile %}
+        style="display:flex;"
+        {% endif %}>
 
         <i class="fas fa-camera"></i>
 
@@ -669,13 +679,18 @@ body{
             alt="Profile Photo">
 
 
-        <!-- PROFILE PHOTO CHANGE BUTTON -->
+        <!-- ==================================
+             PROFILE PHOTO CHANGE BUTTON
+        =================================== -->
 
         <button
             type="button"
             id="changeProfileBtn"
             class="profile-photo-edit-btn"
-            title="Change Profile Photo">
+            title="Change Profile Photo"
+            {% if is_own_profile %}
+            style="display:flex;"
+            {% endif %}>
 
             <i class="fas fa-camera"></i>
 
@@ -719,7 +734,7 @@ body{
 
     <!-- ======================================
          FOLLOW / MESSAGE
-         Other users only
+         OTHER USERS ONLY
     ======================================= -->
 
     <div
