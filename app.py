@@ -5,6 +5,19 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
+from flask import redirect, request
+
+@app.before_request
+def redirect_render_domain():
+
+    if request.host.startswith("pathukkalam.onrender.com"):
+
+        return redirect(
+            "https://pathukkalam.in" + request.full_path,
+            code=301
+        )
+
+
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 
