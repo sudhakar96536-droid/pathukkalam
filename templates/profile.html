@@ -8,12 +8,13 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1.0">
 
 <title>{{ user.name }} - Pathukkalam</title>
 
 <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 
 <style>
 
@@ -29,42 +30,64 @@ body{
     padding-bottom:80px;
 }
 
-/* HEADER */
+
+/* ==========================================
+   HEADER
+========================================== */
 
 .header{
     background:white;
+
     padding:15px;
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     position:sticky;
+
     top:0;
+
     z-index:1000;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+
+    box-shadow:
+        0 2px 5px
+        rgba(0,0,0,0.1);
 }
 
 .logo-section{
     display:flex;
+
     align-items:center;
 }
 
 .logo-img{
     width:42px;
+
     height:42px;
+
     border-radius:12px;
+
     margin-right:10px;
+
     object-fit:cover;
 }
 
 .logo-text{
     font-size:26px;
+
     font-weight:bold;
+
     color:#1877f2;
 }
 
 .header-icons i{
     font-size:22px;
+
     margin-left:18px;
+
     color:#444;
 }
 
@@ -75,18 +98,24 @@ body{
 
 .profile-cover{
     width:100%;
+
     height:220px;
+
     background-size:cover !important;
+
     background-position:center !important;
+
     position:relative;
 }
 
 
 /* ==========================================
-   COVER CHANGE BUTTON
+   COVER EDIT BUTTON
 ========================================== */
 
 .cover-edit-btn{
+
+    display:none;
 
     position:absolute;
 
@@ -94,44 +123,38 @@ body{
 
     bottom:15px;
 
-    width:44px;
-    height:44px;
-
     border:none;
 
-    border-radius:50%;
+    background:rgba(0,0,0,0.65);
 
-    background:white;
+    color:white;
 
-    color:#333;
+    padding:10px 14px;
 
-    display:flex;
+    border-radius:10px;
 
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:18px;
+    font-size:13px;
 
     cursor:pointer;
 
-    box-shadow:
-        0 3px 10px
-        rgba(0,0,0,0.25);
+    align-items:center;
 
-    z-index:20;
+    gap:7px;
+
+    backdrop-filter:blur(5px);
 }
 
 .cover-edit-btn:hover{
 
-    background:#f0f2f5;
+    background:rgba(0,0,0,0.8);
 
 }
 
-.cover-edit-btn:active{
+.cover-edit-btn:disabled{
 
-    transform:scale(0.94);
+    opacity:0.6;
 
+    cursor:not-allowed;
 }
 
 
@@ -140,30 +163,50 @@ body{
 ========================================== */
 
 .profile-box{
+
     background:white;
-    margin:-70px 15px 15px;
+
+    margin:
+        -70px
+        15px
+        15px;
+
     border-radius:16px;
+
     padding:20px;
+
     text-align:center;
+
     position:relative;
-    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+
+    box-shadow:
+        0 2px 10px
+        rgba(0,0,0,0.08);
 }
+
+
+/* ==========================================
+   PROFILE AVATAR AREA
+========================================== */
 
 .profile-avatar-wrapper{
 
     position:relative;
 
     width:130px;
+
     height:130px;
 
     margin:
-        -90px auto 0;
-
+        -90px
+        auto
+        0;
 }
 
 .profile-avatar{
 
     width:130px;
+
     height:130px;
 
     border-radius:50%;
@@ -173,22 +216,27 @@ body{
     object-fit:cover;
 
     display:block;
+
+    background:#eee;
 }
 
 
 /* ==========================================
-   PROFILE PHOTO CHANGE BUTTON
+   PROFILE PHOTO EDIT BUTTON
 ========================================== */
 
 .profile-photo-edit-btn{
 
+    display:none;
+
     position:absolute;
 
-    right:2px;
+    right:3px;
 
     bottom:5px;
 
     width:40px;
+
     height:40px;
 
     border:none;
@@ -199,23 +247,19 @@ body{
 
     color:white;
 
-    display:flex;
+    font-size:16px;
+
+    cursor:pointer;
 
     align-items:center;
 
     justify-content:center;
 
-    font-size:16px;
-
-    cursor:pointer;
-
     border:3px solid white;
 
     box-shadow:
-        0 3px 8px
+        0 2px 8px
         rgba(0,0,0,0.25);
-
-    z-index:20;
 }
 
 .profile-photo-edit-btn:hover{
@@ -224,21 +268,264 @@ body{
 
 }
 
-.profile-photo-edit-btn:active{
+.profile-photo-edit-btn:disabled{
 
-    transform:scale(0.94);
+    opacity:0.6;
 
+    cursor:not-allowed;
 }
 
 
 /* ==========================================
-   HIDDEN FILE INPUTS
+   PROFILE NAME
 ========================================== */
 
-.photo-file-input{
+.profile-name{
 
-    display:none;
+    margin-top:12px;
 
+    font-size:26px;
+
+    font-weight:bold;
+}
+
+.profile-id{
+
+    color:gray;
+
+    margin-top:5px;
+
+    font-size:14px;
+}
+
+.profile-bio{
+
+    margin-top:15px;
+
+    color:#444;
+
+    line-height:1.5;
+}
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.profile-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+
+    margin-top:18px;
+}
+
+.profile-buttons button{
+
+    padding:10px 18px;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    cursor:pointer;
+}
+
+.follow-btn{
+
+    background:#1877f2;
+
+    color:white;
+}
+
+.message-btn{
+
+    background:#e4e6eb;
+}
+
+
+/* ==========================================
+   STATS
+========================================== */
+
+.profile-stats{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    margin-top:25px;
+
+    border-top:1px solid #eee;
+
+    padding-top:20px;
+}
+
+.profile-stats h3{
+
+    font-size:22px;
+}
+
+.profile-stats p{
+
+    color:gray;
+
+    margin-top:5px;
+}
+
+
+/* ==========================================
+   POSTS
+========================================== */
+
+.section-title{
+
+    margin:
+        20px
+        15px
+        10px;
+
+    font-size:20px;
+
+    font-weight:bold;
+}
+
+.post-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:5px;
+
+    padding:
+        0
+        10px
+        20px;
+}
+
+.post-grid img{
+
+    width:100%;
+
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:8px;
+}
+
+
+/* ==========================================
+   FLOATING BUTTON
+========================================== */
+
+.new-post-btn{
+
+    position:fixed;
+
+    bottom:28px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    width:62px;
+
+    height:62px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1877f2,
+            #42a5ff
+        );
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:white;
+
+    font-size:28px;
+
+    text-decoration:none;
+
+    box-shadow:
+        0 5px 15px
+        rgba(24,119,242,0.4);
+
+    z-index:2000;
+
+    border:4px solid white;
+}
+
+
+/* ==========================================
+   BOTTOM NAVIGATION
+========================================== */
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-evenly;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    border-top:1px solid #ddd;
+
+    z-index:1000;
+}
+
+.nav-item{
+
+    text-decoration:none;
+
+    color:gray;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    font-size:12px;
+}
+
+.nav-item i{
+
+    font-size:22px;
+
+    margin-bottom:4px;
+}
+
+.active{
+
+    color:#1877f2;
 }
 
 
@@ -246,7 +533,7 @@ body{
    UPLOAD STATUS
 ========================================== */
 
-.photo-upload-status{
+.upload-status{
 
     display:none;
 
@@ -257,254 +544,6 @@ body{
     color:#1877f2;
 
     font-weight:bold;
-
-}
-
-.photo-upload-status.show{
-
-    display:block;
-
-}
-
-
-/* ==========================================
-   PROFILE INFORMATION
-========================================== */
-
-.profile-name{
-    margin-top:12px;
-    font-size:26px;
-    font-weight:bold;
-}
-
-.profile-id{
-    color:gray;
-    margin-top:5px;
-    font-size:14px;
-}
-
-.profile-bio{
-    margin-top:15px;
-    color:#444;
-    line-height:1.5;
-}
-
-
-/* ==========================================
-   BUTTONS
-========================================== */
-
-.profile-buttons{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-top:18px;
-}
-
-.profile-buttons button{
-    padding:10px 18px;
-    border:none;
-    border-radius:8px;
-    font-size:14px;
-    cursor:pointer;
-}
-
-.follow-btn{
-    background:#1877f2;
-    color:white;
-}
-
-.message-btn{
-    background:#e4e6eb;
-}
-
-
-/* ==========================================
-   STATS
-========================================== */
-
-.profile-stats{
-    display:flex;
-    justify-content:space-around;
-    margin-top:25px;
-    border-top:1px solid #eee;
-    padding-top:20px;
-}
-
-.profile-stats h3{
-    font-size:22px;
-}
-
-.profile-stats p{
-    color:gray;
-    margin-top:5px;
-}
-
-
-/* ==========================================
-   POSTS
-========================================== */
-
-.section-title{
-    margin:20px 15px 10px;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.post-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:5px;
-    padding:0 10px 20px;
-}
-
-.post-grid img{
-    width:100%;
-    height:120px;
-    object-fit:cover;
-    border-radius:8px;
-}
-
-
-/* ==========================================
-   FLOATING BUTTON
-========================================== */
-
-.new-post-btn{
-    position:fixed;
-    bottom:28px;
-    left:50%;
-    transform:translateX(-50%);
-    width:62px;
-    height:62px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#1877f2,#42a5ff);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:28px;
-    text-decoration:none;
-    box-shadow:0 5px 15px rgba(24,119,242,0.4);
-    z-index:2000;
-    border:4px solid white;
-}
-
-
-/* ==========================================
-   BOTTOM NAVIGATION
-========================================== */
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:white;
-    display:flex;
-    justify-content:space-evenly;
-    align-items:center;
-    padding:10px 0;
-    border-top:1px solid #ddd;
-    z-index:1000;
-}
-
-.nav-item{
-    text-decoration:none;
-    color:gray;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    font-size:12px;
-}
-
-.nav-item i{
-    font-size:22px;
-    margin-bottom:4px;
-}
-
-.active{
-    color:#1877f2;
-}
-
-
-/* ==========================================
-   UPLOAD OVERLAY
-========================================== */
-
-.upload-overlay{
-
-    display:none;
-
-    position:fixed;
-
-    inset:0;
-
-    background:
-        rgba(0,0,0,0.45);
-
-    z-index:5000;
-
-    align-items:center;
-
-    justify-content:center;
-
-}
-
-.upload-overlay.active{
-
-    display:flex;
-
-}
-
-.upload-box{
-
-    background:white;
-
-    width:90%;
-
-    max-width:320px;
-
-    padding:25px;
-
-    border-radius:18px;
-
-    text-align:center;
-
-    box-shadow:
-        0 10px 30px
-        rgba(0,0,0,0.25);
-
-}
-
-.upload-box i{
-
-    font-size:42px;
-
-    color:#1877f2;
-
-    margin-bottom:15px;
-
-}
-
-.upload-title{
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    color:#333;
-
-}
-
-.upload-text{
-
-    margin-top:7px;
-
-    font-size:13px;
-
-    color:gray;
-
 }
 
 
@@ -520,10 +559,25 @@ body{
 
     }
 
-    .profile-box{
+    .profile-name{
 
-        margin-left:10px;
-        margin-right:10px;
+        font-size:23px;
+
+    }
+
+    .profile-avatar-wrapper{
+
+        width:120px;
+
+        height:120px;
+
+    }
+
+    .profile-avatar{
+
+        width:120px;
+
+        height:120px;
 
     }
 
@@ -550,10 +604,13 @@ body{
             src="{{ url_for('static', filename='icon-192.png') }}">
 
         <div class="logo-text">
+
             Pathukkalam
+
         </div>
 
     </div>
+
 
     <div class="header-icons">
 
@@ -576,25 +633,18 @@ body{
     style="background:url('{{ user.cover }}') center/cover;">
 
 
-    {% if is_own_profile %}
+    <!-- COVER CHANGE BUTTON -->
 
     <button
         type="button"
-        class="cover-edit-btn"
-        id="coverEditButton"
-        title="Change cover photo">
+        id="changeCoverBtn"
+        class="cover-edit-btn">
 
         <i class="fas fa-camera"></i>
 
+        Change Cover
+
     </button>
-
-    <input
-        type="file"
-        id="coverFileInput"
-        class="photo-file-input"
-        accept="image/*">
-
-    {% endif %}
 
 </div>
 
@@ -606,7 +656,9 @@ body{
 <div class="profile-box">
 
 
-    <!-- PROFILE PHOTO -->
+    <!-- ======================================
+         PROFILE PHOTO
+    ======================================= -->
 
     <div class="profile-avatar-wrapper">
 
@@ -617,42 +669,24 @@ body{
             alt="Profile Photo">
 
 
-        {% if is_own_profile %}
+        <!-- PROFILE PHOTO CHANGE BUTTON -->
 
         <button
             type="button"
+            id="changeProfileBtn"
             class="profile-photo-edit-btn"
-            id="profilePhotoEditButton"
-            title="Change profile photo">
+            title="Change Profile Photo">
 
             <i class="fas fa-camera"></i>
 
         </button>
 
-
-        <input
-            type="file"
-            id="profileFileInput"
-            class="photo-file-input"
-            accept="image/*">
-
-        {% endif %}
-
     </div>
 
 
-    <!-- UPLOAD STATUS -->
-
-    {% if is_own_profile %}
-
-    <div
-        id="photoUploadStatus"
-        class="photo-upload-status">
-
-    </div>
-
-    {% endif %}
-
+    <!-- ======================================
+         PROFILE NAME
+    ======================================= -->
 
     <div class="profile-name">
 
@@ -661,12 +695,20 @@ body{
     </div>
 
 
+    <!-- ======================================
+         USERNAME
+    ======================================= -->
+
     <div class="profile-id">
 
         @{{ username }}
 
     </div>
 
+
+    <!-- ======================================
+         BIO
+    ======================================= -->
 
     <div class="profile-bio">
 
@@ -675,9 +717,17 @@ body{
     </div>
 
 
-    {% if not is_own_profile %}
+    <!-- ======================================
+         FOLLOW / MESSAGE
+         Other users only
+    ======================================= -->
 
-    <div class="profile-buttons">
+    <div
+        id="profileActionButtons"
+        class="profile-buttons"
+        {% if is_own_profile %}
+        style="display:none;"
+        {% endif %}>
 
         <button class="follow-btn">
 
@@ -694,10 +744,21 @@ body{
 
     </div>
 
-    {% endif %}
+
+    <!-- ======================================
+         UPLOAD STATUS
+    ======================================= -->
+
+    <div
+        id="uploadStatus"
+        class="upload-status">
+
+    </div>
 
 
-    <!-- STATS -->
+    <!-- ======================================
+         STATS
+    ======================================= -->
 
     <div class="profile-stats">
 
@@ -745,7 +806,7 @@ body{
 
 
 <!-- ==========================================
-     POSTS
+     RECENT PHOTOS
 ========================================== -->
 
 <div class="section-title">
@@ -760,12 +821,29 @@ body{
     {% for photo in user.photos %}
 
     <img
-        src="{{ photo }}"
-        alt="Post photo">
+        src="{{ photo }}">
 
     {% endfor %}
 
 </div>
+
+
+<!-- ==========================================
+     HIDDEN FILE INPUTS
+========================================== -->
+
+<input
+    type="file"
+    id="profilePhotoInput"
+    accept="image/*"
+    style="display:none;">
+
+
+<input
+    type="file"
+    id="coverPhotoInput"
+    accept="image/*"
+    style="display:none;">
 
 
 <!-- ==========================================
@@ -843,43 +921,6 @@ body{
 
 
 <!-- ==========================================
-     UPLOAD OVERLAY
-========================================== -->
-
-{% if is_own_profile %}
-
-<div
-    id="uploadOverlay"
-    class="upload-overlay">
-
-    <div class="upload-box">
-
-        <i class="fas fa-cloud-arrow-up"></i>
-
-        <div
-            id="uploadTitle"
-            class="upload-title">
-
-            Uploading...
-
-        </div>
-
-        <div
-            id="uploadText"
-            class="upload-text">
-
-            Please wait...
-
-        </div>
-
-    </div>
-
-</div>
-
-{% endif %}
-
-
-<!-- ==========================================
      SUPABASE
 ========================================== -->
 
@@ -887,6 +928,7 @@ body{
 
 
 <script>
+
 
 /* ==========================================
    SUPABASE CONFIG
@@ -908,13 +950,72 @@ const supabaseClient =
 
 
 /* ==========================================
-   PROFILE PHOTO / COVER PHOTO
+   CURRENT PROFILE USERNAME
 ========================================== */
 
-{% if is_own_profile %}
+const profileUsername =
+    "{{ username }}";
 
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const changeProfileBtn =
+    document.getElementById(
+        "changeProfileBtn"
+    );
+
+
+const changeCoverBtn =
+    document.getElementById(
+        "changeCoverBtn"
+    );
+
+
+const profilePhotoInput =
+    document.getElementById(
+        "profilePhotoInput"
+    );
+
+
+const coverPhotoInput =
+    document.getElementById(
+        "coverPhotoInput"
+    );
+
+
+const profileAvatar =
+    document.getElementById(
+        "profileAvatar"
+    );
+
+
+const profileCover =
+    document.getElementById(
+        "profileCover"
+    );
+
+
+const uploadStatus =
+    document.getElementById(
+        "uploadStatus"
+    );
+
+
+const profileActionButtons =
+    document.getElementById(
+        "profileActionButtons"
+    );
+
+
+/* ==========================================
+   CURRENT USER
+========================================== */
 
 let currentUser = null;
+
+let currentProfile = null;
 
 
 /* ==========================================
@@ -948,20 +1049,154 @@ async function loadCurrentUser(){
         }
 
 
+        if(!user){
+
+            console.log(
+                "No logged in user."
+            );
+
+            return;
+
+        }
+
+
         currentUser =
             user;
 
 
         console.log(
-            "Current user:",
+            "Logged in user:",
             currentUser
         );
+
+
+        /*
+        Load the profile belonging
+        to the logged-in user.
+        */
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
+
+            .from("profiles")
+
+            .select(
+                "id, username, name, profile_url, cover_url"
+            )
+
+            .eq(
+                "id",
+                currentUser.id
+            )
+
+            .maybeSingle();
+
+
+        if(profileError){
+
+            console.error(
+                "Current profile error:",
+                profileError
+            );
+
+            return;
+
+        }
+
+
+        currentProfile =
+            profile;
+
+
+        /*
+        ======================================
+        CHECK OWN PROFILE
+        ======================================
+        */
+
+        const isOwnProfile =
+            profile &&
+            String(
+                profile.username
+            ).toLowerCase() ===
+            String(
+                profileUsername
+            ).toLowerCase();
+
+
+        console.log(
+            "Own profile:",
+            isOwnProfile
+        );
+
+
+        /*
+        ======================================
+        OWN PROFILE
+        ======================================
+        */
+
+        if(isOwnProfile){
+
+            /*
+            Show photo editing buttons
+            */
+
+            changeProfileBtn.style.display =
+                "flex";
+
+
+            changeCoverBtn.style.display =
+                "flex";
+
+
+            /*
+            Hide Follow + Message
+            */
+
+            profileActionButtons.style.display =
+                "none";
+
+        }
+
+
+        /*
+        ======================================
+        OTHER USER PROFILE
+        ======================================
+        */
+
+        else{
+
+            /*
+            Hide photo editing buttons
+            */
+
+            changeProfileBtn.style.display =
+                "none";
+
+
+            changeCoverBtn.style.display =
+                "none";
+
+
+            /*
+            Show Follow + Message
+            */
+
+            profileActionButtons.style.display =
+                "flex";
+
+        }
 
     }
     catch(error){
 
         console.error(
-            "Current user error:",
+            "Current user loading error:",
             error
         );
 
@@ -971,164 +1206,47 @@ async function loadCurrentUser(){
 
 
 /* ==========================================
-   ELEMENTS
+   SHOW STATUS
 ========================================== */
 
-const profilePhotoButton =
-    document.getElementById(
-        "profilePhotoEditButton"
-    );
+function showUploadStatus(message){
 
+    uploadStatus.style.display =
+        "block";
 
-const profileFileInput =
-    document.getElementById(
-        "profileFileInput"
-    );
+    uploadStatus.innerText =
+        message;
 
-
-const coverButton =
-    document.getElementById(
-        "coverEditButton"
-    );
-
-
-const coverFileInput =
-    document.getElementById(
-        "coverFileInput"
-    );
-
-
-const profileAvatar =
-    document.getElementById(
-        "profileAvatar"
-    );
-
-
-const profileCover =
-    document.getElementById(
-        "profileCover"
-    );
-
-
-const uploadOverlay =
-    document.getElementById(
-        "uploadOverlay"
-    );
-
-
-const uploadTitle =
-    document.getElementById(
-        "uploadTitle"
-    );
-
-
-const uploadText =
-    document.getElementById(
-        "uploadText"
-    );
-
-
-const uploadStatus =
-    document.getElementById(
-        "photoUploadStatus"
-    );
+}
 
 
 /* ==========================================
-   PROFILE PHOTO BUTTON
+   HIDE STATUS
 ========================================== */
 
-profilePhotoButton.addEventListener(
-    "click",
-    function(){
+function hideUploadStatus(){
 
-        profileFileInput.click();
+    uploadStatus.style.display =
+        "none";
 
-    }
-);
+    uploadStatus.innerText =
+        "";
 
-
-/* ==========================================
-   COVER PHOTO BUTTON
-========================================== */
-
-coverButton.addEventListener(
-    "click",
-    function(){
-
-        coverFileInput.click();
-
-    }
-);
-
-
-/* ==========================================
-   PROFILE PHOTO SELECTED
-========================================== */
-
-profileFileInput.addEventListener(
-    "change",
-    async function(){
-
-        const file =
-            this.files[0];
-
-
-        if(!file){
-
-            return;
-
-        }
-
-
-        await uploadProfilePhoto(
-            file
-        );
-
-
-        this.value = "";
-
-    }
-);
-
-
-/* ==========================================
-   COVER PHOTO SELECTED
-========================================== */
-
-coverFileInput.addEventListener(
-    "change",
-    async function(){
-
-        const file =
-            this.files[0];
-
-
-        if(!file){
-
-            return;
-
-        }
-
-
-        await uploadCoverPhoto(
-            file
-        );
-
-
-        this.value = "";
-
-    }
-);
+}
 
 
 /* ==========================================
    VALIDATE IMAGE
 ========================================== */
 
-function validateImage(
-    file
-){
+function validateImage(file){
+
+    if(!file){
+
+        return false;
+
+    }
+
 
     if(
         !file.type.startsWith(
@@ -1155,7 +1273,7 @@ function validateImage(
     ){
 
         alert(
-            "Image must be smaller than 5 MB."
+            "Image size must be below 5 MB."
         );
 
         return false;
@@ -1169,79 +1287,68 @@ function validateImage(
 
 
 /* ==========================================
-   SHOW UPLOAD
+   GET FILE EXTENSION
 ========================================== */
 
-function showUpload(
-    title,
-    text
-){
+function getFileExtension(file){
 
-    uploadTitle.innerText =
-        title;
+    const parts =
+        file.name.split(".");
 
-    uploadText.innerText =
-        text;
-
-    uploadOverlay.classList.add(
-        "active"
-    );
-
-    uploadStatus.classList.add(
-        "show"
-    );
-
-    uploadStatus.innerText =
-        text;
-
-}
-
-
-/* ==========================================
-   HIDE UPLOAD
-========================================== */
-
-function hideUpload(){
-
-    uploadOverlay.classList.remove(
-        "active"
-    );
-
-    uploadStatus.classList.remove(
-        "show"
-    );
-
-}
-
-
-/* ==========================================
-   UPLOAD PROFILE PHOTO
-========================================== */
-
-async function uploadProfilePhoto(
-    file
-){
 
     if(
-        !validateImage(file)
+        parts.length > 1
     ){
 
-        return;
+        return parts
+            .pop()
+            .toLowerCase();
 
     }
 
 
-    if(!currentUser){
+    /*
+    Fallback
+    */
 
-        await loadCurrentUser();
+    if(
+        file.type ===
+        "image/png"
+    ){
+
+        return "png";
 
     }
 
+
+    if(
+        file.type ===
+        "image/webp"
+    ){
+
+        return "webp";
+
+    }
+
+
+    return "jpg";
+
+}
+
+
+/* ==========================================
+   UPLOAD IMAGE
+========================================== */
+
+async function uploadImage(
+    file,
+    type
+){
 
     if(!currentUser){
 
         alert(
-            "Please login again."
+            "Please login first."
         );
 
         return;
@@ -1249,51 +1356,87 @@ async function uploadProfilePhoto(
     }
 
 
+    if(!validateImage(file)){
+
+        return;
+
+    }
+
+
+    /*
+    Prevent multiple uploads
+    */
+
+    changeProfileBtn.disabled =
+        true;
+
+    changeCoverBtn.disabled =
+        true;
+
+
     try{
 
-        showUpload(
-            "Uploading Profile Photo",
-            "Please wait..."
+        showUploadStatus(
+            type === "profile"
+                ? "Uploading profile photo..."
+                : "Uploading cover photo..."
         );
 
 
         /*
-        Create unique filename
+        ======================================
+        CREATE UNIQUE FILE NAME
+        ======================================
         */
 
-        const fileExtension =
-            file.name
-                .split(".")
-                .pop()
-                .toLowerCase();
+        const extension =
+            getFileExtension(file);
 
 
-        const filePath =
-            "profiles/" +
+        const fileName =
             currentUser.id +
-            "/profile_" +
+            "/" +
+            type +
+            "_" +
             Date.now() +
             "." +
-            fileExtension;
+            extension;
+
+
+        console.log(
+            "Uploading:",
+            fileName
+        );
 
 
         /*
-        Upload to existing bucket
+        ======================================
+        UPLOAD TO post-images BUCKET
+        ======================================
         */
 
         const {
+            data:uploadData,
             error:uploadError
         } =
         await supabaseClient
+
             .storage
+
             .from("post-images")
+
             .upload(
-                filePath,
+                fileName,
                 file,
                 {
-                    cacheControl:"3600",
-                    upsert:false,
-                    contentType:file.type
+                    cacheControl:
+                        "3600",
+
+                    upsert:
+                        false,
+
+                    contentType:
+                        file.type
                 }
             );
 
@@ -1305,28 +1448,59 @@ async function uploadProfilePhoto(
         }
 
 
+        console.log(
+            "Upload successful:",
+            uploadData
+        );
+
+
         /*
-        Get public URL
+        ======================================
+        GET PUBLIC URL
+        ======================================
         */
 
         const {
-            data:urlData
+            data:publicData
         } =
         supabaseClient
+
             .storage
+
             .from("post-images")
+
             .getPublicUrl(
-                filePath
+                fileName
             );
 
 
-        const imageUrl =
-            urlData.publicUrl;
+        const publicUrl =
+            publicData.publicUrl;
+
+
+        console.log(
+            "Public image URL:",
+            publicUrl
+        );
 
 
         /*
-        Update profiles table
+        ======================================
+        UPDATE PROFILES TABLE
+        ======================================
         */
+
+        const updateData =
+            type === "profile"
+                ? {
+                    profile_url:
+                        publicUrl
+                  }
+                : {
+                    cover_url:
+                        publicUrl
+                  };
+
 
         const {
             error:updateError
@@ -1335,12 +1509,9 @@ async function uploadProfilePhoto(
 
             .from("profiles")
 
-            .update({
-
-                profile_url:
-                    imageUrl
-
-            })
+            .update(
+                updateData
+            )
 
             .eq(
                 "id",
@@ -1356,36 +1527,79 @@ async function uploadProfilePhoto(
 
 
         /*
-        Update image immediately
+        ======================================
+        UPDATE PAGE IMMEDIATELY
+        ======================================
         */
 
-        profileAvatar.src =
-            imageUrl;
+        if(
+            type === "profile"
+        ){
+
+            profileAvatar.src =
+                publicUrl;
+
+        }
+        else{
+
+            profileCover.style.backgroundImage =
+                "url('" +
+                publicUrl +
+                "')";
+
+        }
 
 
-        hideUpload();
+        /*
+        ======================================
+        SUCCESS
+        ======================================
+        */
+
+        showUploadStatus(
+            type === "profile"
+                ? "Profile photo updated successfully ✓"
+                : "Cover photo updated successfully ✓"
+        );
 
 
-        alert(
-            "Profile photo updated successfully! ✅"
+        setTimeout(
+            function(){
+
+                hideUploadStatus();
+
+            },
+            2500
         );
 
     }
     catch(error){
 
         console.error(
-            "Profile photo upload error:",
+            "Image upload error:",
             error
         );
 
 
-        hideUpload();
+        showUploadStatus(
+            "Upload failed: " +
+            error.message
+        );
 
 
         alert(
-            "Unable to update profile photo: " +
+            "Unable to update image:\n\n" +
             error.message
         );
+
+    }
+    finally{
+
+        changeProfileBtn.disabled =
+            false;
+
+        changeCoverBtn.disabled =
+            false;
 
     }
 
@@ -1393,255 +1607,136 @@ async function uploadProfilePhoto(
 
 
 /* ==========================================
-   UPLOAD COVER PHOTO
+   CHANGE PROFILE PHOTO
 ========================================== */
 
-async function uploadCoverPhoto(
-    file
-){
+changeProfileBtn.addEventListener(
+    "click",
+    function(){
 
-    if(
-        !validateImage(file)
-    ){
+        if(!currentUser){
 
-        return;
-
-    }
-
-
-    if(!currentUser){
-
-        await loadCurrentUser();
-
-    }
-
-
-    if(!currentUser){
-
-        alert(
-            "Please login again."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        showUpload(
-            "Uploading Cover Photo",
-            "Please wait..."
-        );
-
-
-        /*
-        Create unique filename
-        */
-
-        const fileExtension =
-            file.name
-                .split(".")
-                .pop()
-                .toLowerCase();
-
-
-        const filePath =
-            "covers/" +
-            currentUser.id +
-            "/cover_" +
-            Date.now() +
-            "." +
-            fileExtension;
-
-
-        /*
-        Upload to existing bucket
-        */
-
-        const {
-            error:uploadError
-        } =
-        await supabaseClient
-            .storage
-            .from("post-images")
-            .upload(
-                filePath,
-                file,
-                {
-                    cacheControl:"3600",
-                    upsert:false,
-                    contentType:file.type
-                }
+            alert(
+                "Please login first."
             );
 
-
-        if(uploadError){
-
-            throw uploadError;
+            return;
 
         }
 
 
-        /*
-        Get public URL
-        */
-
-        const {
-            data:urlData
-        } =
-        supabaseClient
-            .storage
-            .from("post-images")
-            .getPublicUrl(
-                filePath
-            );
-
-
-        const imageUrl =
-            urlData.publicUrl;
-
-
-        /*
-        Update profiles table
-        */
-
-        const {
-            error:updateError
-        } =
-        await supabaseClient
-
-            .from("profiles")
-
-            .update({
-
-                cover_url:
-                    imageUrl
-
-            })
-
-            .eq(
-                "id",
-                currentUser.id
-            );
-
-
-        if(updateError){
-
-            throw updateError;
-
-        }
-
-
-        /*
-        Update background immediately
-        */
-
-        profileCover.style.backgroundImage =
-            "url('" +
-            imageUrl +
-            "')";
-
-
-        hideUpload();
-
-
-        alert(
-            "Cover photo updated successfully! ✅"
-        );
+        profilePhotoInput.click();
 
     }
-    catch(error){
-
-        console.error(
-            "Cover photo upload error:",
-            error
-        );
-
-
-        hideUpload();
-
-
-        alert(
-            "Unable to update cover photo: " +
-            error.message
-        );
-
-    }
-
-}
+);
 
 
 /* ==========================================
-   START
+   PROFILE PHOTO SELECTED
+========================================== */
+
+profilePhotoInput.addEventListener(
+    "change",
+    async function(){
+
+        const file =
+            this.files[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        await uploadImage(
+            file,
+            "profile"
+        );
+
+
+        /*
+        Allow selecting the same
+        file again later.
+        */
+
+        this.value =
+            "";
+
+    }
+);
+
+
+/* ==========================================
+   CHANGE COVER PHOTO
+========================================== */
+
+changeCoverBtn.addEventListener(
+    "click",
+    function(){
+
+        if(!currentUser){
+
+            alert(
+                "Please login first."
+            );
+
+            return;
+
+        }
+
+
+        coverPhotoInput.click();
+
+    }
+);
+
+
+/* ==========================================
+   COVER PHOTO SELECTED
+========================================== */
+
+coverPhotoInput.addEventListener(
+    "change",
+    async function(){
+
+        const file =
+            this.files[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        await uploadImage(
+            file,
+            "cover"
+        );
+
+
+        /*
+        Allow selecting the same
+        file again later.
+        */
+
+        this.value =
+            "";
+
+    }
+);
+
+
+/* ==========================================
+   INITIALIZE
 ========================================== */
 
 loadCurrentUser();
 
-
-{% endif %}
-
-
 </script>
-
-
-<!-- ==========================================
-     SERVICE WORKER
-========================================== -->
-
-<script>
-
-if(
-    'serviceWorker'
-    in navigator
-){
-
-    window.addEventListener(
-        'load',
-        function(){
-
-            navigator
-                .serviceWorker
-                .register(
-                    '/static/sw.js'
-                )
-
-                .then(
-                    function(
-                        registration
-                    ){
-
-                        console.log(
-                            'Service Worker Registered'
-                        );
-
-                    }
-                )
-
-                .catch(
-                    function(error){
-
-                        console.log(
-                            'Service Worker Failed',
-                            error
-                        );
-
-                    }
-                );
-
-        }
-    );
-
-}
-
-</script>
-
-
-<!-- ==========================================
-     PWA INSTALL
-========================================== -->
-
-<script src="{{ url_for('static', filename='pwa-install.js') }}"></script>
 
 
 </body>
