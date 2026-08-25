@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
 
-<title>Login - Pathukkalam</title>
+{% block title %}
+Login - Pathukkalam
+{% endblock %}
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% block head %}
 
 <style>
 
@@ -120,19 +121,26 @@ body{
 
 </style>
 
-</head>
+{% endblock %}
 
-<body>
+
+{% block content %}
+
 
 <div class="login-box">
 
     <div class="logo">
 
-        <img src="{{ url_for('static', filename='icon-192.png') }}">
+        <img
+            src="{{ url_for('static', filename='icon-192.png') }}">
 
-        <h1>Pathukkalam</h1>
+        <h1>
+            Pathukkalam
+        </h1>
 
-        <p>Welcome back 🚀</p>
+        <p>
+            Welcome back 🚀
+        </p>
 
     </div>
 
@@ -141,7 +149,9 @@ body{
 
         <div class="input-box">
 
-            <label>Username</label>
+            <label>
+                Username
+            </label>
 
             <input
                 type="text"
@@ -155,7 +165,9 @@ body{
 
         <div class="input-box">
 
-            <label>Password</label>
+            <label>
+                Password
+            </label>
 
             <input
                 type="password"
@@ -198,25 +210,40 @@ body{
 </div>
 
 
+{% endblock %}
+
+
+{% block scripts %}
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
 
 const SUPABASE_URL =
     "https://jxpvkamxtedgzztozonl.supabase.co";
 
+
 const SUPABASE_ANON_KEY =
     "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
 
 const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
-    
-console.log("Supabase client ready");
-    
 
+
+console.log(
+    "Supabase client ready"
+);
+
+
+/* ==========================================
+   LOGIN
+========================================== */
 
 document.getElementById("loginForm").addEventListener(
     "submit",
@@ -234,7 +261,8 @@ document.getElementById("loginForm").addEventListener(
 
 
         const password =
-            document.getElementById("password").value;
+            document.getElementById("password")
+            .value;
 
 
         const button =
@@ -247,7 +275,8 @@ document.getElementById("loginForm").addEventListener(
 
         button.disabled = true;
 
-        button.innerText = "Logging in...";
+        button.innerText =
+            "Logging in...";
 
         message.innerText = "";
 
@@ -255,8 +284,10 @@ document.getElementById("loginForm").addEventListener(
         try{
 
             /*
-             Find the email associated
-             with the username.
+            ======================================
+            Find the email associated
+            with the username.
+            ======================================
             */
 
             const response =
@@ -272,55 +303,75 @@ document.getElementById("loginForm").addEventListener(
             if(!response.ok){
 
                 throw new Error(
-                    result.error || "Username not found"
+                    result.error ||
+                    "Username not found"
                 );
 
             }
 
 
             /*
-             Login using Supabase Auth
+            ======================================
+            Login using Supabase Auth
+            ======================================
             */
 
-            const { data, error } =
-                await supabaseClient.auth.signInWithPassword({
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.auth.signInWithPassword({
 
-                    email: result.email,
+                email:
+                    result.email,
 
-                    password: password
+                password:
+                    password
 
-                });
+            });
 
 
             if(error){
-            
+
                 throw error;
-            
+
             }
-            
-            
-            console.log("Logged in user:", data.user);
-            
-            console.log("Session:", data.session);
-            
-            
-            message.style.color = "green";
-            
+
+
+            console.log(
+                "Logged in user:",
+                data.user
+            );
+
+
+            console.log(
+                "Session:",
+                data.session
+            );
+
+
+            message.style.color =
+                "green";
+
+
             message.innerText =
                 "Login successful!";
-            
-            
+
+
             setTimeout(function(){
-            
-                window.location.href = "/";
-            
+
+                window.location.href =
+                    "/";
+
             }, 500);
 
 
         }
         catch(error){
 
-            message.style.color = "red";
+            message.style.color =
+                "red";
+
 
             message.innerText =
                 error.message;
@@ -328,9 +379,12 @@ document.getElementById("loginForm").addEventListener(
         }
 
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
-        button.innerText = "Login";
+
+        button.innerText =
+            "Login";
 
     }
 
@@ -338,6 +392,5 @@ document.getElementById("loginForm").addEventListener(
 
 </script>
 
-</body>
 
-</html>
+{% endblock %}
