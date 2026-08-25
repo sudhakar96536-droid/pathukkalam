@@ -431,6 +431,57 @@ def get_user_email(username):
         return {
             "error": str(e)
         }, 500
+@app.route("/post/<int:post_id>")
+def view_post(post_id):
 
+    try:
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT
+                p.id,
+                p.caption,
+                p.image_url,
+                p.created_at,
+                p.user_id,
+                pr.username,
+                pr.name,
+                pr.profile_url
+            FROM public.posts p
+            JOIN public.profiles pr
+                ON p.user_id = pr.id
+            WHERE p.id = %s
+        """, (post_id,))
+
+        row = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        if not row:
+            return "Post not found", 404
+
+        post = {
+            "id": row[0],
+            "caption": row[1],
+            "image": row[2],
+            "created_at": row[3],
+            "user_id": row[4],
+            "username": row[5],
+            "name": row[6],
+            "profile": row[7]
+        }
+
+        return render_template(
+            "post.html",
+            post=post
+        )
+
+    except Exception as e:
+
+        return f"Error loading post: {e}", 500
+        
 if __name__ == '__main__':
     app.run(debug=True)
