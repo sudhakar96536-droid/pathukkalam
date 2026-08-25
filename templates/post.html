@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>{{ post.name }} - Pathukkalam</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f0f2f5;
+    padding-bottom:80px;
+}
+
+
+/* HEADER */
+
+.header{
+
+    background:white;
+
+    padding:14px 16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    box-shadow:
+        0 2px 5px
+        rgba(0,0,0,0.08);
+}
+
+.header-title{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#1877f2;
+}
+
+.back-btn{
+
+    color:#333;
+
+    text-decoration:none;
+
+    font-size:20px;
+}
+
+
+/* POST */
+
+.post{
+
+    background:white;
+
+    margin-top:10px;
+
+    padding:15px;
+
+}
+
+
+/* USER */
+
+.post-header{
+
+    display:flex;
+
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.post-header img{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    margin-right:10px;
+}
+
+.post-user{
+
+    font-weight:bold;
+
+    font-size:16px;
+}
+
+.post-username{
+
+    color:gray;
+
+    font-size:13px;
+
+    margin-top:3px;
+}
+
+
+/* TEXT */
+
+.post-text{
+
+    font-size:17px;
+
+    line-height:1.6;
+
+    color:#222;
+
+    margin-bottom:15px;
+}
+
+
+/* IMAGE */
+
+.post-image{
+
+    width:100%;
+
+    max-height:650px;
+
+    object-fit:contain;
+
+    border-radius:12px;
+
+    display:block;
+
+    background:#f0f2f5;
+}
+
+
+/* ACTIONS */
+
+.post-actions{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    padding-top:15px;
+
+    margin-top:15px;
+
+    border-top:1px solid #eee;
+
+    color:#555;
+
+}
+
+.action{
+
+    cursor:pointer;
+
+    font-size:15px;
+
+}
+
+
+/* BOTTOM */
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-evenly;
+
+    padding:12px 0;
+
+    border-top:1px solid #ddd;
+
+}
+
+.nav-item{
+
+    color:gray;
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+}
+
+.nav-item i{
+
+    font-size:21px;
+
+    margin-bottom:4px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <a
+        href="/"
+        class="back-btn">
+
+        <i class="fas fa-arrow-left"></i>
+
+    </a>
+
+
+    <div class="header-title">
+
+        Pathukkalam
+
+    </div>
+
+
+    <div style="width:25px;"></div>
+
+</div>
+
+
+<!-- POST -->
+
+<div class="post">
+
+
+    <!-- USER -->
+
+    <div class="post-header">
+
+        <a
+            href="/profile/{{ post.username }}">
+
+            <img
+                src="{{ post.profile }}"
+                alt="Profile">
+
+        </a>
+
+
+        <div>
+
+            <div class="post-user">
+
+                {{ post.name }}
+
+            </div>
+
+
+            <div class="post-username">
+
+                @{{ post.username }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TEXT -->
+
+    {% if post.caption %}
+
+    <div class="post-text">
+
+        {{ post.caption }}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- IMAGE -->
+
+    {% if post.image %}
+
+    <img
+        class="post-image"
+        src="{{ post.image }}"
+        alt="Post image">
+
+    {% endif %}
+
+
+    <!-- ACTIONS -->
+
+    <div class="post-actions">
+
+        <div class="action">
+
+            <i class="far fa-thumbs-up"></i>
+
+            Like
+
+        </div>
+
+
+        <div class="action">
+
+            <i class="far fa-comment"></i>
+
+            Comment
+
+        </div>
+
+
+        <div class="action">
+
+            <i class="far fa-share-square"></i>
+
+            Share
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- BOTTOM NAVIGATION -->
+
+<div class="bottom-nav">
+
+
+    <a
+        href="/"
+        class="nav-item">
+
+        <i class="fas fa-house"></i>
+
+        <span>
+            Home
+        </span>
+
+    </a>
+
+
+    <a
+        href="/explore"
+        class="nav-item">
+
+        <i class="fas fa-compass"></i>
+
+        <span>
+            Explore
+        </span>
+
+    </a>
+
+
+    <a
+        href="/notifications"
+        class="nav-item">
+
+        <i class="fas fa-bell"></i>
+
+        <span>
+            Alerts
+        </span>
+
+    </a>
+
+
+    <a
+        href="/profile/{{ post.username }}"
+        class="nav-item">
+
+        <i class="fas fa-user"></i>
+
+        <span>
+            Profile
+        </span>
+
+    </a>
+
+</div>
+
+
+</body>
+
+</html>
