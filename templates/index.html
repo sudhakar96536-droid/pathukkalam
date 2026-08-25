@@ -724,6 +724,63 @@ body{
 
 
 /* ==========================================
+   SHARE
+========================================== */
+
+.share-btn{
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+
+    min-width:70px;
+
+    padding:8px;
+
+    border-radius:10px;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+.share-btn:hover{
+
+    background:#f0f2f5;
+}
+
+.share-btn:active{
+
+    transform:scale(0.94);
+}
+
+.share-btn i{
+
+    font-size:17px;
+}
+
+.share-count{
+
+    font-size:14px;
+
+    color:#555;
+}
+
+.share-btn.processing{
+
+    opacity:0.6;
+
+    pointer-events:none;
+}
+
+
+/* ==========================================
    MOBILE COMMENT SHEET
 ========================================== */
 
@@ -1037,8 +1094,6 @@ body{
 
             <i class="far fa-thumbs-up"></i>
 
-
-
             <span class="like-count">
                 0
             </span>
@@ -1066,11 +1121,17 @@ body{
 
         <div
             class="share-btn"
-            data-post-id="{{ post.id }}"
-            data-post-username="{{ post.username }}"
-            style="cursor:pointer;">
+            data-post-id="{{ post.id }}">
 
             <i class="far fa-share-square"></i>
+
+            <span>
+                Share
+            </span>
+
+            <span class="share-count">
+                0
+            </span>
 
         </div>
 
@@ -2350,6 +2411,90 @@ document.getElementById(
 
 
 /* ==========================================
+   SHARE COUNTS
+========================================== */
+
+async function loadShareCounts(){
+
+    const shareButtons =
+        document.querySelectorAll(
+            ".share-btn"
+        );
+
+
+    if(
+        !shareButtons.length
+    ){
+
+        return;
+
+    }
+
+
+    for(
+        const button
+        of shareButtons
+    ){
+
+        const postId =
+            button.dataset.postId;
+
+
+        const {
+
+            count,
+            error
+
+        } =
+        await supabaseClient
+
+            .from("shares")
+
+            .select(
+                "*",
+                {
+                    count:"exact",
+                    head:true
+                }
+            )
+
+            .eq(
+                "post_id",
+                postId
+            );
+
+
+        if(error){
+
+            console.error(
+                "Share count error:",
+                error
+            );
+
+            continue;
+
+        }
+
+
+        const countElement =
+            button.querySelector(
+                ".share-count"
+            );
+
+
+        if(countElement){
+
+            countElement.innerText =
+                count || 0;
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================
    SHARE POST
 ========================================== */
 
@@ -2370,18 +2515,47 @@ document.addEventListener(
         }
 
 
+        if(
+            !currentUser
+        ){
+
+            alert(
+                "Please login to share this post."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            button.classList.contains(
+                "processing"
+            )
+        ){
+
+            return;
+
+        }
+
+
+        button.classList.add(
+            "processing"
+        );
+
+
         const postId =
             button.dataset.postId;
 
 
         /*
-        Real Pathukkalam
-        post URL
+        IMPORTANT:
+        Always use the real Pathukkalam
+        domain for shared links.
         */
 
         const shareUrl =
-            window.location.origin +
-            "/post/" +
+            "https://pathukkalam.in/post/" +
             postId;
 
 
@@ -2397,69 +2571,218 @@ document.addEventListener(
 
 
             /*
-            Native mobile sharing
+            ======================================
+            STEP 1
+            SHARE THE POST
+            ======================================
+            */
+
+            let shareCompleted =
+                false;
+
+
+            /*
+            Mobile / supported browsers
             */
 
             if(
                 navigator.share
             ){
 
-                await navigator.share({
+                try{
 
-                    title:
-                        shareTitle,
+                    await navigator.share({
 
-                    text:
-                        shareText,
+                        title:
+                            shareTitle,
 
-                    url:
-                        shareUrl
+                        text:
+                            shareText,
 
-                });
+                        url:
+                            shareUrl
+
+                    });
 
 
-                console.log(
-                    "Post shared successfully"
-                );
+                    shareCompleted =
+                        true;
+
+                }
+                catch(error){
+
+                    /*
+                    User cancelled share.
+                    Do NOT count it.
+                    */
+
+                    if(
+                        error.name ===
+                        "AbortError"
+                    ){
+
+                        button.classList.remove(
+                            "processing"
+                        );
+
+                        return;
+
+                    }
+
+                    /*
+                    If native sharing fails,
+                    continue to clipboard fallback.
+                    */
+
+                    console.warn(
+                        "Native share failed:",
+                        error
+                    );
+
+                }
 
             }
 
 
             /*
-            Desktop fallback
+            ======================================
+            DESKTOP / FALLBACK
+            ======================================
             */
 
-            else{
+            if(
+                !shareCompleted
+            ){
 
-                await navigator.clipboard.writeText(
-                    shareUrl
-                );
+                try{
+
+                    await navigator
+                        .clipboard
+                        .writeText(
+                            shareUrl
+                        );
 
 
-                alert(
-                    "Post link copied! 🔗"
-                );
+                    shareCompleted =
+                        true;
+
+
+                    alert(
+                        "Post link copied! 🔗"
+                    );
+
+                }
+                catch(error){
+
+                    console.error(
+                        "Clipboard error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Unable to share this post."
+                    );
+
+
+                    button.classList.remove(
+                        "processing"
+                    );
+
+                    return;
+
+                }
+
+            }
+
+
+            /*
+            ======================================
+            STEP 2
+            RECORD REAL SHARE
+            ======================================
+            */
+
+            if(
+                shareCompleted
+            ){
+
+                const {
+
+                    data,
+                    error
+
+                } =
+                await supabaseClient
+
+                    .from("shares")
+
+                    .insert({
+
+                        post_id:
+                            Number(
+                                postId
+                            ),
+
+                        user_id:
+                            currentUser.id
+
+                    })
+
+                    .select()
+                    .single();
+
+
+                if(error){
+
+                    console.error(
+                        "Share database error:",
+                        error
+                    );
+
+
+                    /*
+                    The actual share already
+                    happened, so don't tell
+                    user that sharing failed.
+                    */
+
+                }
+                else{
+
+                    console.log(
+                        "Share recorded:",
+                        data
+                    );
+
+                }
+
+
+                /*
+                ==================================
+                STEP 3
+                REFRESH SHARE COUNT
+                ==================================
+                */
+
+                await loadShareCounts();
 
             }
 
         }
         catch(error){
 
-            /*
-            User cancelled sharing.
-            */
+            console.error(
+                "Share error:",
+                error
+            );
 
-            if(
-                error.name !==
-                "AbortError"
-            ){
+        }
+        finally{
 
-                console.error(
-                    "Share error:",
-                    error
-                );
-
-            }
+            button.classList.remove(
+                "processing"
+            );
 
         }
 
@@ -2499,6 +2822,8 @@ async function initializePage(){
     await loadLikes();
 
     await loadCommentCounts();
+
+    await loadShareCounts();
 
 }
 
