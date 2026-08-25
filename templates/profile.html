@@ -347,6 +347,20 @@ body{
     color:white;
 }
 
+.follow-btn.unfollow{
+
+    background:#e4e6eb;
+
+    color:#333;
+}
+
+.follow-btn:disabled{
+
+    opacity:0.6;
+
+    cursor:not-allowed;
+}
+
 .message-btn{
 
     background:#e4e6eb;
@@ -637,10 +651,7 @@ body{
     style="background:url('{{ user.cover }}') center/cover;">
 
 
-    <!-- ======================================
-         COVER CHANGE BUTTON
-         DIRECTLY VISIBLE FOR OWN PROFILE
-    ======================================= -->
+    <!-- COVER CHANGE BUTTON -->
 
     <button
         type="button"
@@ -679,9 +690,7 @@ body{
             alt="Profile Photo">
 
 
-        <!-- ==================================
-             PROFILE PHOTO CHANGE BUTTON
-        =================================== -->
+        <!-- PROFILE PHOTO CHANGE BUTTON -->
 
         <button
             type="button"
@@ -734,7 +743,6 @@ body{
 
     <!-- ======================================
          FOLLOW / MESSAGE
-         OTHER USERS ONLY
     ======================================= -->
 
     <div
@@ -744,14 +752,22 @@ body{
         style="display:none;"
         {% endif %}>
 
-        <button class="follow-btn">
+
+        <!-- FOLLOW BUTTON -->
+
+        <button
+            id="followButton"
+            class="follow-btn">
 
             Follow
 
         </button>
 
 
-        <button class="message-btn">
+        <!-- MESSAGE BUTTON -->
+
+        <button
+            class="message-btn">
 
             Message
 
@@ -779,8 +795,10 @@ body{
 
         <div>
 
-            <h3>
+            <h3 id="postCount">
+
                 {{ user.posts }}
+
             </h3>
 
             <p>
@@ -792,8 +810,10 @@ body{
 
         <div>
 
-            <h3>
+            <h3 id="followersCount">
+
                 {{ user.followers }}
+
             </h3>
 
             <p>
@@ -806,7 +826,9 @@ body{
         <div>
 
             <h3>
+
                 {{ user.following }}
+
             </h3>
 
             <p>
@@ -1024,6 +1046,18 @@ const profileActionButtons =
     );
 
 
+const followButton =
+    document.getElementById(
+        "followButton"
+    );
+
+
+const followersCount =
+    document.getElementById(
+        "followersCount"
+    );
+
+
 /* ==========================================
    CURRENT USER
 ========================================== */
@@ -1031,6 +1065,8 @@ const profileActionButtons =
 let currentUser = null;
 
 let currentProfile = null;
+
+let viewedProfile = null;
 
 
 /* ==========================================
@@ -1070,6 +1106,14 @@ async function loadCurrentUser(){
                 "No logged in user."
             );
 
+            /*
+            If nobody is logged in,
+            don't show Follow button.
+            */
+
+            profileActionButtons.style.display =
+                "none";
+
             return;
 
         }
@@ -1086,8 +1130,9 @@ async function loadCurrentUser(){
 
 
         /*
-        Load the profile belonging
-        to the logged-in user.
+        ======================================
+        LOAD LOGGED-IN USER PROFILE
+        ======================================
         */
 
         const {
@@ -1128,18 +1173,76 @@ async function loadCurrentUser(){
 
         /*
         ======================================
+        LOAD VIEWED PROFILE
+        ======================================
+        */
+
+        const {
+            data:viewed,
+            error:viewedError
+        } =
+        await supabaseClient
+
+            .from("profiles")
+
+            .select(
+                "id, username, name"
+            )
+
+            .eq(
+                "username",
+                profileUsername
+            )
+
+            .maybeSingle();
+
+
+        if(viewedError){
+
+            console.error(
+                "Viewed profile error:",
+                viewedError
+            );
+
+            return;
+
+        }
+
+
+        if(!viewed){
+
+            console.error(
+                "Viewed profile not found."
+            );
+
+            return;
+
+        }
+
+
+        viewedProfile =
+            viewed;
+
+
+        console.log(
+            "Viewed profile:",
+            viewedProfile
+        );
+
+
+        /*
+        ======================================
         CHECK OWN PROFILE
         ======================================
         */
 
         const isOwnProfile =
-            profile &&
             String(
-                profile.username
-            ).toLowerCase() ===
+                currentUser.id
+            ) ===
             String(
-                profileUsername
-            ).toLowerCase();
+                viewedProfile.id
+            );
 
 
         console.log(
@@ -1205,6 +1308,13 @@ async function loadCurrentUser(){
             profileActionButtons.style.display =
                 "flex";
 
+
+            /*
+            Load Follow status
+            */
+
+            await loadFollowStatus();
+
         }
 
     }
@@ -1218,6 +1328,319 @@ async function loadCurrentUser(){
     }
 
 }
+
+
+/* ==========================================
+   LOAD FOLLOW STATUS
+========================================== */
+
+async function loadFollowStatus(){
+
+    if(
+        !currentUser ||
+        !viewedProfile
+    ){
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+
+        .from("followers")
+
+        .select("id")
+
+        .eq(
+            "follower_id",
+            currentUser.id
+        )
+
+        .eq(
+            "following_id",
+            viewedProfile.id
+        )
+
+        .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Follow status error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if(data){
+
+        setUnfollowButton();
+
+    }
+    else{
+
+        setFollowButton();
+
+    }
+
+}
+
+
+/* ==========================================
+   FOLLOW BUTTON STATE
+========================================== */
+
+function setFollowButton(){
+
+    followButton.innerText =
+        "Follow";
+
+    followButton.classList.remove(
+        "unfollow"
+    );
+
+}
+
+
+/* ==========================================
+   UNFOLLOW BUTTON STATE
+========================================== */
+
+function setUnfollowButton(){
+
+    followButton.innerText =
+        "Unfollow";
+
+    followButton.classList.add(
+        "unfollow"
+    );
+
+}
+
+
+/* ==========================================
+   FOLLOW / UNFOLLOW
+========================================== */
+
+followButton.addEventListener(
+    "click",
+    async function(){
+
+        if(
+            !currentUser ||
+            !viewedProfile
+        ){
+
+            alert(
+                "Please login first."
+            );
+
+            return;
+
+        }
+
+
+        /*
+        Never allow following yourself.
+        */
+
+        if(
+            String(
+                currentUser.id
+            ) ===
+            String(
+                viewedProfile.id
+            )
+        ){
+
+            return;
+
+        }
+
+
+        if(
+            followButton.dataset.processing ===
+            "true"
+        ){
+
+            return;
+
+        }
+
+
+        followButton.dataset.processing =
+            "true";
+
+
+        followButton.disabled =
+            true;
+
+
+        try{
+
+
+            const isCurrentlyFollowing =
+                followButton.innerText
+                    .toLowerCase() ===
+                "unfollow";
+
+
+            /*
+            ==================================
+            UNFOLLOW
+            ==================================
+            */
+
+            if(
+                isCurrentlyFollowing
+            ){
+
+                const {
+                    error
+                } =
+                await supabaseClient
+
+                    .from("followers")
+
+                    .delete()
+
+                    .eq(
+                        "follower_id",
+                        currentUser.id
+                    )
+
+                    .eq(
+                        "following_id",
+                        viewedProfile.id
+                    );
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                setFollowButton();
+
+
+                /*
+                Decrease displayed
+                follower count.
+                */
+
+                const currentCount =
+                    parseInt(
+                        followersCount.innerText
+                    ) || 0;
+
+
+                followersCount.innerText =
+                    Math.max(
+                        0,
+                        currentCount - 1
+                    );
+
+            }
+
+
+            /*
+            ==================================
+            FOLLOW
+            ==================================
+            */
+
+            else{
+
+                const {
+                    error
+                } =
+                await supabaseClient
+
+                    .from("followers")
+
+                    .insert({
+
+                        follower_id:
+                            currentUser.id,
+
+                        following_id:
+                            viewedProfile.id
+
+                    });
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                setUnfollowButton();
+
+
+                /*
+                Increase displayed
+                follower count.
+                */
+
+                const currentCount =
+                    parseInt(
+                        followersCount.innerText
+                    ) || 0;
+
+
+                followersCount.innerText =
+                    currentCount + 1;
+
+            }
+
+        }
+        catch(error){
+
+            console.error(
+                "Follow / Unfollow error:",
+                error
+            );
+
+
+            alert(
+                "Unable to update follow status: " +
+                error.message
+            );
+
+
+            /*
+            Reload actual status
+            if something failed.
+            */
+
+            await loadFollowStatus();
+
+        }
+        finally{
+
+            followButton.disabled =
+                false;
+
+            followButton.dataset.processing =
+                "false";
+
+        }
+
+    }
+);
 
 
 /* ==========================================
