@@ -28,7 +28,9 @@ body{
 }
 
 
-/* HEADER */
+/* ==========================================
+   HEADER
+========================================== */
 
 .header{
 
@@ -72,7 +74,9 @@ body{
 }
 
 
-/* POST */
+/* ==========================================
+   POST
+========================================== */
 
 .post{
 
@@ -81,11 +85,12 @@ body{
     margin-top:10px;
 
     padding:15px;
-
 }
 
 
-/* USER */
+/* ==========================================
+   USER
+========================================== */
 
 .post-header{
 
@@ -126,7 +131,9 @@ body{
 }
 
 
-/* TEXT */
+/* ==========================================
+   TEXT
+========================================== */
 
 .post-text{
 
@@ -140,7 +147,9 @@ body{
 }
 
 
-/* IMAGE */
+/* ==========================================
+   IMAGE
+========================================== */
 
 .post-image{
 
@@ -158,13 +167,17 @@ body{
 }
 
 
-/* ACTIONS */
+/* ==========================================
+   ACTIONS
+========================================== */
 
 .post-actions{
 
     display:flex;
 
     justify-content:space-around;
+
+    align-items:center;
 
     padding-top:15px;
 
@@ -173,19 +186,179 @@ body{
     border-top:1px solid #eee;
 
     color:#555;
-
 }
 
 .action{
 
     cursor:pointer;
 
-    font-size:15px;
+    font-size:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    min-width:80px;
+
+    justify-content:center;
+
+    padding:8px;
+
+    border-radius:10px;
 
 }
 
+.action:hover{
 
-/* BOTTOM */
+    background:#f0f2f5;
+}
+
+.action i{
+
+    font-size:18px;
+}
+
+.like-active{
+
+    color:#1877f2 !important;
+}
+
+
+/* ==========================================
+   COMMENTS
+========================================== */
+
+.comments-section{
+
+    display:none;
+
+    margin-top:15px;
+
+    border-top:1px solid #eee;
+
+    padding-top:12px;
+}
+
+.comments-list{
+
+    max-height:400px;
+
+    overflow-y:auto;
+
+    margin-bottom:12px;
+}
+
+.comment-item{
+
+    display:flex;
+
+    gap:9px;
+
+    margin-bottom:12px;
+}
+
+.comment-avatar{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    flex-shrink:0;
+}
+
+.comment-content{
+
+    background:#f0f2f5;
+
+    border-radius:15px;
+
+    padding:8px 12px;
+
+    max-width:calc(100% - 48px);
+}
+
+.comment-user{
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    color:#222;
+}
+
+.comment-text{
+
+    margin-top:3px;
+
+    font-size:14px;
+
+    line-height:1.4;
+
+    word-break:break-word;
+}
+
+.comment-input-row{
+
+    display:flex;
+
+    gap:8px;
+
+    align-items:center;
+}
+
+.comment-input{
+
+    flex:1;
+
+    min-width:0;
+
+    border:none;
+
+    outline:none;
+
+    background:#f0f2f5;
+
+    border-radius:22px;
+
+    padding:11px 15px;
+
+    font-size:14px;
+}
+
+.comment-submit{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#1877f2;
+
+    color:white;
+
+    cursor:pointer;
+
+    flex-shrink:0;
+}
+
+.comment-submit:disabled{
+
+    opacity:0.6;
+}
+
+
+/* ==========================================
+   BOTTOM NAV
+========================================== */
 
 .bottom-nav{
 
@@ -207,6 +380,7 @@ body{
 
     border-top:1px solid #ddd;
 
+    z-index:1000;
 }
 
 .nav-item{
@@ -239,7 +413,9 @@ body{
 <body>
 
 
-<!-- HEADER -->
+<!-- ==========================================
+     HEADER
+========================================== -->
 
 <div class="header">
 
@@ -264,9 +440,14 @@ body{
 </div>
 
 
-<!-- POST -->
+<!-- ==========================================
+     POST
+========================================== -->
 
-<div class="post">
+<div
+    class="post"
+    id="postContainer"
+    data-post-id="{{ post.id }}">
 
 
     <!-- USER -->
@@ -332,29 +513,93 @@ body{
 
     <div class="post-actions">
 
-        <div class="action">
 
-            <i class="far fa-thumbs-up"></i>
+        <!-- LIKE -->
 
-            Like
+        <div
+            id="likeButton"
+            class="action">
+
+            <i
+                id="likeIcon"
+                class="far fa-thumbs-up">
+            </i>
+
+            <span>
+                <span id="likeCount">
+                    0
+                </span>
+            </span>
 
         </div>
 
 
-        <div class="action">
+        <!-- COMMENT -->
+
+        <div
+            id="commentButton"
+            class="action">
 
             <i class="far fa-comment"></i>
 
-            Comment
+            <span id="commentCount">
+                0
+            </span>
 
         </div>
 
 
-        <div class="action">
+        <!-- SHARE -->
+
+        <div
+            id="shareButton"
+            class="action">
 
             <i class="far fa-share-square"></i>
 
-            Share
+            <span id="shareCount">
+                0
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         COMMENTS
+    ======================================= -->
+
+    <div
+        id="commentsSection"
+        class="comments-section">
+
+
+        <div
+            id="commentsList"
+            class="comments-list">
+
+        </div>
+
+
+        <div class="comment-input-row">
+
+            <input
+                type="text"
+                id="commentInput"
+                class="comment-input"
+                placeholder="Write a comment..."
+                maxlength="500"
+                autocomplete="off">
+
+
+            <button
+                id="commentSubmit"
+                class="comment-submit">
+
+                <i class="fas fa-paper-plane"></i>
+
+            </button>
 
         </div>
 
@@ -363,7 +608,9 @@ body{
 </div>
 
 
-<!-- BOTTOM NAVIGATION -->
+<!-- ==========================================
+     BOTTOM NAVIGATION
+========================================== -->
 
 <div class="bottom-nav">
 
@@ -421,6 +668,1027 @@ body{
 
 </div>
 
+
+<!-- ==========================================
+     SUPABASE
+========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+const postId =
+    Number(
+        document
+            .getElementById("postContainer")
+            .dataset
+            .postId
+    );
+
+
+let currentUser = null;
+
+
+/* ==========================================
+   CURRENT USER
+========================================== */
+
+async function loadCurrentUser(){
+
+    try{
+
+        const {
+            data:{
+                user
+            },
+            error
+        } =
+        await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error){
+
+            console.error(
+                "Auth error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        currentUser =
+            user;
+
+
+        console.log(
+            "Logged in user:",
+            currentUser
+        );
+
+
+    }
+    catch(error){
+
+        console.error(
+            "User loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   LOAD LIKE COUNT
+========================================== */
+
+async function loadLike(){
+
+    const {
+        count,
+        error
+    } =
+    await supabaseClient
+
+        .from("likes")
+
+        .select(
+            "*",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+
+        .eq(
+            "post_id",
+            postId
+        );
+
+
+    if(error){
+
+        console.error(
+            "Like count error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "likeCount"
+    ).innerText =
+        count || 0;
+
+
+    if(!currentUser){
+
+        return;
+
+    }
+
+
+    const {
+        data:myLike,
+        error:myLikeError
+    } =
+    await supabaseClient
+
+        .from("likes")
+
+        .select("id")
+
+        .eq(
+            "post_id",
+            postId
+        )
+
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+
+        .maybeSingle();
+
+
+    if(myLikeError){
+
+        console.error(
+            "My like error:",
+            myLikeError
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "likeButton"
+        );
+
+    const icon =
+        document.getElementById(
+            "likeIcon"
+        );
+
+
+    if(myLike){
+
+        icon.className =
+            "fas fa-thumbs-up";
+
+        button.classList.add(
+            "like-active"
+        );
+
+    }
+    else{
+
+        icon.className =
+            "far fa-thumbs-up";
+
+        button.classList.remove(
+            "like-active"
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   LIKE / UNLIKE
+========================================== */
+
+document
+    .getElementById("likeButton")
+    .addEventListener(
+        "click",
+        async function(){
+
+            if(!currentUser){
+
+                alert(
+                    "Please login to like this post."
+                );
+
+                return;
+
+            }
+
+
+            const button =
+                this;
+
+
+            if(
+                button.dataset.processing ===
+                "true"
+            ){
+
+                return;
+
+            }
+
+
+            button.dataset.processing =
+                "true";
+
+
+            try{
+
+
+                const {
+                    data:existingLike,
+                    error:checkError
+                } =
+                await supabaseClient
+
+                    .from("likes")
+
+                    .select("id")
+
+                    .eq(
+                        "post_id",
+                        postId
+                    )
+
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    )
+
+                    .maybeSingle();
+
+
+                if(checkError){
+
+                    throw checkError;
+
+                }
+
+
+                if(existingLike){
+
+                    const {
+                        error
+                    } =
+                    await supabaseClient
+
+                        .from("likes")
+
+                        .delete()
+
+                        .eq(
+                            "id",
+                            existingLike.id
+                        );
+
+
+                    if(error){
+
+                        throw error;
+
+                    }
+
+                }
+                else{
+
+                    const {
+                        error
+                    } =
+                    await supabaseClient
+
+                        .from("likes")
+
+                        .insert({
+
+                            post_id:
+                                postId,
+
+                            user_id:
+                                currentUser.id
+
+                        });
+
+
+                    if(error){
+
+                        throw error;
+
+                    }
+
+                }
+
+
+                await loadLike();
+
+            }
+            catch(error){
+
+                console.error(
+                    "Like error:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to update Like: " +
+                    error.message
+                );
+
+            }
+            finally{
+
+                button.dataset.processing =
+                    "false";
+
+            }
+
+        }
+    );
+
+
+/* ==========================================
+   LOAD COMMENT COUNT
+========================================== */
+
+async function loadCommentCount(){
+
+    const {
+        count,
+        error
+    } =
+    await supabaseClient
+
+        .from("comments")
+
+        .select(
+            "*",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+
+        .eq(
+            "post_id",
+            postId
+        );
+
+
+    if(error){
+
+        console.error(
+            "Comment count error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "commentCount"
+    ).innerText =
+        count || 0;
+
+}
+
+
+/* ==========================================
+   LOAD COMMENTS
+========================================== */
+
+async function loadComments(){
+
+    const list =
+        document.getElementById(
+            "commentsList"
+        );
+
+
+    list.innerHTML =
+        "Loading comments...";
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+
+        .from("comments")
+
+        .select(`
+            id,
+            comment,
+            created_at,
+            user_id
+        `)
+
+        .eq(
+            "post_id",
+            postId
+        )
+
+        .order(
+            "created_at",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Comments error:",
+            error
+        );
+
+
+        list.innerHTML =
+            "Unable to load comments.";
+
+        return;
+
+    }
+
+
+    if(!data.length){
+
+        list.innerHTML = `
+
+            <div
+                style="
+                    color:gray;
+                    text-align:center;
+                    padding:15px;
+                ">
+
+                No comments yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const userIds =
+        data.map(
+            comment =>
+                comment.user_id
+        );
+
+
+    const {
+        data:profiles
+    } =
+    await supabaseClient
+
+        .from("profiles")
+
+        .select(
+            "id, username, name, profile_url"
+        )
+
+        .in(
+            "id",
+            userIds
+        );
+
+
+    list.innerHTML =
+        "";
+
+
+    data.forEach(
+        function(comment){
+
+            const profile =
+                profiles?.find(
+                    p =>
+                        p.id ===
+                        comment.user_id
+                );
+
+
+            const name =
+                profile?.name ||
+                profile?.username ||
+                "User";
+
+
+            const avatar =
+                profile?.profile_url ||
+                "https://i.pravatar.cc/100";
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "comment-item";
+
+
+            item.innerHTML = `
+
+                <img
+                    class="comment-avatar"
+                    src="${escapeHtml(avatar)}">
+
+
+                <div
+                    class="comment-content">
+
+                    <div
+                        class="comment-user">
+
+                        ${escapeHtml(name)}
+
+                    </div>
+
+
+                    <div
+                        class="comment-text">
+
+                        ${escapeHtml(
+                            comment.comment
+                        )}
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            list.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   OPEN COMMENTS
+========================================== */
+
+document
+    .getElementById("commentButton")
+    .addEventListener(
+        "click",
+        async function(){
+
+            const section =
+                document.getElementById(
+                    "commentsSection"
+                );
+
+
+            if(
+                section.style.display ===
+                "block"
+            ){
+
+                section.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            section.style.display =
+                "block";
+
+
+            await loadComments();
+
+
+            document
+                .getElementById(
+                    "commentInput"
+                )
+                .focus();
+
+        }
+    );
+
+
+/* ==========================================
+   ADD COMMENT
+========================================== */
+
+async function submitComment(){
+
+    if(!currentUser){
+
+        alert(
+            "Please login to comment."
+        );
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "commentInput"
+        );
+
+
+    const button =
+        document.getElementById(
+            "commentSubmit"
+        );
+
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+
+            .from("comments")
+
+            .insert({
+
+                post_id:
+                    postId,
+
+                user_id:
+                    currentUser.id,
+
+                comment:
+                    text
+
+            });
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        input.value =
+            "";
+
+
+        await loadComments();
+
+        await loadCommentCount();
+
+    }
+    catch(error){
+
+        console.error(
+            "Comment error:",
+            error
+        );
+
+
+        alert(
+            "Unable to add comment: " +
+            error.message
+        );
+
+    }
+    finally{
+
+        button.disabled =
+            false;
+
+    }
+
+}
+
+
+document
+    .getElementById("commentSubmit")
+    .addEventListener(
+        "click",
+        submitComment
+    );
+
+
+/* ==========================================
+   ENTER TO COMMENT
+========================================== */
+
+document
+    .getElementById("commentInput")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key ===
+                "Enter"
+            ){
+
+                event.preventDefault();
+
+                submitComment();
+
+            }
+
+        }
+    );
+
+
+/* ==========================================
+   LOAD SHARE COUNT
+========================================== */
+
+async function loadShareCount(){
+
+    const {
+        count,
+        error
+    } =
+    await supabaseClient
+
+        .from("shares")
+
+        .select(
+            "*",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+
+        .eq(
+            "post_id",
+            postId
+        );
+
+
+    if(error){
+
+        console.error(
+            "Share count error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "shareCount"
+    ).innerText =
+        count || 0;
+
+}
+
+
+/* ==========================================
+   SHARE POST
+========================================== */
+
+document
+    .getElementById("shareButton")
+    .addEventListener(
+        "click",
+        async function(){
+
+            if(!currentUser){
+
+                alert(
+                    "Please login to share this post."
+                );
+
+                return;
+
+            }
+
+
+            const shareUrl =
+                window.location.origin +
+                "/post/" +
+                postId;
+
+
+            try{
+
+
+                /*
+                Record share
+                */
+
+                const {
+                    error
+                } =
+                await supabaseClient
+
+                    .from("shares")
+
+                    .insert({
+
+                        post_id:
+                            postId,
+
+                        user_id:
+                            currentUser.id
+
+                    });
+
+
+                if(error){
+
+                    /*
+                    Still allow sharing
+                    if database insert fails.
+                    */
+
+                    console.error(
+                        "Share record error:",
+                        error
+                    );
+
+                }
+
+
+                /*
+                Update count
+                */
+
+                await loadShareCount();
+
+
+                /*
+                Native phone sharing
+                */
+
+                if(
+                    navigator.share
+                ){
+
+                    await navigator.share({
+
+                        title:
+                            "Pathukkalam",
+
+                        text:
+                            "Check out this post on Pathukkalam 🚀",
+
+                        url:
+                            shareUrl
+
+                    });
+
+                }
+
+
+                /*
+                Desktop fallback
+                */
+
+                else{
+
+                    await navigator
+                        .clipboard
+                        .writeText(
+                            shareUrl
+                        );
+
+
+                    alert(
+                        "Post link copied! 🔗"
+                    );
+
+                }
+
+            }
+            catch(error){
+
+                /*
+                User cancelled native share.
+                */
+
+                if(
+                    error.name !==
+                    "AbortError"
+                ){
+
+                    console.error(
+                        "Share error:",
+                        error
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+
+/* ==========================================
+   HTML SAFETY
+========================================== */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+async function initializePage(){
+
+    await loadCurrentUser();
+
+    await loadLike();
+
+    await loadCommentCount();
+
+    await loadShareCount();
+
+}
+
+
+initializePage();
+
+</script>
 
 </body>
 
