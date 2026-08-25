@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pathukkalam-v1';
+const CACHE_NAME = 'pathukkalam-v2';
 
 const urlsToCache = [
     '/',
