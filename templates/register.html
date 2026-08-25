@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
 
-<meta charset="UTF-8">
+{% block title %}
+Register - Pathukkalam
+{% endblock %}
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Register - Pathukkalam</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+{% block head %}
 
 <style>
 
@@ -103,6 +99,11 @@ body{
     background:#1669d8;
 }
 
+.register-btn:disabled{
+    opacity:0.6;
+    cursor:not-allowed;
+}
+
 .bottom-text{
     text-align:center;
     margin-top:18px;
@@ -129,6 +130,10 @@ body{
     font-size:14px;
 }
 
+.features div:last-child{
+    margin-bottom:0;
+}
+
 .features i{
     color:#1877f2;
     margin-right:8px;
@@ -136,99 +141,131 @@ body{
 
 </style>
 
-</head>
+{% endblock %}
 
-<body>
+
+{% block content %}
+
 
 <div class="register-box">
 
     <div class="logo">
 
-        <img src="{{ url_for('static', filename='icon-192.png') }}">
+        <img
+            src="{{ url_for('static', filename='icon-192.png') }}">
 
-        <h1>Pathukkalam</h1>
+        <h1>
+            Pathukkalam
+        </h1>
 
-        <p>All In One Social Platform 🚀</p>
+        <p>
+            All In One Social Platform 🚀
+        </p>
 
     </div>
 
+
     <form id="registerForm">
-    
+
+
         <div class="input-box">
-    
-            <label>Full Name</label>
-    
+
+            <label>
+                Full Name
+            </label>
+
             <input
                 type="text"
                 id="fullName"
                 placeholder="Enter your full name"
                 required>
-    
+
         </div>
-    
+
+
         <div class="input-box">
-    
-            <label>Username</label>
-    
+
+            <label>
+                Username
+            </label>
+
             <input
                 type="text"
                 id="username"
                 placeholder="@username"
                 required>
-    
+
         </div>
-    
+
+
         <div class="input-box">
-    
-            <label>Mobile Number</label>
-    
+
+            <label>
+                Mobile Number
+            </label>
+
             <input
                 type="text"
                 id="mobile"
                 placeholder="Enter mobile number"
                 required>
-    
+
         </div>
-    
+
+
         <div class="input-box">
-    
-            <label>Email Address</label>
-    
+
+            <label>
+                Email Address
+            </label>
+
             <input
                 type="email"
                 id="email"
                 placeholder="Enter email"
                 required>
-    
+
         </div>
-    
+
+
         <div class="input-box">
-    
-            <label>Password</label>
-    
+
+            <label>
+                Password
+            </label>
+
             <input
                 type="password"
                 id="password"
                 placeholder="Create password"
                 required
                 minlength="6">
-    
+
         </div>
-    
+
+
         <button
             type="submit"
             class="register-btn"
             id="registerBtn">
-    
+
             Create Account
-    
+
         </button>
-    
-        <p id="registerMessage"
-           style="text-align:center;margin-top:15px;">
+
+
+        <p
+            id="registerMessage"
+            style="
+                text-align:center;
+                margin-top:15px;
+            ">
+
         </p>
-    
+
+
     </form>
+
 
     <div class="features">
 
@@ -259,6 +296,7 @@ body{
 
     </div>
 
+
     <div class="bottom-text">
 
         Already have an account?
@@ -271,19 +309,31 @@ body{
 
 </div>
 
+
+{% endblock %}
+
+
+{% block scripts %}
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
 
-const SUPABASE_URL = "https://jxpvkamxtedgzztozonl.supabase.co";
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
+
 
 const SUPABASE_ANON_KEY =
     "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
 
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 
 
 document.getElementById("registerForm").addEventListener(
@@ -292,94 +342,141 @@ document.getElementById("registerForm").addEventListener(
 
         event.preventDefault();
 
+
         const fullName =
-            document.getElementById("fullName").value.trim();
+            document.getElementById("fullName")
+            .value
+            .trim();
+
 
         const username =
-            document.getElementById("username").value.trim()
+            document.getElementById("username")
+            .value
+            .trim()
             .replace("@", "")
             .toLowerCase();
 
+
         const mobile =
-            document.getElementById("mobile").value.trim();
+            document.getElementById("mobile")
+            .value
+            .trim();
+
 
         const email =
-            document.getElementById("email").value.trim();
+            document.getElementById("email")
+            .value
+            .trim();
+
 
         const password =
-            document.getElementById("password").value;
+            document.getElementById("password")
+            .value;
+
 
         const button =
             document.getElementById("registerBtn");
+
 
         const message =
             document.getElementById("registerMessage");
 
 
-        button.disabled = true;
+        button.disabled =
+            true;
 
-        button.innerText = "Creating Account...";
 
-        message.innerText = "";
+        button.innerText =
+            "Creating Account...";
+
+
+        message.innerText =
+            "";
 
 
         try {
 
-            const { data, error } =
-                await supabaseClient.auth.signUp({
 
-                    email: email,
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.auth.signUp({
 
-                    password: password,
+                email:
+                    email,
 
-                    options: {
+                password:
+                    password,
 
-                        emailRedirectTo:
-                            "https://pathukkalam.in/",
+                options: {
 
-                        data: {
+                    /*
+                    IMPORTANT:
+                    Production Pathukkalam URL
+                    */
 
-                            full_name: fullName,
+                    emailRedirectTo:
+                        "https://pathukkalam.in/",
 
-                            username: username,
+                    data: {
 
-                            mobile: mobile
+                        full_name:
+                            fullName,
 
-                        }
+                        username:
+                            username,
+
+                        mobile:
+                            mobile
 
                     }
 
-                });
+                }
+
+            });
 
 
-            if (error) {
+            if(error){
 
                 throw error;
 
             }
 
 
-            message.style.color = "green";
+            message.style.color =
+                "green";
+
 
             message.innerText =
                 "Account created successfully!";
 
 
-            console.log("Supabase user:", data.user);
+            console.log(
+                "Supabase user:",
+                data.user
+            );
 
 
-        } catch (error) {
+        }
+        catch(error){
 
-            message.style.color = "red";
+            message.style.color =
+                "red";
 
-            message.innerText = error.message;
+
+            message.innerText =
+                error.message;
 
         }
 
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
-        button.innerText = "Create Account";
+
+        button.innerText =
+            "Create Account";
 
     }
 
@@ -387,6 +484,5 @@ document.getElementById("registerForm").addEventListener(
 
 </script>
 
-    
-</body>
-</html>
+
+{% endblock %}
