@@ -891,9 +891,7 @@ body{
     </div>
 
 
-    <!-- ======================================
-         EDIT BIO
-    ======================================= -->
+    <!-- EDIT BIO -->
 
     <button
         type="button"
@@ -910,9 +908,7 @@ body{
     </button>
 
 
-    <!-- ======================================
-         FOLLOW / MESSAGE
-    ======================================= -->
+    <!-- FOLLOW / MESSAGE -->
 
     <div
         id="profileActionButtons"
@@ -986,7 +982,7 @@ body{
 
         <div>
 
-            <h3>
+            <h3 id="followingCount">
 
                 {{ user.following }}
 
@@ -1161,8 +1157,20 @@ body{
     </a>
 
 
+    <!--
+    IMPORTANT:
+    Do NOT use /profile/{{ username }} here.
+
+    That username belongs to the profile currently
+    being viewed.
+
+    JavaScript changes this link to the logged-in
+    user's own profile.
+    -->
+
     <a
-        href="/profile/{{ username }}"
+        href="#"
+        id="myProfileNav"
         class="nav-item active">
 
         <i class="fas fa-user"></i>
@@ -1277,6 +1285,12 @@ const followersCount =
     );
 
 
+const followingCount =
+    document.getElementById(
+        "followingCount"
+    );
+
+
 const editBioBtn =
     document.getElementById(
         "editBioBtn"
@@ -1319,6 +1333,12 @@ const recentPhotosGrid =
     );
 
 
+const myProfileNav =
+    document.getElementById(
+        "myProfileNav"
+    );
+
+
 /* ==========================================
    CURRENT USER
 ========================================== */
@@ -1331,11 +1351,51 @@ let viewedProfile = null;
 
 
 /* =========================================================
-   =========================================================
+   MY PROFILE NAVIGATION
+========================================================= */
+
+function setupMyProfileNavigation(){
+
+    if(
+        !myProfileNav
+    ){
+
+        return;
+
+    }
+
+
+    /*
+    IMPORTANT:
+
+    currentProfile = logged-in user's
+    real Supabase profile.
+
+    Therefore this always goes to
+    MY profile, even when currently
+    viewing another person's profile.
+    */
+
+    if(
+        currentProfile &&
+        currentProfile.username
+    ){
+
+        myProfileNav.href =
+            "/profile/" +
+            encodeURIComponent(
+                currentProfile.username
+            );
+
+    }
+
+}
+
+
+/* =========================================================
    NOTIFICATION SYSTEM
    FOLLOW ONLY
-   =========================================================
-   ========================================================= */
+========================================================= */
 
 
 /* ==========================================
@@ -1345,11 +1405,6 @@ let viewedProfile = null;
 async function createFollowNotification(){
 
     try{
-
-        /*
-        Current user = person who followed.
-        Viewed profile = person receiving notification.
-        */
 
         if(
             !currentUser ||
@@ -1424,7 +1479,7 @@ async function createFollowNotification(){
         if(error){
 
             /*
-            Notification failure must NOT
+            Notification failure must NEVER
             break Follow functionality.
             */
 
@@ -1457,10 +1512,8 @@ async function createFollowNotification(){
 
 
 /* =========================================================
-   =========================================================
    LOAD CURRENT USER
-   =========================================================
-   ========================================================= */
+========================================================= */
 
 async function loadCurrentUser(){
 
@@ -1498,6 +1551,7 @@ async function loadCurrentUser(){
 
             profileActionButtons.style.display =
                 "none";
+
 
             return;
 
@@ -1552,8 +1606,29 @@ async function loadCurrentUser(){
         }
 
 
+        if(!profile){
+
+            console.error(
+                "Logged-in profile not found."
+            );
+
+            return;
+
+        }
+
+
         currentProfile =
             profile;
+
+
+        /*
+        ======================================
+        IMPORTANT:
+        SET MY PROFILE NAVIGATION NOW
+        ======================================
+        */
+
+        setupMyProfileNavigation();
 
 
         /*
@@ -1571,7 +1646,7 @@ async function loadCurrentUser(){
             .from("profiles")
 
             .select(
-                "id, username, name, bio"
+                "id, username, name, bio, profile_url, cover_url"
             )
 
             .eq(
@@ -1626,7 +1701,7 @@ async function loadCurrentUser(){
 
         /*
         ======================================
-        CHECK OWN PROFILE
+        CHECK OWNER
         ======================================
         */
 
@@ -1647,26 +1722,30 @@ async function loadCurrentUser(){
 
         /*
         ======================================
-        OWN PROFILE
+        OWNER VIEW
         ======================================
         */
 
         if(isOwnProfile){
 
             /*
-            Existing photo editing
+            Profile photo editing
             */
 
             changeProfileBtn.style.display =
                 "flex";
 
 
+            /*
+            Cover editing
+            */
+
             changeCoverBtn.style.display =
                 "flex";
 
 
             /*
-            New Edit Bio
+            Bio editing
             */
 
             editBioBtn.style.display =
@@ -1685,14 +1764,14 @@ async function loadCurrentUser(){
 
         /*
         ======================================
-        OTHER USER PROFILE
+        OTHER USER VIEW
         ======================================
         */
 
         else{
 
             /*
-            Hide editing buttons
+            Hide profile editing
             */
 
             changeProfileBtn.style.display =
@@ -1716,7 +1795,7 @@ async function loadCurrentUser(){
 
 
             /*
-            Existing Follow status
+            Check existing follow state
             */
 
             await loadFollowStatus();
@@ -1737,10 +1816,8 @@ async function loadCurrentUser(){
 
 
 /* =========================================================
-   =========================================================
    RECENT PHOTOS
-   =========================================================
-   ========================================================= */
+========================================================= */
 
 
 /* ==========================================
@@ -1762,10 +1839,8 @@ async function loadRecentPhotos(){
     try{
 
         /*
-        ======================================
-        Load real posts belonging to
-        the viewed profile.
-        ======================================
+        Load real posts from Supabase
+        belonging to the viewed profile.
         */
 
         const {
@@ -1804,10 +1879,8 @@ async function loadRecentPhotos(){
 
 
         /*
-        ======================================
-        Clear existing Flask-rendered
-        photos and load real Supabase data.
-        ======================================
+        Remove any old Flask-rendered
+        photos before inserting real data.
         */
 
         recentPhotosGrid.innerHTML =
@@ -1832,17 +1905,19 @@ async function loadRecentPhotos(){
 
         /*
         ======================================
-        Find image URL safely.
-        
-        Your existing project may use
-        image_url or image.
+        FIND IMAGE URL
         ======================================
+
+        Supports the possible existing
+        column names without changing
+        your posts system.
         */
 
         posts.forEach(
             function(post){
 
-                let imageUrl = null;
+                let imageUrl =
+                    null;
 
 
                 if(
@@ -1872,8 +1947,7 @@ async function loadRecentPhotos(){
 
 
                 /*
-                Only display posts
-                which actually contain images.
+                Text-only posts are skipped.
                 */
 
                 if(!imageUrl){
@@ -1904,14 +1978,13 @@ async function loadRecentPhotos(){
                     "lazy";
 
 
+                /*
+                Click photo -> post page
+                */
+
                 image.addEventListener(
                     "click",
                     function(){
-
-                        /*
-                        Open the actual post
-                        if your post route exists.
-                        */
 
                         window.location.href =
                             "/post/" +
@@ -1958,8 +2031,9 @@ function showNoRecentPhotos(){
 
     recentPhotosGrid.innerHTML = `
 
-        <div class="no-recent-photos"
-             style="grid-column:1/-1;">
+        <div
+            class="no-recent-photos"
+            style="grid-column:1/-1;">
 
             <i class="far fa-images"></i>
 
@@ -1973,10 +2047,8 @@ function showNoRecentPhotos(){
 
 
 /* =========================================================
-   =========================================================
    FOLLOW STATUS
-   =========================================================
-   ========================================================= */
+========================================================= */
 
 
 /* ==========================================
@@ -2077,10 +2149,8 @@ function setUnfollowButton(){
 
 
 /* =========================================================
-   =========================================================
    FOLLOW / UNFOLLOW
-   =========================================================
-   ========================================================= */
+========================================================= */
 
 followButton.addEventListener(
     "click",
@@ -2101,7 +2171,7 @@ followButton.addEventListener(
 
 
         /*
-        Never allow following yourself.
+        Never follow yourself.
         */
 
         if(
@@ -2247,13 +2317,7 @@ followButton.addEventListener(
 
                 /*
                 ==================================
-                NEW NOTIFICATION
-                ==================================
-
-                IMPORTANT:
-                This happens ONLY after the
-                follower row was successfully
-                inserted.
+                CREATE FOLLOW NOTIFICATION
                 ==================================
                 */
 
@@ -2294,10 +2358,8 @@ followButton.addEventListener(
 
 
 /* =========================================================
-   =========================================================
    BIO EDIT SYSTEM
-   =========================================================
-   ========================================================= */
+========================================================= */
 
 
 /* ==========================================
@@ -2376,7 +2438,7 @@ bioCancelBtn.addEventListener(
 
 
 /* ==========================================
-   CLOSE MODAL BY BACKGROUND
+   CLOSE BIO MODAL
 ========================================== */
 
 bioModal.addEventListener(
@@ -2495,7 +2557,7 @@ bioSaveBtn.addEventListener(
 
 
             /*
-            Update local profile.
+            Update local objects.
             */
 
             if(currentProfile){
@@ -2560,11 +2622,9 @@ bioSaveBtn.addEventListener(
 
 
 /* =========================================================
-   =========================================================
    IMAGE UPLOAD SYSTEM
    EXISTING SYSTEM
-   =========================================================
-   ========================================================= */
+========================================================= */
 
 
 /* ==========================================
@@ -2945,6 +3005,26 @@ changeProfileBtn.addEventListener(
         }
 
 
+        /*
+        Extra safety:
+        only owner can change profile photo.
+        */
+
+        if(
+            !viewedProfile ||
+            String(
+                currentUser.id
+            ) !==
+            String(
+                viewedProfile.id
+            )
+        ){
+
+            return;
+
+        }
+
+
         profilePhotoInput.click();
 
     }
@@ -3002,6 +3082,26 @@ changeCoverBtn.addEventListener(
         }
 
 
+        /*
+        Extra safety:
+        only owner can change cover.
+        */
+
+        if(
+            !viewedProfile ||
+            String(
+                currentUser.id
+            ) !==
+            String(
+                viewedProfile.id
+            )
+        ){
+
+            return;
+
+        }
+
+
         coverPhotoInput.click();
 
     }
@@ -3040,9 +3140,9 @@ coverPhotoInput.addEventListener(
 );
 
 
-/* ==========================================
+/* =========================================================
    INITIALIZE
-========================================== */
+========================================================= */
 
 loadCurrentUser();
 
