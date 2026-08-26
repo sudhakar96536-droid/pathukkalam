@@ -1409,11 +1409,6 @@ body{
     class="stories"
     id="storiesContainer">
 
-    <!--
-        Real statuses are loaded here
-        using JavaScript.
-    -->
-
 </div>
 
 
@@ -1436,12 +1431,7 @@ body{
     class="status-viewer">
 
 
-    <!-- TOP AREA -->
-
     <div class="status-viewer-top">
-
-
-        <!-- PROGRESS -->
 
         <div
             id="statusProgress"
@@ -1449,8 +1439,6 @@ body{
 
         </div>
 
-
-        <!-- CURRENT USER -->
 
         <div
             id="statusViewerUser"
@@ -1461,8 +1449,6 @@ body{
     </div>
 
 
-    <!-- CLOSE -->
-
     <button
         id="statusClose"
         class="status-close">
@@ -1472,8 +1458,6 @@ body{
     </button>
 
 
-    <!-- IMAGE -->
-
     <img
         id="statusViewerImage"
         class="status-viewer-image"
@@ -1481,16 +1465,12 @@ body{
         alt="Status">
 
 
-    <!-- PREVIOUS AREA -->
-
     <div
         id="statusPrev"
         class="status-prev">
 
     </div>
 
-
-    <!-- NEXT AREA -->
 
     <div
         id="statusNext"
@@ -1509,8 +1489,6 @@ body{
 
 <div class="post">
 
-
-    <!-- POST HEADER -->
 
     <div class="post-header">
 
@@ -1552,16 +1530,12 @@ body{
     </div>
 
 
-    <!-- POST TEXT -->
-
     <div class="post-text">
 
         {{ post.caption }}
 
     </div>
 
-
-    <!-- POST IMAGE -->
 
     {% if post.image %}
 
@@ -1573,12 +1547,8 @@ body{
     {% endif %}
 
 
-    <!-- POST ACTIONS -->
-
     <div class="post-actions">
 
-
-        <!-- LIKE -->
 
         <div
             class="like-btn"
@@ -1594,8 +1564,6 @@ body{
         </div>
 
 
-        <!-- COMMENT -->
-
         <div
             class="comment-btn"
             data-post-id="{{ post.id }}"
@@ -1609,8 +1577,6 @@ body{
 
         </div>
 
-
-        <!-- SHARE -->
 
         <div
             class="share-btn"
@@ -1645,8 +1611,6 @@ body{
         onclick="event.stopPropagation()">
 
 
-        <!-- COMMENT HEADER -->
-
         <div class="comment-sheet-header">
 
             <div class="comment-sheet-title">
@@ -1680,16 +1644,12 @@ body{
         </div>
 
 
-        <!-- COMMENTS LIST -->
-
         <div
             id="commentSheetList"
             class="comment-sheet-list">
 
         </div>
 
-
-        <!-- COMMENT INPUT -->
 
         <div class="comment-input-area">
 
@@ -1807,7 +1767,6 @@ body{
 
 <script>
 
-
 const SUPABASE_URL =
     "https://jxpvkamxtedgzztozonl.supabase.co";
 
@@ -1835,7 +1794,6 @@ let currentProfile = null;
 async function loadCurrentUser(){
 
     try{
-
 
         const {
 
@@ -1991,6 +1949,311 @@ async function loadCurrentUser(){
 
 /* =========================================================
    =========================================================
+   NOTIFICATION SYSTEM
+   =========================================================
+   ========================================================= */
+
+
+/* ==========================================
+   CREATE NOTIFICATION
+   ========================================== */
+
+async function createNotification({
+
+    receiverId,
+    notificationType,
+    postId = null,
+    message
+
+}){
+
+    try{
+
+        /*
+        Do not notify if there is
+        no receiver.
+        */
+
+        if(!receiverId){
+
+            return;
+
+        }
+
+
+        /*
+        Do not notify yourself.
+        */
+
+        if(
+            currentUser &&
+            receiverId ===
+            currentUser.id
+        ){
+
+            return;
+
+        }
+
+
+        const notificationData = {
+
+            user_id:
+                receiverId,
+
+            sender_id:
+                currentUser.id,
+
+            notification_type:
+                notificationType,
+
+            message:
+                message,
+
+            is_read:
+                false
+
+        };
+
+
+        /*
+        Add post_id only when available.
+        */
+
+        if(postId !== null){
+
+            notificationData.post_id =
+                Number(postId);
+
+        }
+
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+
+            .from("notifications")
+
+            .insert(
+                notificationData
+            )
+            .select()
+            .single();
+
+
+        if(error){
+
+            console.error(
+                "Notification insert error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "Notification created:",
+            data
+        );
+
+    }
+    catch(error){
+
+        /*
+        IMPORTANT:
+        Notification failure must NEVER
+        break the actual Like/Comment/Share.
+        */
+
+        console.error(
+            "Notification error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   GET POST OWNER
+========================================== */
+
+async function getPostOwnerId(
+    postId
+){
+
+    try{
+
+        const {
+
+            data:post,
+            error
+
+        } =
+        await supabaseClient
+
+            .from("posts")
+
+            .select(
+                "user_id"
+            )
+
+            .eq(
+                "id",
+                Number(postId)
+            )
+
+            .maybeSingle();
+
+
+        if(error){
+
+            console.error(
+                "Post owner lookup error:",
+                error
+            );
+
+            return null;
+
+        }
+
+
+        return post?.user_id || null;
+
+    }
+    catch(error){
+
+        console.error(
+            "Post owner exception:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* ==========================================
+   GET POST OWNER NAME
+========================================== */
+
+async function getPostOwnerName(
+    postId
+){
+
+    try{
+
+        const {
+
+            data:post,
+            error:postError
+
+        } =
+        await supabaseClient
+
+            .from("posts")
+
+            .select(
+                "user_id"
+            )
+
+            .eq(
+                "id",
+                Number(postId)
+            )
+
+            .maybeSingle();
+
+
+        if(postError){
+
+            console.error(
+                "Post owner error:",
+                postError
+            );
+
+            return null;
+
+        }
+
+
+        if(!post?.user_id){
+
+            return null;
+
+        }
+
+
+        const {
+
+            data:profile,
+            error:profileError
+
+        } =
+        await supabaseClient
+
+            .from("profiles")
+
+            .select(
+                "id, name, username"
+            )
+
+            .eq(
+                "id",
+                post.user_id
+            )
+
+            .maybeSingle();
+
+
+        if(profileError){
+
+            console.error(
+                "Post owner profile error:",
+                profileError
+            );
+
+            return null;
+
+        }
+
+
+        return {
+
+            id:
+                post.user_id,
+
+            name:
+                profile?.name ||
+                profile?.username ||
+                "Someone"
+
+        };
+
+    }
+    catch(error){
+
+        console.error(
+            "Post owner name error:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* =========================================================
+   =========================================================
    REAL STATUS SYSTEM
    =========================================================
    ========================================================= */
@@ -2082,13 +2345,6 @@ async function loadStatuses(){
 
     try{
 
-        /*
-        ======================================
-        STEP 1
-        Find people current user follows
-        ======================================
-        */
-
         const {
 
             data:followingRows,
@@ -2131,21 +2387,11 @@ async function loadStatuses(){
                 );
 
 
-        /*
-        ======================================
-        Include own status
-        ======================================
-        */
-
         const userIds = [
             currentUser.id,
             ...followingIds
         ];
 
-
-        /*
-        Remove duplicate IDs
-        */
 
         const uniqueUserIds =
             [
@@ -2154,13 +2400,6 @@ async function loadStatuses(){
                 )
             ];
 
-
-        /*
-        ======================================
-        STEP 2
-        Load statuses from last 24 hours
-        ======================================
-        */
 
         const yesterday =
             new Date(
@@ -2226,13 +2465,6 @@ async function loadStatuses(){
         }
 
 
-        /*
-        ======================================
-        STEP 3
-        Load profiles
-        ======================================
-        */
-
         const statusUserIds =
             [
                 ...new Set(
@@ -2273,13 +2505,6 @@ async function loadStatuses(){
 
         }
 
-
-        /*
-        ======================================
-        STEP 4
-        Combine status + profile
-        ======================================
-        */
 
         allStatuses =
             statusRows.map(
@@ -2356,12 +2581,6 @@ function renderStatusBar(
     storiesContainer.innerHTML =
         "";
 
-
-    /*
-    ======================================
-    ADD STATUS CARD
-    ======================================
-    */
 
     const addCard =
         document.createElement(
@@ -2443,12 +2662,6 @@ function renderStatusBar(
     );
 
 
-    /*
-    ======================================
-    GROUP STATUS BY USER
-    ======================================
-    */
-
     const grouped =
         new Map();
 
@@ -2481,12 +2694,6 @@ function renderStatusBar(
         }
     );
 
-
-    /*
-    ======================================
-    SORT OWN USER FIRST
-    ======================================
-    */
 
     const groups =
         [
@@ -2523,20 +2730,10 @@ function renderStatusBar(
     );
 
 
-    /*
-    ======================================
-    CREATE USER STATUS CARDS
-    ======================================
-    */
-
     groups.forEach(
         function(
             [userId,userStatuses]
         ){
-
-            /*
-            Latest status first
-            */
 
             userStatuses.sort(
                 function(a,b){
@@ -2686,12 +2883,6 @@ statusPhotoInput.addEventListener(
 
         try{
 
-            /*
-            ==================================
-            UNIQUE FILE NAME
-            ==================================
-            */
-
             const extension =
                 file.name
                     .split(".")
@@ -2706,12 +2897,6 @@ statusPhotoInput.addEventListener(
                 "." +
                 extension;
 
-
-            /*
-            ==================================
-            UPLOAD TO EXISTING BUCKET
-            ==================================
-            */
 
             const {
 
@@ -2754,12 +2939,6 @@ statusPhotoInput.addEventListener(
             );
 
 
-            /*
-            ==================================
-            GET PUBLIC URL
-            ==================================
-            */
-
             const {
 
                 data:publicData
@@ -2779,12 +2958,6 @@ statusPhotoInput.addEventListener(
             const publicUrl =
                 publicData.publicUrl;
 
-
-            /*
-            ==================================
-            INSERT STATUS RECORD
-            ==================================
-            */
 
             const {
 
@@ -2827,10 +3000,6 @@ statusPhotoInput.addEventListener(
                 "Status added successfully! ✓"
             );
 
-
-            /*
-            Reload status bar
-            */
 
             await loadStatuses();
 
@@ -2877,11 +3046,6 @@ function openStatusGroup(
 
     }
 
-
-    /*
-    Sort oldest → newest
-    so viewer can move naturally
-    */
 
     const sortedStatuses =
         [
@@ -2988,12 +3152,6 @@ function openStatusViewer(){
 
     renderStatusProgress();
 
-
-    /*
-    ======================================
-    4 SECOND TIMER
-    ======================================
-    */
 
     let progress =
         0;
@@ -3525,7 +3683,9 @@ async function loadLikes(){
 
 
         const icon =
-            button.querySelector("i");
+            button.querySelector(
+                "i"
+            );
 
 
         if(myLike){
@@ -3685,6 +3845,49 @@ document.addEventListener(
                 if(error){
 
                     throw error;
+
+                }
+
+
+                /* ==========================================
+                   NOTIFICATION SYSTEM
+                   LIKE
+                ========================================== */
+
+                const postOwner =
+                    await getPostOwnerName(
+                        postId
+                    );
+
+
+                if(
+                    postOwner &&
+                    postOwner.id !==
+                    currentUser.id
+                ){
+
+                    const senderName =
+                        currentProfile?.name ||
+                        currentProfile?.username ||
+                        "Someone";
+
+
+                    await createNotification({
+
+                        receiverId:
+                            postOwner.id,
+
+                        notificationType:
+                            "like",
+
+                        postId:
+                            postId,
+
+                        message:
+                            senderName +
+                            " liked your post."
+
+                    });
 
                 }
 
@@ -4238,7 +4441,6 @@ async function submitComment(){
             })
 
             .select()
-
             .single();
 
 
@@ -4253,6 +4455,51 @@ async function submitComment(){
             "Comment created:",
             data
         );
+
+
+        /*
+        ==========================================
+        NOTIFICATION SYSTEM
+        COMMENT
+        ==========================================
+        */
+
+        const postOwner =
+            await getPostOwnerName(
+                activeCommentPostId
+            );
+
+
+        if(
+            postOwner &&
+            postOwner.id !==
+            currentUser.id
+        ){
+
+            const senderName =
+                currentProfile?.name ||
+                currentProfile?.username ||
+                "Someone";
+
+
+            await createNotification({
+
+                receiverId:
+                    postOwner.id,
+
+                notificationType:
+                    "comment",
+
+                postId:
+                    activeCommentPostId,
+
+                message:
+                    senderName +
+                    " commented on your post."
+
+            });
+
+        }
 
 
         input.value = "";
@@ -4501,10 +4748,6 @@ document.addEventListener(
                 false;
 
 
-            /*
-            Mobile / supported browsers
-            */
-
             if(
                 navigator.share
             ){
@@ -4531,11 +4774,6 @@ document.addEventListener(
                 }
                 catch(error){
 
-                    /*
-                    User cancelled share.
-                    Do NOT count it.
-                    */
-
                     if(
                         error.name ===
                         "AbortError"
@@ -4549,10 +4787,6 @@ document.addEventListener(
 
                     }
 
-                    /*
-                    If native sharing fails,
-                    continue to clipboard fallback.
-                    */
 
                     console.warn(
                         "Native share failed:",
@@ -4667,6 +4901,51 @@ document.addEventListener(
                         "Share recorded:",
                         data
                     );
+
+
+                    /*
+                    ==========================================
+                    NOTIFICATION SYSTEM
+                    SHARE
+                    ==========================================
+                    */
+
+                    const postOwner =
+                        await getPostOwnerName(
+                            postId
+                        );
+
+
+                    if(
+                        postOwner &&
+                        postOwner.id !==
+                        currentUser.id
+                    ){
+
+                        const senderName =
+                            currentProfile?.name ||
+                            currentProfile?.username ||
+                            "Someone";
+
+
+                        await createNotification({
+
+                            receiverId:
+                                postOwner.id,
+
+                            notificationType:
+                                "share",
+
+                            postId:
+                                postId,
+
+                            message:
+                                senderName +
+                                " shared your post."
+
+                        });
+
+                    }
 
                 }
 
