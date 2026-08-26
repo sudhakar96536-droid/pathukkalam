@@ -5,14 +5,20 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Notifications - Pathukkalam</title>
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 
 <style>
+
+/* ==========================================
+   GLOBAL
+========================================== */
 
 *{
     margin:0;
@@ -26,289 +32,1484 @@ body{
     padding-bottom:80px;
 }
 
-/* HEADER */
+
+/* ==========================================
+   HEADER
+========================================== */
 
 .header{
     background:white;
+
     padding:15px;
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     position:sticky;
+
     top:0;
+
     z-index:1000;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+
+    box-shadow:
+        0 2px 5px
+        rgba(0,0,0,0.1);
 }
 
-.logo{
-    font-size:26px;
-    font-weight:bold;
-    color:#1877f2;
-}
-
-.header-icons i{
-    font-size:22px;
-    margin-left:18px;
-    color:#444;
-}
-
-/* PAGE TITLE */
-
-.page-title{
-    padding:15px;
-    font-size:22px;
-    font-weight:bold;
-}
-
-/* NOTIFICATION CARD */
-
-.notify-card{
-    background:white;
-    margin:10px;
-    padding:15px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    box-shadow:0 2px 5px rgba(0,0,0,0.08);
-}
-
-.notify-icon{
-    width:50px;
-    height:50px;
-    border-radius:50%;
-    background:#1877f2;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    margin-right:15px;
-}
-
-.notify-text{
-    font-size:15px;
-    line-height:1.5;
-}
-
-.notify-time{
-    font-size:12px;
-    color:gray;
-    margin-top:4px;
-}
-/* FLOATING NEW POST BUTTON */
-
-.new-post-btn{
-    position:fixed;
-    bottom:28px;
-    left:50%;
-    transform:translateX(-50%);
-    width:62px;
-    height:62px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#1877f2,#42a5ff);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:28px;
-    text-decoration:none;
-    box-shadow:0 5px 15px rgba(24,119,242,0.4);
-    z-index:2000;
-    border:4px solid white;
-}
-
-.new-post-btn:active{
-    transform:translateX(-50%) scale(0.95);
-}
-/* BOTTOM NAVIGATION */
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:white;
-    display:flex;
-    justify-content:space-evenly;
-    align-items:center;
-    padding:10px 0;
-    border-top:1px solid #ddd;
-    z-index:1000;
-}
-
-.nav-item{
-    text-decoration:none;
-    color:gray;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    font-size:12px;
-}
-
-.nav-item i{
-    font-size:22px;
-    margin-bottom:4px;
-}
-
-.active{
-    color:#1877f2;
-}
 .logo-section{
     display:flex;
+
     align-items:center;
 }
 
 .logo-img{
     width:42px;
+
     height:42px;
+
     border-radius:12px;
+
     margin-right:10px;
+
     object-fit:cover;
 }
 
 .logo-text{
     font-size:26px;
+
     font-weight:bold;
+
     color:#1877f2;
 }
+
+.header-icons{
+    display:flex;
+
+    align-items:center;
+}
+
+.header-icons i{
+    font-size:22px;
+
+    margin-left:18px;
+
+    color:#444;
+}
+
+
+/* ==========================================
+   PAGE TITLE
+========================================== */
+
+.page-title{
+
+    padding:15px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+
+/* ==========================================
+   NOTIFICATION LIST
+========================================== */
+
+#notificationList{
+
+    padding-bottom:10px;
+
+}
+
+
+/* ==========================================
+   NOTIFICATION CARD
+========================================== */
+
+.notify-card{
+
+    background:white;
+
+    margin:10px;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    box-shadow:
+        0 2px 5px
+        rgba(0,0,0,0.08);
+
+    cursor:pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+.notify-card:hover{
+
+    background:#f8f9fa;
+
+}
+
+.notify-card.unread{
+
+    background:#eef5ff;
+
+}
+
+
+/* ==========================================
+   SENDER PROFILE PHOTO
+========================================== */
+
+.notify-avatar{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    flex-shrink:0;
+
+    margin-right:12px;
+}
+
+
+/* ==========================================
+   ICON FALLBACK
+========================================== */
+
+.notify-icon{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    background:#1877f2;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:21px;
+
+    margin-right:12px;
+
+    flex-shrink:0;
+}
+
+
+/* ==========================================
+   NOTIFICATION CONTENT
+========================================== */
+
+.notify-content{
+
+    flex:1;
+
+    min-width:0;
+}
+
+.notify-text{
+
+    font-size:15px;
+
+    line-height:1.4;
+
+    color:#222;
+
+}
+
+.notify-text strong{
+
+    font-weight:bold;
+
+}
+
+.notify-time{
+
+    font-size:12px;
+
+    color:gray;
+
+    margin-top:4px;
+}
+
+
+/* ==========================================
+   POST THUMBNAIL
+========================================== */
+
+.notify-post-image{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:8px;
+
+    object-fit:cover;
+
+    margin-left:8px;
+
+    flex-shrink:0;
+}
+
+
+/* ==========================================
+   EMPTY
+========================================== */
+
+.empty-notifications{
+
+    text-align:center;
+
+    padding:70px 20px;
+
+    color:#888;
+}
+
+.empty-notifications i{
+
+    font-size:50px;
+
+    color:#bbb;
+
+    margin-bottom:15px;
+}
+
+.empty-title{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    color:#555;
+}
+
+.empty-text{
+
+    font-size:14px;
+
+    margin-top:6px;
+}
+
+
+/* ==========================================
+   LOADING
+========================================== */
+
+.loading-notifications{
+
+    text-align:center;
+
+    padding:50px 20px;
+
+    color:#888;
+}
+
+.loading-notifications i{
+
+    font-size:25px;
+
+    margin-bottom:10px;
+}
+
+
+/* ==========================================
+   ERROR
+========================================== */
+
+.notification-error{
+
+    margin:15px;
+
+    padding:15px;
+
+    background:#fff0f0;
+
+    color:#c62828;
+
+    border-radius:10px;
+
+    text-align:center;
+
+}
+
+
+/* ==========================================
+   FLOATING NEW POST BUTTON
+========================================== */
+
+.new-post-btn{
+
+    position:fixed;
+
+    bottom:28px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    width:62px;
+
+    height:62px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1877f2,
+            #42a5ff
+        );
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:white;
+
+    font-size:28px;
+
+    text-decoration:none;
+
+    box-shadow:
+        0 5px 15px
+        rgba(24,119,242,0.4);
+
+    z-index:2000;
+
+    border:4px solid white;
+}
+
+.new-post-btn:active{
+
+    transform:
+        translateX(-50%)
+        scale(0.95);
+}
+
+
+/* ==========================================
+   BOTTOM NAVIGATION
+========================================== */
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-evenly;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    border-top:1px solid #ddd;
+
+    z-index:1000;
+}
+
+.nav-item{
+
+    text-decoration:none;
+
+    color:gray;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    font-size:12px;
+}
+
+.nav-item i{
+
+    font-size:22px;
+
+    margin-bottom:4px;
+}
+
+.active{
+
+    color:#1877f2;
+}
+
+
+/* ==========================================
+   UNREAD DOT
+========================================== */
+
+.unread-dot{
+
+    width:8px;
+
+    height:8px;
+
+    background:#1877f2;
+
+    border-radius:50%;
+
+    margin-left:6px;
+
+    flex-shrink:0;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+    .notify-card{
+
+        margin:
+            8px;
+
+        padding:
+            11px;
+    }
+
+    .notify-avatar,
+    .notify-icon,
+    .notify-post-image{
+
+        width:46px;
+
+        height:46px;
+    }
+
+}
+
 </style>
 
 </head>
 
+
 <body>
 
-<!-- HEADER -->
+
+<!-- ==========================================
+     HEADER
+========================================== -->
 
 <div class="header">
 
     <div class="logo-section">
 
-        <img class="logo-img"
-        src="{{ url_for('static', filename='icon-192.png') }}">
+        <img
+            class="logo-img"
+            src="{{ url_for('static', filename='icon-192.png') }}">
 
         <div class="logo-text">
+
             Pathukkalam
+
         </div>
 
     </div>
+
 
     <div class="header-icons">
+
         <i class="fas fa-search"></i>
+
         <i class="fas fa-message"></i>
+
     </div>
 
 </div>
 
-<!-- PAGE TITLE -->
+
+<!-- ==========================================
+     PAGE TITLE
+========================================== -->
 
 <div class="page-title">
-    Notifications 🔔
-</div>
 
-<!-- NOTIFICATIONS -->
-
-<div class="notify-card">
-
-    <div class="notify-icon">
-        <i class="fas fa-heart"></i>
-    </div>
-
-    <div>
-        <div class="notify-text">
-            Arun liked your post.
-        </div>
-
-        <div class="notify-time">
-            2 mins ago
-        </div>
-    </div>
+    <span>
+        Notifications 🔔
+    </span>
 
 </div>
 
-<div class="notify-card">
 
-    <div class="notify-icon">
-        <i class="fas fa-user-plus"></i>
-    </div>
+<!-- ==========================================
+     NOTIFICATION LIST
+========================================== -->
 
-    <div>
-        <div class="notify-text">
-            Vijay started following you.
+<div id="notificationList">
+
+    <div class="loading-notifications">
+
+        <i class="fas fa-spinner fa-spin"></i>
+
+        <div>
+            Loading notifications...
         </div>
 
-        <div class="notify-time">
-            10 mins ago
-        </div>
     </div>
 
 </div>
 
-<div class="notify-card">
 
-    <div class="notify-icon">
-        <i class="fas fa-comment"></i>
-    </div>
+<!-- ==========================================
+     FLOATING POST BUTTON
+========================================== -->
 
-    <div>
-        <div class="notify-text">
-            Kumar commented on your photo.
-        </div>
+<a
+    href="/new-post"
+    class="new-post-btn">
 
-        <div class="notify-time">
-            25 mins ago
-        </div>
-    </div>
+    <i class="fas fa-plus"></i>
 
-</div>
+</a>
 
-<div class="notify-card">
 
-    <div class="notify-icon">
-        <i class="fas fa-fire"></i>
-    </div>
-
-    <div>
-        <div class="notify-text">
-            New trending topic available.
-        </div>
-
-        <div class="notify-time">
-            1 hour ago
-        </div>
-    </div>
-
-</div>
-<!-- FLOATING POST BUTTON -->
-
-<a href="/new-post" class="new-post-btn">+</a>
-    
-<!-- BOTTOM NAVIGATION -->
+<!-- ==========================================
+     BOTTOM NAVIGATION
+========================================== -->
 
 <div class="bottom-nav">
 
-    <a href="/" class="nav-item">
+
+    <a
+        href="/"
+        class="nav-item">
+
         <i class="fas fa-house"></i>
-        <span>Home</span>
+
+        <span>
+            Home
+        </span>
+
     </a>
 
-    <a href="/explore" class="nav-item">
+
+    <a
+        href="/explore"
+        class="nav-item">
+
         <i class="fas fa-compass"></i>
-        <span>Explore</span>
-    </a>
-    
-    <div style="width:70px;"></div>
-    
-    <a href="/notifications" class="nav-item active">
-        <i class="fas fa-bell"></i>
-        <span>Alerts</span>
+
+        <span>
+            Explore
+        </span>
+
     </a>
 
-    <a href="/profile" class="nav-item">
+
+    <!-- SPACE FOR FLOATING BUTTON -->
+
+    <div
+        style="width:70px;">
+    </div>
+
+
+    <a
+        href="/notifications"
+        class="nav-item active">
+
+        <i class="fas fa-bell"></i>
+
+        <span>
+            Alerts
+        </span>
+
+    </a>
+
+
+    <a
+        href="/profile"
+        class="nav-item">
+
         <i class="fas fa-user"></i>
-        <span>Profile</span>
+
+        <span>
+            Profile
+        </span>
+
     </a>
 
 </div>
 
+
+<!-- ==========================================
+     SUPABASE
+========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* ==========================================
+   SUPABASE CONFIG
+========================================== */
+
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* ==========================================
+   CURRENT USER
+========================================== */
+
+let currentUser = null;
+
+
+/* ==========================================
+   GET CURRENT USER
+========================================== */
+
+async function loadCurrentUser(){
+
+    try{
+
+        const {
+
+            data:{
+                user
+            },
+
+            error
+
+        } =
+        await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error){
+
+            console.error(
+                "Auth error:",
+                error
+            );
+
+            return null;
+
+        }
+
+
+        if(!user){
+
+            window.location.href =
+                "/login";
+
+            return null;
+
+        }
+
+
+        currentUser =
+            user;
+
+
+        return user;
+
+    }
+    catch(error){
+
+        console.error(
+            "Current user error:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* ==========================================
+   NOTIFICATION ICON
+========================================== */
+
+function getNotificationIcon(type){
+
+    switch(type){
+
+        case "like":
+
+            return `
+                <i class="fas fa-heart"></i>
+            `;
+
+
+        case "comment":
+
+            return `
+                <i class="fas fa-comment"></i>
+            `;
+
+
+        case "share":
+
+            return `
+                <i class="fas fa-share"></i>
+            `;
+
+
+        case "follow":
+
+            return `
+                <i class="fas fa-user-plus"></i>
+            `;
+
+
+        default:
+
+            return `
+                <i class="fas fa-bell"></i>
+            `;
+
+    }
+
+}
+
+
+/* ==========================================
+   TIME FORMAT
+========================================== */
+
+function formatNotificationTime(
+    dateString
+){
+
+    const date =
+        new Date(
+            dateString
+        );
+
+
+    const now =
+        new Date();
+
+
+    const seconds =
+        Math.floor(
+            (
+                now.getTime() -
+                date.getTime()
+            ) / 1000
+        );
+
+
+    if(seconds < 60){
+
+        return "Just now";
+
+    }
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    if(minutes < 60){
+
+        return (
+            minutes +
+            (
+                minutes === 1
+                    ? " min ago"
+                    : " mins ago"
+            )
+        );
+
+    }
+
+
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
+
+
+    if(hours < 24){
+
+        return (
+            hours +
+            (
+                hours === 1
+                    ? " hour ago"
+                    : " hours ago"
+            )
+        );
+
+    }
+
+
+    const days =
+        Math.floor(
+            hours / 24
+        );
+
+
+    if(days < 7){
+
+        return (
+            days +
+            (
+                days === 1
+                    ? " day ago"
+                    : " days ago"
+            )
+        );
+
+    }
+
+
+    return date.toLocaleDateString();
+
+}
+
+
+/* ==========================================
+   LOAD NOTIFICATIONS
+========================================== */
+
+async function loadNotifications(){
+
+    const list =
+        document.getElementById(
+            "notificationList"
+        );
+
+
+    if(!currentUser){
+
+        return;
+
+    }
+
+
+    try{
+
+        /*
+        ======================================
+        LOAD NOTIFICATIONS
+        ======================================
+        */
+
+        const {
+
+            data,
+            error
+
+        } =
+        await supabaseClient
+
+            .from("notifications")
+
+            .select(`
+                id,
+                user_id,
+                sender_id,
+                notification_type,
+                post_id,
+                message,
+                is_read,
+                created_at
+            `)
+
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+
+            .limit(100);
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        if(!data || !data.length){
+
+            list.innerHTML = `
+
+                <div
+                    class="empty-notifications">
+
+                    <i class="far fa-bell"></i>
+
+                    <div class="empty-title">
+
+                        No notifications yet
+
+                    </div>
+
+                    <div class="empty-text">
+
+                        Your likes, comments,
+                        shares and new followers
+                        will appear here.
+
+                    </div>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        /*
+        ======================================
+        GET SENDER IDS
+        ======================================
+        */
+
+        const senderIds =
+            [
+                ...new Set(
+                    data
+                        .map(
+                            item =>
+                                item.sender_id
+                        )
+                        .filter(Boolean)
+                )
+            ];
+
+
+        /*
+        ======================================
+        LOAD SENDER PROFILES
+        ======================================
+        */
+
+        let profiles = [];
+
+
+        if(senderIds.length){
+
+            const {
+
+                data:profileData,
+                error:profileError
+
+            } =
+            await supabaseClient
+
+                .from("profiles")
+
+                .select(
+                    "id, username, name, profile_url"
+                )
+
+                .in(
+                    "id",
+                    senderIds
+                );
+
+
+            if(profileError){
+
+                console.error(
+                    "Sender profile error:",
+                    profileError
+                );
+
+            }
+            else{
+
+                profiles =
+                    profileData || [];
+
+            }
+
+        }
+
+
+        /*
+        ======================================
+        GET POST IDS
+        ======================================
+        */
+
+        const postIds =
+            [
+                ...new Set(
+                    data
+                        .map(
+                            item =>
+                                item.post_id
+                        )
+                        .filter(Boolean)
+                )
+            ];
+
+
+        /*
+        ======================================
+        LOAD POST IMAGES
+        ======================================
+        */
+
+        let posts = [];
+
+
+        if(postIds.length){
+
+            const {
+
+                data:postData,
+                error:postError
+
+            } =
+            await supabaseClient
+
+                .from("posts")
+
+                .select(
+                    "id, image"
+                )
+
+                .in(
+                    "id",
+                    postIds
+                );
+
+
+            if(postError){
+
+                console.error(
+                    "Notification post error:",
+                    postError
+                );
+
+            }
+            else{
+
+                posts =
+                    postData || [];
+
+            }
+
+        }
+
+
+        /*
+        ======================================
+        BUILD HTML
+        ======================================
+        */
+
+        list.innerHTML =
+            "";
+
+
+        data.forEach(
+            function(notification){
+
+                const sender =
+                    profiles.find(
+                        profile =>
+                            profile.id ===
+                            notification.sender_id
+                    );
+
+
+                const post =
+                    posts.find(
+                        item =>
+                            String(item.id) ===
+                            String(notification.post_id)
+                    );
+
+
+                const senderName =
+                    sender?.name ||
+                    sender?.username ||
+                    "Someone";
+
+
+                const avatar =
+                    sender?.profile_url ||
+                    "https://i.pravatar.cc/100";
+
+
+                const hasAvatar =
+                    Boolean(
+                        sender?.profile_url
+                    );
+
+
+                /*
+                Determine target URL
+                */
+
+                let targetUrl =
+                    "#";
+
+
+                if(
+                    notification.post_id
+                ){
+
+                    targetUrl =
+                        "/post/" +
+                        notification.post_id;
+
+                }
+                else if(
+                    sender?.username
+                ){
+
+                    targetUrl =
+                        "/profile/" +
+                        encodeURIComponent(
+                            sender.username
+                        );
+
+                }
+
+
+                /*
+                ==================================
+                NOTIFICATION CARD
+                ==================================
+                */
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "notify-card" +
+                    (
+                        notification.is_read
+                            ? ""
+                            : " unread"
+                    );
+
+
+                card.dataset.id =
+                    notification.id;
+
+
+                card.dataset.target =
+                    targetUrl;
+
+
+                /*
+                Profile image / icon
+                */
+
+                let avatarHtml;
+
+
+                if(hasAvatar){
+
+                    avatarHtml = `
+
+                        <img
+                            class="notify-avatar"
+                            src="${escapeHtml(avatar)}"
+                            alt="Profile">
+
+                    `;
+
+                }
+                else{
+
+                    avatarHtml = `
+
+                        <div class="notify-icon">
+
+                            ${getNotificationIcon(
+                                notification.notification_type
+                            )}
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                /*
+                Post thumbnail
+                */
+
+                let postHtml =
+                    "";
+
+
+                if(
+                    post &&
+                    post.image
+                ){
+
+                    postHtml = `
+
+                        <img
+                            class="notify-post-image"
+                            src="${escapeHtml(
+                                post.image
+                            )}"
+                            alt="Post">
+
+                    `;
+
+                }
+
+
+                /*
+                ==================================
+                CARD HTML
+                ==================================
+                */
+
+                card.innerHTML = `
+
+                    ${avatarHtml}
+
+                    <div class="notify-content">
+
+                        <div class="notify-text">
+
+                            ${escapeHtml(
+                                notification.message
+                            )}
+
+                        </div>
+
+
+                        <div class="notify-time">
+
+                            ${formatNotificationTime(
+                                notification.created_at
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    ${postHtml}
+
+
+                    ${
+                        notification.is_read
+                            ? ""
+                            : `
+                                <div
+                                    class="unread-dot">
+                                </div>
+                              `
+                    }
+
+                `;
+
+
+                /*
+                ==================================
+                CLICK
+                ==================================
+                */
+
+                card.addEventListener(
+                    "click",
+                    async function(){
+
+                        /*
+                        Mark as read
+                        */
+
+                        await supabaseClient
+
+                            .from("notifications")
+
+                            .update({
+                                is_read:true
+                            })
+
+                            .eq(
+                                "id",
+                                notification.id
+                            )
+
+                            .eq(
+                                "user_id",
+                                currentUser.id
+                            );
+
+
+                        /*
+                        Open target
+                        */
+
+                        if(
+                            targetUrl &&
+                            targetUrl !== "#"
+                        ){
+
+                            window.location.href =
+                                targetUrl;
+
+                        }
+
+                    }
+                );
+
+
+                list.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Notification loading error:",
+            error
+        );
+
+
+        list.innerHTML = `
+
+            <div
+                class="notification-error">
+
+                Unable to load notifications.
+
+                <br>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   HTML SAFETY
+========================================== */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+async function initializeNotifications(){
+
+    const user =
+        await loadCurrentUser();
+
+
+    if(!user){
+
+        return;
+
+    }
+
+
+    await loadNotifications();
+
+}
+
+
+initializeNotifications();
+
+</script>
+
+
 </body>
+
 </html>
