@@ -180,10 +180,28 @@ body{
     padding:10px;
 
     gap:10px;
+
+    background:#f0f2f5;
+
+    scrollbar-width:none;
 }
 
-.story{
+.stories::-webkit-scrollbar{
+    display:none;
+}
+
+
+/* ==========================================
+   REAL STATUS CARD
+========================================== */
+
+.status-card{
+
     min-width:90px;
+
+    width:90px;
+
+    height:140px;
 
     background:white;
 
@@ -191,24 +209,463 @@ body{
 
     overflow:hidden;
 
-    box-shadow:0 2px 5px rgba(0,0,0,0.08);
+    position:relative;
+
+    box-shadow:
+        0 2px 5px
+        rgba(0,0,0,0.08);
+
+    cursor:pointer;
+
+    flex-shrink:0;
+
+    border:0;
+
+    padding:0;
+
+    text-align:left;
 }
 
-.story img{
+.status-card:active{
+
+    transform:scale(0.97);
+
+}
+
+
+/* ==========================================
+   STATUS IMAGE
+========================================== */
+
+.status-image{
+
     width:100%;
-    height:110px;
+
+    height:100%;
 
     object-fit:cover;
+
+    display:block;
 }
 
-.story p{
-    padding:8px;
+
+/* ==========================================
+   STATUS DARK GRADIENT
+========================================== */
+
+.status-gradient{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.05),
+            rgba(0,0,0,0.65)
+        );
+
+    pointer-events:none;
+}
+
+
+/* ==========================================
+   STATUS PROFILE IMAGE
+========================================== */
+
+.status-profile-image{
+
+    position:absolute;
+
+    top:8px;
+
+    left:8px;
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid white;
+
+    z-index:2;
+}
+
+
+/* ==========================================
+   STATUS NAME
+========================================== */
+
+.status-name{
+
+    position:absolute;
+
+    bottom:8px;
+
+    left:8px;
+
+    right:8px;
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    z-index:2;
+
+    text-shadow:
+        0 1px 3px
+        rgba(0,0,0,0.6);
+}
+
+
+/* ==========================================
+   ADD STATUS
+========================================== */
+
+.add-status-card{
+
+    background:white;
+
+    min-width:90px;
+
+    width:90px;
+
+    height:140px;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    box-shadow:
+        0 2px 5px
+        rgba(0,0,0,0.08);
+
+    cursor:pointer;
+
+    flex-shrink:0;
+
+    border:none;
+
+    padding:0;
+}
+
+.add-status-card:active{
+
+    transform:scale(0.97);
+
+}
+
+
+.add-status-image{
+
+    width:100%;
+
+    height:100px;
+
+    object-fit:cover;
+
+    display:block;
+}
+
+
+.add-status-plus{
+
+    position:absolute;
+
+    left:50%;
+
+    top:82px;
+
+    transform:
+        translate(-50%,-50%);
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    background:#1877f2;
+
+    border:4px solid white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:white;
+
+    font-size:17px;
+
+    z-index:3;
+}
+
+
+.add-status-text{
+
+    position:absolute;
+
+    left:0;
+
+    right:0;
+
+    bottom:10px;
 
     text-align:center;
 
-    font-size:13px;
+    font-size:12px;
 
     font-weight:bold;
+
+    color:#333;
+}
+
+
+/* ==========================================
+   HIDDEN STATUS FILE INPUT
+========================================== */
+
+#statusPhotoInput{
+
+    display:none;
+}
+
+
+/* ==========================================
+   FULL SCREEN STATUS VIEWER
+========================================== */
+
+.status-viewer{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:#000;
+
+    z-index:10000;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+.status-viewer.active{
+
+    display:flex;
+}
+
+
+/* ==========================================
+   STATUS VIEWER IMAGE
+========================================== */
+
+.status-viewer-image{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    display:block;
+
+    background:#000;
+}
+
+
+/* ==========================================
+   STATUS TOP BAR
+========================================== */
+
+.status-viewer-top{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    right:0;
+
+    z-index:5;
+
+    padding:
+        12px
+        12px
+        20px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.65),
+            transparent
+        );
+}
+
+
+/* ==========================================
+   STATUS PROGRESS
+========================================== */
+
+.status-progress{
+
+    display:flex;
+
+    gap:4px;
+
+    width:100%;
+
+    margin-bottom:12px;
+}
+
+.status-progress-bar{
+
+    height:3px;
+
+    flex:1;
+
+    background:
+        rgba(255,255,255,0.35);
+
+    border-radius:10px;
+
+    overflow:hidden;
+}
+
+.status-progress-fill{
+
+    width:0%;
+
+    height:100%;
+
+    background:white;
+}
+
+
+/* ==========================================
+   STATUS VIEWER USER
+========================================== */
+
+.status-viewer-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    color:white;
+}
+
+.status-viewer-avatar{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid white;
+}
+
+.status-viewer-name{
+
+    font-size:14px;
+
+    font-weight:bold;
+}
+
+
+/* ==========================================
+   STATUS CLOSE
+========================================== */
+
+.status-close{
+
+    position:absolute;
+
+    top:12px;
+
+    right:12px;
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+        rgba(0,0,0,0.45);
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    z-index:10;
+}
+
+
+/* ==========================================
+   STATUS NEXT / PREVIOUS
+========================================== */
+
+.status-next{
+
+    position:absolute;
+
+    right:0;
+
+    top:0;
+
+    width:35%;
+
+    height:100%;
+
+    z-index:4;
+
+    cursor:pointer;
+}
+
+.status-prev{
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:35%;
+
+    height:100%;
+
+    z-index:4;
+
+    cursor:pointer;
 }
 
 
@@ -769,7 +1226,6 @@ body{
     opacity:0.6;
 
     pointer-events:none;
-
 }
 
 
@@ -946,55 +1402,99 @@ body{
 
 
 <!-- ==========================================
-     STORIES
+     REAL STATUS BAR
 ========================================== -->
 
-<div class="stories">
+<div
+    class="stories"
+    id="storiesContainer">
 
-    <div class="story">
+    <!--
+        Real statuses are loaded here
+        using JavaScript.
+    -->
 
-        <img
-            src="https://picsum.photos/200/300?1">
+</div>
 
-        <p>
-            Arun
-        </p>
+
+<!-- ==========================================
+     HIDDEN STATUS PHOTO INPUT
+========================================== -->
+
+<input
+    type="file"
+    id="statusPhotoInput"
+    accept="image/*">
+
+
+<!-- ==========================================
+     FULL SCREEN STATUS VIEWER
+========================================== -->
+
+<div
+    id="statusViewer"
+    class="status-viewer">
+
+
+    <!-- TOP AREA -->
+
+    <div class="status-viewer-top">
+
+
+        <!-- PROGRESS -->
+
+        <div
+            id="statusProgress"
+            class="status-progress">
+
+        </div>
+
+
+        <!-- CURRENT USER -->
+
+        <div
+            id="statusViewerUser"
+            class="status-viewer-user">
+
+        </div>
 
     </div>
 
 
-    <div class="story">
+    <!-- CLOSE -->
 
-        <img
-            src="https://picsum.photos/200/300?2">
+    <button
+        id="statusClose"
+        class="status-close">
 
-        <p>
-            Rahul
-        </p>
+        <i class="fas fa-xmark"></i>
+
+    </button>
+
+
+    <!-- IMAGE -->
+
+    <img
+        id="statusViewerImage"
+        class="status-viewer-image"
+        src=""
+        alt="Status">
+
+
+    <!-- PREVIOUS AREA -->
+
+    <div
+        id="statusPrev"
+        class="status-prev">
 
     </div>
 
 
-    <div class="story">
+    <!-- NEXT AREA -->
 
-        <img
-            src="https://picsum.photos/200/300?3">
-
-        <p>
-            Priya
-        </p>
-
-    </div>
-
-
-    <div class="story">
-
-        <img
-            src="https://picsum.photos/200/300?4">
-
-        <p>
-            Vijay
-        </p>
+    <div
+        id="statusNext"
+        class="status-next">
 
     </div>
 
@@ -1489,6 +1989,1423 @@ async function loadCurrentUser(){
 }
 
 
+/* =========================================================
+   =========================================================
+   REAL STATUS SYSTEM
+   =========================================================
+   ========================================================= */
+
+
+/* ==========================================
+   STATUS VARIABLES
+========================================== */
+
+let allStatuses = [];
+
+let currentStatusIndex = 0;
+
+let statusTimer = null;
+
+let statusProgressTimer = null;
+
+
+/* ==========================================
+   STATUS ELEMENTS
+========================================== */
+
+const storiesContainer =
+    document.getElementById(
+        "storiesContainer"
+    );
+
+
+const statusPhotoInput =
+    document.getElementById(
+        "statusPhotoInput"
+    );
+
+
+const statusViewer =
+    document.getElementById(
+        "statusViewer"
+    );
+
+
+const statusViewerImage =
+    document.getElementById(
+        "statusViewerImage"
+    );
+
+
+const statusViewerUser =
+    document.getElementById(
+        "statusViewerUser"
+    );
+
+
+const statusProgress =
+    document.getElementById(
+        "statusProgress"
+    );
+
+
+const statusClose =
+    document.getElementById(
+        "statusClose"
+    );
+
+
+const statusNext =
+    document.getElementById(
+        "statusNext"
+    );
+
+
+const statusPrev =
+    document.getElementById(
+        "statusPrev"
+    );
+
+
+/* ==========================================
+   LOAD REAL STATUSES
+========================================== */
+
+async function loadStatuses(){
+
+    if(!currentUser){
+
+        return;
+
+    }
+
+
+    try{
+
+        /*
+        ======================================
+        STEP 1
+        Find people current user follows
+        ======================================
+        */
+
+        const {
+
+            data:followingRows,
+            error:followingError
+
+        } =
+        await supabaseClient
+
+            .from("followers")
+
+            .select(
+                "following_id"
+            )
+
+            .eq(
+                "follower_id",
+                currentUser.id
+            );
+
+
+        if(followingError){
+
+            console.error(
+                "Following loading error:",
+                followingError
+            );
+
+            renderStatusBar([]);
+
+            return;
+
+        }
+
+
+        const followingIds =
+            (followingRows || [])
+                .map(
+                    row =>
+                        row.following_id
+                );
+
+
+        /*
+        ======================================
+        Include own status
+        ======================================
+        */
+
+        const userIds = [
+            currentUser.id,
+            ...followingIds
+        ];
+
+
+        /*
+        Remove duplicate IDs
+        */
+
+        const uniqueUserIds =
+            [
+                ...new Set(
+                    userIds
+                )
+            ];
+
+
+        /*
+        ======================================
+        STEP 2
+        Load statuses from last 24 hours
+        ======================================
+        */
+
+        const yesterday =
+            new Date(
+                Date.now() -
+                24 * 60 * 60 * 1000
+            ).toISOString();
+
+
+        const {
+
+            data:statusRows,
+            error:statusError
+
+        } =
+        await supabaseClient
+
+            .from("statuses")
+
+            .select(
+                "id, user_id, image_url, created_at"
+            )
+
+            .in(
+                "user_id",
+                uniqueUserIds
+            )
+
+            .gte(
+                "created_at",
+                yesterday
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending:true
+                }
+            );
+
+
+        if(statusError){
+
+            console.error(
+                "Status loading error:",
+                statusError
+            );
+
+            renderStatusBar([]);
+
+            return;
+
+        }
+
+
+        if(!statusRows || !statusRows.length){
+
+            allStatuses = [];
+
+            renderStatusBar([]);
+
+            return;
+
+        }
+
+
+        /*
+        ======================================
+        STEP 3
+        Load profiles
+        ======================================
+        */
+
+        const statusUserIds =
+            [
+                ...new Set(
+                    statusRows.map(
+                        status =>
+                            status.user_id
+                    )
+                )
+            ];
+
+
+        const {
+
+            data:profiles,
+            error:profileError
+
+        } =
+        await supabaseClient
+
+            .from("profiles")
+
+            .select(
+                "id, username, name, profile_url"
+            )
+
+            .in(
+                "id",
+                statusUserIds
+            );
+
+
+        if(profileError){
+
+            console.error(
+                "Status profile loading error:",
+                profileError
+            );
+
+        }
+
+
+        /*
+        ======================================
+        STEP 4
+        Combine status + profile
+        ======================================
+        */
+
+        allStatuses =
+            statusRows.map(
+                function(status){
+
+                    const profile =
+                        profiles?.find(
+                            p =>
+                                p.id ===
+                                status.user_id
+                        );
+
+
+                    return {
+
+                        id:
+                            status.id,
+
+                        user_id:
+                            status.user_id,
+
+                        image_url:
+                            status.image_url,
+
+                        created_at:
+                            status.created_at,
+
+                        username:
+                            profile?.username ||
+                            "user",
+
+                        name:
+                            profile?.name ||
+                            profile?.username ||
+                            "User",
+
+                        profile_url:
+                            profile?.profile_url ||
+                            "https://i.pravatar.cc/100"
+
+                    };
+
+                }
+            );
+
+
+        renderStatusBar(
+            allStatuses
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Status system error:",
+            error
+        );
+
+        renderStatusBar([]);
+
+    }
+
+}
+
+
+/* ==========================================
+   RENDER STATUS BAR
+========================================== */
+
+function renderStatusBar(
+    statuses
+){
+
+    storiesContainer.innerHTML =
+        "";
+
+
+    /*
+    ======================================
+    ADD STATUS CARD
+    ======================================
+    */
+
+    const addCard =
+        document.createElement(
+            "button"
+        );
+
+
+    addCard.type =
+        "button";
+
+
+    addCard.className =
+        "add-status-card";
+
+
+    const ownStatus =
+        statuses.find(
+            status =>
+                status.user_id ===
+                currentUser.id
+        );
+
+
+    const ownImage =
+        ownStatus?.image_url ||
+        currentProfile?.profile_url ||
+        "https://i.pravatar.cc/150?img=10";
+
+
+    addCard.innerHTML = `
+
+        <img
+            class="add-status-image"
+            src="${escapeHtml(ownImage)}"
+            alt="Add Status">
+
+
+        <div
+            class="add-status-plus">
+
+            <i class="fas fa-plus"></i>
+
+        </div>
+
+
+        <div
+            class="add-status-text">
+
+            Add Status
+
+        </div>
+
+    `;
+
+
+    addCard.addEventListener(
+        "click",
+        function(){
+
+            if(!currentUser){
+
+                alert(
+                    "Please login first."
+                );
+
+                return;
+
+            }
+
+
+            statusPhotoInput.click();
+
+        }
+    );
+
+
+    storiesContainer.appendChild(
+        addCard
+    );
+
+
+    /*
+    ======================================
+    GROUP STATUS BY USER
+    ======================================
+    */
+
+    const grouped =
+        new Map();
+
+
+    statuses.forEach(
+        function(status){
+
+            if(
+                !grouped.has(
+                    status.user_id
+                )
+            ){
+
+                grouped.set(
+                    status.user_id,
+                    []
+                );
+
+            }
+
+
+            grouped
+                .get(
+                    status.user_id
+                )
+                .push(
+                    status
+                );
+
+        }
+    );
+
+
+    /*
+    ======================================
+    SORT OWN USER FIRST
+    ======================================
+    */
+
+    const groups =
+        [
+            ...grouped.entries()
+        ];
+
+
+    groups.sort(
+        function(a,b){
+
+            if(
+                a[0] ===
+                currentUser.id
+            ){
+
+                return -1;
+
+            }
+
+
+            if(
+                b[0] ===
+                currentUser.id
+            ){
+
+                return 1;
+
+            }
+
+
+            return 0;
+
+        }
+    );
+
+
+    /*
+    ======================================
+    CREATE USER STATUS CARDS
+    ======================================
+    */
+
+    groups.forEach(
+        function(
+            [userId,userStatuses]
+        ){
+
+            /*
+            Latest status first
+            */
+
+            userStatuses.sort(
+                function(a,b){
+
+                    return new Date(
+                        b.created_at
+                    ) -
+                    new Date(
+                        a.created_at
+                    );
+
+                }
+            );
+
+
+            const latest =
+                userStatuses[0];
+
+
+            const card =
+                document.createElement(
+                    "button"
+                );
+
+
+            card.type =
+                "button";
+
+
+            card.className =
+                "status-card";
+
+
+            card.innerHTML = `
+
+                <img
+                    class="status-image"
+                    src="${escapeHtml(
+                        latest.image_url
+                    )}"
+                    alt="Status">
+
+
+                <div
+                    class="status-gradient">
+                </div>
+
+
+                <img
+                    class="status-profile-image"
+                    src="${escapeHtml(
+                        latest.profile_url
+                    )}"
+                    alt="Profile">
+
+
+                <div
+                    class="status-name">
+
+                    ${escapeHtml(
+                        latest.user_id ===
+                        currentUser.id
+                            ? "Your Status"
+                            : latest.name
+                    )}
+
+                </div>
+
+            `;
+
+
+            card.addEventListener(
+                "click",
+                function(){
+
+                    openStatusGroup(
+                        userStatuses
+                    );
+
+                }
+            );
+
+
+            storiesContainer.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   STATUS PHOTO SELECTED
+========================================== */
+
+statusPhotoInput.addEventListener(
+    "change",
+    async function(){
+
+        const file =
+            this.files[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        if(
+            !file.type.startsWith(
+                "image/"
+            )
+        ){
+
+            alert(
+                "Please select an image file."
+            );
+
+            this.value =
+                "";
+
+            return;
+
+        }
+
+
+        if(
+            file.size >
+            5 * 1024 * 1024
+        ){
+
+            alert(
+                "Image size must be below 5 MB."
+            );
+
+            this.value =
+                "";
+
+            return;
+
+        }
+
+
+        try{
+
+            /*
+            ==================================
+            UNIQUE FILE NAME
+            ==================================
+            */
+
+            const extension =
+                file.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+            const fileName =
+                currentUser.id +
+                "/status_" +
+                Date.now() +
+                "." +
+                extension;
+
+
+            /*
+            ==================================
+            UPLOAD TO EXISTING BUCKET
+            ==================================
+            */
+
+            const {
+
+                data:uploadData,
+                error:uploadError
+
+            } =
+            await supabaseClient
+
+                .storage
+
+                .from("post-images")
+
+                .upload(
+                    fileName,
+                    file,
+                    {
+                        cacheControl:
+                            "3600",
+
+                        upsert:
+                            false,
+
+                        contentType:
+                            file.type
+                    }
+                );
+
+
+            if(uploadError){
+
+                throw uploadError;
+
+            }
+
+
+            console.log(
+                "Status uploaded:",
+                uploadData
+            );
+
+
+            /*
+            ==================================
+            GET PUBLIC URL
+            ==================================
+            */
+
+            const {
+
+                data:publicData
+
+            } =
+            supabaseClient
+
+                .storage
+
+                .from("post-images")
+
+                .getPublicUrl(
+                    fileName
+                );
+
+
+            const publicUrl =
+                publicData.publicUrl;
+
+
+            /*
+            ==================================
+            INSERT STATUS RECORD
+            ==================================
+            */
+
+            const {
+
+                data:statusData,
+                error:statusError
+
+            } =
+            await supabaseClient
+
+                .from("statuses")
+
+                .insert({
+
+                    user_id:
+                        currentUser.id,
+
+                    image_url:
+                        publicUrl
+
+                })
+
+                .select()
+                .single();
+
+
+            if(statusError){
+
+                throw statusError;
+
+            }
+
+
+            console.log(
+                "Status created:",
+                statusData
+            );
+
+
+            alert(
+                "Status added successfully! ✓"
+            );
+
+
+            /*
+            Reload status bar
+            */
+
+            await loadStatuses();
+
+        }
+        catch(error){
+
+            console.error(
+                "Status upload error:",
+                error
+            );
+
+
+            alert(
+                "Unable to add status:\n\n" +
+                error.message
+            );
+
+        }
+        finally{
+
+            this.value =
+                "";
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   OPEN STATUS GROUP
+========================================== */
+
+function openStatusGroup(
+    statuses
+){
+
+    if(
+        !statuses ||
+        !statuses.length
+    ){
+
+        return;
+
+    }
+
+
+    /*
+    Sort oldest → newest
+    so viewer can move naturally
+    */
+
+    const sortedStatuses =
+        [
+            ...statuses
+        ]
+        .sort(
+            function(a,b){
+
+                return new Date(
+                    a.created_at
+                ) -
+                new Date(
+                    b.created_at
+                );
+
+            }
+        );
+
+
+    allStatuses =
+        sortedStatuses;
+
+
+    currentStatusIndex =
+        0;
+
+
+    openStatusViewer();
+
+}
+
+
+/* ==========================================
+   OPEN STATUS VIEWER
+========================================== */
+
+function openStatusViewer(){
+
+    if(
+        !allStatuses.length
+    ){
+
+        closeStatusViewer();
+
+        return;
+
+    }
+
+
+    clearStatusTimers();
+
+
+    const status =
+        allStatuses[
+            currentStatusIndex
+        ];
+
+
+    if(!status){
+
+        closeStatusViewer();
+
+        return;
+
+    }
+
+
+    statusViewer.classList.add(
+        "active"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    statusViewerImage.src =
+        status.image_url;
+
+
+    statusViewerUser.innerHTML = `
+
+        <img
+            class="status-viewer-avatar"
+            src="${escapeHtml(
+                status.profile_url
+            )}">
+
+
+        <div
+            class="status-viewer-name">
+
+            ${escapeHtml(
+                status.user_id ===
+                currentUser.id
+                    ? "Your Status"
+                    : status.name
+            )}
+
+        </div>
+
+    `;
+
+
+    renderStatusProgress();
+
+
+    /*
+    ======================================
+    4 SECOND TIMER
+    ======================================
+    */
+
+    let progress =
+        0;
+
+
+    const startTime =
+        Date.now();
+
+
+    statusProgressTimer =
+        setInterval(
+            function(){
+
+                const elapsed =
+                    Date.now() -
+                    startTime;
+
+
+                progress =
+                    Math.min(
+                        100,
+                        (elapsed /
+                        4000) *
+                        100
+                    );
+
+
+                const fill =
+                    document.querySelector(
+                        "#statusProgress .status-progress-fill"
+                    );
+
+
+                if(fill){
+
+                    fill.style.width =
+                        progress +
+                        "%";
+
+                }
+
+
+                if(
+                    progress >=
+                    100
+                ){
+
+                    clearInterval(
+                        statusProgressTimer
+                    );
+
+                }
+
+            },
+            40
+        );
+
+
+    statusTimer =
+        setTimeout(
+            function(){
+
+                showNextStatus();
+
+            },
+            4000
+        );
+
+}
+
+
+/* ==========================================
+   STATUS PROGRESS BARS
+========================================== */
+
+function renderStatusProgress(){
+
+    statusProgress.innerHTML =
+        "";
+
+
+    allStatuses.forEach(
+        function(status,index){
+
+            const bar =
+                document.createElement(
+                    "div"
+                );
+
+
+            bar.className =
+                "status-progress-bar";
+
+
+            const fill =
+                document.createElement(
+                    "div"
+                );
+
+
+            fill.className =
+                "status-progress-fill";
+
+
+            if(
+                index <
+                currentStatusIndex
+            ){
+
+                fill.style.width =
+                    "100%";
+
+            }
+
+
+            bar.appendChild(
+                fill
+            );
+
+
+            statusProgress.appendChild(
+                bar
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   NEXT STATUS
+========================================== */
+
+function showNextStatus(){
+
+    clearStatusTimers();
+
+
+    if(
+        currentStatusIndex <
+        allStatuses.length - 1
+    ){
+
+        currentStatusIndex++;
+
+        openStatusViewer();
+
+    }
+    else{
+
+        closeStatusViewer();
+
+    }
+
+}
+
+
+/* ==========================================
+   PREVIOUS STATUS
+========================================== */
+
+function showPreviousStatus(){
+
+    clearStatusTimers();
+
+
+    if(
+        currentStatusIndex >
+        0
+    ){
+
+        currentStatusIndex--;
+
+        openStatusViewer();
+
+    }
+    else{
+
+        openStatusViewer();
+
+    }
+
+}
+
+
+/* ==========================================
+   CLEAR STATUS TIMERS
+========================================== */
+
+function clearStatusTimers(){
+
+    if(statusTimer){
+
+        clearTimeout(
+            statusTimer
+        );
+
+        statusTimer =
+            null;
+
+    }
+
+
+    if(statusProgressTimer){
+
+        clearInterval(
+            statusProgressTimer
+        );
+
+        statusProgressTimer =
+            null;
+
+    }
+
+}
+
+
+/* ==========================================
+   CLOSE STATUS VIEWER
+========================================== */
+
+function closeStatusViewer(){
+
+    clearStatusTimers();
+
+
+    statusViewer.classList.remove(
+        "active"
+    );
+
+
+    statusViewerImage.src =
+        "";
+
+
+    statusViewerUser.innerHTML =
+        "";
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* ==========================================
+   STATUS NEXT CLICK
+========================================== */
+
+statusNext.addEventListener(
+    "click",
+    function(event){
+
+        event.stopPropagation();
+
+        showNextStatus();
+
+    }
+);
+
+
+/* ==========================================
+   STATUS PREVIOUS CLICK
+========================================== */
+
+statusPrev.addEventListener(
+    "click",
+    function(event){
+
+        event.stopPropagation();
+
+        showPreviousStatus();
+
+    }
+);
+
+
+/* ==========================================
+   STATUS CLOSE CLICK
+========================================== */
+
+statusClose.addEventListener(
+    "click",
+    function(event){
+
+        event.stopPropagation();
+
+        closeStatusViewer();
+
+    }
+);
+
+
+/* ==========================================
+   ESC KEY
+========================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            if(
+                statusViewer.classList.contains(
+                    "active"
+                )
+            ){
+
+                closeStatusViewer();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   STATUS SWIPE SUPPORT
+========================================== */
+
+let statusTouchStartX =
+    0;
+
+let statusTouchEndX =
+    0;
+
+
+statusViewer.addEventListener(
+    "touchstart",
+    function(event){
+
+        if(
+            event.touches &&
+            event.touches.length
+        ){
+
+            statusTouchStartX =
+                event.touches[0].clientX;
+
+        }
+
+    },
+    {
+        passive:true
+    }
+);
+
+
+statusViewer.addEventListener(
+    "touchend",
+    function(event){
+
+        if(
+            event.changedTouches &&
+            event.changedTouches.length
+        ){
+
+            statusTouchEndX =
+                event.changedTouches[0].clientX;
+
+        }
+
+
+        const difference =
+            statusTouchEndX -
+            statusTouchStartX;
+
+
+        if(
+            Math.abs(difference) <
+            50
+        ){
+
+            return;
+
+        }
+
+
+        if(
+            difference < 0
+        ){
+
+            showNextStatus();
+
+        }
+        else{
+
+            showPreviousStatus();
+
+        }
+
+    },
+    {
+        passive:true
+    }
+);
+
+
+/* =========================================================
+   =========================================================
+   EXISTING LIKE CODE
+   =========================================================
+   ========================================================= */
+
+
 /* ==========================================
    LOAD LIKE COUNTS
 ========================================== */
@@ -1800,6 +3717,13 @@ document.addEventListener(
 
     }
 );
+
+
+/* =========================================================
+   =========================================================
+   EXISTING COMMENT CODE
+   =========================================================
+   ========================================================= */
 
 
 /* ==========================================
@@ -2399,6 +4323,13 @@ document.getElementById(
 );
 
 
+/* =========================================================
+   =========================================================
+   EXISTING SHARE CODE
+   =========================================================
+   ========================================================= */
+
+
 /* ==========================================
    SHARE COUNTS
 ========================================== */
@@ -2800,6 +4731,17 @@ function escapeHtml(value){
 async function initializePage(){
 
     await loadCurrentUser();
+
+    /*
+    Load real statuses after
+    current user/profile is ready.
+    */
+
+    await loadStatuses();
+
+    /*
+    Existing working functions
+    */
 
     await loadLikes();
 
