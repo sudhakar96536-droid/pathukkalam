@@ -37,21 +37,13 @@ body{
 
 .header{
     background:white;
-
     padding:15px;
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     position:sticky;
-
     top:0;
-
     z-index:1000;
-
     box-shadow:
         0 2px 5px
         rgba(0,0,0,0.1);
@@ -59,35 +51,26 @@ body{
 
 .logo-section{
     display:flex;
-
     align-items:center;
 }
 
 .logo-img{
     width:42px;
-
     height:42px;
-
     border-radius:12px;
-
     margin-right:10px;
-
     object-fit:cover;
 }
 
 .logo-text{
     font-size:26px;
-
     font-weight:bold;
-
     color:#1877f2;
 }
 
 .header-icons i{
     font-size:22px;
-
     margin-left:18px;
-
     color:#444;
 }
 
@@ -98,13 +81,9 @@ body{
 
 .profile-cover{
     width:100%;
-
     height:220px;
-
     background-size:cover !important;
-
     background-position:center !important;
-
     position:relative;
 }
 
@@ -147,15 +126,11 @@ body{
 }
 
 .cover-edit-btn:hover{
-
     background:rgba(0,0,0,0.8);
-
 }
 
 .cover-edit-btn:disabled{
-
     opacity:0.6;
-
     cursor:not-allowed;
 }
 
@@ -188,7 +163,7 @@ body{
 
 
 /* ==========================================
-   PROFILE AVATAR AREA
+   PROFILE PHOTO
 ========================================== */
 
 .profile-avatar-wrapper{
@@ -267,15 +242,11 @@ body{
 }
 
 .profile-photo-edit-btn:hover{
-
     background:#1669d8;
-
 }
 
 .profile-photo-edit-btn:disabled{
-
     opacity:0.6;
-
     cursor:not-allowed;
 }
 
@@ -285,30 +256,61 @@ body{
 ========================================== */
 
 .profile-name{
-
     margin-top:12px;
-
     font-size:26px;
-
     font-weight:bold;
 }
 
 .profile-id{
-
     color:gray;
-
     margin-top:5px;
-
     font-size:14px;
 }
 
+
+/* ==========================================
+   PROFILE BIO
+========================================== */
+
 .profile-bio{
-
     margin-top:15px;
-
     color:#444;
-
     line-height:1.5;
+}
+
+
+/* ==========================================
+   EDIT BIO BUTTON
+========================================== */
+
+.edit-bio-btn{
+
+    display:none;
+
+    margin:
+        12px
+        auto
+        0;
+
+    padding:
+        8px
+        14px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#e4e6eb;
+
+    color:#333;
+
+    font-size:13px;
+
+    cursor:pointer;
+}
+
+.edit-bio-btn:hover{
+    background:#d8dadf;
 }
 
 
@@ -329,7 +331,9 @@ body{
 
 .profile-buttons button{
 
-    padding:10px 18px;
+    padding:
+        10px
+        18px;
 
     border:none;
 
@@ -385,7 +389,6 @@ body{
 }
 
 .profile-stats h3{
-
     font-size:22px;
 }
 
@@ -437,6 +440,187 @@ body{
     object-fit:cover;
 
     border-radius:8px;
+
+    display:block;
+
+    cursor:pointer;
+}
+
+
+/* ==========================================
+   NO RECENT PHOTOS
+========================================== */
+
+.no-recent-photos{
+
+    padding:
+        30px
+        15px
+        40px;
+
+    text-align:center;
+
+    color:#888;
+
+    font-size:14px;
+}
+
+.no-recent-photos i{
+
+    font-size:35px;
+
+    color:#bbb;
+
+    margin-bottom:10px;
+
+    display:block;
+}
+
+
+/* ==========================================
+   BIO EDIT MODAL
+========================================== */
+
+.bio-modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,0.45);
+
+    z-index:10000;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+.bio-modal.active{
+
+    display:flex;
+}
+
+.bio-modal-box{
+
+    width:100%;
+
+    max-width:500px;
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:20px;
+
+    box-shadow:
+        0 10px 40px
+        rgba(0,0,0,0.25);
+}
+
+.bio-modal-title{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+}
+
+.bio-textarea{
+
+    width:100%;
+
+    min-height:130px;
+
+    resize:vertical;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    padding:12px;
+
+    outline:none;
+
+    font-size:15px;
+
+    line-height:1.5;
+}
+
+.bio-textarea:focus{
+
+    border-color:#1877f2;
+}
+
+.bio-modal-buttons{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+    margin-top:15px;
+}
+
+.bio-modal-buttons button{
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:
+        10px
+        18px;
+
+    cursor:pointer;
+
+    font-size:14px;
+}
+
+.bio-cancel{
+
+    background:#e4e6eb;
+
+    color:#333;
+}
+
+.bio-save{
+
+    background:#1877f2;
+
+    color:white;
+}
+
+.bio-save:disabled{
+
+    opacity:0.6;
+
+    cursor:not-allowed;
+}
+
+
+/* ==========================================
+   UPLOAD STATUS
+========================================== */
+
+.upload-status{
+
+    display:none;
+
+    margin-top:10px;
+
+    font-size:13px;
+
+    color:#1877f2;
+
+    font-weight:bold;
 }
 
 
@@ -548,39 +732,17 @@ body{
 
 
 /* ==========================================
-   UPLOAD STATUS
-========================================== */
-
-.upload-status{
-
-    display:none;
-
-    margin-top:10px;
-
-    font-size:13px;
-
-    color:#1877f2;
-
-    font-weight:bold;
-}
-
-
-/* ==========================================
    MOBILE
 ========================================== */
 
 @media(max-width:600px){
 
     .profile-cover{
-
         height:190px;
-
     }
 
     .profile-name{
-
         font-size:23px;
-
     }
 
     .profile-avatar-wrapper{
@@ -588,7 +750,6 @@ body{
         width:120px;
 
         height:120px;
-
     }
 
     .profile-avatar{
@@ -596,7 +757,6 @@ body{
         width:120px;
 
         height:120px;
-
     }
 
 }
@@ -651,8 +811,6 @@ body{
     style="background:url('{{ user.cover }}') center/cover;">
 
 
-    <!-- COVER CHANGE BUTTON -->
-
     <button
         type="button"
         id="changeCoverBtn"
@@ -677,9 +835,7 @@ body{
 <div class="profile-box">
 
 
-    <!-- ======================================
-         PROFILE PHOTO
-    ======================================= -->
+    <!-- PROFILE PHOTO -->
 
     <div class="profile-avatar-wrapper">
 
@@ -689,8 +845,6 @@ body{
             src="{{ user.profile }}"
             alt="Profile Photo">
 
-
-        <!-- PROFILE PHOTO CHANGE BUTTON -->
 
         <button
             type="button"
@@ -708,9 +862,7 @@ body{
     </div>
 
 
-    <!-- ======================================
-         PROFILE NAME
-    ======================================= -->
+    <!-- PROFILE NAME -->
 
     <div class="profile-name">
 
@@ -719,9 +871,7 @@ body{
     </div>
 
 
-    <!-- ======================================
-         USERNAME
-    ======================================= -->
+    <!-- USERNAME -->
 
     <div class="profile-id">
 
@@ -730,15 +880,34 @@ body{
     </div>
 
 
-    <!-- ======================================
-         BIO
-    ======================================= -->
+    <!-- BIO -->
 
-    <div class="profile-bio">
+    <div
+        class="profile-bio"
+        id="profileBio">
 
         {{ user.bio }}
 
     </div>
+
+
+    <!-- ======================================
+         EDIT BIO
+    ======================================= -->
+
+    <button
+        type="button"
+        id="editBioBtn"
+        class="edit-bio-btn"
+        {% if is_own_profile %}
+        style="display:block;"
+        {% endif %}>
+
+        <i class="fas fa-pen"></i>
+
+        Edit Bio
+
+    </button>
 
 
     <!-- ======================================
@@ -753,8 +922,6 @@ body{
         {% endif %}>
 
 
-        <!-- FOLLOW BUTTON -->
-
         <button
             id="followButton"
             class="follow-btn">
@@ -763,8 +930,6 @@ body{
 
         </button>
 
-
-        <!-- MESSAGE BUTTON -->
 
         <button
             class="message-btn">
@@ -776,9 +941,7 @@ body{
     </div>
 
 
-    <!-- ======================================
-         UPLOAD STATUS
-    ======================================= -->
+    <!-- UPLOAD STATUS -->
 
     <div
         id="uploadStatus"
@@ -787,9 +950,7 @@ body{
     </div>
 
 
-    <!-- ======================================
-         STATS
-    ======================================= -->
+    <!-- STATS -->
 
     <div class="profile-stats">
 
@@ -853,12 +1014,15 @@ body{
 </div>
 
 
-<div class="post-grid">
+<div
+    class="post-grid"
+    id="recentPhotosGrid">
 
     {% for photo in user.photos %}
 
     <img
-        src="{{ photo }}">
+        src="{{ photo }}"
+        alt="Recent Photo">
 
     {% endfor %}
 
@@ -881,6 +1045,61 @@ body{
     id="coverPhotoInput"
     accept="image/*"
     style="display:none;">
+
+
+<!-- ==========================================
+     BIO EDIT MODAL
+========================================== -->
+
+<div
+    id="bioModal"
+    class="bio-modal">
+
+    <div
+        class="bio-modal-box"
+        onclick="event.stopPropagation()">
+
+
+        <div class="bio-modal-title">
+
+            Edit Bio
+
+        </div>
+
+
+        <textarea
+            id="bioTextarea"
+            class="bio-textarea"
+            maxlength="500"
+            placeholder="Write something about yourself..."></textarea>
+
+
+        <div class="bio-modal-buttons">
+
+            <button
+                type="button"
+                id="bioCancelBtn"
+                class="bio-cancel">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                type="button"
+                id="bioSaveBtn"
+                class="bio-save">
+
+                Save
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 <!-- ==========================================
@@ -1058,6 +1277,48 @@ const followersCount =
     );
 
 
+const editBioBtn =
+    document.getElementById(
+        "editBioBtn"
+    );
+
+
+const profileBio =
+    document.getElementById(
+        "profileBio"
+    );
+
+
+const bioModal =
+    document.getElementById(
+        "bioModal"
+    );
+
+
+const bioTextarea =
+    document.getElementById(
+        "bioTextarea"
+    );
+
+
+const bioCancelBtn =
+    document.getElementById(
+        "bioCancelBtn"
+    );
+
+
+const bioSaveBtn =
+    document.getElementById(
+        "bioSaveBtn"
+    );
+
+
+const recentPhotosGrid =
+    document.getElementById(
+        "recentPhotosGrid"
+    );
+
+
 /* ==========================================
    CURRENT USER
 ========================================== */
@@ -1069,9 +1330,137 @@ let currentProfile = null;
 let viewedProfile = null;
 
 
+/* =========================================================
+   =========================================================
+   NOTIFICATION SYSTEM
+   FOLLOW ONLY
+   =========================================================
+   ========================================================= */
+
+
 /* ==========================================
-   LOAD CURRENT USER
+   CREATE FOLLOW NOTIFICATION
 ========================================== */
+
+async function createFollowNotification(){
+
+    try{
+
+        /*
+        Current user = person who followed.
+        Viewed profile = person receiving notification.
+        */
+
+        if(
+            !currentUser ||
+            !viewedProfile
+        ){
+
+            return;
+
+        }
+
+
+        /*
+        Never notify yourself.
+        */
+
+        if(
+            String(
+                currentUser.id
+            ) ===
+            String(
+                viewedProfile.id
+            )
+        ){
+
+            return;
+
+        }
+
+
+        const senderName =
+            currentProfile?.name ||
+            currentProfile?.username ||
+            "Someone";
+
+
+        const notificationData = {
+
+            user_id:
+                viewedProfile.id,
+
+            sender_id:
+                currentUser.id,
+
+            notification_type:
+                "follow",
+
+            message:
+                senderName +
+                " started following you.",
+
+            is_read:
+                false
+
+        };
+
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+
+            .from("notifications")
+
+            .insert(
+                notificationData
+            )
+            .select()
+            .single();
+
+
+        if(error){
+
+            /*
+            Notification failure must NOT
+            break Follow functionality.
+            */
+
+            console.error(
+                "Follow notification error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "Follow notification created:",
+            data
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Follow notification exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   =========================================================
+   LOAD CURRENT USER
+   =========================================================
+   ========================================================= */
 
 async function loadCurrentUser(){
 
@@ -1106,10 +1495,6 @@ async function loadCurrentUser(){
                 "No logged in user."
             );
 
-            /*
-            If nobody is logged in,
-            don't show Follow button.
-            */
 
             profileActionButtons.style.display =
                 "none";
@@ -1144,7 +1529,7 @@ async function loadCurrentUser(){
             .from("profiles")
 
             .select(
-                "id, username, name, profile_url, cover_url"
+                "id, username, name, profile_url, cover_url, bio"
             )
 
             .eq(
@@ -1186,7 +1571,7 @@ async function loadCurrentUser(){
             .from("profiles")
 
             .select(
-                "id, username, name"
+                "id, username, name, bio"
             )
 
             .eq(
@@ -1232,6 +1617,15 @@ async function loadCurrentUser(){
 
         /*
         ======================================
+        LOAD RECENT PHOTOS
+        ======================================
+        */
+
+        await loadRecentPhotos();
+
+
+        /*
+        ======================================
         CHECK OWN PROFILE
         ======================================
         */
@@ -1260,7 +1654,7 @@ async function loadCurrentUser(){
         if(isOwnProfile){
 
             /*
-            Show photo editing buttons
+            Existing photo editing
             */
 
             changeProfileBtn.style.display =
@@ -1269,6 +1663,14 @@ async function loadCurrentUser(){
 
             changeCoverBtn.style.display =
                 "flex";
+
+
+            /*
+            New Edit Bio
+            */
+
+            editBioBtn.style.display =
+                "block";
 
 
             /*
@@ -1290,7 +1692,7 @@ async function loadCurrentUser(){
         else{
 
             /*
-            Hide photo editing buttons
+            Hide editing buttons
             */
 
             changeProfileBtn.style.display =
@@ -1298,6 +1700,10 @@ async function loadCurrentUser(){
 
 
             changeCoverBtn.style.display =
+                "none";
+
+
+            editBioBtn.style.display =
                 "none";
 
 
@@ -1310,7 +1716,7 @@ async function loadCurrentUser(){
 
 
             /*
-            Load Follow status
+            Existing Follow status
             */
 
             await loadFollowStatus();
@@ -1328,6 +1734,249 @@ async function loadCurrentUser(){
     }
 
 }
+
+
+/* =========================================================
+   =========================================================
+   RECENT PHOTOS
+   =========================================================
+   ========================================================= */
+
+
+/* ==========================================
+   LOAD RECENT PHOTOS
+========================================== */
+
+async function loadRecentPhotos(){
+
+    if(
+        !viewedProfile ||
+        !recentPhotosGrid
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        /*
+        ======================================
+        Load real posts belonging to
+        the viewed profile.
+        ======================================
+        */
+
+        const {
+            data:posts,
+            error
+        } =
+        await supabaseClient
+
+            .from("posts")
+
+            .select("*")
+
+            .eq(
+                "user_id",
+                viewedProfile.id
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Recent photos loading error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        /*
+        ======================================
+        Clear existing Flask-rendered
+        photos and load real Supabase data.
+        ======================================
+        */
+
+        recentPhotosGrid.innerHTML =
+            "";
+
+
+        if(
+            !posts ||
+            !posts.length
+        ){
+
+            showNoRecentPhotos();
+
+            return;
+
+        }
+
+
+        let photoCount =
+            0;
+
+
+        /*
+        ======================================
+        Find image URL safely.
+        
+        Your existing project may use
+        image_url or image.
+        ======================================
+        */
+
+        posts.forEach(
+            function(post){
+
+                let imageUrl = null;
+
+
+                if(
+                    post.image_url
+                ){
+
+                    imageUrl =
+                        post.image_url;
+
+                }
+                else if(
+                    post.image
+                ){
+
+                    imageUrl =
+                        post.image;
+
+                }
+                else if(
+                    post.photo_url
+                ){
+
+                    imageUrl =
+                        post.photo_url;
+
+                }
+
+
+                /*
+                Only display posts
+                which actually contain images.
+                */
+
+                if(!imageUrl){
+
+                    return;
+
+                }
+
+
+                photoCount++;
+
+
+                const image =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                image.src =
+                    imageUrl;
+
+
+                image.alt =
+                    "Recent Photo";
+
+
+                image.loading =
+                    "lazy";
+
+
+                image.addEventListener(
+                    "click",
+                    function(){
+
+                        /*
+                        Open the actual post
+                        if your post route exists.
+                        */
+
+                        window.location.href =
+                            "/post/" +
+                            post.id;
+
+                    }
+                );
+
+
+                recentPhotosGrid.appendChild(
+                    image
+                );
+
+            }
+        );
+
+
+        if(
+            photoCount === 0
+        ){
+
+            showNoRecentPhotos();
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Recent photos exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   NO RECENT PHOTOS
+========================================== */
+
+function showNoRecentPhotos(){
+
+    recentPhotosGrid.innerHTML = `
+
+        <div class="no-recent-photos"
+             style="grid-column:1/-1;">
+
+            <i class="far fa-images"></i>
+
+            No recent photos
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   =========================================================
+   FOLLOW STATUS
+   =========================================================
+   ========================================================= */
 
 
 /* ==========================================
@@ -1427,9 +2076,11 @@ function setUnfollowButton(){
 }
 
 
-/* ==========================================
+/* =========================================================
+   =========================================================
    FOLLOW / UNFOLLOW
-========================================== */
+   =========================================================
+   ========================================================= */
 
 followButton.addEventListener(
     "click",
@@ -1487,7 +2138,6 @@ followButton.addEventListener(
 
         try{
 
-
             const isCurrentlyFollowing =
                 followButton.innerText
                     .toLowerCase() ===
@@ -1533,11 +2183,6 @@ followButton.addEventListener(
 
                 setFollowButton();
 
-
-                /*
-                Decrease displayed
-                follower count.
-                */
 
                 const currentCount =
                     parseInt(
@@ -1590,11 +2235,6 @@ followButton.addEventListener(
                 setUnfollowButton();
 
 
-                /*
-                Increase displayed
-                follower count.
-                */
-
                 const currentCount =
                     parseInt(
                         followersCount.innerText
@@ -1603,6 +2243,21 @@ followButton.addEventListener(
 
                 followersCount.innerText =
                     currentCount + 1;
+
+
+                /*
+                ==================================
+                NEW NOTIFICATION
+                ==================================
+
+                IMPORTANT:
+                This happens ONLY after the
+                follower row was successfully
+                inserted.
+                ==================================
+                */
+
+                await createFollowNotification();
 
             }
 
@@ -1621,11 +2276,6 @@ followButton.addEventListener(
             );
 
 
-            /*
-            Reload actual status
-            if something failed.
-            */
-
             await loadFollowStatus();
 
         }
@@ -1641,6 +2291,280 @@ followButton.addEventListener(
 
     }
 );
+
+
+/* =========================================================
+   =========================================================
+   BIO EDIT SYSTEM
+   =========================================================
+   ========================================================= */
+
+
+/* ==========================================
+   OPEN BIO MODAL
+========================================== */
+
+editBioBtn.addEventListener(
+    "click",
+    function(){
+
+        if(
+            !currentUser ||
+            !viewedProfile
+        ){
+
+            return;
+
+        }
+
+
+        /*
+        Safety:
+        only owner can edit.
+        */
+
+        if(
+            String(
+                currentUser.id
+            ) !==
+            String(
+                viewedProfile.id
+            )
+        ){
+
+            return;
+
+        }
+
+
+        bioTextarea.value =
+            profileBio.innerText.trim();
+
+
+        bioModal.classList.add(
+            "active"
+        );
+
+
+        setTimeout(
+            function(){
+
+                bioTextarea.focus();
+
+            },
+            100
+        );
+
+    }
+);
+
+
+/* ==========================================
+   CANCEL BIO
+========================================== */
+
+bioCancelBtn.addEventListener(
+    "click",
+    function(){
+
+        bioModal.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+/* ==========================================
+   CLOSE MODAL BY BACKGROUND
+========================================== */
+
+bioModal.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            bioModal
+        ){
+
+            bioModal.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   SAVE BIO
+========================================== */
+
+bioSaveBtn.addEventListener(
+    "click",
+    async function(){
+
+        if(
+            !currentUser ||
+            !viewedProfile
+        ){
+
+            return;
+
+        }
+
+
+        /*
+        Safety:
+        only owner can edit.
+        */
+
+        if(
+            String(
+                currentUser.id
+            ) !==
+            String(
+                viewedProfile.id
+            )
+        ){
+
+            return;
+
+        }
+
+
+        const newBio =
+            bioTextarea.value.trim();
+
+
+        if(
+            newBio.length >
+            500
+        ){
+
+            alert(
+                "Bio must be below 500 characters."
+            );
+
+            return;
+
+        }
+
+
+        bioSaveBtn.disabled =
+            true;
+
+
+        try{
+
+            const {
+                error
+            } =
+            await supabaseClient
+
+                .from("profiles")
+
+                .update({
+
+                    bio:
+                        newBio
+
+                })
+
+                .eq(
+                    "id",
+                    currentUser.id
+                );
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            /*
+            Update page immediately.
+            */
+
+            profileBio.innerText =
+                newBio;
+
+
+            /*
+            Update local profile.
+            */
+
+            if(currentProfile){
+
+                currentProfile.bio =
+                    newBio;
+
+            }
+
+
+            if(viewedProfile){
+
+                viewedProfile.bio =
+                    newBio;
+
+            }
+
+
+            bioModal.classList.remove(
+                "active"
+            );
+
+
+            showUploadStatus(
+                "Bio updated successfully ✓"
+            );
+
+
+            setTimeout(
+                function(){
+
+                    hideUploadStatus();
+
+                },
+                2500
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Bio update error:",
+                error
+            );
+
+
+            alert(
+                "Unable to update bio:\n\n" +
+                error.message
+            );
+
+        }
+        finally{
+
+            bioSaveBtn.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   =========================================================
+   IMAGE UPLOAD SYSTEM
+   EXISTING SYSTEM
+   =========================================================
+   ========================================================= */
 
 
 /* ==========================================
@@ -1701,10 +2625,6 @@ function validateImage(file){
     }
 
 
-    /*
-    Maximum 5 MB
-    */
-
     if(
         file.size >
         5 * 1024 * 1024
@@ -1744,10 +2664,6 @@ function getFileExtension(file){
 
     }
 
-
-    /*
-    Fallback
-    */
 
     if(
         file.type ===
@@ -1801,10 +2717,6 @@ async function uploadImage(
     }
 
 
-    /*
-    Prevent multiple uploads
-    */
-
     changeProfileBtn.disabled =
         true;
 
@@ -1820,12 +2732,6 @@ async function uploadImage(
                 : "Uploading cover photo..."
         );
 
-
-        /*
-        ======================================
-        CREATE UNIQUE FILE NAME
-        ======================================
-        */
 
         const extension =
             getFileExtension(file);
@@ -1846,12 +2752,6 @@ async function uploadImage(
             fileName
         );
 
-
-        /*
-        ======================================
-        UPLOAD TO post-images BUCKET
-        ======================================
-        */
 
         const {
             data:uploadData,
@@ -1892,12 +2792,6 @@ async function uploadImage(
         );
 
 
-        /*
-        ======================================
-        GET PUBLIC URL
-        ======================================
-        */
-
         const {
             data:publicData
         } =
@@ -1921,12 +2815,6 @@ async function uploadImage(
             publicUrl
         );
 
-
-        /*
-        ======================================
-        UPDATE PROFILES TABLE
-        ======================================
-        */
 
         const updateData =
             type === "profile"
@@ -1987,12 +2875,6 @@ async function uploadImage(
 
         }
 
-
-        /*
-        ======================================
-        SUCCESS
-        ======================================
-        */
 
         showUploadStatus(
             type === "profile"
@@ -2094,11 +2976,6 @@ profilePhotoInput.addEventListener(
         );
 
 
-        /*
-        Allow selecting the same
-        file again later.
-        */
-
         this.value =
             "";
 
@@ -2155,11 +3032,6 @@ coverPhotoInput.addEventListener(
             "cover"
         );
 
-
-        /*
-        Allow selecting the same
-        file again later.
-        */
 
         this.value =
             "";
