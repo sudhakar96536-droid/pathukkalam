@@ -95,6 +95,59 @@ body{
 
 
 /* ==========================================
+   MESSAGE ICON + UNREAD BADGE
+========================================== */
+
+.messages-nav-link{
+    position:relative;
+    width:40px;
+    height:40px;
+    margin-left:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:inherit;
+    text-decoration:none;
+}
+
+.messages-nav-link i{
+    width:40px;
+    height:40px;
+    margin-left:0;
+    background:#f0f2f5;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#333;
+    font-size:18px;
+}
+
+.message-unread-badge{
+    display:none;
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    min-width:20px;
+    height:20px;
+    padding:0 5px;
+    border-radius:12px;
+    background:#e53935;
+    color:white;
+    border:2px solid white;
+    font-size:10px;
+    font-weight:bold;
+    line-height:16px;
+    text-align:center;
+    z-index:3;
+}
+
+.message-unread-badge.active{
+    display:block;
+}
+
+
+/* ==========================================
    CREATE POST
 ========================================== */
 
@@ -1548,6 +1601,12 @@ body{
             ">
 
             <i class="fas fa-message"></i>
+
+            <span
+                id="messageUnreadBadge"
+                class="message-unread-badge"
+                aria-live="polite">
+            </span>
 
         </a>
 
@@ -6228,6 +6287,175 @@ function escapeHtml(value){
    START
 ========================================== */
 
+
+
+/* =========================================================
+   MESSAGE UNREAD INDICATOR
+   NEW ONLY - EXISTING HOME FEATURES ARE NOT CHANGED
+========================================================= */
+
+const messageUnreadBadge =
+    document.getElementById(
+        "messageUnreadBadge"
+    );
+
+let messageUnreadTimer = null;
+let messageUnreadChannel = null;
+
+
+function renderMessageUnreadBadge(count){
+
+    if(!messageUnreadBadge){
+        return;
+    }
+
+    const unreadCount = Number(count) || 0;
+
+    if(unreadCount <= 0){
+        messageUnreadBadge.innerText = "";
+        messageUnreadBadge.classList.remove("active");
+        return;
+    }
+
+    messageUnreadBadge.innerText =
+        unreadCount > 99 ? "99+" : String(unreadCount);
+
+    messageUnreadBadge.classList.add("active");
+}
+
+
+/*
+   Counts only messages received by the current user
+   which are still marked unread.
+*/
+async function loadUnreadMessageCount(){
+
+    if(!currentUser){
+        return;
+    }
+
+    try{
+
+        const {
+            count,
+            error
+        } =
+        await supabaseClient
+            .from("messages")
+            .select(
+                "id",
+                {
+                    count:"exact",
+                    head:true
+                }
+            )
+            .eq(
+                "receiver_id",
+                currentUser.id
+            )
+            .eq(
+                "is_read",
+                false
+            );
+
+        if(error){
+            console.error(
+                "Unread message count error:",
+                error
+            );
+            return;
+        }
+
+        renderMessageUnreadBadge(count || 0);
+
+    }
+    catch(error){
+        console.error(
+            "Unread message count exception:",
+            error
+        );
+    }
+}
+
+
+/*
+   Check every 5 seconds. This also works when
+   Supabase Realtime is not enabled.
+*/
+function startMessageUnreadMonitoring(){
+
+    loadUnreadMessageCount();
+
+    if(messageUnreadTimer){
+        clearInterval(messageUnreadTimer);
+    }
+
+    messageUnreadTimer =
+        setInterval(
+            function(){
+                if(document.visibilityState === "visible"){
+                    loadUnreadMessageCount();
+                }
+            },
+            5000
+        );
+}
+
+
+/*
+   If Realtime is enabled for public.messages,
+   new messages can update the badge immediately.
+   The 5-second polling remains as a fallback.
+*/
+function startMessageRealtime(){
+
+    if(!currentUser || messageUnreadChannel){
+        return;
+    }
+
+    try{
+
+        messageUnreadChannel =
+            supabaseClient
+                .channel(
+                    "home-message-unread-" + currentUser.id
+                )
+                .on(
+                    "postgres_changes",
+                    {
+                        event:"*",
+                        schema:"public",
+                        table:"messages",
+                        filter:
+                            "receiver_id=eq." + currentUser.id
+                    },
+                    function(){
+                        loadUnreadMessageCount();
+                    }
+                )
+                .subscribe();
+
+    }
+    catch(error){
+        console.warn(
+            "Message realtime unavailable:",
+            error
+        );
+    }
+}
+
+
+/* Refresh immediately when coming back from /messages. */
+document.addEventListener(
+    "visibilitychange",
+    function(){
+        if(document.visibilityState === "visible"){
+            loadUnreadMessageCount();
+        }
+    }
+);
+
+
 async function initializePage(){
 
     await loadCurrentUser();
@@ -6248,6 +6476,10 @@ async function initializePage(){
     await loadCommentCounts();
 
     await loadShareCounts();
+
+    /* NEW: message unread badge only. */
+    startMessageUnreadMonitoring();
+    startMessageRealtime();
 
 }
 
