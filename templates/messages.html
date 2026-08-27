@@ -1,43 +1,4415 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Messages</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
+
+{% block title %}
+Messages - Pathukkalam
+{% endblock %}
+
+{% block head %}
+
 <style>
-body{
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
     margin:0;
-    font-family:Arial;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f0f2f5;
+    padding-bottom:0;
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   MAIN MESSAGING PAGE
+========================================================= */
+
+.messages-page{
+
+    width:100%;
+    height:calc(100vh - 0px);
+
+    display:flex;
+
+    background:white;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   LEFT CONVERSATION PANEL
+========================================================= */
+
+.conversation-panel{
+
+    width:360px;
+
+    min-width:360px;
+
+    height:100%;
+
+    background:white;
+
+    border-right:1px solid #ddd;
+
+    display:flex;
+
+    flex-direction:column;
+
+    z-index:20;
+}
+
+
+/* =========================================================
+   LEFT HEADER
+========================================================= */
+
+.conversation-header{
+
+    padding:15px;
+
+    border-bottom:1px solid #eee;
+
+    flex-shrink:0;
+}
+
+.conversation-title-row{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:14px;
+}
+
+.conversation-title{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:#222;
+}
+
+.home-back-btn{
+
+    width:38px;
+    height:38px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f0f2f5;
+
+    color:#444;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    font-size:17px;
+}
+
+
+/* =========================================================
+   SEARCH USERS
+========================================================= */
+
+.user-search-wrap{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    background:#f0f2f5;
+
+    border-radius:22px;
+
+    padding:0 13px;
+}
+
+.user-search-wrap i{
+
+    color:#777;
+
+    font-size:15px;
+}
+
+.user-search{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    padding:11px 5px;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   SEARCH RESULTS
+========================================================= */
+
+.user-search-results{
+
+    max-height:260px;
+
+    overflow-y:auto;
+
+    background:white;
+
+    border-radius:10px;
+
+    margin-top:7px;
+}
+
+.user-search-results:empty{
+
+    display:none;
+}
+
+.user-search-result{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px;
+
+    cursor:pointer;
+
+    border-radius:10px;
+}
+
+.user-search-result:hover{
+
     background:#f0f2f5;
 }
 
-.header{
-    background:#1877f2;
-    color:white;
-    padding:18px;
-    font-size:22px;
+.user-search-avatar{
+
+    width:44px;
+    height:44px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    flex-shrink:0;
 }
 
-.chat{
-    background:white;
-    margin:10px;
-    padding:15px;
+.user-search-info{
+
+    flex:1;
+
+    min-width:0;
+}
+
+.user-search-name{
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#222;
+}
+
+.user-search-username{
+
+    font-size:12px;
+
+    color:#888;
+
+    margin-top:3px;
+}
+
+
+/* =========================================================
+   CONVERSATION LIST
+========================================================= */
+
+.conversation-list{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:5px 8px;
+}
+
+.conversation-empty{
+
+    padding:50px 20px;
+
+    text-align:center;
+
+    color:#888;
+
+    font-size:14px;
+}
+
+.conversation-empty i{
+
+    display:block;
+
+    font-size:42px;
+
+    color:#bbb;
+
+    margin-bottom:12px;
+}
+
+.conversation-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:11px 9px;
+
     border-radius:12px;
+
+    cursor:pointer;
+
+    position:relative;
 }
+
+.conversation-item:hover{
+
+    background:#f5f6f7;
+}
+
+.conversation-item.active{
+
+    background:#e9f2ff;
+}
+
+.conversation-avatar{
+
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    flex-shrink:0;
+}
+
+.conversation-info{
+
+    flex:1;
+
+    min-width:0;
+}
+
+.conversation-name-row{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:8px;
+}
+
+.conversation-name{
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#222;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+}
+
+.conversation-time{
+
+    font-size:10px;
+
+    color:#999;
+
+    flex-shrink:0;
+}
+
+.conversation-last-message{
+
+    margin-top:5px;
+
+    color:#777;
+
+    font-size:12px;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+
+    padding-right:5px;
+}
+
+.conversation-item.unread .conversation-last-message{
+
+    color:#222;
+
+    font-weight:bold;
+}
+
+.unread-badge{
+
+    min-width:19px;
+
+    height:19px;
+
+    padding:0 5px;
+
+    border-radius:20px;
+
+    background:#1877f2;
+
+    color:white;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-top:5px;
+}
+
+
+/* =========================================================
+   RIGHT CHAT PANEL
+========================================================= */
+
+.chat-panel{
+
+    flex:1;
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:#f7f8fa;
+
+    min-width:0;
+}
+
+
+/* =========================================================
+   EMPTY CHAT
+========================================================= */
+
+.chat-empty{
+
+    flex:1;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    color:#888;
+
+    padding:30px;
+}
+
+.chat-empty-inner{
+
+    max-width:350px;
+}
+
+.chat-empty i{
+
+    font-size:60px;
+
+    color:#c5c8cc;
+
+    margin-bottom:18px;
+}
+
+.chat-empty-title{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    color:#555;
+}
+
+.chat-empty-text{
+
+    margin-top:8px;
+
+    font-size:13px;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   CHAT HEADER
+========================================================= */
+
+.chat-header{
+
+    height:70px;
+
+    background:white;
+
+    border-bottom:1px solid #ddd;
+
+    display:none;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px 15px;
+
+    flex-shrink:0;
+
+    z-index:10;
+}
+
+.chat-header.active{
+
+    display:flex;
+}
+
+.chat-back-btn{
+
+    width:38px;
+    height:38px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f0f2f5;
+
+    color:#444;
+
+    cursor:pointer;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+.chat-header-avatar{
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+}
+
+.chat-header-info{
+
+    flex:1;
+
+    min-width:0;
+}
+
+.chat-header-name{
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    color:#222;
+}
+
+.chat-header-username{
+
+    font-size:11px;
+
+    color:#888;
+
+    margin-top:3px;
+}
+
+.chat-profile-btn{
+
+    width:38px;
+    height:38px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f0f2f5;
+
+    color:#555;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   MESSAGE LIST
+========================================================= */
+
+.message-list{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:18px 15px 15px;
+
+    display:none;
+
+    flex-direction:column;
+
+    gap:5px;
+}
+
+.message-list.active{
+
+    display:flex;
+}
+
+
+/* =========================================================
+   MESSAGE DATE
+========================================================= */
+
+.message-date{
+
+    text-align:center;
+
+    font-size:11px;
+
+    color:#999;
+
+    margin:10px 0;
+}
+
+
+/* =========================================================
+   MESSAGE ROW
+========================================================= */
+
+.message-row{
+
+    display:flex;
+
+    width:100%;
+
+    margin-bottom:2px;
+}
+
+.message-row.sent{
+
+    justify-content:flex-end;
+}
+
+.message-row.received{
+
+    justify-content:flex-start;
+}
+
+
+/* =========================================================
+   MESSAGE BUBBLE
+========================================================= */
+
+.message-bubble{
+
+    max-width:min(70%,500px);
+
+    padding:9px 12px;
+
+    border-radius:18px;
+
+    font-size:14px;
+
+    line-height:1.45;
+
+    word-break:break-word;
+
+    position:relative;
+}
+
+.message-row.sent .message-bubble{
+
+    background:#1877f2;
+
+    color:white;
+
+    border-bottom-right-radius:5px;
+}
+
+.message-row.received .message-bubble{
+
+    background:white;
+
+    color:#222;
+
+    border-bottom-left-radius:5px;
+
+    box-shadow:0 1px 2px rgba(0,0,0,0.08);
+}
+
+
+/* =========================================================
+   MESSAGE TIME
+========================================================= */
+
+.message-meta{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    gap:4px;
+
+    margin-top:3px;
+
+    font-size:9px;
+
+    opacity:.75;
+}
+
+
+/* =========================================================
+   READ STATUS
+========================================================= */
+
+.message-read{
+
+    font-size:10px;
+
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   IMAGE MESSAGE
+========================================================= */
+
+.message-image{
+
+    max-width:280px;
+
+    max-height:350px;
+
+    border-radius:13px;
+
+    display:block;
+
+    cursor:pointer;
+
+    object-fit:cover;
+}
+
+.image-message-bubble{
+
+    padding:4px !important;
+
+    background:transparent !important;
+
+    box-shadow:none !important;
+}
+
+
+/* =========================================================
+   TYPING / LOADING
+========================================================= */
+
+.chat-loading{
+
+    text-align:center;
+
+    padding:20px;
+
+    color:#888;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   MESSAGE INPUT AREA
+========================================================= */
+
+.message-input-area{
+
+    background:white;
+
+    border-top:1px solid #ddd;
+
+    padding:10px 12px;
+
+    flex-shrink:0;
+
+    display:none;
+}
+
+.message-input-area.active{
+
+    display:block;
+}
+
+.message-input-row{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:7px;
+}
+
+
+/* =========================================================
+   INPUT BUTTONS
+========================================================= */
+
+.message-tool-btn{
+
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f0f2f5;
+
+    color:#555;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    font-size:17px;
+}
+
+.message-tool-btn:hover{
+
+    background:#e4e6e9;
+}
+
+.message-tool-btn:active{
+
+    transform:scale(.94);
+}
+
+
+/* =========================================================
+   TEXT INPUT
+========================================================= */
+
+.message-text-input{
+
+    flex:1;
+
+    min-width:0;
+
+    max-height:120px;
+
+    resize:none;
+
+    border:none;
+
+    outline:none;
+
+    background:#f0f2f5;
+
+    border-radius:20px;
+
+    padding:10px 14px;
+
+    font-size:14px;
+
+    line-height:1.4;
+}
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+.send-message-btn{
+
+    width:42px;
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#1877f2;
+
+    color:white;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    font-size:16px;
+}
+
+.send-message-btn:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+}
+
+
+/* =========================================================
+   EMOJI PANEL
+========================================================= */
+
+.emoji-panel{
+
+    display:none;
+
+    position:absolute;
+
+    bottom:65px;
+
+    left:10px;
+
+    width:280px;
+
+    max-height:220px;
+
+    overflow-y:auto;
+
+    background:white;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 25px rgba(0,0,0,.18);
+
+    padding:12px;
+
+    z-index:100;
+}
+
+.emoji-panel.active{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(8,1fr);
+
+    gap:5px;
+}
+
+.emoji-btn{
+
+    border:none;
+
+    background:transparent;
+
+    font-size:21px;
+
+    padding:5px;
+
+    cursor:pointer;
+
+    border-radius:7px;
+}
+
+.emoji-btn:hover{
+
+    background:#f0f2f5;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+.image-preview{
+
+    display:none;
+
+    padding:8px 5px;
+
+    position:relative;
+}
+
+.image-preview.active{
+
+    display:inline-block;
+}
+
+.image-preview img{
+
+    width:80px;
+    height:80px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+}
+
+.remove-image-preview{
+
+    position:absolute;
+
+    top:0;
+    right:0;
+
+    width:23px;
+    height:23px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#222;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   HIDDEN FILE INPUT
+========================================================= */
+
+#messageImageInput{
+
+    display:none;
+}
+
+
+/* =========================================================
+   IMAGE VIEWER
+========================================================= */
+
+.image-viewer{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.85);
+
+    z-index:10000;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+.image-viewer.active{
+
+    display:flex;
+}
+
+.image-viewer img{
+
+    max-width:95%;
+
+    max-height:90%;
+
+    object-fit:contain;
+
+    border-radius:8px;
+}
+
+.image-viewer-close{
+
+    position:absolute;
+
+    top:15px;
+    right:15px;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.15);
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:700px){
+
+    body{
+
+        overflow:hidden;
+    }
+
+    .messages-page{
+
+        height:100vh;
+    }
+
+    .conversation-panel{
+
+        width:100%;
+
+        min-width:100%;
+
+        border-right:none;
+    }
+
+    .chat-panel{
+
+        position:fixed;
+
+        inset:0;
+
+        z-index:50;
+
+        width:100%;
+
+        transform:translateX(100%);
+
+        transition:
+            transform .25s ease;
+    }
+
+    .chat-panel.mobile-open{
+
+        transform:translateX(0);
+    }
+
+    .chat-back-btn{
+
+        display:flex;
+    }
+
+    .message-bubble{
+
+        max-width:80%;
+    }
+
+    .conversation-header{
+
+        padding-top:15px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL DEVICES
+========================================================= */
+
+@media(max-width:380px){
+
+    .conversation-title{
+
+        font-size:21px;
+    }
+
+    .message-tool-btn{
+
+        width:36px;
+        height:36px;
+    }
+
+    .send-message-btn{
+
+        width:38px;
+        height:38px;
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE LINK
+========================================================= */
+
+.chat-header-clickable{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    flex:1;
+
+    min-width:0;
+
+    cursor:pointer;
+}
+
 </style>
-</head>
-<body>
 
-<div class="header">
-    Messages
+{% endblock %}
+
+
+{% block content %}
+
+<div class="messages-page">
+
+
+<!-- =====================================================
+     CONVERSATION PANEL
+===================================================== -->
+
+<div
+    id="conversationPanel"
+    class="conversation-panel">
+
+
+    <!-- HEADER -->
+
+    <div class="conversation-header">
+
+        <div class="conversation-title-row">
+
+            <div class="conversation-title">
+
+                Messages
+
+            </div>
+
+            <button
+                type="button"
+                id="homeBackBtn"
+                class="home-back-btn"
+                title="Back to Home">
+
+                <i class="fas fa-arrow-left"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- USER SEARCH -->
+
+        <div class="user-search-wrap">
+
+            <i class="fas fa-search"></i>
+
+            <input
+                type="text"
+                id="userSearchInput"
+                class="user-search"
+                placeholder="Search people..."
+                autocomplete="off"
+                maxlength="100">
+
+        </div>
+
+
+        <!-- SEARCH RESULTS -->
+
+        <div
+            id="userSearchResults"
+            class="user-search-results">
+
+        </div>
+
+    </div>
+
+
+    <!-- CONVERSATIONS -->
+
+    <div
+        id="conversationList"
+        class="conversation-list">
+
+        <div class="conversation-empty">
+
+            <i class="far fa-comments"></i>
+
+            <div>
+                No conversations yet
+            </div>
+
+            <div style="margin-top:6px;font-size:12px;">
+                Search for someone to start messaging.
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="chat">
-    Arun: Welcome to Pathukkalam 🔥
+
+<!-- =====================================================
+     CHAT PANEL
+===================================================== -->
+
+<div
+    id="chatPanel"
+    class="chat-panel">
+
+
+    <!-- EMPTY -->
+
+    <div
+        id="chatEmpty"
+        class="chat-empty">
+
+        <div class="chat-empty-inner">
+
+            <i class="far fa-comment-dots"></i>
+
+            <div class="chat-empty-title">
+
+                Your Messages
+
+            </div>
+
+            <div class="chat-empty-text">
+
+                Select a conversation or search for a Pathukkalam user to start a private conversation.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CHAT HEADER -->
+
+    <div
+        id="chatHeader"
+        class="chat-header">
+
+
+        <button
+            type="button"
+            id="chatBackBtn"
+            class="chat-back-btn">
+
+            <i class="fas fa-arrow-left"></i>
+
+        </button>
+
+
+        <div
+            id="chatHeaderClickable"
+            class="chat-header-clickable">
+
+
+            <img
+                id="chatHeaderAvatar"
+                class="chat-header-avatar"
+                src="https://i.pravatar.cc/100"
+                alt="Profile">
+
+
+            <div class="chat-header-info">
+
+                <div
+                    id="chatHeaderName"
+                    class="chat-header-name">
+
+                </div>
+
+                <div
+                    id="chatHeaderUsername"
+                    class="chat-header-username">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="chatProfileBtn"
+            class="chat-profile-btn"
+            title="View Profile">
+
+            <i class="fas fa-user"></i>
+
+        </button>
+
+    </div>
+
+
+    <!-- MESSAGE LIST -->
+
+    <div
+        id="messageList"
+        class="message-list">
+
+    </div>
+
+
+    <!-- MESSAGE INPUT -->
+
+    <div
+        id="messageInputArea"
+        class="message-input-area">
+
+
+        <!-- EMOJI PANEL -->
+
+        <div
+            id="emojiPanel"
+            class="emoji-panel">
+
+        </div>
+
+
+        <!-- IMAGE PREVIEW -->
+
+        <div
+            id="imagePreview"
+            class="image-preview">
+
+            <img
+                id="imagePreviewImg"
+                src=""
+                alt="Preview">
+
+            <button
+                type="button"
+                id="removeImagePreview"
+                class="remove-image-preview">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="message-input-row">
+
+
+            <!-- EMOJI -->
+
+            <button
+                type="button"
+                id="emojiBtn"
+                class="message-tool-btn"
+                title="Emoji">
+
+                <i class="far fa-face-smile"></i>
+
+            </button>
+
+
+            <!-- IMAGE -->
+
+            <button
+                type="button"
+                id="imageBtn"
+                class="message-tool-btn"
+                title="Send image">
+
+                <i class="far fa-image"></i>
+
+            </button>
+
+
+            <input
+                type="file"
+                id="messageImageInput"
+                accept="image/*">
+
+
+            <!-- TEXT -->
+
+            <textarea
+                id="messageTextInput"
+                class="message-text-input"
+                rows="1"
+                placeholder="Write a message..."
+                maxlength="2000"></textarea>
+
+
+            <!-- SEND -->
+
+            <button
+                type="button"
+                id="sendMessageBtn"
+                class="send-message-btn"
+                title="Send">
+
+                <i class="fas fa-paper-plane"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="chat">
-    Vijay: Ride share feature super 🚀
 </div>
 
-</body>
-</html>
+
+<!-- =====================================================
+     IMAGE VIEWER
+===================================================== -->
+
+<div
+    id="imageViewer"
+    class="image-viewer">
+
+
+    <button
+        type="button"
+        id="imageViewerClose"
+        class="image-viewer-close">
+
+        <i class="fas fa-xmark"></i>
+
+    </button>
+
+
+    <img
+        id="imageViewerImage"
+        src=""
+        alt="Image">
+
+</div>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let selectedPerson = null;
+
+let conversations = [];
+
+let realtimeChannel = null;
+
+let selectedImageFile = null;
+
+let searchTimer = null;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const conversationList =
+    document.getElementById(
+        "conversationList"
+    );
+
+const userSearchInput =
+    document.getElementById(
+        "userSearchInput"
+    );
+
+const userSearchResults =
+    document.getElementById(
+        "userSearchResults"
+    );
+
+const chatPanel =
+    document.getElementById(
+        "chatPanel"
+    );
+
+const chatEmpty =
+    document.getElementById(
+        "chatEmpty"
+    );
+
+const chatHeader =
+    document.getElementById(
+        "chatHeader"
+    );
+
+const chatHeaderAvatar =
+    document.getElementById(
+        "chatHeaderAvatar"
+    );
+
+const chatHeaderName =
+    document.getElementById(
+        "chatHeaderName"
+    );
+
+const chatHeaderUsername =
+    document.getElementById(
+        "chatHeaderUsername"
+    );
+
+const messageList =
+    document.getElementById(
+        "messageList"
+    );
+
+const messageInputArea =
+    document.getElementById(
+        "messageInputArea"
+    );
+
+const messageTextInput =
+    document.getElementById(
+        "messageTextInput"
+    );
+
+const sendMessageBtn =
+    document.getElementById(
+        "sendMessageBtn"
+    );
+
+const emojiPanel =
+    document.getElementById(
+        "emojiPanel"
+    );
+
+const imageBtn =
+    document.getElementById(
+        "imageBtn"
+    );
+
+const imageInput =
+    document.getElementById(
+        "messageImageInput"
+    );
+
+const imagePreview =
+    document.getElementById(
+        "imagePreview"
+    );
+
+const imagePreviewImg =
+    document.getElementById(
+        "imagePreviewImg"
+    );
+
+const removeImagePreview =
+    document.getElementById(
+        "removeImagePreview"
+    );
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value == null
+            ? ""
+            : String(value);
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   FORMAT TIME
+========================================================= */
+
+function formatMessageTime(
+    dateValue
+){
+
+    if(!dateValue){
+
+        return "";
+
+    }
+
+    const date =
+        new Date(dateValue);
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "";
+
+    }
+
+    return date.toLocaleTimeString(
+        [],
+        {
+            hour:"numeric",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT CONVERSATION TIME
+========================================================= */
+
+function formatConversationTime(
+    dateValue
+){
+
+    if(!dateValue){
+
+        return "";
+
+    }
+
+    const date =
+        new Date(dateValue);
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "";
+
+    }
+
+    const now =
+        new Date();
+
+    const sameDay =
+        date.toDateString() ===
+        now.toDateString();
+
+    if(sameDay){
+
+        return date.toLocaleTimeString(
+            [],
+            {
+                hour:"numeric",
+                minute:"2-digit"
+            }
+        );
+
+    }
+
+    return date.toLocaleDateString(
+        [],
+        {
+            day:"numeric",
+            month:"short"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CURRENT USER
+========================================================= */
+
+async function loadCurrentUser(){
+
+    const {
+        data:{
+            user
+        },
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
+
+
+    if(
+        error ||
+        !user
+    ){
+
+        window.location.href =
+            "/login";
+
+        return false;
+
+    }
+
+
+    currentUser =
+        user;
+
+
+    const {
+        data:profile,
+        error:profileError
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "id, username, name, profile_url"
+        )
+        .eq(
+            "id",
+            user.id
+        )
+        .maybeSingle();
+
+
+    if(profileError){
+
+        console.error(
+            "Current profile error:",
+            profileError
+        );
+
+    }
+
+
+    currentProfile =
+        profile || null;
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   LOAD ALL CONVERSATIONS
+========================================================= */
+
+async function loadConversations(){
+
+    if(!currentUser){
+
+        return;
+
+    }
+
+
+    try{
+
+        /*
+        Get every message where current user
+        is sender OR receiver.
+        */
+
+        const {
+            data:messages,
+            error
+        } =
+        await supabaseClient
+            .from("messages")
+            .select(
+                "id, sender_id, receiver_id, message, is_read, created_at"
+            )
+            .or(
+                "sender_id.eq." +
+                currentUser.id +
+                ",receiver_id.eq." +
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(1000);
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        if(
+            !messages ||
+            !messages.length
+        ){
+
+            conversations = [];
+
+            renderConversationList();
+
+            return;
+
+        }
+
+
+        /*
+        Find unique conversation partner.
+        */
+
+        const partnerMap =
+            new Map();
+
+
+        messages.forEach(
+            function(message){
+
+                const partnerId =
+                    message.sender_id ===
+                    currentUser.id
+                        ? message.receiver_id
+                        : message.sender_id;
+
+
+                if(!partnerId){
+
+                    return;
+
+                }
+
+
+                if(
+                    !partnerMap.has(
+                        partnerId
+                    )
+                ){
+
+                    partnerMap.set(
+                        partnerId,
+                        {
+
+                            partner_id:
+                                partnerId,
+
+                            last_message:
+                                message.message,
+
+                            last_created_at:
+                                message.created_at,
+
+                            unread_count:
+                                (
+                                    message.receiver_id ===
+                                    currentUser.id &&
+                                    !message.is_read
+                                )
+                                    ? 1
+                                    : 0
+
+                        }
+                    );
+
+                }
+                else{
+
+                    const conversation =
+                        partnerMap.get(
+                            partnerId
+                        );
+
+
+                    if(
+                        message.receiver_id ===
+                        currentUser.id &&
+                        !message.is_read
+                    ){
+
+                        conversation.unread_count++;
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        const partnerIds =
+            [
+                ...partnerMap.keys()
+            ];
+
+
+        const {
+            data:profiles,
+            error:profileError
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select(
+                "id, username, name, profile_url"
+            )
+            .in(
+                "id",
+                partnerIds
+            );
+
+
+        if(profileError){
+
+            throw profileError;
+
+        }
+
+
+        conversations =
+            partnerIds.map(
+                function(partnerId){
+
+                    const conversation =
+                        partnerMap.get(
+                            partnerId
+                        );
+
+
+                    const profile =
+                        profiles?.find(
+                            function(item){
+
+                                return (
+                                    item.id ===
+                                    partnerId
+                                );
+
+                            }
+                        );
+
+
+                    return {
+
+                        ...conversation,
+
+                        username:
+                            profile?.username ||
+                            "user",
+
+                        name:
+                            profile?.name ||
+                            profile?.username ||
+                            "User",
+
+                        profile_url:
+                            profile?.profile_url ||
+                            "https://i.pravatar.cc/100"
+
+                    };
+
+                }
+            );
+
+
+        conversations.sort(
+            function(a,b){
+
+                return new Date(
+                    b.last_created_at
+                ) -
+                new Date(
+                    a.last_created_at
+                );
+
+            }
+        );
+
+
+        renderConversationList();
+
+    }
+    catch(error){
+
+        console.error(
+            "Conversation loading error:",
+            error
+        );
+
+
+        conversationList.innerHTML = `
+
+            <div class="conversation-empty">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                Unable to load messages
+
+                <div style="margin-top:6px;font-size:12px;">
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER CONVERSATIONS
+========================================================= */
+
+function renderConversationList(){
+
+    conversationList.innerHTML =
+        "";
+
+
+    if(
+        !conversations.length
+    ){
+
+        conversationList.innerHTML = `
+
+            <div class="conversation-empty">
+
+                <i class="far fa-comments"></i>
+
+                <div>
+                    No conversations yet
+                </div>
+
+                <div style="margin-top:6px;font-size:12px;">
+                    Search for someone to start messaging.
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    conversations.forEach(
+        function(conversation){
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "conversation-item";
+
+
+            if(
+                selectedPerson &&
+                selectedPerson.id ===
+                conversation.partner_id
+            ){
+
+                item.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            if(
+                conversation.unread_count >
+                0
+            ){
+
+                item.classList.add(
+                    "unread"
+                );
+
+            }
+
+
+            const isImage =
+                String(
+                    conversation.last_message ||
+                    ""
+                ).startsWith(
+                    "IMAGE:"
+                );
+
+
+            const lastMessage =
+                isImage
+                    ? "📷 Image"
+                    : conversation.last_message ||
+                      "Message";
+
+
+            item.innerHTML = `
+
+                <img
+                    class="conversation-avatar"
+                    src="${escapeHtml(
+                        conversation.profile_url
+                    )}"
+                    alt="Profile">
+
+
+                <div class="conversation-info">
+
+                    <div class="conversation-name-row">
+
+                        <div class="conversation-name">
+
+                            ${escapeHtml(
+                                conversation.name
+                            )}
+
+                        </div>
+
+                        <div class="conversation-time">
+
+                            ${formatConversationTime(
+                                conversation.last_created_at
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="conversation-last-message">
+
+                        ${escapeHtml(
+                            lastMessage
+                        )}
+
+                    </div>
+
+
+                    ${
+                        conversation.unread_count > 0
+                            ? `
+                                <div class="unread-badge">
+
+                                    ${
+                                        conversation.unread_count > 99
+                                            ? "99+"
+                                            : conversation.unread_count
+                                    }
+
+                                </div>
+                              `
+                            : ""
+                    }
+
+                </div>
+
+            `;
+
+
+            item.addEventListener(
+                "click",
+                function(){
+
+                    openConversation(
+                        {
+                            id:
+                                conversation.partner_id,
+
+                            username:
+                                conversation.username,
+
+                            name:
+                                conversation.name,
+
+                            profile_url:
+                                conversation.profile_url
+
+                        }
+                    );
+
+                }
+            );
+
+
+            conversationList.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GLOBAL USER SEARCH
+========================================================= */
+
+userSearchInput.addEventListener(
+    "input",
+    function(){
+
+        clearTimeout(
+            searchTimer
+        );
+
+
+        const query =
+            this.value.trim();
+
+
+        if(!query){
+
+            userSearchResults.innerHTML =
+                "";
+
+            return;
+
+        }
+
+
+        searchTimer =
+            setTimeout(
+                function(){
+
+                    searchUsers(
+                        query
+                    );
+
+                },
+                300
+            );
+
+    }
+);
+
+
+/* =========================================================
+   SEARCH USERS
+========================================================= */
+
+async function searchUsers(
+    query
+){
+
+    userSearchResults.innerHTML = `
+
+        <div
+            style="
+                padding:12px;
+                text-align:center;
+                color:#888;
+                font-size:12px;
+            ">
+
+            <i class="fas fa-spinner fa-spin"></i>
+            Searching...
+
+        </div>
+
+    `;
+
+
+    try{
+
+        /*
+        Search BOTH name and username globally.
+        */
+
+        const [
+            nameResult,
+            usernameResult
+        ] =
+        await Promise.all([
+
+            supabaseClient
+                .from("profiles")
+                .select(
+                    "id, username, name, profile_url"
+                )
+                .ilike(
+                    "name",
+                    "%" +
+                    query +
+                    "%"
+                )
+                .limit(30),
+
+            supabaseClient
+                .from("profiles")
+                .select(
+                    "id, username, name, profile_url"
+                )
+                .ilike(
+                    "username",
+                    "%" +
+                    query +
+                    "%"
+                )
+                .limit(30)
+
+        ]);
+
+
+        if(nameResult.error){
+
+            throw nameResult.error;
+
+        }
+
+
+        if(usernameResult.error){
+
+            throw usernameResult.error;
+
+        }
+
+
+        const peopleMap =
+            new Map();
+
+
+        [
+            ...(nameResult.data || []),
+            ...(usernameResult.data || [])
+        ]
+        .forEach(
+            function(person){
+
+                if(
+                    person.id !==
+                    currentUser.id
+                ){
+
+                    peopleMap.set(
+                        person.id,
+                        person
+                    );
+
+                }
+
+            }
+        );
+
+
+        const people =
+            [
+                ...peopleMap.values()
+            ].slice(
+                0,
+                30
+            );
+
+
+        renderUserSearchResults(
+            people
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "User search error:",
+            error
+        );
+
+
+        userSearchResults.innerHTML = `
+
+            <div
+                style="
+                    padding:15px;
+                    text-align:center;
+                    color:#888;
+                    font-size:12px;
+                ">
+
+                Unable to search users
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER USER SEARCH RESULTS
+========================================================= */
+
+function renderUserSearchResults(
+    people
+){
+
+    userSearchResults.innerHTML =
+        "";
+
+
+    if(!people.length){
+
+        userSearchResults.innerHTML = `
+
+            <div
+                style="
+                    padding:15px;
+                    text-align:center;
+                    color:#888;
+                    font-size:12px;
+                ">
+
+                No people found
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    people.forEach(
+        function(person){
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "user-search-result";
+
+
+            row.innerHTML = `
+
+                <img
+                    class="user-search-avatar"
+                    src="${escapeHtml(
+                        person.profile_url ||
+                        "https://i.pravatar.cc/100"
+                    )}"
+                    alt="Profile">
+
+
+                <div class="user-search-info">
+
+                    <div class="user-search-name">
+
+                        ${escapeHtml(
+                            person.name ||
+                            person.username ||
+                            "User"
+                        )}
+
+                    </div>
+
+
+                    <div class="user-search-username">
+
+                        @${escapeHtml(
+                            person.username ||
+                            "user"
+                        )}
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            row.addEventListener(
+                "click",
+                function(){
+
+                    userSearchInput.value =
+                        "";
+
+                    userSearchResults.innerHTML =
+                        "";
+
+                    openConversation(
+                        person
+                    );
+
+                }
+            );
+
+
+            userSearchResults.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   OPEN CONVERSATION
+========================================================= */
+
+async function openConversation(
+    person
+){
+
+    if(
+        !person ||
+        !person.id
+    ){
+
+        return;
+
+    }
+
+
+    selectedPerson =
+        person;
+
+
+    /*
+    Update header.
+    */
+
+    chatHeaderAvatar.src =
+        person.profile_url ||
+        "https://i.pravatar.cc/100";
+
+
+    chatHeaderName.innerText =
+        person.name ||
+        person.username ||
+        "User";
+
+
+    chatHeaderUsername.innerText =
+        "@" +
+        (
+            person.username ||
+            "user"
+        );
+
+
+    chatHeader.classList.add(
+        "active"
+    );
+
+
+    chatEmpty.style.display =
+        "none";
+
+
+    messageList.classList.add(
+        "active"
+    );
+
+
+    messageInputArea.classList.add(
+        "active"
+    );
+
+
+    /*
+    Mobile opens the chat.
+    */
+
+    chatPanel.classList.add(
+        "mobile-open"
+    );
+
+
+    messageList.innerHTML = `
+
+        <div class="chat-loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            Loading messages...
+
+        </div>
+
+    `;
+
+
+    await loadConversationMessages(
+        person.id
+    );
+
+
+    /*
+    Mark received messages as read.
+    */
+
+    await markConversationRead(
+        person.id
+    );
+
+
+    /*
+    Refresh conversation list
+    to clear unread badge.
+    */
+
+    await loadConversations();
+
+
+    /*
+    Scroll to bottom.
+    */
+
+    scrollMessagesToBottom();
+
+
+    setTimeout(
+        function(){
+
+            messageTextInput.focus();
+
+        },
+        150
+    );
+
+}
+
+
+/* =========================================================
+   LOAD CONVERSATION MESSAGES
+========================================================= */
+
+async function loadConversationMessages(
+    partnerId
+){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("messages")
+            .select(
+                "id, sender_id, receiver_id, message, is_read, created_at"
+            )
+            .or(
+                "and(sender_id.eq." +
+                currentUser.id +
+                ",receiver_id.eq." +
+                partnerId +
+                "),and(sender_id.eq." +
+                partnerId +
+                ",receiver_id.eq." +
+                currentUser.id +
+                ")"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:true
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        renderMessages(
+            data || []
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Message loading error:",
+            error
+        );
+
+
+        messageList.innerHTML = `
+
+            <div class="chat-loading">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                Unable to load messages
+
+                <div style="margin-top:5px;font-size:11px;">
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER MESSAGES
+========================================================= */
+
+function renderMessages(
+    messages
+){
+
+    messageList.innerHTML =
+        "";
+
+
+    if(!messages.length){
+
+        messageList.innerHTML = `
+
+            <div
+                style="
+                    text-align:center;
+                    color:#999;
+                    padding:50px 20px;
+                    font-size:13px;
+                ">
+
+                <i
+                    class="far fa-comment-dots"
+                    style="
+                        display:block;
+                        font-size:45px;
+                        margin-bottom:12px;
+                        color:#bbb;
+                    ">
+                </i>
+
+                No messages yet.
+
+                <div style="margin-top:5px;">
+                    Say hello 👋
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let previousDate =
+        "";
+
+
+    messages.forEach(
+        function(message){
+
+            const messageDate =
+                new Date(
+                    message.created_at
+                );
+
+
+            const dateLabel =
+                messageDate.toLocaleDateString(
+                    [],
+                    {
+                        day:"numeric",
+                        month:"long",
+                        year:"numeric"
+                    }
+                );
+
+
+            if(
+                dateLabel !==
+                previousDate
+            ){
+
+                const dateElement =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                dateElement.className =
+                    "message-date";
+
+
+                dateElement.innerText =
+                    dateLabel;
+
+
+                messageList.appendChild(
+                    dateElement
+                );
+
+
+                previousDate =
+                    dateLabel;
+
+            }
+
+
+            const sent =
+                message.sender_id ===
+                currentUser.id;
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "message-row " +
+                (
+                    sent
+                        ? "sent"
+                        : "received"
+                );
+
+
+            const bubble =
+                document.createElement(
+                    "div"
+                );
+
+
+            bubble.className =
+                "message-bubble";
+
+
+            const rawMessage =
+                String(
+                    message.message ||
+                    ""
+                );
+
+
+            /*
+            Image messages use:
+
+            IMAGE:<public-url>
+            */
+
+            if(
+                rawMessage.startsWith(
+                    "IMAGE:"
+                )
+            ){
+
+                const imageUrl =
+                    rawMessage.substring(
+                        6
+                    );
+
+
+                bubble.classList.add(
+                    "image-message-bubble"
+                );
+
+
+                bubble.innerHTML = `
+
+                    <img
+                        class="message-image"
+                        src="${escapeHtml(
+                            imageUrl
+                        )}"
+                        alt="Shared image">
+
+                    <div
+                        class="message-meta"
+                        style="
+                            background:rgba(0,0,0,.35);
+                            color:white;
+                            border-radius:10px;
+                            padding:2px 6px;
+                            width:max-content;
+                            margin-left:auto;
+                        ">
+
+                        ${formatMessageTime(
+                            message.created_at
+                        )}
+
+                        ${
+                            sent
+                                ? `
+                                    <span class="message-read">
+
+                                        ${
+                                            message.is_read
+                                                ? "✓✓"
+                                                : "✓"
+                                        }
+
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+                `;
+
+
+                const image =
+                    bubble.querySelector(
+                        ".message-image"
+                    );
+
+
+                image.addEventListener(
+                    "click",
+                    function(){
+
+                        openImageViewer(
+                            imageUrl
+                        );
+
+                    }
+                );
+
+            }
+            else{
+
+                bubble.innerHTML = `
+
+                    <div>
+                        ${escapeHtml(
+                            rawMessage
+                        )}
+                    </div>
+
+                    <div class="message-meta">
+
+                        ${formatMessageTime(
+                            message.created_at
+                        )}
+
+                        ${
+                            sent
+                                ? `
+                                    <span class="message-read">
+
+                                        ${
+                                            message.is_read
+                                                ? "✓✓"
+                                                : "✓"
+                                        }
+
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+                `;
+
+            }
+
+
+            row.appendChild(
+                bubble
+            );
+
+
+            messageList.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    /*
+    Add image click events for normal
+    rendering if needed.
+    */
+
+    messageList
+        .querySelectorAll(
+            ".message-image"
+        )
+        .forEach(
+            function(image){
+
+                image.addEventListener(
+                    "click",
+                    function(){
+
+                        openImageViewer(
+                            image.src
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   MARK CONVERSATION READ
+========================================================= */
+
+async function markConversationRead(
+    partnerId
+){
+
+    if(
+        !currentUser ||
+        !partnerId
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("messages")
+            .update({
+                is_read:true
+            })
+            .eq(
+                "sender_id",
+                partnerId
+            )
+            .eq(
+                "receiver_id",
+                currentUser.id
+            )
+            .eq(
+                "is_read",
+                false
+            );
+
+
+        if(error){
+
+            console.error(
+                "Mark read error:",
+                error
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Mark read exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SEND TEXT MESSAGE
+========================================================= */
+
+async function sendTextMessage(){
+
+    if(
+        !currentUser ||
+        !selectedPerson
+    ){
+
+        return;
+
+    }
+
+
+    const text =
+        messageTextInput.value.trim();
+
+
+    if(!text){
+
+        return;
+
+    }
+
+
+    if(
+        text.length >
+        2000
+    ){
+
+        alert(
+            "Message is too long."
+        );
+
+        return;
+
+    }
+
+
+    sendMessageBtn.disabled =
+        true;
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("messages")
+            .insert({
+
+                sender_id:
+                    currentUser.id,
+
+                receiver_id:
+                    selectedPerson.id,
+
+                message:
+                    text,
+
+                is_read:
+                    false
+
+            })
+            .select()
+            .single();
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        messageTextInput.value =
+            "";
+
+
+        autoResizeTextarea();
+
+
+        appendSingleMessage(
+            data
+        );
+
+
+        scrollMessagesToBottom();
+
+
+        await loadConversations();
+
+    }
+    catch(error){
+
+        console.error(
+            "Send message error:",
+            error
+        );
+
+
+        alert(
+            "Unable to send message:\n\n" +
+            error.message
+        );
+
+    }
+    finally{
+
+        sendMessageBtn.disabled =
+            false;
+
+    }
+
+}
+
+
+/* =========================================================
+   APPEND ONE MESSAGE
+========================================================= */
+
+function appendSingleMessage(
+    message
+){
+
+    if(
+        !message ||
+        !selectedPerson
+    ){
+
+        return;
+
+    }
+
+
+    /*
+    Prevent showing messages from
+    another conversation.
+    */
+
+    const belongs =
+        (
+            message.sender_id ===
+            currentUser.id &&
+            message.receiver_id ===
+            selectedPerson.id
+        )
+        ||
+        (
+            message.sender_id ===
+            selectedPerson.id &&
+            message.receiver_id ===
+            currentUser.id
+        );
+
+
+    if(!belongs){
+
+        return;
+
+    }
+
+
+    /*
+    Reload conversation is safer when
+    date separators or ordering matter.
+    */
+
+    loadConversationMessages(
+        selectedPerson.id
+    )
+    .then(
+        function(){
+
+            scrollMessagesToBottom();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE SELECT
+========================================================= */
+
+imageBtn.addEventListener(
+    "click",
+    function(){
+
+        if(!selectedPerson){
+
+            return;
+
+        }
+
+        imageInput.click();
+
+    }
+);
+
+
+imageInput.addEventListener(
+    "change",
+    function(){
+
+        const file =
+            this.files[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        if(
+            !file.type.startsWith(
+                "image/"
+            )
+        ){
+
+            alert(
+                "Please select an image."
+            );
+
+            this.value =
+                "";
+
+            return;
+
+        }
+
+
+        /*
+        10 MB maximum.
+        */
+
+        if(
+            file.size >
+            10 * 1024 * 1024
+        ){
+
+            alert(
+                "Image size must be below 10 MB."
+            );
+
+            this.value =
+                "";
+
+            return;
+
+        }
+
+
+        selectedImageFile =
+            file;
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(event){
+
+                imagePreviewImg.src =
+                    event.target.result;
+
+                imagePreview.classList.add(
+                    "active"
+                );
+
+            };
+
+
+        reader.readAsDataURL(
+            file
+        );
+
+    }
+);
+
+
+/* =========================================================
+   REMOVE IMAGE
+========================================================= */
+
+removeImagePreview.addEventListener(
+    "click",
+    function(){
+
+        selectedImageFile =
+            null;
+
+        imageInput.value =
+            "";
+
+        imagePreviewImg.src =
+            "";
+
+        imagePreview.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SEND IMAGE
+========================================================= */
+
+async function sendImageMessage(){
+
+    if(
+        !currentUser ||
+        !selectedPerson ||
+        !selectedImageFile
+    ){
+
+        return;
+
+    }
+
+
+    sendMessageBtn.disabled =
+        true;
+
+
+    try{
+
+        const file =
+            selectedImageFile;
+
+
+        const extension =
+            file.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+
+        /*
+        Unique path.
+
+        We use a separate messaging
+        folder inside your existing
+        post-images bucket.
+        */
+
+        const filePath =
+            "messages/" +
+            currentUser.id +
+            "/" +
+            Date.now() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .substring(2,9) +
+            "." +
+            extension;
+
+
+        const {
+            data:uploadData,
+            error:uploadError
+        } =
+        await supabaseClient
+            .storage
+            .from("post-images")
+            .upload(
+                filePath,
+                file,
+                {
+
+                    cacheControl:
+                        "3600",
+
+                    upsert:
+                        false,
+
+                    contentType:
+                        file.type
+
+                }
+            );
+
+
+        if(uploadError){
+
+            throw uploadError;
+
+        }
+
+
+        console.log(
+            "Message image uploaded:",
+            uploadData
+        );
+
+
+        const {
+            data:publicData
+        } =
+        supabaseClient
+            .storage
+            .from("post-images")
+            .getPublicUrl(
+                filePath
+            );
+
+
+        const imageUrl =
+            publicData.publicUrl;
+
+
+        /*
+        Store image URL in messages.message
+
+        IMAGE:<url>
+        */
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("messages")
+            .insert({
+
+                sender_id:
+                    currentUser.id,
+
+                receiver_id:
+                    selectedPerson.id,
+
+                message:
+                    "IMAGE:" +
+                    imageUrl,
+
+                is_read:
+                    false
+
+            })
+            .select()
+            .single();
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        selectedImageFile =
+            null;
+
+        imageInput.value =
+            "";
+
+        imagePreviewImg.src =
+            "";
+
+        imagePreview.classList.remove(
+            "active"
+        );
+
+
+        await loadConversationMessages(
+            selectedPerson.id
+        );
+
+
+        scrollMessagesToBottom();
+
+
+        await loadConversations();
+
+    }
+    catch(error){
+
+        console.error(
+            "Image message error:",
+            error
+        );
+
+
+        alert(
+            "Unable to send image:\n\n" +
+            error.message
+        );
+
+    }
+    finally{
+
+        sendMessageBtn.disabled =
+            false;
+
+    }
+
+}
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+sendMessageBtn.addEventListener(
+    "click",
+    async function(){
+
+        if(
+            selectedImageFile
+        ){
+
+            await sendImageMessage();
+
+            return;
+
+        }
+
+
+        await sendTextMessage();
+
+    }
+);
+
+
+/* =========================================================
+   ENTER TO SEND
+========================================================= */
+
+messageTextInput.addEventListener(
+    "keydown",
+    function(event){
+
+        /*
+        Desktop/mobile:
+        Enter = send
+        Shift + Enter = new line
+        */
+
+        if(
+            event.key ===
+            "Enter" &&
+            !event.shiftKey
+        ){
+
+            event.preventDefault();
+
+            sendTextMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TEXTAREA AUTO RESIZE
+========================================================= */
+
+function autoResizeTextarea(){
+
+    messageTextInput.style.height =
+        "auto";
+
+    messageTextInput.style.height =
+        Math.min(
+            messageTextInput.scrollHeight,
+            120
+        ) +
+        "px";
+
+}
+
+
+messageTextInput.addEventListener(
+    "input",
+    autoResizeTextarea
+);
+
+
+/* =========================================================
+   EMOJIS
+========================================================= */
+
+const emojis = [
+
+    "😀","😃","😄","😁",
+    "😆","😅","😂","🤣",
+    "😊","😇","🙂","🙃",
+    "😉","😌","😍","🥰",
+    "😘","😗","😙","😚",
+    "😋","😛","😝","😜",
+    "🤪","🤨","🧐","🤓",
+    "😎","🤩","🥳","😏",
+    "😒","😞","😔","😟",
+    "😕","🙁","☹️","😣",
+    "😖","😫","😩","🥺",
+    "😢","😭","😤","😠",
+    "😡","🤬","🤯","😳",
+    "🥵","🥶","😱","😨",
+    "😰","😥","😓","🤗",
+    "🤔","🤭","🤫","🤥",
+    "😶","😐","😑","😬",
+    "🙄","😯","😦","😧",
+    "😮","😲","🥱","😴",
+    "🤤","😪","😵","🤐",
+    "🥴","🤢","🤮","🤧",
+    "😷","🤒","🤕","🤑",
+    "👍","👎","👏","🙌",
+    "🙏","❤️","🧡","💛",
+    "💚","💙","💜","🖤",
+    "🤍","💔","🔥","✨",
+    "🎉","🎊","💯","✅",
+    "❌","⭐","🚀","💪",
+    "😍","😂","🤣","😎"
+
+];
+
+
+emojis.forEach(
+    function(emoji){
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.type =
+            "button";
+
+
+        button.className =
+            "emoji-btn";
+
+
+        button.innerText =
+            emoji;
+
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                insertEmoji(
+                    emoji
+                );
+
+            }
+        );
+
+
+        emojiPanel.appendChild(
+            button
+        );
+
+    }
+);
+
+
+/* =========================================================
+   EMOJI BUTTON
+========================================================= */
+
+document.getElementById(
+    "emojiBtn"
+).addEventListener(
+    "click",
+    function(event){
+
+        event.stopPropagation();
+
+        emojiPanel.classList.toggle(
+            "active"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   INSERT EMOJI
+========================================================= */
+
+function insertEmoji(
+    emoji
+){
+
+    const input =
+        messageTextInput;
+
+
+    const start =
+        input.selectionStart;
+
+
+    const end =
+        input.selectionEnd;
+
+
+    const value =
+        input.value;
+
+
+    input.value =
+        value.substring(
+            0,
+            start
+        ) +
+        emoji +
+        value.substring(
+            end
+        );
+
+
+    input.focus();
+
+
+    input.selectionStart =
+        input.selectionEnd =
+            start +
+            emoji.length;
+
+
+    autoResizeTextarea();
+
+}
+
+
+/* =========================================================
+   CLOSE EMOJI WHEN CLICKING OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            !event.target.closest(
+                "#emojiPanel"
+            ) &&
+            !event.target.closest(
+                "#emojiBtn"
+            )
+        ){
+
+            emojiPanel.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollMessagesToBottom(){
+
+    setTimeout(
+        function(){
+
+            messageList.scrollTop =
+                messageList.scrollHeight;
+
+        },
+        50
+    );
+
+}
+
+
+/* =========================================================
+   MOBILE BACK
+========================================================= */
+
+document.getElementById(
+    "chatBackBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        chatPanel.classList.remove(
+            "mobile-open"
+        );
+
+        selectedPerson =
+            null;
+
+        chatHeader.classList.remove(
+            "active"
+        );
+
+        messageList.classList.remove(
+            "active"
+        );
+
+        messageInputArea.classList.remove(
+            "active"
+        );
+
+        chatEmpty.style.display =
+            "flex";
+
+        loadConversations();
+
+    }
+);
+
+
+/* =========================================================
+   HOME BUTTON
+========================================================= */
+
+document.getElementById(
+    "homeBackBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        window.location.href =
+            "/";
+
+    }
+);
+
+
+/* =========================================================
+   PROFILE BUTTON
+========================================================= */
+
+document.getElementById(
+    "chatProfileBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        if(
+            selectedPerson &&
+            selectedPerson.username
+        ){
+
+            window.location.href =
+                "/profile/" +
+                encodeURIComponent(
+                    selectedPerson.username
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLICK CHAT HEADER
+========================================================= */
+
+document.getElementById(
+    "chatHeaderClickable"
+).addEventListener(
+    "click",
+    function(){
+
+        if(
+            selectedPerson &&
+            selectedPerson.username
+        ){
+
+            window.location.href =
+                "/profile/" +
+                encodeURIComponent(
+                    selectedPerson.username
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   IMAGE VIEWER
+========================================================= */
+
+const imageViewer =
+    document.getElementById(
+        "imageViewer"
+    );
+
+const imageViewerImage =
+    document.getElementById(
+        "imageViewerImage"
+    );
+
+
+function openImageViewer(
+    url
+){
+
+    imageViewerImage.src =
+        url;
+
+    imageViewer.classList.add(
+        "active"
+    );
+
+}
+
+
+function closeImageViewer(){
+
+    imageViewer.classList.remove(
+        "active"
+    );
+
+    imageViewerImage.src =
+        "";
+
+}
+
+
+document.getElementById(
+    "imageViewerClose"
+).addEventListener(
+    "click",
+    closeImageViewer
+);
+
+
+imageViewer.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            imageViewer
+        ){
+
+            closeImageViewer();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SUPABASE REALTIME
+========================================================= */
+
+function startRealtimeMessages(){
+
+    if(
+        !currentUser
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        realtimeChannel
+    ){
+
+        supabaseClient
+            .removeChannel(
+                realtimeChannel
+            );
+
+    }
+
+
+    realtimeChannel =
+        supabaseClient
+            .channel(
+                "messages-" +
+                currentUser.id
+            )
+            .on(
+                "postgres_changes",
+                {
+
+                    event:"INSERT",
+
+                    schema:"public",
+
+                    table:"messages"
+
+                },
+                async function(payload){
+
+                    const message =
+                        payload.new;
+
+
+                    /*
+                    Ignore messages that do not
+                    belong to current user.
+                    */
+
+                    if(
+                        message.sender_id !==
+                        currentUser.id &&
+                        message.receiver_id !==
+                        currentUser.id
+                    ){
+
+                        return;
+
+                    }
+
+
+                    /*
+                    If this message belongs to
+                    currently open conversation,
+                    show it immediately.
+                    */
+
+                    if(
+                        selectedPerson &&
+                        (
+                            (
+                                message.sender_id ===
+                                selectedPerson.id &&
+                                message.receiver_id ===
+                                currentUser.id
+                            )
+                            ||
+                            (
+                                message.sender_id ===
+                                currentUser.id &&
+                                message.receiver_id ===
+                                selectedPerson.id
+                            )
+                        )
+                    ){
+
+                        await loadConversationMessages(
+                            selectedPerson.id
+                        );
+
+
+                        /*
+                        Incoming message is being viewed,
+                        so mark it read immediately.
+                        */
+
+                        if(
+                            message.sender_id ===
+                            selectedPerson.id
+                        ){
+
+                            await markConversationRead(
+                                selectedPerson.id
+                            );
+
+                        }
+
+
+                        scrollMessagesToBottom();
+
+                    }
+
+
+                    /*
+                    Refresh conversation list.
+                    */
+
+                    await loadConversations();
+
+                }
+            )
+            .subscribe(
+                function(status){
+
+                    console.log(
+                        "Message realtime:",
+                        status
+                    );
+
+                }
+            );
+
+}
+
+
+/* =========================================================
+   VISIBILITY REFRESH
+========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    async function(){
+
+        if(
+            !document.hidden &&
+            currentUser
+        ){
+
+            await loadConversations();
+
+
+            if(
+                selectedPerson
+            ){
+
+                await loadConversationMessages(
+                    selectedPerson.id
+                );
+
+                await markConversationRead(
+                    selectedPerson.id
+                );
+
+                scrollMessagesToBottom();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PERIODIC UNREAD REFRESH
+========================================================= */
+
+setInterval(
+    async function(){
+
+        if(
+            currentUser &&
+            !document.hidden
+        ){
+
+            await loadConversations();
+
+        }
+
+    },
+    10000
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initializeMessagesPage(){
+
+    const loggedIn =
+        await loadCurrentUser();
+
+
+    if(!loggedIn){
+
+        return;
+
+    }
+
+
+    await loadConversations();
+
+
+    startRealtimeMessages();
+
+}
+
+
+initializeMessagesPage();
+
+</script>
+
+{% endblock %}
