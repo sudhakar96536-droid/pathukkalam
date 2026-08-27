@@ -5,14 +5,20 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Explore - Pathukkalam</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+
 <style>
+
+/* ==========================================
+   GLOBAL
+========================================== */
 
 *{
     margin:0;
@@ -23,187 +29,1079 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 body{
     background:#f0f2f5;
-    padding-bottom:80px;
+    padding-bottom:90px;
 }
 
-/* HEADER */
+
+/* ==========================================
+   HEADER
+========================================== */
 
 .header{
+
     background:white;
-    padding:15px;
+
+    padding:14px 16px;
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     position:sticky;
+
     top:0;
+
     z-index:1000;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+
+    box-shadow:
+        0 2px 5px
+        rgba(0,0,0,0.08);
 }
 
-.logo{
-    font-size:26px;
-    font-weight:bold;
-    color:#1877f2;
-}
-
-.header-icons i{
-    font-size:22px;
-    margin-left:18px;
-    color:#444;
-}
-
-/* PAGE TITLE */
-
-.page-title{
-    padding:15px;
-    font-size:22px;
-    font-weight:bold;
-}
-
-/* POSTS */
-
-.post{
-    background:white;
-    margin:10px;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 2px 5px rgba(0,0,0,0.08);
-}
-
-.post-header{
-    display:flex;
-    align-items:center;
-    padding:12px;
-}
-
-.post-header img{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    margin-right:10px;
-}
-
-.post-user{
-    font-weight:bold;
-}
-
-.post-time{
-    font-size:12px;
-    color:gray;
-}
-
-.post-text{
-    padding:0 12px 12px;
-    line-height:1.5;
-}
-
-.post-image{
-    width:100%;
-    max-height:450px;
-    object-fit:cover;
-}
-
-.post-actions{
-    display:flex;
-    justify-content:space-around;
-    padding:12px;
-    border-top:1px solid #eee;
-}
-
-.post-actions div{
-    color:#555;
-    font-size:14px;
-}
-/* FLOATING NEW POST BUTTON */
-
-.new-post-btn{
-    position:fixed;
-    bottom:28px;
-    left:50%;
-    transform:translateX(-50%);
-    width:62px;
-    height:62px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#1877f2,#42a5ff);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:28px;
-    text-decoration:none;
-    box-shadow:0 5px 15px rgba(24,119,242,0.4);
-    z-index:2000;
-    border:4px solid white;
-}
-
-.new-post-btn:active{
-    transform:translateX(-50%) scale(0.95);
-}
-/* BOTTOM NAVIGATION */
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:white;
-    display:flex;
-    justify-content:space-evenly;
-    align-items:center;
-    padding:10px 0;
-    border-top:1px solid #ddd;
-    z-index:1000;
-}
-
-.nav-item{
-    text-decoration:none;
-    color:gray;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    font-size:12px;
-}
-
-.nav-item i{
-    font-size:22px;
-    margin-bottom:4px;
-}
-
-.active{
-    color:#1877f2;
-}
 .logo-section{
+
     display:flex;
+
     align-items:center;
 }
 
 .logo-img{
+
     width:42px;
+
     height:42px;
+
     border-radius:12px;
+
     margin-right:10px;
+
     object-fit:cover;
 }
 
 .logo-text{
+
     font-size:26px;
+
     font-weight:bold;
+
     color:#1877f2;
 }
+
+.header-icons{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.header-icon{
+
+    width:40px;
+
+    height:40px;
+
+    background:#f0f2f5;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#333;
+
+    font-size:18px;
+
+    text-decoration:none;
+
+}
+
+
+/* ==========================================
+   PAGE TITLE
+========================================== */
+
+.page-title{
+
+    background:white;
+
+    padding:
+        18px
+        15px
+        14px;
+
+    font-size:22px;
+
+    font-weight:bold;
+}
+
+.page-subtitle{
+
+    font-size:13px;
+
+    color:#777;
+
+    font-weight:normal;
+
+    margin-top:5px;
+}
+
+
+/* ==========================================
+   EXPLORE FILTER BAR
+========================================== */
+
+.explore-filters{
+
+    background:white;
+
+    padding:
+        0
+        12px
+        12px;
+
+    display:flex;
+
+    gap:8px;
+
+    overflow-x:auto;
+
+    scrollbar-width:none;
+}
+
+.explore-filters::-webkit-scrollbar{
+
+    display:none;
+}
+
+.explore-filter{
+
+    border:none;
+
+    background:#f0f2f5;
+
+    color:#555;
+
+    padding:
+        9px
+        15px;
+
+    border-radius:20px;
+
+    white-space:nowrap;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:bold;
+}
+
+.explore-filter.active{
+
+    background:#1877f2;
+
+    color:white;
+}
+
+
+/* ==========================================
+   LOADING
+========================================== */
+
+.explore-loading{
+
+    padding:50px 20px;
+
+    text-align:center;
+
+    color:#888;
+
+    font-size:14px;
+}
+
+.explore-loading i{
+
+    font-size:30px;
+
+    margin-bottom:12px;
+
+    display:block;
+}
+
+
+/* ==========================================
+   EMPTY
+========================================== */
+
+.explore-empty{
+
+    background:white;
+
+    margin-top:10px;
+
+    padding:60px 20px;
+
+    text-align:center;
+
+    color:#888;
+}
+
+.explore-empty i{
+
+    font-size:45px;
+
+    color:#bbb;
+
+    margin-bottom:15px;
+
+    display:block;
+}
+
+.explore-empty-title{
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    color:#555;
+}
+
+.explore-empty-text{
+
+    margin-top:6px;
+
+    font-size:13px;
+}
+
+
+/* ==========================================
+   POST
+========================================== */
+
+.post{
+
+    background:white;
+
+    margin-top:10px;
+
+    padding:12px;
+}
+
+
+/* ==========================================
+   POST HEADER
+========================================== */
+
+.post-header{
+
+    display:flex;
+
+    align-items:center;
+
+    margin-bottom:10px;
+}
+
+.post-profile-link{
+
+    display:block;
+
+    text-decoration:none;
+
+    flex-shrink:0;
+}
+
+.post-header img{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+}
+
+.post-user-info{
+
+    margin-left:10px;
+
+    min-width:0;
+
+    flex:1;
+}
+
+.post-user-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+}
+
+.post-user{
+
+    font-weight:bold;
+
+    font-size:15px;
+
+    color:#222;
+
+    text-decoration:none;
+}
+
+.post-username{
+
+    color:#888;
+
+    font-size:12px;
+}
+
+.post-time{
+
+    font-size:12px;
+
+    color:gray;
+
+    margin-top:3px;
+}
+
+
+/* ==========================================
+   FOLLOW BUTTON
+========================================== */
+
+.explore-follow-btn{
+
+    border:none;
+
+    background:#1877f2;
+
+    color:white;
+
+    padding:
+        7px
+        13px;
+
+    border-radius:8px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    flex-shrink:0;
+}
+
+.explore-follow-btn.unfollow{
+
+    background:#e4e6eb;
+
+    color:#333;
+}
+
+.explore-follow-btn:disabled{
+
+    opacity:0.6;
+
+    cursor:not-allowed;
+}
+
+
+/* ==========================================
+   POST TEXT
+========================================== */
+
+.post-text{
+
+    margin-bottom:12px;
+
+    line-height:1.5;
+
+    color:#222;
+
+    word-break:break-word;
+}
+
+
+/* ==========================================
+   POST IMAGE
+========================================== */
+
+.post-image{
+
+    width:100%;
+
+    max-height:500px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    display:block;
+
+    cursor:pointer;
+}
+
+
+/* ==========================================
+   POST ACTIONS
+========================================== */
+
+.post-actions{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    margin-top:10px;
+
+    padding-top:10px;
+
+    border-top:1px solid #eee;
+}
+
+.post-action{
+
+    color:#555;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+
+    min-width:70px;
+
+    padding:8px;
+
+    border-radius:10px;
+
+    transition:
+        background 0.2s ease;
+}
+
+.post-action:hover{
+
+    background:#f0f2f5;
+}
+
+.post-action i{
+
+    font-size:17px;
+}
+
+.post-action.liked{
+
+    color:#1877f2;
+}
+
+.post-action.processing{
+
+    opacity:0.6;
+
+    pointer-events:none;
+}
+
+
+/* ==========================================
+   TRENDING BADGE
+========================================== */
+
+.trending-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:4px;
+
+    background:#fff3cd;
+
+    color:#856404;
+
+    padding:
+        4px
+        8px;
+
+    border-radius:10px;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+    margin-left:5px;
+}
+
+
+/* ==========================================
+   POST IMAGE FALLBACK
+========================================== */
+
+.no-post-image{
+
+    background:#f0f2f5;
+
+    border-radius:12px;
+
+    padding:25px;
+
+    color:#888;
+
+    text-align:center;
+
+    font-size:13px;
+}
+
+
+/* ==========================================
+   COMMENT BOTTOM SHEET
+========================================== */
+
+.comment-overlay{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.45);
+
+    z-index:5000;
+}
+
+.comment-overlay.active{
+
+    display:block;
+}
+
+.comment-sheet{
+
+    position:absolute;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    width:100%;
+
+    max-width:650px;
+
+    margin:auto;
+
+    height:min(75vh,650px);
+
+    background:white;
+
+    border-radius:
+        22px
+        22px
+        0
+        0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    box-shadow:
+        0 -5px 30px
+        rgba(0,0,0,0.18);
+
+    animation:
+        commentSheetUp
+        0.25s
+        ease;
+}
+
+@keyframes commentSheetUp{
+
+    from{
+
+        transform:
+            translateY(100%);
+
+    }
+
+    to{
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================
+   COMMENT HEADER
+========================================== */
+
+.comment-sheet-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        16px
+        18px;
+
+    border-bottom:1px solid #eee;
+
+    flex-shrink:0;
+}
+
+.comment-sheet-title{
+
+    font-size:18px;
+
+    font-weight:bold;
+}
+
+.comment-close{
+
+    width:36px;
+
+    height:36px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f0f2f5;
+
+    color:#444;
+
+    font-size:17px;
+
+    cursor:pointer;
+}
+
+
+/* ==========================================
+   COMMENT LIST
+========================================== */
+
+.comment-sheet-list{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:
+        15px
+        16px;
+}
+
+.comment-item{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-bottom:15px;
+}
+
+.comment-avatar{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    flex-shrink:0;
+}
+
+.comment-content{
+
+    background:#f0f2f5;
+
+    border-radius:16px;
+
+    padding:
+        9px
+        13px;
+
+    max-width:
+        calc(100% - 50px);
+
+    position:relative;
+}
+
+.comment-user{
+
+    font-weight:bold;
+
+    font-size:13px;
+
+    color:#222;
+}
+
+.comment-text{
+
+    margin-top:4px;
+
+    font-size:14px;
+
+    line-height:1.4;
+
+    color:#333;
+
+    word-break:break-word;
+}
+
+.comment-delete{
+
+    border:none;
+
+    background:none;
+
+    color:#999;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    margin-top:6px;
+
+    padding:0;
+}
+
+.comment-delete:hover{
+
+    color:#e53935;
+}
+
+
+/* ==========================================
+   NO COMMENTS
+========================================== */
+
+.no-comments{
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#888;
+
+    text-align:center;
+}
+
+.no-comments i{
+
+    font-size:42px;
+
+    margin-bottom:12px;
+
+    color:#bbb;
+}
+
+.no-comments-title{
+
+    font-weight:bold;
+
+    color:#555;
+
+    font-size:16px;
+}
+
+.no-comments-text{
+
+    margin-top:5px;
+
+    font-size:13px;
+}
+
+
+/* ==========================================
+   COMMENT INPUT
+========================================== */
+
+.comment-input-area{
+
+    padding:
+        12px
+        14px;
+
+    border-top:1px solid #eee;
+
+    background:white;
+
+    flex-shrink:0;
+}
+
+.comment-input-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.comment-input{
+
+    flex:1;
+
+    min-width:0;
+
+    border:none;
+
+    outline:none;
+
+    background:#f0f2f5;
+
+    border-radius:22px;
+
+    padding:
+        12px
+        15px;
+
+    font-size:14px;
+}
+
+.comment-submit{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#1877f2;
+
+    color:white;
+
+    cursor:pointer;
+
+    flex-shrink:0;
+}
+
+.comment-submit:disabled{
+
+    opacity:0.6;
+}
+
+
+/* ==========================================
+   FLOATING BUTTON
+========================================== */
+
+.new-post-btn{
+
+    position:fixed;
+
+    bottom:28px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    width:62px;
+
+    height:62px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1877f2,
+            #42a5ff
+        );
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:white;
+
+    font-size:28px;
+
+    text-decoration:none;
+
+    box-shadow:
+        0 5px 15px
+        rgba(24,119,242,0.4);
+
+    z-index:2000;
+
+    border:4px solid white;
+}
+
+
+/* ==========================================
+   BOTTOM NAVIGATION
+========================================== */
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-evenly;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    border-top:1px solid #ddd;
+
+    z-index:1000;
+}
+
+.nav-item{
+
+    text-decoration:none;
+
+    color:gray;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    font-size:12px;
+}
+
+.nav-item i{
+
+    font-size:22px;
+
+    margin-bottom:4px;
+}
+
+.nav-item.active{
+
+    color:#1877f2;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+    .page-title{
+
+        font-size:20px;
+
+    }
+
+    .post{
+
+        margin-top:8px;
+
+        padding:11px;
+    }
+
+    .post-header img{
+
+        width:45px;
+
+        height:45px;
+    }
+
+    .post-user{
+
+        font-size:14px;
+    }
+
+    .explore-follow-btn{
+
+        padding:
+            6px
+            10px;
+
+        font-size:11px;
+    }
+
+    .post-action{
+
+        min-width:55px;
+
+        font-size:13px;
+    }
+
+    .comment-sheet{
+
+        height:78vh;
+
+        border-radius:
+            20px
+            20px
+            0
+            0;
+    }
+
+}
+
 </style>
 
 </head>
 
+
 <body>
 
-<!-- HEADER -->
+
+<!-- ==========================================
+     HEADER
+========================================== -->
 
 <div class="header">
 
     <div class="logo-section">
 
-        <img class="logo-img"
-        src="{{ url_for('static', filename='icon-192.png') }}">
+        <img
+            class="logo-img"
+            src="{{ url_for('static', filename='icon-192.png') }}">
 
         <div class="logo-text">
             Pathukkalam
@@ -211,86 +1109,3581 @@ body{
 
     </div>
 
+
     <div class="header-icons">
-        <i class="fas fa-search"></i>
-        <i class="fas fa-message"></i>
+
+        <a
+            href="#"
+            class="header-icon">
+
+            <i class="fas fa-search"></i>
+
+        </a>
+
+
+        <a
+            href="/messages"
+            class="header-icon">
+
+            <i class="fas fa-message"></i>
+
+        </a>
+
     </div>
 
 </div>
 
-<!-- TITLE -->
+
+<!-- ==========================================
+     TITLE
+========================================== -->
 
 <div class="page-title">
-    Explore Trending Posts 🔥
+
+    Explore 🔥
+
+    <div class="page-subtitle">
+
+        Discover what's trending across Pathukkalam
+
+    </div>
+
 </div>
 
-<!-- POSTS -->
 
-{% for post in posts %}
+<!-- ==========================================
+     FILTERS
+========================================== -->
 
-<div class="post">
+<div class="explore-filters">
 
-    <div class="post-header">
+    <button
+        class="explore-filter active"
+        data-filter="trending">
 
-        <img src="{{ post.profile }}">
+        🔥 Trending
 
-        <div>
-            <div class="post-user">{{ post.name }}</div>
-            <div class="post-time">Trending Now</div>
+    </button>
+
+
+    <button
+        class="explore-filter"
+        data-filter="latest">
+
+        🆕 Latest
+
+    </button>
+
+
+    <button
+        class="explore-filter"
+        data-filter="popular">
+
+        📈 Popular
+
+    </button>
+
+</div>
+
+
+<!-- ==========================================
+     POSTS CONTAINER
+========================================== -->
+
+<div id="explorePosts">
+
+    <div class="explore-loading">
+
+        <i class="fas fa-spinner fa-spin"></i>
+
+        Discovering trending posts...
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     COMMENT BOTTOM SHEET
+========================================== -->
+
+<div
+    id="commentOverlay"
+    class="comment-overlay">
+
+
+    <div
+        class="comment-sheet"
+        onclick="event.stopPropagation()">
+
+
+        <div class="comment-sheet-header">
+
+            <div class="comment-sheet-title">
+
+                <i class="far fa-comment"></i>
+
+                Comments
+
+                <span
+                    id="sheetCommentCount"
+                    style="
+                        color:#888;
+                        font-size:14px;
+                    ">
+
+                    0
+
+                </span>
+
+            </div>
+
+
+            <button
+                class="comment-close"
+                id="commentClose">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="commentSheetList"
+            class="comment-sheet-list">
+
+        </div>
+
+
+        <div class="comment-input-area">
+
+            <div class="comment-input-row">
+
+                <input
+                    type="text"
+                    id="commentInput"
+                    class="comment-input"
+                    placeholder="Write a comment..."
+                    maxlength="500"
+                    autocomplete="off">
+
+
+                <button
+                    id="commentSubmit"
+                    class="comment-submit">
+
+                    <i class="fas fa-paper-plane"></i>
+
+                </button>
+
+            </div>
+
         </div>
 
     </div>
 
-    <div class="post-text">
-        {{ post.caption }}
-    </div>
-
-    <img class="post-image" src="{{ post.image }}">
-
-    <div class="post-actions">
-
-        <div><i class="far fa-thumbs-up"></i> Like</div>
-
-        <div><i class="far fa-comment"></i> Comment</div>
-
-        <div><i class="far fa-share-square"></i> Share</div>
-
-    </div>
-
 </div>
 
-{% endfor %}
-<!-- FLOATING POST BUTTON -->
 
-<a href="/new-post" class="new-post-btn">+</a>
-    
-<!-- BOTTOM NAVIGATION -->
+<!-- ==========================================
+     FLOATING NEW POST
+========================================== -->
+
+<a
+    href="/new-post"
+    class="new-post-btn">
+
+    <i class="fas fa-plus"></i>
+
+</a>
+
+
+<!-- ==========================================
+     BOTTOM NAVIGATION
+========================================== -->
 
 <div class="bottom-nav">
 
-    <a href="/" class="nav-item">
+
+    <a
+        href="/"
+        class="nav-item">
+
         <i class="fas fa-house"></i>
-        <span>Home</span>
+
+        <span>
+            Home
+        </span>
+
     </a>
 
-    <a href="/explore" class="nav-item active">
+
+    <a
+        href="/explore"
+        class="nav-item active">
+
         <i class="fas fa-compass"></i>
-        <span>Explore</span>
-    </a>
-    
-    <div style="width:70px;"></div>
-    
-    <a href="/notifications" class="nav-item">
-        <i class="fas fa-bell"></i>
-        <span>Alerts</span>
+
+        <span>
+            Explore
+        </span>
+
     </a>
 
-    <a href="/profile" class="nav-item">
+
+    <div style="width:70px;"></div>
+
+
+    <a
+        href="/notifications"
+        class="nav-item">
+
+        <i class="fas fa-bell"></i>
+
+        <span>
+            Alerts
+        </span>
+
+    </a>
+
+
+    <a
+        href="#"
+        class="
+            nav-item
+            current-user-profile-link
+        ">
+
         <i class="fas fa-user"></i>
-        <span>Profile</span>
+
+        <span>
+            Profile
+        </span>
+
     </a>
 
 </div>
 
+
+<!-- ==========================================
+     SUPABASE
+========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* ==========================================
+   SUPABASE CONFIG
+========================================== */
+
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* ==========================================
+   GLOBAL VARIABLES
+========================================== */
+
+let currentUser =
+    null;
+
+let currentProfile =
+    null;
+
+let explorePosts =
+    [];
+
+let activeFilter =
+    "trending";
+
+let activeCommentPostId =
+    null;
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const explorePostsContainer =
+    document.getElementById(
+        "explorePosts"
+    );
+
+
+const commentOverlay =
+    document.getElementById(
+        "commentOverlay"
+    );
+
+
+const commentSheetList =
+    document.getElementById(
+        "commentSheetList"
+    );
+
+
+const commentInput =
+    document.getElementById(
+        "commentInput"
+    );
+
+
+const commentSubmit =
+    document.getElementById(
+        "commentSubmit"
+    );
+
+
+const sheetCommentCount =
+    document.getElementById(
+        "sheetCommentCount"
+    );
+
+
+/* =========================================================
+   CURRENT USER
+========================================================= */
+
+async function loadCurrentUser(){
+
+    try{
+
+        const {
+
+            data:{
+                user
+            },
+
+            error
+
+        } =
+        await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error){
+
+            console.error(
+                "Auth error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        if(!user){
+
+            window.location.href =
+                "/login";
+
+            return;
+
+        }
+
+
+        currentUser =
+            user;
+
+
+        const {
+
+            data:profile,
+            error:profileError
+
+        } =
+        await supabaseClient
+
+            .from("profiles")
+
+            .select(
+                "id, username, name, profile_url, cover_url, bio"
+            )
+
+            .eq(
+                "id",
+                user.id
+            )
+
+            .maybeSingle();
+
+
+        if(profileError){
+
+            console.error(
+                "Current profile error:",
+                profileError
+            );
+
+            return;
+
+        }
+
+
+        currentProfile =
+            profile;
+
+
+        /*
+        Current user profile image
+        */
+
+        const profileLinks =
+            document.querySelectorAll(
+                ".current-user-profile-link"
+            );
+
+
+        profileLinks.forEach(
+            function(link){
+
+                if(
+                    profile?.username
+                ){
+
+                    link.href =
+                        "/profile/" +
+                        encodeURIComponent(
+                            profile.username
+                        );
+
+                }
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Current user loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD EXPLORE POSTS
+========================================================= */
+
+async function loadExplorePosts(){
+
+    try{
+
+        showExploreLoading();
+
+
+        /*
+        ==========================================
+        STEP 1
+        LOAD POSTS
+        ==========================================
+        */
+
+        const {
+
+            data:posts,
+            error:postError
+
+        } =
+        await supabaseClient
+
+            .from("posts")
+
+            .select(
+                "id, user_id, caption, image, image_url, photo_url, created_at"
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+
+            .limit(
+                100
+            );
+
+
+        if(postError){
+
+            throw postError;
+
+        }
+
+
+        if(
+            !posts ||
+            !posts.length
+        ){
+
+            showExploreEmpty();
+
+            return;
+
+        }
+
+
+        /*
+        ==========================================
+        STEP 2
+        USER IDS
+        ==========================================
+        */
+
+        const userIds =
+            [
+                ...new Set(
+                    posts.map(
+                        post =>
+                            post.user_id
+                    )
+                )
+            ];
+
+
+        /*
+        ==========================================
+        STEP 3
+        LOAD PROFILES
+        ==========================================
+        */
+
+        const {
+
+            data:profiles,
+            error:profileError
+
+        } =
+        await supabaseClient
+
+            .from("profiles")
+
+            .select(
+                "id, username, name, profile_url"
+            )
+
+            .in(
+                "id",
+                userIds
+            );
+
+
+        if(profileError){
+
+            console.error(
+                "Explore profiles error:",
+                profileError
+            );
+
+        }
+
+
+        /*
+        ==========================================
+        STEP 4
+        LOAD LIKES
+        ==========================================
+        */
+
+        const {
+
+            data:likes,
+            error:likesError
+
+        } =
+        await supabaseClient
+
+            .from("likes")
+
+            .select(
+                "id, post_id, user_id"
+            );
+
+
+        if(likesError){
+
+            console.error(
+                "Explore likes error:",
+                likesError
+            );
+
+        }
+
+
+        /*
+        ==========================================
+        STEP 5
+        LOAD COMMENTS
+        ==========================================
+        */
+
+        const {
+
+            data:comments,
+            error:commentsError
+
+        } =
+        await supabaseClient
+
+            .from("comments")
+
+            .select(
+                "id, post_id, user_id, comment, created_at"
+            );
+
+
+        if(commentsError){
+
+            console.error(
+                "Explore comments error:",
+                commentsError
+            );
+
+        }
+
+
+        /*
+        ==========================================
+        STEP 6
+        LOAD SHARES
+        ==========================================
+        */
+
+        const {
+
+            data:shares,
+            error:sharesError
+
+        } =
+        await supabaseClient
+
+            .from("shares")
+
+            .select(
+                "id, post_id, user_id"
+            );
+
+
+        if(sharesError){
+
+            console.error(
+                "Explore shares error:",
+                sharesError
+            );
+
+        }
+
+
+        /*
+        ==========================================
+        STEP 7
+        LOAD FOLLOWER DATA
+        ==========================================
+        */
+
+        const {
+
+            data:followerRows,
+            error:followerError
+
+        } =
+        await supabaseClient
+
+            .from("followers")
+
+            .select(
+                "follower_id, following_id"
+            );
+
+
+        if(followerError){
+
+            console.error(
+                "Follower data error:",
+                followerError
+            );
+
+        }
+
+
+        /*
+        ==========================================
+        CREATE COUNT MAPS
+        ==========================================
+        */
+
+        const likeMap =
+            new Map();
+
+        const commentMap =
+            new Map();
+
+        const shareMap =
+            new Map();
+
+        const followerMap =
+            new Map();
+
+
+        (likes || []).forEach(
+            function(row){
+
+                likeMap.set(
+                    row.post_id,
+                    (likeMap.get(
+                        row.post_id
+                    ) || 0) + 1
+                );
+
+            }
+        );
+
+
+        (comments || []).forEach(
+            function(row){
+
+                commentMap.set(
+                    row.post_id,
+                    (commentMap.get(
+                        row.post_id
+                    ) || 0) + 1
+                );
+
+            }
+        );
+
+
+        (shares || []).forEach(
+            function(row){
+
+                shareMap.set(
+                    row.post_id,
+                    (shareMap.get(
+                        row.post_id
+                    ) || 0) + 1
+                );
+
+            }
+        );
+
+
+        (followerRows || []).forEach(
+            function(row){
+
+                followerMap.set(
+                    row.following_id,
+                    (followerMap.get(
+                        row.following_id
+                    ) || 0) + 1
+                );
+
+            }
+        );
+
+
+        /*
+        ==========================================
+        CURRENT USER LIKES
+        ==========================================
+        */
+
+        const myLikeSet =
+            new Set();
+
+
+        (likes || []).forEach(
+            function(row){
+
+                if(
+                    row.user_id ===
+                    currentUser.id
+                ){
+
+                    myLikeSet.add(
+                        row.post_id
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+        ==========================================
+        CURRENT USER FOLLOWING
+        ==========================================
+        */
+
+        const followingSet =
+            new Set();
+
+
+        (followerRows || []).forEach(
+            function(row){
+
+                if(
+                    row.follower_id ===
+                    currentUser.id
+                ){
+
+                    followingSet.add(
+                        row.following_id
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+        ==========================================
+        BUILD EXPLORE OBJECTS
+        ==========================================
+        */
+
+        explorePosts =
+            posts.map(
+                function(post){
+
+                    const profile =
+                        profiles?.find(
+                            p =>
+                                p.id ===
+                                post.user_id
+                        );
+
+
+                    const likesCount =
+                        likeMap.get(
+                            post.id
+                        ) || 0;
+
+
+                    const commentsCount =
+                        commentMap.get(
+                            post.id
+                        ) || 0;
+
+
+                    const sharesCount =
+                        shareMap.get(
+                            post.id
+                        ) || 0;
+
+
+                    const followersCount =
+                        followerMap.get(
+                            post.user_id
+                        ) || 0;
+
+
+                    const createdAt =
+                        new Date(
+                            post.created_at
+                        );
+
+
+                    /*
+                    ==================================
+                    TRENDING SCORE
+                    ==================================
+
+                    Likes      = 1 point
+                    Comments   = 3 points
+                    Shares     = 5 points
+
+                    Followers also matter,
+                    but logarithm prevents
+                    huge accounts from completely
+                    dominating.
+
+                    Recent posts get a
+                    time-decay advantage.
+                    ==================================
+                    */
+
+                    const engagementScore =
+
+                        likesCount * 1 +
+
+                        commentsCount * 3 +
+
+                        sharesCount * 5;
+
+
+                    const followerStrength =
+
+                        Math.log10(
+                            followersCount + 1
+                        ) * 5;
+
+
+                    const hoursOld =
+
+                        Math.max(
+                            0,
+                            (
+                                Date.now() -
+                                createdAt.getTime()
+                            ) /
+                            (
+                                1000 *
+                                60 *
+                                60
+                            )
+                        );
+
+
+                    const freshnessScore =
+
+                        25 /
+                        Math.pow(
+                            hoursOld + 2,
+                            0.55
+                        );
+
+
+                    const trendingScore =
+
+                        engagementScore +
+
+                        followerStrength +
+
+                        freshnessScore;
+
+
+                    return {
+
+                        ...post,
+
+                        profile:
+                            profile,
+
+                        likes:
+                            likesCount,
+
+                        comments:
+                            commentsCount,
+
+                        shares:
+                            sharesCount,
+
+                        followers:
+                            followersCount,
+
+                        likedByMe:
+                            myLikeSet.has(
+                                post.id
+                            ),
+
+                        followedByMe:
+                            followingSet.has(
+                                post.user_id
+                            ),
+
+                        trendingScore:
+                            trendingScore
+
+                    };
+
+                }
+            );
+
+
+        /*
+        ==========================================
+        DEFAULT TRENDING ORDER
+        ==========================================
+        */
+
+        sortExplorePosts();
+
+        renderExplorePosts();
+
+    }
+    catch(error){
+
+        console.error(
+            "Explore loading error:",
+            error
+        );
+
+
+        explorePostsContainer.innerHTML = `
+
+            <div class="explore-empty">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                <div class="explore-empty-title">
+
+                    Unable to load Explore
+
+                </div>
+
+                <div class="explore-empty-text">
+
+                    ${escapeHtml(
+                        error.message ||
+                        "Please try again."
+                    )}
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   SORT EXPLORE
+========================================================= */
+
+function sortExplorePosts(){
+
+    if(
+        activeFilter ===
+        "latest"
+    ){
+
+        explorePosts.sort(
+            function(a,b){
+
+                return new Date(
+                    b.created_at
+                ) -
+                new Date(
+                    a.created_at
+                );
+
+            }
+        );
+
+        return;
+
+    }
+
+
+    if(
+        activeFilter ===
+        "popular"
+    ){
+
+        explorePosts.sort(
+            function(a,b){
+
+                const scoreA =
+
+                    a.likes +
+
+                    (a.comments * 3) +
+
+                    (a.shares * 5) +
+
+                    (
+                        Math.log10(
+                            a.followers + 1
+                        ) * 5
+                    );
+
+
+                const scoreB =
+
+                    b.likes +
+
+                    (b.comments * 3) +
+
+                    (b.shares * 5) +
+
+                    (
+                        Math.log10(
+                            b.followers + 1
+                        ) * 5
+                    );
+
+
+                return scoreB -
+                    scoreA;
+
+            }
+        );
+
+        return;
+
+    }
+
+
+    /*
+    ==========================================
+    TRENDING
+    ==========================================
+    */
+
+    explorePosts.sort(
+        function(a,b){
+
+            return b.trendingScore -
+                a.trendingScore;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER EXPLORE POSTS
+========================================================= */
+
+function renderExplorePosts(){
+
+    explorePostsContainer.innerHTML =
+        "";
+
+
+    if(
+        !explorePosts.length
+    ){
+
+        showExploreEmpty();
+
+        return;
+
+    }
+
+
+    /*
+    Show maximum 50 posts
+    on the Explore page.
+    */
+
+    explorePosts
+        .slice(
+            0,
+            50
+        )
+        .forEach(
+            function(post){
+
+                const card =
+                    createPostCard(
+                        post
+                    );
+
+                explorePostsContainer
+                    .appendChild(
+                        card
+                    );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   CREATE POST CARD
+========================================================= */
+
+function createPostCard(
+    post
+){
+
+    const article =
+        document.createElement(
+            "div"
+        );
+
+
+    article.className =
+        "post";
+
+
+    article.dataset.postId =
+        post.id;
+
+
+    const profile =
+        post.profile;
+
+
+    const username =
+        profile?.username ||
+        "user";
+
+
+    const name =
+        profile?.name ||
+        username;
+
+
+    const profileImage =
+        profile?.profile_url ||
+        "https://i.pravatar.cc/100";
+
+
+    const imageUrl =
+        post.image ||
+        post.image_url ||
+        post.photo_url ||
+        null;
+
+
+    const timeText =
+        formatTime(
+            post.created_at
+        );
+
+
+    const isOwnPost =
+        String(
+            post.user_id
+        ) ===
+        String(
+            currentUser.id
+        );
+
+
+    const trending =
+        activeFilter ===
+        "trending";
+
+
+    article.innerHTML = `
+
+        <div class="post-header">
+
+
+            <a
+                href="/profile/${encodeURIComponent(username)}"
+                class="post-profile-link">
+
+
+                <img
+                    src="${escapeHtml(profileImage)}"
+                    alt="Profile">
+
+
+            </a>
+
+
+            <div class="post-user-info">
+
+
+                <div class="post-user-row">
+
+
+                    <a
+                        href="/profile/${encodeURIComponent(username)}"
+                        class="post-user">
+
+                        ${escapeHtml(name)}
+
+                    </a>
+
+
+                    ${
+                        trending &&
+                        post.trendingScore > 15
+                        ?
+
+                        `
+
+                        <span class="trending-badge">
+
+                            🔥 Trending
+
+                        </span>
+
+                        `
+
+                        :
+
+                        ""
+
+                    }
+
+
+                </div>
+
+
+                <div class="post-username">
+
+                    @${escapeHtml(username)}
+
+                </div>
+
+
+                <div class="post-time">
+
+                    ${escapeHtml(timeText)}
+
+                </div>
+
+
+            </div>
+
+
+            ${
+                isOwnPost
+
+                ?
+
+                ""
+
+                :
+
+                `
+
+                <button
+                    class="
+                        explore-follow-btn
+                        ${
+                            post.followedByMe
+                            ? "unfollow"
+                            : ""
+                        }
+                    "
+                    data-follow-user-id="${escapeHtml(post.user_id)}">
+
+                    ${
+                        post.followedByMe
+                        ? "Following"
+                        : "Follow"
+                    }
+
+                </button>
+
+                `
+
+            }
+
+
+        </div>
+
+
+        ${
+            post.caption
+            ?
+
+            `
+
+            <div class="post-text">
+
+                ${escapeHtml(
+                    post.caption
+                )}
+
+            </div>
+
+            `
+
+            :
+
+            ""
+
+        }
+
+
+        ${
+            imageUrl
+
+            ?
+
+            `
+
+            <img
+                class="post-image"
+                src="${escapeHtml(imageUrl)}"
+                alt="Post image"
+                loading="lazy">
+
+            `
+
+            :
+
+            `
+
+            <div class="no-post-image">
+
+                <i class="far fa-file-lines"></i>
+
+                Text Post
+
+            </div>
+
+            `
+
+        }
+
+
+        <div class="post-actions">
+
+
+            <div
+                class="
+                    post-action
+                    like-btn
+                    ${
+                        post.likedByMe
+                        ? "liked"
+                        : ""
+                    }
+                "
+                data-post-id="${post.id}">
+
+
+                <i
+                    class="
+                        ${
+                            post.likedByMe
+                            ? "fas"
+                            : "far"
+                        }
+                        fa-thumbs-up
+                    ">
+                </i>
+
+
+                <span class="like-count">
+
+                    ${post.likes}
+
+                </span>
+
+            </div>
+
+
+            <div
+                class="post-action comment-btn"
+                data-post-id="${post.id}">
+
+
+                <i class="far fa-comment"></i>
+
+
+                <span class="comment-count">
+
+                    ${post.comments}
+
+                </span>
+
+            </div>
+
+
+            <div
+                class="post-action share-btn"
+                data-post-id="${post.id}">
+
+
+                <i class="far fa-share-square"></i>
+
+
+                <span class="share-count">
+
+                    ${post.shares}
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+    `;
+
+
+    return article;
+
+}
+
+
+/* =========================================================
+   FOLLOW / UNFOLLOW FROM EXPLORE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    async function(event){
+
+        const button =
+            event.target.closest(
+                ".explore-follow-btn"
+            );
+
+
+        if(!button){
+
+            return;
+
+        }
+
+
+        if(!currentUser){
+
+            alert(
+                "Please login first."
+            );
+
+            return;
+
+        }
+
+
+        const followingId =
+            button.dataset.followUserId;
+
+
+        if(
+            followingId ===
+            currentUser.id
+        ){
+
+            return;
+
+        }
+
+
+        if(
+            button.dataset.processing ===
+            "true"
+        ){
+
+            return;
+
+        }
+
+
+        button.dataset.processing =
+            "true";
+
+
+        button.disabled =
+            true;
+
+
+        try{
+
+            const isFollowing =
+                button.innerText
+                    .trim()
+                    .toLowerCase() ===
+                "following";
+
+
+            if(isFollowing){
+
+                /*
+                ==================================
+                UNFOLLOW
+                ==================================
+                */
+
+                const {
+                    error
+                } =
+                await supabaseClient
+
+                    .from("followers")
+
+                    .delete()
+
+                    .eq(
+                        "follower_id",
+                        currentUser.id
+                    )
+
+                    .eq(
+                        "following_id",
+                        followingId
+                    );
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                button.innerText =
+                    "Follow";
+
+
+                button.classList.remove(
+                    "unfollow"
+                );
+
+
+                /*
+                Update local state.
+                */
+
+                explorePosts.forEach(
+                    function(post){
+
+                        if(
+                            String(
+                                post.user_id
+                            ) ===
+                            String(
+                                followingId
+                            )
+                        ){
+
+                            post.followedByMe =
+                                false;
+
+                        }
+
+                    }
+                );
+
+            }
+            else{
+
+                /*
+                ==================================
+                FOLLOW
+                ==================================
+                */
+
+                const {
+                    error
+                } =
+                await supabaseClient
+
+                    .from("followers")
+
+                    .insert({
+
+                        follower_id:
+                            currentUser.id,
+
+                        following_id:
+                            followingId
+
+                    });
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                button.innerText =
+                    "Following";
+
+
+                button.classList.add(
+                    "unfollow"
+                );
+
+
+                /*
+                Update local state.
+                */
+
+                explorePosts.forEach(
+                    function(post){
+
+                        if(
+                            String(
+                                post.user_id
+                            ) ===
+                            String(
+                                followingId
+                            )
+                        ){
+
+                            post.followedByMe =
+                                true;
+
+                        }
+
+                    }
+                );
+
+
+                /*
+                ==================================
+                CREATE FOLLOW NOTIFICATION
+                ==================================
+                */
+
+                await createFollowNotification(
+                    followingId
+                );
+
+            }
+
+        }
+        catch(error){
+
+            console.error(
+                "Explore follow error:",
+                error
+            );
+
+
+            alert(
+                "Unable to update follow status: " +
+                error.message
+            );
+
+        }
+        finally{
+
+            button.disabled =
+                false;
+
+            button.dataset.processing =
+                "false";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FOLLOW NOTIFICATION
+========================================================= */
+
+async function createFollowNotification(
+    receiverId
+){
+
+    try{
+
+        if(
+            !currentUser ||
+            !receiverId
+        ){
+
+            return;
+
+        }
+
+
+        if(
+            receiverId ===
+            currentUser.id
+        ){
+
+            return;
+
+        }
+
+
+        const senderName =
+            currentProfile?.name ||
+            currentProfile?.username ||
+            "Someone";
+
+
+        const {
+
+            data,
+            error
+
+        } =
+        await supabaseClient
+
+            .from("notifications")
+
+            .insert({
+
+                user_id:
+                    receiverId,
+
+                sender_id:
+                    currentUser.id,
+
+                notification_type:
+                    "follow",
+
+                message:
+                    senderName +
+                    " started following you.",
+
+                is_read:
+                    false
+
+            })
+
+            .select()
+            .single();
+
+
+        if(error){
+
+            /*
+            Notification failure
+            must not break follow.
+            */
+
+            console.error(
+                "Follow notification error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "Follow notification created:",
+            data
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Follow notification exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LIKE / UNLIKE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    async function(event){
+
+        const button =
+            event.target.closest(
+                ".like-btn"
+            );
+
+
+        if(!button){
+
+            return;
+
+        }
+
+
+        if(!currentUser){
+
+            alert(
+                "Please login to like this post."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            button.classList.contains(
+                "processing"
+            )
+        ){
+
+            return;
+
+        }
+
+
+        const postId =
+            button.dataset.postId;
+
+
+        button.classList.add(
+            "processing"
+        );
+
+
+        try{
+
+            const {
+
+                data:existingLike,
+                error:checkError
+
+            } =
+            await supabaseClient
+
+                .from("likes")
+
+                .select("id")
+
+                .eq(
+                    "post_id",
+                    postId
+                )
+
+                .eq(
+                    "user_id",
+                    currentUser.id
+                )
+
+                .maybeSingle();
+
+
+            if(checkError){
+
+                throw checkError;
+
+            }
+
+
+            const post =
+                explorePosts.find(
+                    p =>
+                        String(
+                            p.id
+                        ) ===
+                        String(
+                            postId
+                        )
+                );
+
+
+            if(existingLike){
+
+                /*
+                ==================================
+                REMOVE LIKE
+                ==================================
+                */
+
+                const {
+                    error
+                } =
+                await supabaseClient
+
+                    .from("likes")
+
+                    .delete()
+
+                    .eq(
+                        "id",
+                        existingLike.id
+                    );
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                if(post){
+
+                    post.likedByMe =
+                        false;
+
+                    post.likes =
+                        Math.max(
+                            0,
+                            post.likes - 1
+                        );
+
+                }
+
+            }
+            else{
+
+                /*
+                ==================================
+                INSERT LIKE
+                ==================================
+                */
+
+                const {
+                    error
+                } =
+                await supabaseClient
+
+                    .from("likes")
+
+                    .insert({
+
+                        post_id:
+                            Number(
+                                postId
+                            ),
+
+                        user_id:
+                            currentUser.id
+
+                    });
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                if(post){
+
+                    post.likedByMe =
+                        true;
+
+                    post.likes++;
+
+                }
+
+
+                /*
+                ==================================
+                LIKE NOTIFICATION
+                ==================================
+                */
+
+                await createPostNotification(
+                    postId,
+                    "like"
+                );
+
+            }
+
+
+            updatePostCard(
+                postId
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Explore like error:",
+                error
+            );
+
+
+            alert(
+                "Unable to update Like: " +
+                error.message
+            );
+
+        }
+        finally{
+
+            button.classList.remove(
+                "processing"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CREATE POST NOTIFICATION
+========================================================= */
+
+async function createPostNotification(
+    postId,
+    type
+){
+
+    try{
+
+        const {
+
+            data:post,
+            error:postError
+
+        } =
+        await supabaseClient
+
+            .from("posts")
+
+            .select(
+                "user_id"
+            )
+
+            .eq(
+                "id",
+                Number(postId)
+            )
+
+            .maybeSingle();
+
+
+        if(
+            postError ||
+            !post?.user_id
+        ){
+
+            return;
+
+        }
+
+
+        if(
+            post.user_id ===
+            currentUser.id
+        ){
+
+            return;
+
+        }
+
+
+        const senderName =
+            currentProfile?.name ||
+            currentProfile?.username ||
+            "Someone";
+
+
+        let message =
+            "";
+
+
+        if(
+            type ===
+            "like"
+        ){
+
+            message =
+                senderName +
+                " liked your post.";
+
+        }
+        else if(
+            type ===
+            "comment"
+        ){
+
+            message =
+                senderName +
+                " commented on your post.";
+
+        }
+        else if(
+            type ===
+            "share"
+        ){
+
+            message =
+                senderName +
+                " shared your post.";
+
+        }
+
+
+        const {
+            error
+        } =
+        await supabaseClient
+
+            .from("notifications")
+
+            .insert({
+
+                user_id:
+                    post.user_id,
+
+                sender_id:
+                    currentUser.id,
+
+                notification_type:
+                    type,
+
+                post_id:
+                    Number(postId),
+
+                message:
+                    message,
+
+                is_read:
+                    false
+
+            });
+
+
+        if(error){
+
+            console.error(
+                "Post notification error:",
+                error
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Post notification exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   COMMENTS
+========================================================= */
+
+
+/* ==========================================
+   OPEN COMMENT SHEET
+========================================== */
+
+document.addEventListener(
+    "click",
+    async function(event){
+
+        const button =
+            event.target.closest(
+                ".comment-btn"
+            );
+
+
+        if(!button){
+
+            return;
+
+        }
+
+
+        activeCommentPostId =
+            button.dataset.postId;
+
+
+        commentOverlay.classList.add(
+            "active"
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+
+        commentInput.value =
+            "";
+
+
+        await loadComments(
+            activeCommentPostId
+        );
+
+
+        setTimeout(
+            function(){
+
+                commentInput.focus();
+
+            },
+            300
+        );
+
+    }
+);
+
+
+/* ==========================================
+   LOAD COMMENTS
+========================================== */
+
+async function loadComments(
+    postId
+){
+
+    commentSheetList.innerHTML = `
+
+        <div class="no-comments">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <div class="no-comments-title">
+
+                Loading comments...
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    const {
+
+        data,
+        error
+
+    } =
+    await supabaseClient
+
+        .from("comments")
+
+        .select(
+            "id, comment, created_at, user_id"
+        )
+
+        .eq(
+            "post_id",
+            Number(postId)
+        )
+
+        .order(
+            "created_at",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Comments loading error:",
+            error
+        );
+
+
+        commentSheetList.innerHTML = `
+
+            <div class="no-comments">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                <div class="no-comments-title">
+
+                    Unable to load comments
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    sheetCommentCount.innerText =
+        data.length;
+
+
+    if(
+        !data.length
+    ){
+
+        commentSheetList.innerHTML = `
+
+            <div class="no-comments">
+
+                <i class="far fa-comment-dots"></i>
+
+                <div class="no-comments-title">
+
+                    No comments yet
+
+                </div>
+
+                <div class="no-comments-text">
+
+                    Be the first to comment
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const userIds =
+        [
+            ...new Set(
+                data.map(
+                    comment =>
+                        comment.user_id
+                )
+            )
+        ];
+
+
+    const {
+
+        data:profiles,
+        error:profileError
+
+    } =
+    await supabaseClient
+
+        .from("profiles")
+
+        .select(
+            "id, username, name, profile_url"
+        )
+
+        .in(
+            "id",
+            userIds
+        );
+
+
+    if(profileError){
+
+        console.error(
+            "Comment profile error:",
+            profileError
+        );
+
+    }
+
+
+    commentSheetList.innerHTML =
+        "";
+
+
+    data.forEach(
+        function(comment){
+
+            const profile =
+                profiles?.find(
+                    p =>
+                        p.id ===
+                        comment.user_id
+                );
+
+
+            const name =
+                profile?.name ||
+                profile?.username ||
+                "User";
+
+
+            const avatar =
+                profile?.profile_url ||
+                "https://i.pravatar.cc/100";
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "comment-item";
+
+
+            item.innerHTML = `
+
+                <a
+                    href="/profile/${encodeURIComponent(
+                        profile?.username ||
+                        "user"
+                    )}">
+
+                    <img
+                        class="comment-avatar"
+                        src="${escapeHtml(avatar)}"
+                        alt="Profile">
+
+                </a>
+
+
+                <div class="comment-content">
+
+                    <div class="comment-user">
+
+                        ${escapeHtml(name)}
+
+                    </div>
+
+
+                    <div class="comment-text">
+
+                        ${escapeHtml(
+                            comment.comment
+                        )}
+
+                    </div>
+
+
+                    ${
+                        String(
+                            comment.user_id
+                        ) ===
+                        String(
+                            currentUser.id
+                        )
+
+                        ?
+
+                        `
+
+                        <button
+                            class="comment-delete"
+                            data-comment-id="${comment.id}">
+
+                            <i class="fas fa-trash"></i>
+
+                            Delete
+
+                        </button>
+
+                        `
+
+                        :
+
+                        ""
+
+                    }
+
+                </div>
+
+            `;
+
+
+            commentSheetList.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   DELETE OWN COMMENT
+========================================== */
+
+document.addEventListener(
+    "click",
+    async function(event){
+
+        const button =
+            event.target.closest(
+                ".comment-delete"
+            );
+
+
+        if(!button){
+
+            return;
+
+        }
+
+
+        const commentId =
+            button.dataset.commentId;
+
+
+        if(
+            !confirm(
+                "Delete this comment?"
+            )
+        ){
+
+            return;
+
+        }
+
+
+        button.disabled =
+            true;
+
+
+        try{
+
+            const {
+                error
+            } =
+            await supabaseClient
+
+                .from("comments")
+
+                .delete()
+
+                .eq(
+                    "id",
+                    commentId
+                )
+
+                .eq(
+                    "user_id",
+                    currentUser.id
+                );
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            /*
+            Update local count.
+            */
+
+            const post =
+                explorePosts.find(
+                    p =>
+                        String(
+                            p.id
+                        ) ===
+                        String(
+                            activeCommentPostId
+                        )
+                );
+
+
+            if(post){
+
+                post.comments =
+                    Math.max(
+                        0,
+                        post.comments - 1
+                    );
+
+            }
+
+
+            await loadComments(
+                activeCommentPostId
+            );
+
+
+            updatePostCard(
+                activeCommentPostId
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Comment delete error:",
+                error
+            );
+
+
+            alert(
+                "Unable to delete comment: " +
+                error.message
+            );
+
+            button.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   SUBMIT COMMENT
+========================================== */
+
+async function submitComment(){
+
+    if(!currentUser){
+
+        alert(
+            "Please login to comment."
+        );
+
+        return;
+
+    }
+
+
+    if(!activeCommentPostId){
+
+        return;
+
+    }
+
+
+    const text =
+        commentInput.value.trim();
+
+
+    if(!text){
+
+        return;
+
+    }
+
+
+    commentSubmit.disabled =
+        true;
+
+
+    try{
+
+        const {
+
+            data,
+            error
+
+        } =
+        await supabaseClient
+
+            .from("comments")
+
+            .insert({
+
+                post_id:
+                    Number(
+                        activeCommentPostId
+                    ),
+
+                user_id:
+                    currentUser.id,
+
+                comment:
+                    text
+
+            })
+
+            .select()
+            .single();
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        console.log(
+            "Explore comment created:",
+            data
+        );
+
+
+        const post =
+            explorePosts.find(
+                p =>
+                    String(
+                        p.id
+                    ) ===
+                    String(
+                        activeCommentPostId
+                    )
+            );
+
+
+        if(post){
+
+            post.comments++;
+
+        }
+
+
+        /*
+        Comment notification.
+        */
+
+        await createPostNotification(
+            activeCommentPostId,
+            "comment"
+        );
+
+
+        commentInput.value =
+            "";
+
+
+        await loadComments(
+            activeCommentPostId
+        );
+
+
+        updatePostCard(
+            activeCommentPostId
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Comment error:",
+            error
+        );
+
+
+        alert(
+            "Unable to add comment: " +
+            error.message
+        );
+
+    }
+    finally{
+
+        commentSubmit.disabled =
+            false;
+
+    }
+
+}
+
+
+commentSubmit.addEventListener(
+    "click",
+    submitComment
+);
+
+
+commentInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            event.preventDefault();
+
+            submitComment();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   CLOSE COMMENTS
+========================================== */
+
+function closeCommentSheet(){
+
+    commentOverlay.classList.remove(
+        "active"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+
+    activeCommentPostId =
+        null;
+
+}
+
+
+document.getElementById(
+    "commentClose"
+).addEventListener(
+    "click",
+    closeCommentSheet
+);
+
+
+commentOverlay.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            commentOverlay
+        ){
+
+            closeCommentSheet();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SHARE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    async function(event){
+
+        const button =
+            event.target.closest(
+                ".share-btn"
+            );
+
+
+        if(!button){
+
+            return;
+
+        }
+
+
+        if(!currentUser){
+
+            alert(
+                "Please login to share this post."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            button.classList.contains(
+                "processing"
+            )
+        ){
+
+            return;
+
+        }
+
+
+        button.classList.add(
+            "processing"
+        );
+
+
+        const postId =
+            button.dataset.postId;
+
+
+        const shareUrl =
+            "https://pathukkalam.in/post/" +
+            postId;
+
+
+        try{
+
+            let shareCompleted =
+                false;
+
+
+            /*
+            ==================================
+            NATIVE SHARE
+            ==================================
+            */
+
+            if(
+                navigator.share
+            ){
+
+                try{
+
+                    await navigator.share({
+
+                        title:
+                            "Pathukkalam",
+
+                        text:
+                            "Check out this post on Pathukkalam 🚀",
+
+                        url:
+                            shareUrl
+
+                    });
+
+
+                    shareCompleted =
+                        true;
+
+                }
+                catch(error){
+
+                    if(
+                        error.name ===
+                        "AbortError"
+                    ){
+
+                        button.classList.remove(
+                            "processing"
+                        );
+
+                        return;
+
+                    }
+
+                }
+
+            }
+
+
+            /*
+            ==================================
+            CLIPBOARD FALLBACK
+            ==================================
+            */
+
+            if(
+                !shareCompleted
+            ){
+
+                await navigator
+                    .clipboard
+                    .writeText(
+                        shareUrl
+                    );
+
+
+                shareCompleted =
+                    true;
+
+
+                alert(
+                    "Post link copied! 🔗"
+                );
+
+            }
+
+
+            /*
+            ==================================
+            RECORD SHARE
+            ==================================
+            */
+
+            if(
+                shareCompleted
+            ){
+
+                const {
+
+                    data,
+                    error
+
+                } =
+                await supabaseClient
+
+                    .from("shares")
+
+                    .insert({
+
+                        post_id:
+                            Number(
+                                postId
+                            ),
+
+                        user_id:
+                            currentUser.id
+
+                    })
+
+                    .select()
+                    .single();
+
+
+                if(error){
+
+                    console.error(
+                        "Share database error:",
+                        error
+                    );
+
+                }
+                else{
+
+                    const post =
+                        explorePosts.find(
+                            p =>
+                                String(
+                                    p.id
+                                ) ===
+                                String(
+                                    postId
+                                )
+                        );
+
+
+                    if(post){
+
+                        post.shares++;
+
+                    }
+
+
+                    /*
+                    Share notification.
+                    */
+
+                    await createPostNotification(
+                        postId,
+                        "share"
+                    );
+
+
+                    updatePostCard(
+                        postId
+                    );
+
+                }
+
+            }
+
+        }
+        catch(error){
+
+            console.error(
+                "Explore share error:",
+                error
+            );
+
+
+            alert(
+                "Unable to share this post."
+            );
+
+        }
+        finally{
+
+            button.classList.remove(
+                "processing"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   UPDATE POST CARD COUNTS / LIKE STATE
+========================================================= */
+
+function updatePostCard(
+    postId
+){
+
+    const post =
+        explorePosts.find(
+            p =>
+                String(
+                    p.id
+                ) ===
+                String(
+                    postId
+                )
+        );
+
+
+    if(!post){
+
+        return;
+
+    }
+
+
+    const card =
+        document.querySelector(
+            `.post[data-post-id="${postId}"]`
+        );
+
+
+    if(!card){
+
+        return;
+
+    }
+
+
+    const likeButton =
+        card.querySelector(
+            ".like-btn"
+        );
+
+
+    const likeCount =
+        card.querySelector(
+            ".like-count"
+        );
+
+
+    const commentCount =
+        card.querySelector(
+            ".comment-count"
+        );
+
+
+    const shareCount =
+        card.querySelector(
+            ".share-count"
+        );
+
+
+    if(likeCount){
+
+        likeCount.innerText =
+            post.likes;
+
+    }
+
+
+    if(commentCount){
+
+        commentCount.innerText =
+            post.comments;
+
+    }
+
+
+    if(shareCount){
+
+        shareCount.innerText =
+            post.shares;
+
+    }
+
+
+    if(likeButton){
+
+        if(
+            post.likedByMe
+        ){
+
+            likeButton.classList.add(
+                "liked"
+            );
+
+            const icon =
+                likeButton.querySelector(
+                    "i"
+                );
+
+            if(icon){
+
+                icon.className =
+                    "fas fa-thumbs-up";
+
+            }
+
+        }
+        else{
+
+            likeButton.classList.remove(
+                "liked"
+            );
+
+            const icon =
+                likeButton.querySelector(
+                    "i"
+                );
+
+            if(icon){
+
+                icon.className =
+                    "far fa-thumbs-up";
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   FILTER BUTTONS
+========================================================= */
+
+document.querySelectorAll(
+    ".explore-filter"
+).forEach(
+    function(button){
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                document.querySelectorAll(
+                    ".explore-filter"
+                ).forEach(
+                    function(item){
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                activeFilter =
+                    button.dataset.filter;
+
+
+                sortExplorePosts();
+
+                renderExplorePosts();
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TIME FORMAT
+========================================================= */
+
+function formatTime(
+    value
+){
+
+    if(!value){
+
+        return "Recently";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "Recently";
+
+    }
+
+
+    const seconds =
+        Math.floor(
+            (
+                Date.now() -
+                date.getTime()
+            ) /
+            1000
+        );
+
+
+    if(
+        seconds < 60
+    ){
+
+        return "Just now";
+
+    }
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    if(
+        minutes < 60
+    ){
+
+        return (
+            minutes +
+            "m ago"
+        );
+
+    }
+
+
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
+
+
+    if(
+        hours < 24
+    ){
+
+        return (
+            hours +
+            "h ago"
+        );
+
+    }
+
+
+    const days =
+        Math.floor(
+            hours / 24
+        );
+
+
+    if(
+        days < 7
+    ){
+
+        return (
+            days +
+            "d ago"
+        );
+
+    }
+
+
+    return date.toLocaleDateString();
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function showExploreLoading(){
+
+    explorePostsContainer.innerHTML = `
+
+        <div class="explore-loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            Discovering trending posts...
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+function showExploreEmpty(){
+
+    explorePostsContainer.innerHTML = `
+
+        <div class="explore-empty">
+
+            <i class="fas fa-compass"></i>
+
+            <div class="explore-empty-title">
+
+                Nothing to explore yet
+
+            </div>
+
+            <div class="explore-empty-text">
+
+                New posts will appear here as
+                Pathukkalam grows.
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   HTML SAFETY
+========================================================= */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+async function initializeExplore(){
+
+    await loadCurrentUser();
+
+
+    if(!currentUser){
+
+        return;
+
+    }
+
+
+    await loadExplorePosts();
+
+}
+
+
+initializeExplore();
+
+</script>
+
+
 </body>
+
 </html>
