@@ -1255,25 +1255,22 @@ body{
 
 .search-modal{
     display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.35);
-    z-index:12000;
-    align-items:flex-start;
-    justify-content:center;
-    padding:75px 15px 20px;
+    position:relative;
+    width:100%;
+    background:white;
+    border-bottom:1px solid #ddd;
+    z-index:900;
 }
 
 .search-modal.active{
-    display:flex;
+    display:block;
 }
 
 .search-box{
     width:100%;
-    max-width:650px;
+    max-width:700px;
+    margin:0 auto;
     background:white;
-    border-radius:16px;
-    box-shadow:0 10px 35px rgba(0,0,0,0.2);
     overflow:hidden;
 }
 
@@ -1361,9 +1358,9 @@ body{
 }
 
 .search-results{
-    max-height:70vh;
+    max-height:65vh;
     overflow-y:auto;
-    padding:8px;
+    padding:8px 12px 14px;
 }
 
 .search-empty{
@@ -5126,8 +5123,6 @@ function openSearch(){
 
     searchModal.classList.add("active");
 
-    document.body.style.overflow = "hidden";
-
     searchInput.value = "";
 
     searchFilterBar.style.display = "none";
@@ -5158,9 +5153,11 @@ function closeSearch(){
 
     searchModal.classList.remove("active");
 
-    document.body.style.overflow = "";
-
     searchInput.value = "";
+
+    searchFilterBar.style.display = "none";
+
+    searchResults.innerHTML = "";
 
 }
 
@@ -5189,18 +5186,8 @@ searchCloseBtn.addEventListener(
 );
 
 
-searchModal.addEventListener(
-    "click",
-    function(event){
-
-        if(event.target === searchModal){
-
-            closeSearch();
-
-        }
-
-    }
-);
+/* Search is now an inline section below the header.
+   No popup/backdrop is used. */
 
 
 /* ==========================================
@@ -5236,8 +5223,8 @@ searchSubmitBtn.addEventListener(
 
 
 /* ==========================================
-   PERFORM SEARCH
-   ONLY PEOPLE CURRENT USER FOLLOWS
+   PERFORM GLOBAL SEARCH
+   SEARCHES THE ENTIRE PATHUKKALAM DATABASE
 ========================================== */
 
 async function performSearch(){
@@ -5285,7 +5272,7 @@ async function performSearch(){
 
             <i class="fas fa-spinner fa-spin"></i>
 
-            &nbsp; Searching...
+            &nbsp; Searching all Pathukkalam...
 
         </div>
 
@@ -5296,102 +5283,111 @@ async function performSearch(){
         /*
         ======================================
         STEP 1
-        GET PEOPLE CURRENT USER FOLLOWS
+        SEARCH ALL PROFILES GLOBALLY
+
+        Example:
+        "Excel" will match:
+        Excel Kumar
+        My Excel World
+        excel_user
         ======================================
         */
 
         const {
-            data:followingRows,
-            error:followingError
-        } =
-        await supabaseClient
-            .from("followers")
-            .select("following_id")
-            .eq(
-                "follower_id",
-                currentUser.id
-            );
-
-        if(followingError){
-            throw followingError;
-        }
-
-        const followingIds =
-            (followingRows || [])
-                .map(function(row){
-                    return row.following_id;
-                })
-                .filter(Boolean);
-
-        if(!followingIds.length){
-
-            searchResultPeople = [];
-            searchResultPosts = [];
-            renderSearchResults();
-            return;
-
-        }
-
-        /*
-        ======================================
-        STEP 2
-        SEARCH FOLLOWED PEOPLE
-        ======================================
-        */
-
-        const escapedQuery =
-            query
-                .replace(/,/g," ")
-                .trim();
-
-        const {
-            data:people,
-            error:peopleError
+            data:namePeople,
+            error:nameError
         } =
         await supabaseClient
             .from("profiles")
             .select(
                 "id, username, name, profile_url"
             )
-            .in(
-                "id",
-                followingIds
+            .ilike(
+                "name",
+                "%" + query + "%"
             )
-            .or(
-                "name.ilike.%" +
-                escapedQuery +
-                "%,username.ilike.%" +
-                escapedQuery +
-                "%"
-            )
-            .limit(30);
+            .limit(50);
 
-        if(peopleError){
-            throw peopleError;
+        if(nameError){
+            throw nameError;
         }
 
-        searchResultPeople =
-            people || [];
+
+        const {
+            data:usernamePeople,
+            error:usernameError
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select(
+                "id, username, name, profile_url"
+            )
+            .ilike(
+                "username",
+                "%" + query + "%"
+            )
+            .limit(50);
+
+        if(usernameError){
+            throw usernameError;
+        }
+
 
         /*
         ======================================
-        STEP 3
-        SEARCH POSTS FROM FOLLOWED PEOPLE
+        MERGE PEOPLE RESULTS
+        REMOVE DUPLICATES
+        ======================================
+        */
+
+        const peopleMap = new Map();
+
+        [
+            ...(namePeople || []),
+            ...(usernamePeople || [])
+        ]
+        .forEach(function(person){
+
+            if(
+                person &&
+                person.id
+            ){
+
+                peopleMap.set(
+                    person.id,
+                    person
+                );
+
+            }
+
+        });
+
+        searchResultPeople =
+            [...peopleMap.values()]
+                .slice(0,50);
+
+
+        /*
+        ======================================
+        STEP 2
+        SEARCH ALL POSTS GLOBALLY
+
+        Example:
+        "Excel" matches:
+        "I am teaching Excel..."
+        "Excel automation..."
+        "Advanced Excel..."
         ======================================
         */
 
         const {
-            data:posts,
+            data:postRows,
             error:postsError
         } =
         await supabaseClient
             .from("posts")
             .select(
                 "id, user_id, caption, image, created_at"
-            )
-            .in(
-                "user_id",
-                followingIds
             )
             .ilike(
                 "caption",
@@ -5403,27 +5399,28 @@ async function performSearch(){
                     ascending:false
                 }
             )
-            .limit(50);
+            .limit(100);
 
         if(postsError){
             throw postsError;
         }
 
-        const postRows =
-            posts || [];
 
         /*
         ======================================
-        GET PROFILES FOR POST RESULTS
+        STEP 3
+        LOAD POST AUTHORS
         ======================================
         */
 
         const postUserIds =
             [
                 ...new Set(
-                    postRows.map(function(post){
-                        return post.user_id;
-                    })
+                    (postRows || [])
+                        .map(function(post){
+                            return post.user_id;
+                        })
+                        .filter(Boolean)
                 )
             ];
 
@@ -5454,33 +5451,125 @@ async function performSearch(){
 
         }
 
+
+        /*
+        ======================================
+        BUILD POST RESULTS
+        ======================================
+        */
+
         searchResultPosts =
-            postRows.map(function(post){
+            (postRows || [])
+                .map(function(post){
 
-                const profile =
-                    postProfiles.find(function(item){
-                        return item.id === post.user_id;
-                    });
+                    const profile =
+                        postProfiles.find(
+                            function(item){
+                                return item.id === post.user_id;
+                            }
+                        );
 
-                return {
+                    return {
 
-                    ...post,
+                        ...post,
 
-                    username:
-                        profile?.username || "user",
+                        username:
+                            profile?.username ||
+                            "user",
 
-                    name:
-                        profile?.name ||
-                        profile?.username ||
-                        "User",
+                        name:
+                            profile?.name ||
+                            profile?.username ||
+                            "User",
 
-                    profile_url:
-                        profile?.profile_url ||
-                        "https://i.pravatar.cc/100"
+                        profile_url:
+                            profile?.profile_url ||
+                            "https://i.pravatar.cc/100"
 
-                };
+                    };
 
-            });
+                });
+
+
+        /*
+        ======================================
+        STEP 4
+        GET FOLLOW STATUS FOR SEARCH PEOPLE
+
+        This is also GLOBAL.
+        It does NOT limit the search.
+        It only tells us whether the
+        current user already follows them.
+        ======================================
+        */
+
+        const peopleIds =
+            searchResultPeople
+                .map(function(person){
+                    return person.id;
+                })
+                .filter(function(id){
+                    return id &&
+                           id !== currentUser.id;
+                });
+
+        let followedIds = new Set();
+
+        if(peopleIds.length){
+
+            const {
+                data:followRows,
+                error:followError
+            } =
+            await supabaseClient
+                .from("followers")
+                .select(
+                    "following_id"
+                )
+                .eq(
+                    "follower_id",
+                    currentUser.id
+                )
+                .in(
+                    "following_id",
+                    peopleIds
+                );
+
+            if(followError){
+                throw followError;
+            }
+
+            followedIds =
+                new Set(
+                    (followRows || [])
+                        .map(function(row){
+                            return row.following_id;
+                        })
+                );
+
+        }
+
+
+        searchResultPeople =
+            searchResultPeople.map(
+                function(person){
+
+                    return {
+
+                        ...person,
+
+                        is_following:
+                            person.id === currentUser.id
+                                ? false
+                                : followedIds.has(
+                                    person.id
+                                )
+
+                    };
+
+                }
+            );
+
 
         renderSearchResults();
 
@@ -5488,7 +5577,7 @@ async function performSearch(){
     catch(error){
 
         console.error(
-            "Search error:",
+            "Global search error:",
             error
         );
 
@@ -5501,7 +5590,14 @@ async function performSearch(){
 
                 <i class="fas fa-circle-exclamation"></i>
 
-                Unable to search right now.
+                Unable to search right now.<br>
+
+                <small>
+                    ${escapeHtml(
+                        error.message ||
+                        "Please try again."
+                    )}
+                </small>
 
             </div>
 
@@ -5702,12 +5798,26 @@ function renderSearchPerson(person){
 
         </div>
 
-        <button
-            type="button"
-            class="search-follow-btn"
-            data-search-user-id="${escapeHtml(person.id)}">
-            Following
-        </button>
+        ${
+            person.id === currentUser?.id
+                ? ""
+                : `
+                    <button
+                        type="button"
+                        class="search-follow-btn ${
+                            person.is_following
+                                ? "following"
+                                : ""
+                        }"
+                        data-search-user-id="${escapeHtml(person.id)}">
+                        ${
+                            person.is_following
+                                ? "Following"
+                                : "Follow"
+                        }
+                    </button>
+                  `
+        }
 
     `;
 
@@ -5716,22 +5826,24 @@ function renderSearchPerson(person){
             ".search-follow-btn"
         );
 
-    button.classList.add("following");
+    if(button){
 
-    button.addEventListener(
-        "click",
-        async function(event){
+        button.addEventListener(
+            "click",
+            async function(event){
 
-            event.preventDefault();
-            event.stopPropagation();
+                event.preventDefault();
+                event.stopPropagation();
 
-            await toggleSearchFollow(
-                person,
-                button
-            );
+                await toggleSearchFollow(
+                    person,
+                    button
+                );
 
-        }
-    );
+            }
+        );
+
+    }
 
     row.addEventListener(
         "click",
@@ -5829,6 +5941,8 @@ async function toggleSearchFollow(
                 "following"
             );
 
+            person.is_following = false;
+
         }
         else{
 
@@ -5854,6 +5968,8 @@ async function toggleSearchFollow(
             button.classList.add(
                 "following"
             );
+
+            person.is_following = true;
 
             /*
             Notification only after successful
