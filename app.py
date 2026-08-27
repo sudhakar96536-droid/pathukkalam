@@ -108,7 +108,7 @@ def home():
 
 @app.route('/explore')
 def explore():
-    return render_template('explore.html', posts=posts)
+    return render_template('explore.html')
 
 @app.route('/new-post')
 def new_post():
