@@ -15,25 +15,33 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 <style>
 
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial;
+    font-family:Arial,sans-serif;
 }
 
 body{
     background:#f0f2f5;
-    padding-bottom:120px;
+    padding-bottom:110px;
+    color:#222;
 }
 
-/* HEADER */
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
     background:#1877f2;
     color:white;
-    padding:18px;
-    font-size:24px;
+    padding:16px;
+    font-size:22px;
     font-weight:bold;
     text-align:center;
     position:sticky;
@@ -41,77 +49,97 @@ body{
     z-index:1000;
 }
 
-/* SEARCH */
+
+/* =========================================================
+   SEARCH
+========================================================= */
 
 .search-box{
-    padding:15px;
+    padding:12px;
     background:white;
     position:sticky;
-    top:68px;
+    top:58px;
     z-index:999;
+    border-bottom:1px solid #eee;
+}
+
+.search-wrapper{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#f0f2f5;
+    border-radius:14px;
+    padding:0 13px;
+}
+
+.search-wrapper i{
+    color:#777;
 }
 
 .search-box input{
     width:100%;
-    padding:14px;
+    padding:13px 5px;
     border:none;
-    background:#f0f2f5;
-    border-radius:12px;
+    background:transparent;
     outline:none;
     font-size:15px;
 }
 
-/* TOP ACTION BUTTONS */
+
+/* =========================================================
+   TOP ACTION BUTTONS
+========================================================= */
 
 .top-action-buttons{
     display:flex;
     gap:10px;
-    padding:0 15px;
+    padding:0 12px;
+}
+
+.show-form-btn,
+.my-request-btn{
+    flex:1;
+    padding:14px 8px;
+    border:none;
+    color:white;
+    border-radius:14px;
+    font-size:14px;
+    font-weight:bold;
+    margin-top:10px;
+    cursor:pointer;
 }
 
 .show-form-btn{
-    flex:1;
-    width:100%;
-    padding:15px;
-    border:none;
     background:#1877f2;
-    color:white;
-    border-radius:14px;
-    font-size:16px;
-    font-weight:bold;
-    margin-top:10px;
-    cursor:pointer;
 }
 
 .my-request-btn{
-    flex:1;
-    width:100%;
-    padding:15px;
-    border:none;
     background:#00a86b;
-    color:white;
-    border-radius:14px;
-    font-size:16px;
-    font-weight:bold;
-    margin-top:10px;
-    cursor:pointer;
 }
 
-/* NEW RIDE FORM */
+.show-form-btn:active,
+.my-request-btn:active{
+    transform:scale(.98);
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
 
 .new-ride-form{
     background:white;
-    margin:15px;
+    margin:15px 12px;
     padding:18px;
     border-radius:18px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
     display:none;
 }
 
 .form-title{
     font-size:20px;
     font-weight:bold;
-    margin-bottom:15px;
+    margin-bottom:18px;
     color:#1877f2;
 }
 
@@ -122,7 +150,7 @@ body{
 .form-group label{
     display:block;
     margin-bottom:6px;
-    font-size:14px;
+    font-size:13px;
     font-weight:bold;
     color:#333;
 }
@@ -138,7 +166,10 @@ body{
     font-size:14px;
 }
 
-/* BUTTONS */
+.form-group input:focus,
+.form-group select:focus{
+    outline:2px solid rgba(24,119,242,.15);
+}
 
 .btn-group{
     display:flex;
@@ -146,153 +177,428 @@ body{
     margin-top:15px;
 }
 
-.post-btn{
-    flex:1;
-    padding:14px;
-    border:none;
-    background:#1877f2;
-    color:white;
-    border-radius:12px;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
+.post-btn,
 .draft-btn{
     flex:1;
     padding:14px;
     border:none;
-    background:#ddd;
-    color:#333;
     border-radius:12px;
     font-size:15px;
     font-weight:bold;
     cursor:pointer;
 }
 
-/* CARD */
+.post-btn{
+    background:#1877f2;
+    color:white;
+}
+
+.draft-btn{
+    background:#ddd;
+    color:#333;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 14px 5px;
+}
+
+.section-title{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.refresh-btn{
+    border:none;
+    background:white;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    cursor:pointer;
+    color:#1877f2;
+    box-shadow:0 2px 5px rgba(0,0,0,.08);
+}
+
+
+/* =========================================================
+   RIDE CARD
+========================================================= */
 
 .ride-card{
     background:white;
-    margin:15px;
-    padding:18px;
+    margin:12px;
+    padding:17px;
     border-radius:18px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 .profile{
     display:flex;
     align-items:center;
-    margin-bottom:15px;
+    margin-bottom:14px;
 }
 
-.profile img{
-    width:65px;
-    height:65px;
+.profile-avatar{
+    width:58px;
+    height:58px;
     border-radius:50%;
     margin-right:12px;
     object-fit:cover;
+    flex-shrink:0;
+}
+
+.profile-info{
+    min-width:0;
+    flex:1;
 }
 
 .name{
-    font-size:18px;
+    font-size:17px;
     font-weight:bold;
+}
+
+.username{
+    color:#888;
+    font-size:12px;
+    margin-top:3px;
 }
 
 .details{
     color:#666;
     margin-top:4px;
-    font-size:14px;
+    font-size:13px;
 }
 
-/* TAGS */
+
+/* =========================================================
+   TAGS
+========================================================= */
+
+.tags{
+    margin-top:8px;
+}
+
+.gender,
+.vehicle{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:bold;
+    margin-right:4px;
+    margin-top:4px;
+}
 
 .gender{
-    margin-top:8px;
-    display:inline-block;
     background:#e8f1ff;
     color:#1877f2;
-    padding:7px 12px;
-    border-radius:30px;
-    font-size:13px;
-    font-weight:bold;
 }
 
 .vehicle{
-    margin-top:8px;
-    margin-left:6px;
-    display:inline-block;
     background:#fff4e5;
-    color:#ff8800;
-    padding:7px 12px;
-    border-radius:30px;
-    font-size:13px;
-    font-weight:bold;
+    color:#d66f00;
 }
 
-/* ROUTE */
+
+/* =========================================================
+   ROUTE
+========================================================= */
 
 .route{
     background:#f5f7ff;
-    padding:12px;
+    padding:13px;
     border-radius:12px;
     margin-top:10px;
 }
 
 .city{
-    font-size:17px;
+    font-size:15px;
     font-weight:bold;
     color:#1877f2;
-    margin-bottom:8px;
+    margin-bottom:7px;
 }
 
-.bus-stop{
+.route-line{
     font-size:15px;
     color:#333;
-    line-height:1.6;
     font-weight:bold;
+    line-height:1.5;
 }
 
 .time{
     margin-top:12px;
-    font-size:15px;
+    font-size:14px;
     color:#444;
     font-weight:bold;
 }
 
+
+/* =========================================================
+   RIDE OWNER
+========================================================= */
+
+.ride-owner-label{
+    font-size:11px;
+    color:#1877f2;
+    background:#e8f1ff;
+    padding:4px 7px;
+    border-radius:10px;
+}
+
+
+/* =========================================================
+   REQUEST BUTTON
+========================================================= */
+
 .request-btn{
     width:100%;
-    padding:14px;
+    padding:13px;
     border:none;
     background:#1877f2;
     color:white;
     border-radius:12px;
-    margin-top:16px;
-    font-size:16px;
+    margin-top:15px;
+    font-size:15px;
     font-weight:bold;
     cursor:pointer;
 }
 
-/* REQUEST SECTION */
+.request-btn.requested{
+    background:#00a86b;
+}
+
+.request-btn.own{
+    background:#ddd;
+    color:#555;
+}
+
+.request-btn:disabled{
+    opacity:.7;
+    cursor:not-allowed;
+}
+
+
+/* =========================================================
+   REQUEST STATUS
+========================================================= */
+
+.request-status{
+    margin-top:10px;
+    padding:9px;
+    border-radius:10px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.status-pending{
+    background:#fff4d6;
+    color:#a66b00;
+}
+
+.status-accepted{
+    background:#dff7e9;
+    color:#00834f;
+}
+
+.status-rejected{
+    background:#ffe3e3;
+    color:#c62828;
+}
+
+.status-cancelled{
+    background:#eee;
+    color:#777;
+}
+
+
+/* =========================================================
+   REQUEST MANAGEMENT
+========================================================= */
+
+.request-management{
+    margin-top:12px;
+    border-top:1px solid #eee;
+    padding-top:12px;
+}
+
+.request-management-title{
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.request-user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.request-user img{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.request-user-info{
+    flex:1;
+    min-width:0;
+}
+
+.request-user-name{
+    font-weight:bold;
+    font-size:13px;
+}
+
+.request-user-time{
+    color:#888;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.request-actions{
+    display:flex;
+    gap:5px;
+}
+
+.accept-btn,
+.reject-btn{
+    border:none;
+    padding:7px 9px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.accept-btn{
+    background:#00a86b;
+    color:white;
+}
+
+.reject-btn{
+    background:#ffe3e3;
+    color:#c62828;
+}
+
+
+/* =========================================================
+   MY REQUESTS
+========================================================= */
 
 .request-section{
     display:none;
-    margin:15px;
 }
 
-.request-title{
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:15px;
+.request-section-title{
     color:#00a86b;
+    font-size:18px;
+    font-weight:bold;
+    padding:18px 14px 5px;
 }
 
-.no-result{
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty-state{
     text-align:center;
-    color:gray;
-    margin-top:40px;
-    font-size:18px;
-    display:none;
+    padding:50px 20px;
+    color:#888;
+}
+
+.empty-state i{
+    font-size:42px;
+    color:#bbb;
+    margin-bottom:12px;
+}
+
+.empty-title{
+    font-size:16px;
+    font-weight:bold;
+    color:#555;
+}
+
+.empty-text{
+    font-size:13px;
+    margin-top:6px;
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+    text-align:center;
+    padding:40px;
+    color:#777;
+}
+
+.loading i{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:85px;
+    transform:translateX(-50%) translateY(20px);
+    background:#222;
+    color:white;
+    padding:12px 18px;
+    border-radius:25px;
+    font-size:13px;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:10000;
+    max-width:90%;
+    text-align:center;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:500px){
+
+    .header{
+        font-size:20px;
+    }
+
+    .ride-card{
+        margin:10px;
+    }
+
+    .top-action-buttons{
+        padding:0 10px;
+    }
+
 }
 
 </style>
@@ -301,522 +607,2616 @@ body{
 
 <body>
 
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
 <div class="header">
+
     🚖 Pathukkalam Lift Share
+
 </div>
 
-<!-- SEARCH -->
+
+<!-- =======================================================
+     SEARCH
+======================================================= -->
 
 <div class="search-box">
 
-    <input type="text"
-    id="searchInput"
-    placeholder="Search destination like Koyambedu"
-    onkeyup="searchRide()">
+    <div class="search-wrapper">
+
+        <i class="fas fa-search"></i>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search destination, pickup, city..."
+            autocomplete="off">
+
+    </div>
 
 </div>
 
-<!-- TOP BUTTONS -->
+
+<!-- =======================================================
+     TOP BUTTONS
+======================================================= -->
 
 <div class="top-action-buttons">
 
-    <button class="show-form-btn"
-    onclick="toggleForm()">
+    <button
+        class="show-form-btn"
+        id="toggleFormBtn">
 
-        ➕ Post New Lift
+        <i class="fas fa-plus"></i>
+        Post New Lift
 
     </button>
 
-    <button class="my-request-btn"
-    onclick="toggleRequests()">
 
-        📩 My Lift Requests
+    <button
+        class="my-request-btn"
+        id="toggleRequestsBtn">
+
+        <i class="fas fa-envelope"></i>
+        My Lift Requests
 
     </button>
 
 </div>
 
-<!-- NEW RIDE FORM -->
 
-<div class="new-ride-form"
-id="rideForm">
+<!-- =======================================================
+     NEW RIDE FORM
+======================================================= -->
+
+<div
+    class="new-ride-form"
+    id="rideForm">
+
 
     <div class="form-title">
+
+        <i class="fas fa-route"></i>
         Share Your Lift
+
     </div>
+
+
+    <!-- FULL NAME -->
 
     <div class="form-group">
 
         <label>Full Name</label>
 
-        <input type="text"
-        placeholder="Enter your name">
+        <input
+            type="text"
+            id="fullName"
+            placeholder="Enter your name">
 
     </div>
+
+
+    <!-- AGE -->
 
     <div class="form-group">
 
         <label>Age</label>
 
-        <input type="number"
-        placeholder="Enter age">
+        <input
+            type="number"
+            id="age"
+            placeholder="Enter age"
+            min="1"
+            max="120">
 
     </div>
+
+
+    <!-- COMPANY -->
 
     <div class="form-group">
 
         <label>Company Name</label>
 
-        <input type="text"
-        placeholder="TCS / Infosys / HCL">
+        <input
+            type="text"
+            id="companyName"
+            placeholder="TCS / Infosys / HCL">
 
     </div>
+
+
+    <!-- PROFESSION -->
 
     <div class="form-group">
 
         <label>Profession</label>
 
-        <input type="text"
-        placeholder="Software Engineer">
+        <input
+            type="text"
+            id="profession"
+            placeholder="Software Engineer">
 
     </div>
+
+
+    <!-- CITY -->
 
     <div class="form-group">
 
         <label>City</label>
 
-        <input type="text"
-        placeholder="Chennai">
+        <input
+            type="text"
+            id="city"
+            placeholder="Chennai">
 
     </div>
+
+
+    <!-- PICKUP -->
 
     <div class="form-group">
 
         <label>Pickup Point</label>
 
-        <input type="text"
-        placeholder="Velappanchavadi">
+        <input
+            type="text"
+            id="pickupPoint"
+            placeholder="Velappanchavadi">
 
     </div>
+
+
+    <!-- DESTINATION -->
 
     <div class="form-group">
 
         <label>Destination</label>
 
-        <input type="text"
-        placeholder="Koyambedu">
+        <input
+            type="text"
+            id="destination"
+            placeholder="Koyambedu">
 
     </div>
+
+
+    <!-- TIME -->
 
     <div class="form-group">
 
         <label>Pickup Time</label>
 
-        <input type="time">
+        <input
+            type="time"
+            id="pickupTime">
 
     </div>
+
+
+    <!-- VEHICLE -->
 
     <div class="form-group">
 
         <label>Vehicle Type</label>
 
-        <select>
+        <select id="vehicleType">
 
-            <option>🏍 Bike</option>
+            <option value="Bike">
+                🏍 Bike
+            </option>
 
-            <option>🚗 Car</option>
+            <option value="Car">
+                🚗 Car
+            </option>
 
         </select>
 
     </div>
+
+
+    <!-- GENDER -->
 
     <div class="form-group">
 
         <label>Accepting Gender</label>
 
-        <select>
+        <select id="acceptingGender">
 
-            <option>🌍 Anyone</option>
+            <option value="Anyone">
+                🌍 Anyone
+            </option>
 
-            <option>👨 Men Only</option>
+            <option value="Men Only">
+                👨 Men Only
+            </option>
 
-            <option>👩 Women Only</option>
+            <option value="Women Only">
+                👩 Women Only
+            </option>
 
-            <option>⚧ Others Welcome</option>
+            <option value="Others Welcome">
+                ⚧ Others Welcome
+            </option>
 
         </select>
 
     </div>
 
+
     <div class="btn-group">
 
-        <button class="post-btn">
+        <button
+            class="post-btn"
+            id="postRideBtn">
+
+            <i class="fas fa-paper-plane"></i>
             Share Lift Post
+
         </button>
 
-        <button class="draft-btn">
-            Save Draft
+
+        <button
+            class="draft-btn"
+            id="cancelFormBtn">
+
+            Cancel
+
         </button>
 
     </div>
 
 </div>
 
-<!-- CARD 1 -->
 
-<div class="ride-card">
+<!-- =======================================================
+     MY REQUESTS
+======================================================= -->
 
-    <div class="profile">
+<div
+    class="request-section"
+    id="requestSection">
 
-        <img src="https://i.pravatar.cc/150?img=11">
+    <div class="request-section-title">
 
-        <div>
-
-            <div class="name">
-                Arun Kumar
-            </div>
-
-            <div class="details">
-                27 yrs • TCS • Software Engineer
-            </div>
-
-            <div class="gender">
-                🌍 Accepting Anyone
-            </div>
-
-            <div class="vehicle">
-                🏍 Bike
-            </div>
-
-        </div>
+        <i class="fas fa-envelope"></i>
+        My Lift Requests
 
     </div>
 
-    <div class="route">
 
-        <div class="city">
-            Chennai
-        </div>
-
-        <div class="bus-stop">
-            Velappanchavadi → Koyambedu
-        </div>
+    <div id="myRequestsContainer">
 
     </div>
-
-    <div class="time">
-        ⏰ 8:00 AM at pickup point
-    </div>
-
-    <button class="request-btn">
-        Request Lift
-    </button>
 
 </div>
 
-<!-- CARD 2 -->
 
-<div class="ride-card">
+<!-- =======================================================
+     AVAILABLE RIDES
+======================================================= -->
 
-    <div class="profile">
+<div id="availableSection">
 
-        <img src="https://i.pravatar.cc/150?img=12">
+    <div class="section-header">
 
-        <div>
+        <div class="section-title">
 
-            <div class="name">
-                Vijay Raj
-            </div>
-
-            <div class="details">
-                30 yrs • Infosys • Team Lead
-            </div>
-
-            <div class="gender">
-                👨 Men Only
-            </div>
-
-            <div class="vehicle">
-                🚗 Car
-            </div>
+            Available Lifts
 
         </div>
 
-    </div>
 
-    <div class="route">
+        <button
+            class="refresh-btn"
+            id="refreshBtn"
+            title="Refresh">
 
-        <div class="city">
-            Chennai
-        </div>
+            <i class="fas fa-rotate"></i>
 
-        <div class="bus-stop">
-            Tambaram → Guindy
-        </div>
+        </button>
 
     </div>
 
-    <div class="time">
-        ⏰ 9:15 AM at pickup point
-    </div>
 
-    <button class="request-btn">
-        Request Lift
-    </button>
+    <div id="ridesContainer">
+
+    </div>
 
 </div>
 
-<!-- CARD 3 -->
 
-<div class="ride-card">
+<!-- =======================================================
+     TOAST
+======================================================= -->
 
-    <div class="profile">
-
-        <img src="https://i.pravatar.cc/150?img=13">
-
-        <div>
-
-            <div class="name">
-                Priya Sharma
-            </div>
-
-            <div class="details">
-                25 yrs • Wipro • HR Manager
-            </div>
-
-            <div class="gender">
-                👩 Women Only
-            </div>
-
-            <div class="vehicle">
-                🚗 Car
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="route">
-
-        <div class="city">
-            Kanchipuram
-        </div>
-
-        <div class="bus-stop">
-            Oragadam → Sriperumbudur
-        </div>
-
-    </div>
-
-    <div class="time">
-        ⏰ 7:45 AM at pickup point
-    </div>
-
-    <button class="request-btn">
-        Request Lift
-    </button>
+<div
+    class="toast"
+    id="toast">
 
 </div>
 
-<!-- CARD 4 -->
 
-<div class="ride-card">
+<!-- =======================================================
+     SUPABASE
+======================================================= -->
 
-    <div class="profile">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        <img src="https://i.pravatar.cc/150?img=14">
 
-        <div>
+<script>
 
-            <div class="name">
-                Dinesh Kumar
-            </div>
+/* =========================================================
+   SUPABASE
+========================================================= */
 
-            <div class="details">
-                29 yrs • Zoho • UI Designer
-            </div>
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
 
-            <div class="gender">
-                ⚧ Others Welcome
-            </div>
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
 
-            <div class="vehicle">
-                🏍 Bike
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let allRides = [];
+
+let myRequests = [];
+
+let searchText = "";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const ridesContainer =
+    document.getElementById(
+        "ridesContainer"
+    );
+
+const requestSection =
+    document.getElementById(
+        "requestSection"
+    );
+
+const myRequestsContainer =
+    document.getElementById(
+        "myRequestsContainer"
+    );
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+const rideForm =
+    document.getElementById(
+        "rideForm"
+    );
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.innerText =
+        message;
+
+    toast.classList.add("show");
+
+    setTimeout(function(){
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   CURRENT USER
+========================================================= */
+
+async function loadCurrentUser(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
+
+
+    if(
+        error ||
+        !data.user
+    ){
+
+        window.location.href =
+            "/login";
+
+        return false;
+
+    }
+
+
+    currentUser =
+        data.user;
+
+
+    /* -----------------------------------------------------
+       Load profile
+    ----------------------------------------------------- */
+
+    const {
+        data:profile,
+        error:profileError
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(`
+            id,
+            username,
+            name,
+            profile_url
+        `)
+        .eq(
+            "id",
+            currentUser.id
+        )
+        .single();
+
+
+    if(profileError){
+
+        console.error(
+            "Profile error:",
+            profileError
+        );
+
+        return false;
+
+    }
+
+
+    currentProfile =
+        profile;
+
+
+    /* -----------------------------------------------------
+       Automatically fill name
+    ----------------------------------------------------- */
+
+    document.getElementById(
+        "fullName"
+    ).value =
+        profile.name ||
+        profile.username ||
+        "";
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   LOAD RIDES
+========================================================= */
+
+async function loadRides(){
+
+    ridesContainer.innerHTML = `
+
+        <div class="loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <div>
+                Loading available lifts...
             </div>
 
         </div>
 
-    </div>
+    `;
 
-    <div class="route">
 
-        <div class="city">
-            Chennai
-        </div>
+    const {
+        data:rides,
+        error
+    } =
+    await supabaseClient
+        .from("rides")
+        .select(`
+            id,
+            user_id,
+            full_name,
+            age,
+            company_name,
+            profession,
+            city,
+            pickup_point,
+            destination,
+            pickup_time,
+            vehicle_type,
+            accepting_gender,
+            status,
+            created_at
+        `)
+        .eq(
+            "status",
+            "active"
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
 
-        <div class="bus-stop">
-            Porur → Vadapalani
-        </div>
 
-    </div>
+    if(error){
 
-    <div class="time">
-        ⏰ 8:30 AM at pickup point
-    </div>
+        console.error(
+            "Ride loading error:",
+            error
+        );
 
-    <button class="request-btn">
-        Request Lift
-    </button>
+        ridesContainer.innerHTML = `
 
-</div>
+            <div class="empty-state">
 
-<!-- MY REQUESTS -->
+                <i class="fas fa-circle-exclamation"></i>
 
-<div class="request-section"
-id="requestSection">
+                <div class="empty-title">
+                    Unable to load lifts
+                </div>
 
-    <div class="request-title">
+                <div class="empty-text">
+                    ${escapeHtml(error.message)}
+                </div>
 
-        📩 Below is your requests
+            </div>
 
-    </div>
+        `;
 
-    <div class="ride-card">
+        return;
+
+    }
+
+
+    allRides =
+        rides || [];
+
+
+    await loadRideProfiles();
+
+}
+
+
+/* =========================================================
+   LOAD RIDE PROFILES
+========================================================= */
+
+async function loadRideProfiles(){
+
+    const userIds =
+        [
+            ...new Set(
+                allRides
+                    .map(
+                        ride =>
+                            ride.user_id
+                    )
+                    .filter(Boolean)
+            )
+        ];
+
+
+    if(!userIds.length){
+
+        renderRides();
+
+        return;
+
+    }
+
+
+    const {
+        data:profiles,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(`
+            id,
+            username,
+            name,
+            profile_url
+        `)
+        .in(
+            "id",
+            userIds
+        );
+
+
+    if(error){
+
+        console.error(
+            "Ride profiles error:",
+            error
+        );
+
+    }
+
+
+    const profileMap =
+        new Map();
+
+
+    (
+        profiles || []
+    ).forEach(
+        profile => {
+
+            profileMap.set(
+                profile.id,
+                profile
+            );
+
+        }
+    );
+
+
+    allRides =
+        allRides.map(
+            ride => {
+
+                const profile =
+                    profileMap.get(
+                        ride.user_id
+                    );
+
+
+                return {
+
+                    ...ride,
+
+                    profile:
+                        profile || null
+
+                };
+
+            }
+        );
+
+
+    await loadMyRequests();
+
+    renderRides();
+
+}
+
+
+/* =========================================================
+   LOAD MY REQUESTS
+========================================================= */
+
+async function loadMyRequests(){
+
+    if(!currentUser){
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("ride_requests")
+        .select(`
+            id,
+            ride_id,
+            requester_id,
+            status,
+            created_at
+        `)
+        .eq(
+            "requester_id",
+            currentUser.id
+        );
+
+
+    if(error){
+
+        console.error(
+            "My requests error:",
+            error
+        );
+
+        myRequests = [];
+
+        return;
+
+    }
+
+
+    myRequests =
+        data || [];
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    function(){
+
+        searchText =
+            this.value
+                .trim()
+                .toLowerCase();
+
+        renderRides();
+
+    }
+);
+
+
+/* =========================================================
+   FILTER RIDES
+========================================================= */
+
+function getFilteredRides(){
+
+    if(!searchText){
+
+        return allRides;
+
+    }
+
+
+    return allRides.filter(
+        ride => {
+
+            const text =
+                [
+
+                    ride.city,
+
+                    ride.pickup_point,
+
+                    ride.destination,
+
+                    ride.full_name,
+
+                    ride.company_name,
+
+                    ride.profession,
+
+                    ride.vehicle_type,
+
+                    ride.accepting_gender
+
+                ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
+
+
+            return text.includes(
+                searchText
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER RIDES
+========================================================= */
+
+function renderRides(){
+
+    const rides =
+        getFilteredRides();
+
+
+    ridesContainer.innerHTML =
+        "";
+
+
+    if(!rides.length){
+
+        ridesContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-car-side"></i>
+
+                <div class="empty-title">
+
+                    ${
+                        searchText
+                            ? "No lifts found"
+                            : "No active lifts yet"
+                    }
+
+                </div>
+
+                <div class="empty-text">
+
+                    ${
+                        searchText
+                            ? "Try another destination, pickup point or city."
+                            : "Be the first person to share a lift."
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    rides.forEach(
+        ride => {
+
+            ridesContainer.appendChild(
+                createRideCard(ride)
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT TIME
+========================================================= */
+
+function formatRideTime(time){
+
+    if(!time){
+
+        return "";
+
+    }
+
+
+    const parts =
+        time.split(":");
+
+    if(parts.length < 2){
+
+        return time;
+
+    }
+
+
+    let hour =
+        parseInt(
+            parts[0],
+            10
+        );
+
+    const minute =
+        parts[1];
+
+
+    const suffix =
+        hour >= 12
+            ? "PM"
+            : "AM";
+
+
+    hour =
+        hour % 12 || 12;
+
+
+    return (
+        hour +
+        ":" +
+        minute +
+        " " +
+        suffix
+    );
+
+}
+
+
+/* =========================================================
+   CREATE RIDE CARD
+========================================================= */
+
+function createRideCard(ride){
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "ride-card";
+
+
+    const profile =
+        ride.profile;
+
+
+    const avatar =
+        profile?.profile_url ||
+        "https://i.pravatar.cc/100";
+
+
+    const displayName =
+        profile?.name ||
+        ride.full_name ||
+        "Pathukkalam User";
+
+
+    const username =
+        profile?.username ||
+        "user";
+
+
+    const isOwnRide =
+        ride.user_id ===
+        currentUser.id;
+
+
+    const existingRequest =
+        myRequests.find(
+            request =>
+                Number(
+                    request.ride_id
+                ) ===
+                Number(
+                    ride.id
+                )
+        );
+
+
+    let requestButtonHtml;
+
+
+    if(isOwnRide){
+
+        requestButtonHtml = `
+
+            <button
+                class="request-btn own"
+                disabled>
+
+                <i class="fas fa-user"></i>
+                Your Lift Post
+
+            </button>
+
+        `;
+
+    }
+
+    else if(existingRequest){
+
+        const status =
+            existingRequest.status;
+
+
+        if(status === "accepted"){
+
+            requestButtonHtml = `
+
+                <button
+                    class="request-btn requested"
+                    disabled>
+
+                    <i class="fas fa-check"></i>
+                    Lift Accepted
+
+                </button>
+
+            `;
+
+        }
+
+        else if(status === "rejected"){
+
+            requestButtonHtml = `
+
+                <button
+                    class="request-btn own"
+                    disabled>
+
+                    Request Rejected
+
+                </button>
+
+            `;
+
+        }
+
+        else{
+
+            requestButtonHtml = `
+
+                <button
+                    class="request-btn requested"
+                    disabled>
+
+                    <i class="fas fa-clock"></i>
+                    Request Pending
+
+                </button>
+
+            `;
+
+        }
+
+    }
+
+    else{
+
+        requestButtonHtml = `
+
+            <button
+                class="request-btn"
+                data-request-ride-id="${ride.id}">
+
+                <i class="fas fa-paper-plane"></i>
+                Request Lift
+
+            </button>
+
+        `;
+
+    }
+
+
+    card.innerHTML = `
 
         <div class="profile">
 
-            <img src="https://i.pravatar.cc/150?img=12">
+            <img
+                class="profile-avatar"
+                src="${escapeHtml(avatar)}"
+                alt="Profile">
 
-            <div>
+            <div class="profile-info">
 
                 <div class="name">
-                    Vijay Raj
+
+                    ${escapeHtml(displayName)}
+
+                </div>
+
+                <div class="username">
+
+                    @${escapeHtml(username)}
+
                 </div>
 
                 <div class="details">
-                    30 yrs • Infosys • Team Lead
+
+                    ${
+                        ride.age
+                            ? escapeHtml(
+                                ride.age
+                            ) + " yrs"
+                            : ""
+                    }
+
+                    ${
+                        ride.company_name
+                            ? " • " +
+                              escapeHtml(
+                                  ride.company_name
+                              )
+                            : ""
+                    }
+
+                    ${
+                        ride.profession
+                            ? " • " +
+                              escapeHtml(
+                                  ride.profession
+                              )
+                            : ""
+                    }
+
                 </div>
 
-                <div class="gender">
-                    👨 Men Only
-                </div>
+                <div class="tags">
 
-                <div class="vehicle">
-                    🚗 Car
+                    <span class="gender">
+
+                        ${
+                            ride.accepting_gender ===
+                            "Anyone"
+                                ? "🌍"
+                                : ride.accepting_gender ===
+                                  "Men Only"
+                                    ? "👨"
+                                    : ride.accepting_gender ===
+                                      "Women Only"
+                                        ? "👩"
+                                        : "⚧"
+                        }
+
+                        ${escapeHtml(
+                            ride.accepting_gender
+                        )}
+
+                    </span>
+
+
+                    <span class="vehicle">
+
+                        ${
+                            ride.vehicle_type ===
+                            "Bike"
+                                ? "🏍"
+                                : "🚗"
+                        }
+
+                        ${escapeHtml(
+                            ride.vehicle_type
+                        )}
+
+                    </span>
+
                 </div>
 
             </div>
 
+
+            ${
+                isOwnRide
+                    ? `
+                        <span class="ride-owner-label">
+                            YOUR POST
+                        </span>
+                      `
+                    : ""
+            }
+
         </div>
+
 
         <div class="route">
 
             <div class="city">
-                Chennai
+
+                <i class="fas fa-location-dot"></i>
+
+                ${escapeHtml(
+                    ride.city
+                )}
+
             </div>
 
-            <div class="bus-stop">
-                Tambaram → Guindy
+            <div class="route-line">
+
+                ${escapeHtml(
+                    ride.pickup_point
+                )}
+
+                →
+
+                ${escapeHtml(
+                    ride.destination
+                )}
+
             </div>
 
         </div>
+
 
         <div class="time">
-            ⏰ 9:15 AM at pickup point
+
+            <i class="far fa-clock"></i>
+
+            ${formatRideTime(
+                ride.pickup_time
+            )}
+
+            at pickup point
+
         </div>
 
-        <button class="request-btn"
-        style="background:#00a86b;">
 
-            Requested Successfully
+        ${requestButtonHtml}
 
-        </button>
 
-    </div>
+        ${
+            isOwnRide
+                ? `
+                    <div
+                        class="request-management"
+                        data-management-ride-id="${ride.id}">
 
-</div>
+                        <div class="request-management-title">
 
-<div class="no-result"
-id="noResult">
+                            <i class="fas fa-users"></i>
 
-    No lift providers found
+                            Lift Requests
 
-</div>
+                        </div>
 
-<script>
+                        <div
+                            class="ride-request-list">
 
-function toggleRequests(){
+                            Loading requests...
 
-    let section =
-    document.getElementById("requestSection");
+                        </div>
 
-    if(section.style.display === "block"){
+                    </div>
+                  `
+                : ""
+        }
 
-        section.style.display = "none";
+    `;
 
-    }else{
 
-        section.style.display = "block";
+    const requestButton =
+        card.querySelector(
+            "[data-request-ride-id]"
+        );
+
+
+    if(requestButton){
+
+        requestButton.addEventListener(
+            "click",
+            function(){
+
+                requestLift(
+                    ride,
+                    requestButton
+                );
+
+            }
+        );
 
     }
 
-}
 
-function toggleForm(){
+    if(isOwnRide){
 
-    let form =
-    document.getElementById("rideForm");
-
-    if(form.style.display === "block"){
-
-        form.style.display = "none";
-
-    }else{
-
-        form.style.display = "block";
+        loadRideRequests(
+            ride,
+            card.querySelector(
+                ".ride-request-list"
+            )
+        );
 
     }
+
+
+    return card;
+
 }
 
-function searchRide() {
 
-    let input =
-    document.getElementById("searchInput")
-    .value
-    .toLowerCase();
+/* =========================================================
+   REQUEST LIFT
+========================================================= */
 
-    let cards =
-    document.querySelectorAll(".ride-card");
+async function requestLift(
+    ride,
+    button
+){
 
-    let found = false;
+    if(!currentUser){
 
-    cards.forEach(card => {
+        alert(
+            "Please login first."
+        );
 
-        let route =
-        card.querySelector(".bus-stop")
-        .innerText
-        .toLowerCase();
+        return;
 
-        let destination =
-        route.split("→")[1].trim();
+    }
 
-        if(destination.includes(input)){
 
-            card.style.display = "block";
-            found = true;
+    button.disabled =
+        true;
 
-        } else {
+    button.innerHTML = `
 
-            card.style.display = "none";
+        <i class="fas fa-spinner fa-spin"></i>
+        Sending Request...
+
+    `;
+
+
+    try{
+
+        /* -------------------------------------------------
+           Check existing request
+        ------------------------------------------------- */
+
+        const {
+            data:existing,
+            error:checkError
+        } =
+        await supabaseClient
+            .from("ride_requests")
+            .select("id,status")
+            .eq(
+                "ride_id",
+                ride.id
+            )
+            .eq(
+                "requester_id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+
+        if(checkError){
+
+            throw checkError;
 
         }
 
-    });
 
-    document.getElementById("noResult")
-    .style.display =
-    found ? "none" : "block";
+        if(existing){
+
+            showToast(
+                "You already requested this lift."
+            );
+
+            await loadMyRequests();
+
+            renderRides();
+
+            return;
+
+        }
+
+
+        /* -------------------------------------------------
+           Insert request
+        ------------------------------------------------- */
+
+        const {
+            data:request,
+            error
+        } =
+        await supabaseClient
+            .from("ride_requests")
+            .insert({
+
+                ride_id:
+                    ride.id,
+
+                requester_id:
+                    currentUser.id,
+
+                status:
+                    "pending"
+
+            })
+            .select()
+            .single();
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        /* -------------------------------------------------
+           Notify ride owner
+        ------------------------------------------------- */
+
+        await createRideNotification({
+
+            receiverId:
+                ride.user_id,
+
+            type:
+                "ride_request",
+
+            message:
+                (
+                    currentProfile?.name ||
+                    currentProfile?.username ||
+                    "Someone"
+                ) +
+                " requested your lift from " +
+                ride.pickup_point +
+                " to " +
+                ride.destination +
+                "."
+
+        });
+
+
+        showToast(
+            "Lift request sent successfully! ✓"
+        );
+
+
+        await loadMyRequests();
+
+        renderRides();
+
+    }
+    catch(error){
+
+        console.error(
+            "Lift request error:",
+            error
+        );
+
+
+        showToast(
+            "Unable to send request: " +
+            error.message
+        );
+
+
+        button.disabled =
+            false;
+
+        button.innerHTML = `
+
+            <i class="fas fa-paper-plane"></i>
+            Request Lift
+
+        `;
+
+    }
+
 }
+
+
+/* =========================================================
+   LOAD RIDE REQUESTS FOR OWNER
+========================================================= */
+
+async function loadRideRequests(
+    ride,
+    container
+){
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    const {
+        data:requests,
+        error
+    } =
+    await supabaseClient
+        .from("ride_requests")
+        .select(`
+            id,
+            requester_id,
+            status,
+            created_at
+        `)
+        .eq(
+            "ride_id",
+            ride.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        container.innerHTML =
+            "Unable to load requests.";
+
+        console.error(
+            error
+        );
+
+        return;
+
+    }
+
+
+    if(!requests?.length){
+
+        container.innerHTML = `
+
+            <div
+                style="
+                    color:#888;
+                    font-size:12px;
+                ">
+
+                No requests yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const requesterIds =
+        [
+            ...new Set(
+                requests.map(
+                    request =>
+                        request.requester_id
+                )
+            )
+        ];
+
+
+    const {
+        data:profiles
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(`
+            id,
+            username,
+            name,
+            profile_url
+        `)
+        .in(
+            "id",
+            requesterIds
+        );
+
+
+    const profileMap =
+        new Map();
+
+
+    (
+        profiles || []
+    ).forEach(
+        profile => {
+
+            profileMap.set(
+                profile.id,
+                profile
+            );
+
+        }
+    );
+
+
+    container.innerHTML =
+        "";
+
+
+    requests.forEach(
+        request => {
+
+            const profile =
+                profileMap.get(
+                    request.requester_id
+                );
+
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "request-user";
+
+
+            const avatar =
+                profile?.profile_url ||
+                "https://i.pravatar.cc/100";
+
+
+            const name =
+                profile?.name ||
+                profile?.username ||
+                "User";
+
+
+            let actions = "";
+
+
+            if(
+                request.status ===
+                "pending"
+            ){
+
+                actions = `
+
+                    <div class="request-actions">
+
+                        <button
+                            class="accept-btn"
+                            data-action="accept">
+
+                            Accept
+
+                        </button>
+
+                        <button
+                            class="reject-btn"
+                            data-action="reject">
+
+                            Reject
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+            else{
+
+                actions = `
+
+                    <span
+                        style="
+                            font-size:11px;
+                            font-weight:bold;
+                            color:${
+                                request.status ===
+                                "accepted"
+                                    ? "#00a86b"
+                                    : "#c62828"
+                            };
+                        ">
+
+                        ${escapeHtml(
+                            request.status
+                        )}
+
+                    </span>
+
+                `;
+
+            }
+
+
+            row.innerHTML = `
+
+                <img
+                    src="${escapeHtml(avatar)}">
+
+                <div class="request-user-info">
+
+                    <div class="request-user-name">
+
+                        ${escapeHtml(name)}
+
+                    </div>
+
+                    <div class="request-user-time">
+
+                        @${escapeHtml(
+                            profile?.username ||
+                            "user"
+                        )}
+
+                    </div>
+
+                </div>
+
+                ${actions}
+
+            `;
+
+
+            const acceptBtn =
+                row.querySelector(
+                    '[data-action="accept"]'
+                );
+
+
+            const rejectBtn =
+                row.querySelector(
+                    '[data-action="reject"]'
+                );
+
+
+            if(acceptBtn){
+
+                acceptBtn.addEventListener(
+                    "click",
+                    function(){
+
+                        updateRideRequest(
+                            ride,
+                            request,
+                            "accepted"
+                        );
+
+                    }
+                );
+
+            }
+
+
+            if(rejectBtn){
+
+                rejectBtn.addEventListener(
+                    "click",
+                    function(){
+
+                        updateRideRequest(
+                            ride,
+                            request,
+                            "rejected"
+                        );
+
+                    }
+                );
+
+            }
+
+
+            container.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ACCEPT / REJECT REQUEST
+========================================================= */
+
+async function updateRideRequest(
+    ride,
+    request,
+    newStatus
+){
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("ride_requests")
+            .update({
+
+                status:
+                    newStatus
+
+            })
+            .eq(
+                "id",
+                request.id
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        /* -------------------------------------------------
+           Notify requester
+        ------------------------------------------------- */
+
+        const message =
+            newStatus ===
+            "accepted"
+
+                ? (
+                    "Your lift request was accepted by " +
+                    (
+                        currentProfile?.name ||
+                        currentProfile?.username ||
+                        "the ride owner"
+                    ) +
+                    "."
+                  )
+
+                : (
+                    "Your lift request was rejected by " +
+                    (
+                        currentProfile?.name ||
+                        currentProfile?.username ||
+                        "the ride owner"
+                    ) +
+                    "."
+                  );
+
+
+        await createRideNotification({
+
+            receiverId:
+                request.requester_id,
+
+            type:
+                "ride_" + newStatus,
+
+            message:
+                message
+
+        });
+
+
+        showToast(
+            newStatus ===
+            "accepted"
+                ? "Request accepted ✓"
+                : "Request rejected"
+        );
+
+
+        await loadRides();
+
+    }
+    catch(error){
+
+        console.error(
+            "Request update error:",
+            error
+        );
+
+
+        showToast(
+            "Unable to update request: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MY REQUESTS
+========================================================= */
+
+async function renderMyRequests(){
+
+    await loadMyRequests();
+
+
+    myRequestsContainer.innerHTML =
+        "";
+
+
+    if(!myRequests.length){
+
+        myRequestsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-envelope-open"></i>
+
+                <div class="empty-title">
+
+                    No lift requests yet
+
+                </div>
+
+                <div class="empty-text">
+
+                    When you request a lift,
+                    it will appear here.
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    for(
+        const request
+        of myRequests
+    ){
+
+        const ride =
+            allRides.find(
+                item =>
+                    Number(item.id) ===
+                    Number(request.ride_id)
+            );
+
+
+        if(!ride){
+
+            continue;
+
+        }
+
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "ride-card";
+
+
+        const profile =
+            ride.profile;
+
+
+        const avatar =
+            profile?.profile_url ||
+            "https://i.pravatar.cc/100";
+
+
+        card.innerHTML = `
+
+            <div class="profile">
+
+                <img
+                    class="profile-avatar"
+                    src="${escapeHtml(avatar)}">
+
+                <div class="profile-info">
+
+                    <div class="name">
+
+                        ${escapeHtml(
+                            profile?.name ||
+                            ride.full_name
+                        )}
+
+                    </div>
+
+                    <div class="username">
+
+                        @${escapeHtml(
+                            profile?.username ||
+                            "user"
+                        )}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="route">
+
+                <div class="city">
+
+                    ${escapeHtml(
+                        ride.city
+                    )}
+
+                </div>
+
+                <div class="route-line">
+
+                    ${escapeHtml(
+                        ride.pickup_point
+                    )}
+
+                    →
+
+                    ${escapeHtml(
+                        ride.destination
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="time">
+
+                <i class="far fa-clock"></i>
+
+                ${formatRideTime(
+                    ride.pickup_time
+                )}
+
+            </div>
+
+
+            <div class="
+                request-status
+                status-${escapeHtml(
+                    request.status
+                )}
+            ">
+
+                ${
+                    request.status ===
+                    "pending"
+                        ? "⏳ Request Pending"
+                        : request.status ===
+                          "accepted"
+                            ? "✓ Lift Accepted"
+                            : request.status ===
+                              "rejected"
+                                ? "✕ Request Rejected"
+                                : "Request Cancelled"
+                }
+
+            </div>
+
+        `;
+
+
+        myRequestsContainer.appendChild(
+            card
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE NOTIFICATION
+========================================================= */
+
+async function createRideNotification({
+    receiverId,
+    type,
+    message
+}){
+
+    try{
+
+        if(
+            !receiverId ||
+            receiverId ===
+            currentUser?.id
+        ){
+
+            return;
+
+        }
+
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("notifications")
+            .insert({
+
+                user_id:
+                    receiverId,
+
+                sender_id:
+                    currentUser.id,
+
+                notification_type:
+                    type,
+
+                message:
+                    message,
+
+                is_read:
+                    false
+
+            });
+
+
+        if(error){
+
+            console.error(
+                "Ride notification error:",
+                error
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Notification exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   TOGGLE FORM
+========================================================= */
+
+document.getElementById(
+    "toggleFormBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        const visible =
+            rideForm.style.display ===
+            "block";
+
+
+        rideForm.style.display =
+            visible
+                ? "none"
+                : "block";
+
+
+        if(!visible){
+
+            rideForm.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CANCEL FORM
+========================================================= */
+
+document.getElementById(
+    "cancelFormBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        rideForm.style.display =
+            "none";
+
+    }
+);
+
+
+/* =========================================================
+   POST NEW RIDE
+========================================================= */
+
+document.getElementById(
+    "postRideBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        if(!currentUser){
+
+            alert(
+                "Please login first."
+            );
+
+            return;
+
+        }
+
+
+        const fullName =
+            document.getElementById(
+                "fullName"
+            ).value.trim();
+
+
+        const ageValue =
+            document.getElementById(
+                "age"
+            ).value.trim();
+
+
+        const companyName =
+            document.getElementById(
+                "companyName"
+            ).value.trim();
+
+
+        const profession =
+            document.getElementById(
+                "profession"
+            ).value.trim();
+
+
+        const city =
+            document.getElementById(
+                "city"
+            ).value.trim();
+
+
+        const pickupPoint =
+            document.getElementById(
+                "pickupPoint"
+            ).value.trim();
+
+
+        const destination =
+            document.getElementById(
+                "destination"
+            ).value.trim();
+
+
+        const pickupTime =
+            document.getElementById(
+                "pickupTime"
+            ).value;
+
+
+        const vehicleType =
+            document.getElementById(
+                "vehicleType"
+            ).value;
+
+
+        const acceptingGender =
+            document.getElementById(
+                "acceptingGender"
+            ).value;
+
+
+        if(
+            !fullName ||
+            !city ||
+            !pickupPoint ||
+            !destination ||
+            !pickupTime
+        ){
+
+            alert(
+                "Please fill all required fields."
+            );
+
+            return;
+
+        }
+
+
+        const button =
+            this;
+
+
+        button.disabled =
+            true;
+
+
+        button.innerHTML = `
+
+            <i class="fas fa-spinner fa-spin"></i>
+            Posting...
+
+        `;
+
+
+        try{
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient
+                .from("rides")
+                .insert({
+
+                    user_id:
+                        currentUser.id,
+
+                    full_name:
+                        fullName,
+
+                    age:
+                        ageValue
+                            ? Number(
+                                ageValue
+                              )
+                            : null,
+
+                    company_name:
+                        companyName ||
+                        null,
+
+                    profession:
+                        profession ||
+                        null,
+
+                    city:
+                        city,
+
+                    pickup_point:
+                        pickupPoint,
+
+                    destination:
+                        destination,
+
+                    pickup_time:
+                        pickupTime,
+
+                    vehicle_type:
+                        vehicleType,
+
+                    accepting_gender:
+                        acceptingGender,
+
+                    status:
+                        "active"
+
+                })
+                .select()
+                .single();
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            showToast(
+                "Your lift has been posted! 🚗"
+            );
+
+
+            /* ------------------------------------------------
+               Reset form
+            ------------------------------------------------ */
+
+            document.getElementById(
+                "age"
+            ).value = "";
+
+            document.getElementById(
+                "companyName"
+            ).value = "";
+
+            document.getElementById(
+                "profession"
+            ).value = "";
+
+            document.getElementById(
+                "city"
+            ).value = "";
+
+            document.getElementById(
+                "pickupPoint"
+            ).value = "";
+
+            document.getElementById(
+                "destination"
+            ).value = "";
+
+            document.getElementById(
+                "pickupTime"
+            ).value = "";
+
+
+            rideForm.style.display =
+                "none";
+
+
+            await loadRides();
+
+        }
+        catch(error){
+
+            console.error(
+                "Create ride error:",
+                error
+            );
+
+
+            alert(
+                "Unable to post lift:\n\n" +
+                error.message
+            );
+
+        }
+        finally{
+
+            button.disabled =
+                false;
+
+            button.innerHTML = `
+
+                <i class="fas fa-paper-plane"></i>
+                Share Lift Post
+
+            `;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOGGLE MY REQUESTS
+========================================================= */
+
+document.getElementById(
+    "toggleRequestsBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        const visible =
+            requestSection.style.display ===
+            "block";
+
+
+        if(visible){
+
+            requestSection.style.display =
+                "none";
+
+            document.getElementById(
+                "availableSection"
+            ).style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        requestSection.style.display =
+            "block";
+
+
+        document.getElementById(
+            "availableSection"
+        ).style.display =
+            "none";
+
+
+        await renderMyRequests();
+
+    }
+);
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+document.getElementById(
+    "refreshBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        this.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i>';
+
+
+        await loadRides();
+
+
+        this.innerHTML =
+            '<i class="fas fa-rotate"></i>';
+
+    }
+);
+
+
+/* =========================================================
+   PERIODIC REFRESH
+========================================================= */
+
+setInterval(
+    async function(){
+
+        if(!currentUser){
+
+            return;
+
+        }
+
+
+        await loadRides();
+
+
+        if(
+            requestSection.style.display ===
+            "block"
+        ){
+
+            await renderMyRequests();
+
+        }
+
+    },
+    30000
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initializePage(){
+
+    const loggedIn =
+        await loadCurrentUser();
+
+
+    if(!loggedIn){
+
+        return;
+
+    }
+
+
+    await loadRides();
+
+}
+
+
+initializePage();
 
 </script>
 
