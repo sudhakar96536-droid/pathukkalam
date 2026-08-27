@@ -1246,6 +1246,271 @@ body{
 
 }
 
+
+
+/* ==========================================
+   SEARCH OVERLAY
+   NEW SEARCH SYSTEM ONLY
+   ========================================== */
+
+.search-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+    z-index:12000;
+    align-items:flex-start;
+    justify-content:center;
+    padding:75px 15px 20px;
+}
+
+.search-modal.active{
+    display:flex;
+}
+
+.search-box{
+    width:100%;
+    max-width:650px;
+    background:white;
+    border-radius:16px;
+    box-shadow:0 10px 35px rgba(0,0,0,0.2);
+    overflow:hidden;
+}
+
+.search-input-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px;
+    border-bottom:1px solid #eee;
+}
+
+.search-input-wrap{
+    flex:1;
+    display:flex;
+    align-items:center;
+    background:#f0f2f5;
+    border-radius:25px;
+    padding:0 12px;
+}
+
+.search-input-wrap i{
+    color:#777;
+    font-size:16px;
+}
+
+.search-input{
+    width:100%;
+    border:none;
+    outline:none;
+    background:transparent;
+    padding:12px 9px;
+    font-size:15px;
+}
+
+.search-submit-btn,
+.search-close-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.search-submit-btn{
+    background:#1877f2;
+    color:white;
+}
+
+.search-close-btn{
+    background:#f0f2f5;
+    color:#444;
+}
+
+.search-filter-bar{
+    display:flex;
+    gap:8px;
+    padding:10px 12px;
+    border-bottom:1px solid #eee;
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+
+.search-filter-bar::-webkit-scrollbar{
+    display:none;
+}
+
+.search-filter-btn{
+    border:none;
+    background:#f0f2f5;
+    color:#555;
+    padding:8px 15px;
+    border-radius:20px;
+    cursor:pointer;
+    white-space:nowrap;
+    font-size:13px;
+}
+
+.search-filter-btn.active{
+    background:#1877f2;
+    color:white;
+}
+
+.search-results{
+    max-height:70vh;
+    overflow-y:auto;
+    padding:8px;
+}
+
+.search-empty{
+    text-align:center;
+    color:#888;
+    padding:35px 15px;
+    font-size:14px;
+}
+
+.search-empty i{
+    display:block;
+    font-size:34px;
+    color:#bbb;
+    margin-bottom:10px;
+}
+
+.search-section-title{
+    padding:10px 8px 7px;
+    font-size:14px;
+    font-weight:bold;
+    color:#555;
+}
+
+.search-person-result{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 8px;
+    border-radius:10px;
+}
+
+.search-person-result:hover{
+    background:#f5f6f7;
+}
+
+.search-person-avatar{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    object-fit:cover;
+    flex-shrink:0;
+}
+
+.search-person-info{
+    flex:1;
+    min-width:0;
+}
+
+.search-person-name{
+    font-weight:bold;
+    font-size:14px;
+    color:#222;
+}
+
+.search-person-username{
+    color:#888;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.search-follow-btn{
+    border:none;
+    border-radius:8px;
+    padding:8px 12px;
+    background:#1877f2;
+    color:white;
+    cursor:pointer;
+    font-size:12px;
+    flex-shrink:0;
+}
+
+.search-follow-btn.following{
+    background:#e4e6eb;
+    color:#333;
+}
+
+.search-follow-btn:disabled{
+    opacity:0.6;
+    cursor:not-allowed;
+}
+
+.search-post-result{
+    display:block;
+    text-decoration:none;
+    color:inherit;
+    padding:10px 8px;
+    border-radius:10px;
+    margin-bottom:4px;
+}
+
+.search-post-result:hover{
+    background:#f5f6f7;
+}
+
+.search-post-header{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.search-post-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.search-post-user{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.search-post-username{
+    color:#888;
+    font-size:11px;
+    margin-top:2px;
+}
+
+.search-post-caption{
+    font-size:13px;
+    line-height:1.45;
+    color:#333;
+    margin:8px 0;
+    word-break:break-word;
+}
+
+.search-post-image{
+    width:100%;
+    max-height:220px;
+    object-fit:cover;
+    border-radius:10px;
+    display:block;
+}
+
+.search-post-time{
+    font-size:11px;
+    color:#888;
+    margin-top:6px;
+}
+
+.search-loading{
+    text-align:center;
+    padding:25px;
+    color:#777;
+    font-size:14px;
+}
+
 </style>
 
 {% endblock %}
@@ -1275,7 +1540,7 @@ body{
 
     <div class="header-icons">
 
-        <i class="fas fa-search"></i>
+        <i id="openSearchBtn" class="fas fa-search" title="Search" style="cursor:pointer;"></i>
 
 
         <a
@@ -1288,6 +1553,106 @@ body{
             <i class="fas fa-message"></i>
 
         </a>
+
+    </div>
+
+</div>
+
+
+
+
+<!-- ==========================================
+     SEARCH OVERLAY
+     NEW SEARCH SYSTEM ONLY
+========================================== -->
+
+<div
+    id="searchModal"
+    class="search-modal">
+
+    <div
+        class="search-box"
+        onclick="event.stopPropagation()">
+
+        <div class="search-input-row">
+
+            <div class="search-input-wrap">
+
+                <i class="fas fa-search"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search-input"
+                    placeholder="Search people or posts..."
+                    autocomplete="off"
+                    maxlength="100">
+
+            </div>
+
+            <button
+                type="button"
+                id="searchSubmitBtn"
+                class="search-submit-btn"
+                title="Search">
+
+                <i class="fas fa-arrow-right"></i>
+
+            </button>
+
+            <button
+                type="button"
+                id="searchCloseBtn"
+                class="search-close-btn"
+                title="Close">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <div
+            id="searchFilterBar"
+            class="search-filter-bar"
+            style="display:none;">
+
+            <button
+                type="button"
+                class="search-filter-btn active"
+                data-search-filter="all">
+                All
+            </button>
+
+            <button
+                type="button"
+                class="search-filter-btn"
+                data-search-filter="people">
+                People
+            </button>
+
+            <button
+                type="button"
+                class="search-filter-btn"
+                data-search-filter="posts">
+                Posts
+            </button>
+
+        </div>
+
+        <div
+            id="searchResults"
+            class="search-results">
+
+            <div class="search-empty">
+
+                <i class="fas fa-magnifying-glass"></i>
+
+                Search people or posts from all Pathukkalam users.
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -1409,6 +1774,11 @@ body{
     class="stories"
     id="storiesContainer">
 
+    <!--
+        Real statuses are loaded here
+        using JavaScript.
+    -->
+
 </div>
 
 
@@ -1431,7 +1801,12 @@ body{
     class="status-viewer">
 
 
+    <!-- TOP AREA -->
+
     <div class="status-viewer-top">
+
+
+        <!-- PROGRESS -->
 
         <div
             id="statusProgress"
@@ -1439,6 +1814,8 @@ body{
 
         </div>
 
+
+        <!-- CURRENT USER -->
 
         <div
             id="statusViewerUser"
@@ -1449,6 +1826,8 @@ body{
     </div>
 
 
+    <!-- CLOSE -->
+
     <button
         id="statusClose"
         class="status-close">
@@ -1458,6 +1837,8 @@ body{
     </button>
 
 
+    <!-- IMAGE -->
+
     <img
         id="statusViewerImage"
         class="status-viewer-image"
@@ -1465,12 +1846,16 @@ body{
         alt="Status">
 
 
+    <!-- PREVIOUS AREA -->
+
     <div
         id="statusPrev"
         class="status-prev">
 
     </div>
 
+
+    <!-- NEXT AREA -->
 
     <div
         id="statusNext"
@@ -1489,6 +1874,8 @@ body{
 
 <div class="post">
 
+
+    <!-- POST HEADER -->
 
     <div class="post-header">
 
@@ -1530,12 +1917,16 @@ body{
     </div>
 
 
+    <!-- POST TEXT -->
+
     <div class="post-text">
 
         {{ post.caption }}
 
     </div>
 
+
+    <!-- POST IMAGE -->
 
     {% if post.image %}
 
@@ -1547,8 +1938,12 @@ body{
     {% endif %}
 
 
+    <!-- POST ACTIONS -->
+
     <div class="post-actions">
 
+
+        <!-- LIKE -->
 
         <div
             class="like-btn"
@@ -1564,6 +1959,8 @@ body{
         </div>
 
 
+        <!-- COMMENT -->
+
         <div
             class="comment-btn"
             data-post-id="{{ post.id }}"
@@ -1577,6 +1974,8 @@ body{
 
         </div>
 
+
+        <!-- SHARE -->
 
         <div
             class="share-btn"
@@ -1611,6 +2010,8 @@ body{
         onclick="event.stopPropagation()">
 
 
+        <!-- COMMENT HEADER -->
+
         <div class="comment-sheet-header">
 
             <div class="comment-sheet-title">
@@ -1644,12 +2045,16 @@ body{
         </div>
 
 
+        <!-- COMMENTS LIST -->
+
         <div
             id="commentSheetList"
             class="comment-sheet-list">
 
         </div>
 
+
+        <!-- COMMENT INPUT -->
 
         <div class="comment-input-area">
 
@@ -1741,7 +2146,7 @@ body{
 
 
     <a
-        href="#"
+        href="/profile/sudhakar"
         class="
             nav-item
             current-user-profile-link
@@ -1766,6 +2171,7 @@ body{
 
 
 <script>
+
 
 const SUPABASE_URL =
     "https://jxpvkamxtedgzztozonl.supabase.co";
@@ -1794,6 +2200,7 @@ let currentProfile = null;
 async function loadCurrentUser(){
 
     try{
+
 
         const {
 
@@ -1949,311 +2356,6 @@ async function loadCurrentUser(){
 
 /* =========================================================
    =========================================================
-   NOTIFICATION SYSTEM
-   =========================================================
-   ========================================================= */
-
-
-/* ==========================================
-   CREATE NOTIFICATION
-   ========================================== */
-
-async function createNotification({
-
-    receiverId,
-    notificationType,
-    postId = null,
-    message
-
-}){
-
-    try{
-
-        /*
-        Do not notify if there is
-        no receiver.
-        */
-
-        if(!receiverId){
-
-            return;
-
-        }
-
-
-        /*
-        Do not notify yourself.
-        */
-
-        if(
-            currentUser &&
-            receiverId ===
-            currentUser.id
-        ){
-
-            return;
-
-        }
-
-
-        const notificationData = {
-
-            user_id:
-                receiverId,
-
-            sender_id:
-                currentUser.id,
-
-            notification_type:
-                notificationType,
-
-            message:
-                message,
-
-            is_read:
-                false
-
-        };
-
-
-        /*
-        Add post_id only when available.
-        */
-
-        if(postId !== null){
-
-            notificationData.post_id =
-                Number(postId);
-
-        }
-
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-
-            .from("notifications")
-
-            .insert(
-                notificationData
-            )
-            .select()
-            .single();
-
-
-        if(error){
-
-            console.error(
-                "Notification insert error:",
-                error
-            );
-
-            return;
-
-        }
-
-
-        console.log(
-            "Notification created:",
-            data
-        );
-
-    }
-    catch(error){
-
-        /*
-        IMPORTANT:
-        Notification failure must NEVER
-        break the actual Like/Comment/Share.
-        */
-
-        console.error(
-            "Notification error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   GET POST OWNER
-========================================== */
-
-async function getPostOwnerId(
-    postId
-){
-
-    try{
-
-        const {
-
-            data:post,
-            error
-
-        } =
-        await supabaseClient
-
-            .from("posts")
-
-            .select(
-                "user_id"
-            )
-
-            .eq(
-                "id",
-                Number(postId)
-            )
-
-            .maybeSingle();
-
-
-        if(error){
-
-            console.error(
-                "Post owner lookup error:",
-                error
-            );
-
-            return null;
-
-        }
-
-
-        return post?.user_id || null;
-
-    }
-    catch(error){
-
-        console.error(
-            "Post owner exception:",
-            error
-        );
-
-        return null;
-
-    }
-
-}
-
-
-/* ==========================================
-   GET POST OWNER NAME
-========================================== */
-
-async function getPostOwnerName(
-    postId
-){
-
-    try{
-
-        const {
-
-            data:post,
-            error:postError
-
-        } =
-        await supabaseClient
-
-            .from("posts")
-
-            .select(
-                "user_id"
-            )
-
-            .eq(
-                "id",
-                Number(postId)
-            )
-
-            .maybeSingle();
-
-
-        if(postError){
-
-            console.error(
-                "Post owner error:",
-                postError
-            );
-
-            return null;
-
-        }
-
-
-        if(!post?.user_id){
-
-            return null;
-
-        }
-
-
-        const {
-
-            data:profile,
-            error:profileError
-
-        } =
-        await supabaseClient
-
-            .from("profiles")
-
-            .select(
-                "id, name, username"
-            )
-
-            .eq(
-                "id",
-                post.user_id
-            )
-
-            .maybeSingle();
-
-
-        if(profileError){
-
-            console.error(
-                "Post owner profile error:",
-                profileError
-            );
-
-            return null;
-
-        }
-
-
-        return {
-
-            id:
-                post.user_id,
-
-            name:
-                profile?.name ||
-                profile?.username ||
-                "Someone"
-
-        };
-
-    }
-    catch(error){
-
-        console.error(
-            "Post owner name error:",
-            error
-        );
-
-        return null;
-
-    }
-
-}
-
-
-/* =========================================================
-   =========================================================
    REAL STATUS SYSTEM
    =========================================================
    ========================================================= */
@@ -2345,6 +2447,13 @@ async function loadStatuses(){
 
     try{
 
+        /*
+        ======================================
+        STEP 1
+        Find people current user follows
+        ======================================
+        */
+
         const {
 
             data:followingRows,
@@ -2387,11 +2496,21 @@ async function loadStatuses(){
                 );
 
 
+        /*
+        ======================================
+        Include own status
+        ======================================
+        */
+
         const userIds = [
             currentUser.id,
             ...followingIds
         ];
 
+
+        /*
+        Remove duplicate IDs
+        */
 
         const uniqueUserIds =
             [
@@ -2400,6 +2519,13 @@ async function loadStatuses(){
                 )
             ];
 
+
+        /*
+        ======================================
+        STEP 2
+        Load statuses from last 24 hours
+        ======================================
+        */
 
         const yesterday =
             new Date(
@@ -2465,6 +2591,13 @@ async function loadStatuses(){
         }
 
 
+        /*
+        ======================================
+        STEP 3
+        Load profiles
+        ======================================
+        */
+
         const statusUserIds =
             [
                 ...new Set(
@@ -2505,6 +2638,13 @@ async function loadStatuses(){
 
         }
 
+
+        /*
+        ======================================
+        STEP 4
+        Combine status + profile
+        ======================================
+        */
 
         allStatuses =
             statusRows.map(
@@ -2581,6 +2721,12 @@ function renderStatusBar(
     storiesContainer.innerHTML =
         "";
 
+
+    /*
+    ======================================
+    ADD STATUS CARD
+    ======================================
+    */
 
     const addCard =
         document.createElement(
@@ -2662,6 +2808,12 @@ function renderStatusBar(
     );
 
 
+    /*
+    ======================================
+    GROUP STATUS BY USER
+    ======================================
+    */
+
     const grouped =
         new Map();
 
@@ -2694,6 +2846,12 @@ function renderStatusBar(
         }
     );
 
+
+    /*
+    ======================================
+    SORT OWN USER FIRST
+    ======================================
+    */
 
     const groups =
         [
@@ -2730,10 +2888,20 @@ function renderStatusBar(
     );
 
 
+    /*
+    ======================================
+    CREATE USER STATUS CARDS
+    ======================================
+    */
+
     groups.forEach(
         function(
             [userId,userStatuses]
         ){
+
+            /*
+            Latest status first
+            */
 
             userStatuses.sort(
                 function(a,b){
@@ -2883,6 +3051,12 @@ statusPhotoInput.addEventListener(
 
         try{
 
+            /*
+            ==================================
+            UNIQUE FILE NAME
+            ==================================
+            */
+
             const extension =
                 file.name
                     .split(".")
@@ -2897,6 +3071,12 @@ statusPhotoInput.addEventListener(
                 "." +
                 extension;
 
+
+            /*
+            ==================================
+            UPLOAD TO EXISTING BUCKET
+            ==================================
+            */
 
             const {
 
@@ -2939,6 +3119,12 @@ statusPhotoInput.addEventListener(
             );
 
 
+            /*
+            ==================================
+            GET PUBLIC URL
+            ==================================
+            */
+
             const {
 
                 data:publicData
@@ -2958,6 +3144,12 @@ statusPhotoInput.addEventListener(
             const publicUrl =
                 publicData.publicUrl;
 
+
+            /*
+            ==================================
+            INSERT STATUS RECORD
+            ==================================
+            */
 
             const {
 
@@ -3000,6 +3192,10 @@ statusPhotoInput.addEventListener(
                 "Status added successfully! ✓"
             );
 
+
+            /*
+            Reload status bar
+            */
 
             await loadStatuses();
 
@@ -3046,6 +3242,11 @@ function openStatusGroup(
 
     }
 
+
+    /*
+    Sort oldest → newest
+    so viewer can move naturally
+    */
 
     const sortedStatuses =
         [
@@ -3152,6 +3353,12 @@ function openStatusViewer(){
 
     renderStatusProgress();
 
+
+    /*
+    ======================================
+    4 SECOND TIMER
+    ======================================
+    */
 
     let progress =
         0;
@@ -3683,9 +3890,7 @@ async function loadLikes(){
 
 
         const icon =
-            button.querySelector(
-                "i"
-            );
+            button.querySelector("i");
 
 
         if(myLike){
@@ -3845,49 +4050,6 @@ document.addEventListener(
                 if(error){
 
                     throw error;
-
-                }
-
-
-                /* ==========================================
-                   NOTIFICATION SYSTEM
-                   LIKE
-                ========================================== */
-
-                const postOwner =
-                    await getPostOwnerName(
-                        postId
-                    );
-
-
-                if(
-                    postOwner &&
-                    postOwner.id !==
-                    currentUser.id
-                ){
-
-                    const senderName =
-                        currentProfile?.name ||
-                        currentProfile?.username ||
-                        "Someone";
-
-
-                    await createNotification({
-
-                        receiverId:
-                            postOwner.id,
-
-                        notificationType:
-                            "like",
-
-                        postId:
-                            postId,
-
-                        message:
-                            senderName +
-                            " liked your post."
-
-                    });
 
                 }
 
@@ -4441,6 +4603,7 @@ async function submitComment(){
             })
 
             .select()
+
             .single();
 
 
@@ -4455,51 +4618,6 @@ async function submitComment(){
             "Comment created:",
             data
         );
-
-
-        /*
-        ==========================================
-        NOTIFICATION SYSTEM
-        COMMENT
-        ==========================================
-        */
-
-        const postOwner =
-            await getPostOwnerName(
-                activeCommentPostId
-            );
-
-
-        if(
-            postOwner &&
-            postOwner.id !==
-            currentUser.id
-        ){
-
-            const senderName =
-                currentProfile?.name ||
-                currentProfile?.username ||
-                "Someone";
-
-
-            await createNotification({
-
-                receiverId:
-                    postOwner.id,
-
-                notificationType:
-                    "comment",
-
-                postId:
-                    activeCommentPostId,
-
-                message:
-                    senderName +
-                    " commented on your post."
-
-            });
-
-        }
 
 
         input.value = "";
@@ -4748,6 +4866,10 @@ document.addEventListener(
                 false;
 
 
+            /*
+            Mobile / supported browsers
+            */
+
             if(
                 navigator.share
             ){
@@ -4774,6 +4896,11 @@ document.addEventListener(
                 }
                 catch(error){
 
+                    /*
+                    User cancelled share.
+                    Do NOT count it.
+                    */
+
                     if(
                         error.name ===
                         "AbortError"
@@ -4787,6 +4914,10 @@ document.addEventListener(
 
                     }
 
+                    /*
+                    If native sharing fails,
+                    continue to clipboard fallback.
+                    */
 
                     console.warn(
                         "Native share failed:",
@@ -4902,51 +5033,6 @@ document.addEventListener(
                         data
                     );
 
-
-                    /*
-                    ==========================================
-                    NOTIFICATION SYSTEM
-                    SHARE
-                    ==========================================
-                    */
-
-                    const postOwner =
-                        await getPostOwnerName(
-                            postId
-                        );
-
-
-                    if(
-                        postOwner &&
-                        postOwner.id !==
-                        currentUser.id
-                    ){
-
-                        const senderName =
-                            currentProfile?.name ||
-                            currentProfile?.username ||
-                            "Someone";
-
-
-                        await createNotification({
-
-                            receiverId:
-                                postOwner.id,
-
-                            notificationType:
-                                "share",
-
-                            postId:
-                                postId,
-
-                            message:
-                                senderName +
-                                " shared your post."
-
-                        });
-
-                    }
-
                 }
 
 
@@ -4980,6 +5066,1025 @@ document.addEventListener(
 
     }
 );
+
+
+
+
+
+/* =========================================================
+   =========================================================
+   SEARCH SYSTEM
+   NEW SEARCH ONLY - EXISTING SYSTEMS ARE NOT CHANGED
+   =========================================================
+   ========================================================= */
+
+const openSearchBtn =
+    document.getElementById(
+        "openSearchBtn"
+    );
+
+const searchModal =
+    document.getElementById(
+        "searchModal"
+    );
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+const searchSubmitBtn =
+    document.getElementById(
+        "searchSubmitBtn"
+    );
+
+const searchCloseBtn =
+    document.getElementById(
+        "searchCloseBtn"
+    );
+
+const searchFilterBar =
+    document.getElementById(
+        "searchFilterBar"
+    );
+
+const searchResults =
+    document.getElementById(
+        "searchResults"
+    );
+
+let searchResultPeople = [];
+let searchResultPosts = [];
+let activeSearchFilter = "all";
+
+
+/* ==========================================
+   OPEN SEARCH
+========================================== */
+
+function openSearch(){
+
+    searchModal.classList.add("active");
+
+    document.body.style.overflow = "hidden";
+
+    searchInput.value = "";
+
+    searchFilterBar.style.display = "none";
+
+    searchResults.innerHTML = `
+
+        <div class="search-empty">
+
+            <i class="fas fa-magnifying-glass"></i>
+
+            Search people or posts from all Pathukkalam users.
+
+        </div>
+
+    `;
+
+    setTimeout(function(){
+        searchInput.focus();
+    },100);
+}
+
+
+/* ==========================================
+   CLOSE SEARCH
+========================================== */
+
+function closeSearch(){
+
+    searchModal.classList.remove("active");
+
+    document.body.style.overflow = "";
+
+    searchInput.value = "";
+
+}
+
+
+if(openSearchBtn){
+
+    openSearchBtn.addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            openSearch();
+
+        }
+    );
+
+}
+
+
+searchCloseBtn.addEventListener(
+    "click",
+    closeSearch
+);
+
+
+searchModal.addEventListener(
+    "click",
+    function(event){
+
+        if(event.target === searchModal){
+
+            closeSearch();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   SEARCH BY ENTER
+========================================== */
+
+searchInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+            performSearch();
+
+        }
+
+        if(event.key === "Escape"){
+
+            closeSearch();
+
+        }
+
+    }
+);
+
+
+searchSubmitBtn.addEventListener(
+    "click",
+    performSearch
+);
+
+
+/* ==========================================
+   PERFORM SEARCH
+   ONLY PEOPLE CURRENT USER FOLLOWS
+========================================== */
+
+async function performSearch(){
+
+    if(!currentUser){
+
+        alert("Please login first.");
+
+        return;
+
+    }
+
+    const query =
+        searchInput.value.trim();
+
+    if(!query){
+
+        searchFilterBar.style.display = "none";
+
+        searchResults.innerHTML = `
+
+            <div class="search-empty">
+
+                <i class="fas fa-magnifying-glass"></i>
+
+                Type something to search.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    searchFilterBar.style.display = "flex";
+
+    activeSearchFilter = "all";
+
+    setActiveSearchFilter("all");
+
+    searchResults.innerHTML = `
+
+        <div class="search-loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            &nbsp; Searching...
+
+        </div>
+
+    `;
+
+    try{
+
+        /*
+        ======================================
+        STEP 1
+        GET PEOPLE CURRENT USER FOLLOWS
+        ======================================
+        */
+
+        const {
+            data:followingRows,
+            error:followingError
+        } =
+        await supabaseClient
+            .from("followers")
+            .select("following_id")
+            .eq(
+                "follower_id",
+                currentUser.id
+            );
+
+        if(followingError){
+            throw followingError;
+        }
+
+        const followingIds =
+            (followingRows || [])
+                .map(function(row){
+                    return row.following_id;
+                })
+                .filter(Boolean);
+
+        if(!followingIds.length){
+
+            searchResultPeople = [];
+            searchResultPosts = [];
+            renderSearchResults();
+            return;
+
+        }
+
+        /*
+        ======================================
+        STEP 2
+        SEARCH FOLLOWED PEOPLE
+        ======================================
+        */
+
+        const escapedQuery =
+            query
+                .replace(/,/g," ")
+                .trim();
+
+        const {
+            data:people,
+            error:peopleError
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select(
+                "id, username, name, profile_url"
+            )
+            .in(
+                "id",
+                followingIds
+            )
+            .or(
+                "name.ilike.%" +
+                escapedQuery +
+                "%,username.ilike.%" +
+                escapedQuery +
+                "%"
+            )
+            .limit(30);
+
+        if(peopleError){
+            throw peopleError;
+        }
+
+        searchResultPeople =
+            people || [];
+
+        /*
+        ======================================
+        STEP 3
+        SEARCH POSTS FROM FOLLOWED PEOPLE
+        ======================================
+        */
+
+        const {
+            data:posts,
+            error:postsError
+        } =
+        await supabaseClient
+            .from("posts")
+            .select(
+                "id, user_id, caption, image, created_at"
+            )
+            .in(
+                "user_id",
+                followingIds
+            )
+            .ilike(
+                "caption",
+                "%" + query + "%"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(50);
+
+        if(postsError){
+            throw postsError;
+        }
+
+        const postRows =
+            posts || [];
+
+        /*
+        ======================================
+        GET PROFILES FOR POST RESULTS
+        ======================================
+        */
+
+        const postUserIds =
+            [
+                ...new Set(
+                    postRows.map(function(post){
+                        return post.user_id;
+                    })
+                )
+            ];
+
+        let postProfiles = [];
+
+        if(postUserIds.length){
+
+            const {
+                data:profileRows,
+                error:postProfileError
+            } =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "id, username, name, profile_url"
+                )
+                .in(
+                    "id",
+                    postUserIds
+                );
+
+            if(postProfileError){
+                throw postProfileError;
+            }
+
+            postProfiles =
+                profileRows || [];
+
+        }
+
+        searchResultPosts =
+            postRows.map(function(post){
+
+                const profile =
+                    postProfiles.find(function(item){
+                        return item.id === post.user_id;
+                    });
+
+                return {
+
+                    ...post,
+
+                    username:
+                        profile?.username || "user",
+
+                    name:
+                        profile?.name ||
+                        profile?.username ||
+                        "User",
+
+                    profile_url:
+                        profile?.profile_url ||
+                        "https://i.pravatar.cc/100"
+
+                };
+
+            });
+
+        renderSearchResults();
+
+    }
+    catch(error){
+
+        console.error(
+            "Search error:",
+            error
+        );
+
+        searchResultPeople = [];
+        searchResultPosts = [];
+
+        searchResults.innerHTML = `
+
+            <div class="search-empty">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                Unable to search right now.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   FILTER BUTTONS
+========================================== */
+
+document
+    .querySelectorAll(
+        ".search-filter-btn"
+    )
+    .forEach(function(button){
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                activeSearchFilter =
+                    button.dataset.searchFilter;
+
+                setActiveSearchFilter(
+                    activeSearchFilter
+                );
+
+                renderSearchResults();
+
+            }
+        );
+
+    });
+
+
+function setActiveSearchFilter(filter){
+
+    document
+        .querySelectorAll(
+            ".search-filter-btn"
+        )
+        .forEach(function(button){
+
+            button.classList.toggle(
+                "active",
+                button.dataset.searchFilter === filter
+            );
+
+        });
+
+}
+
+
+/* ==========================================
+   RENDER SEARCH RESULTS
+========================================== */
+
+function renderSearchResults(){
+
+    searchResults.innerHTML = "";
+
+    const showPeople =
+        activeSearchFilter === "all" ||
+        activeSearchFilter === "people";
+
+    const showPosts =
+        activeSearchFilter === "all" ||
+        activeSearchFilter === "posts";
+
+    let totalResults = 0;
+
+    if(
+        showPeople &&
+        searchResultPeople.length
+    ){
+
+        totalResults +=
+            searchResultPeople.length;
+
+        const title =
+            document.createElement("div");
+
+        title.className =
+            "search-section-title";
+
+        title.innerText =
+            "People";
+
+        searchResults.appendChild(title);
+
+        searchResultPeople.forEach(
+            function(person){
+
+                renderSearchPerson(person);
+
+            }
+        );
+
+    }
+
+    if(
+        showPosts &&
+        searchResultPosts.length
+    ){
+
+        totalResults +=
+            searchResultPosts.length;
+
+        const title =
+            document.createElement("div");
+
+        title.className =
+            "search-section-title";
+
+        title.innerText =
+            "Posts";
+
+        searchResults.appendChild(title);
+
+        searchResultPosts.forEach(
+            function(post){
+
+                renderSearchPost(post);
+
+            }
+        );
+
+    }
+
+    if(!totalResults){
+
+        const filterText =
+            activeSearchFilter === "people"
+                ? "people"
+                : activeSearchFilter === "posts"
+                    ? "posts"
+                    : "people or posts";
+
+        searchResults.innerHTML = `
+
+            <div class="search-empty">
+
+                <i class="far fa-face-frown"></i>
+
+                No ${filterText} found
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   RENDER PERSON
+========================================== */
+
+function renderSearchPerson(person){
+
+    const row =
+        document.createElement("div");
+
+    row.className =
+        "search-person-result";
+
+    const avatar =
+        person.profile_url ||
+        "https://i.pravatar.cc/100";
+
+    row.innerHTML = `
+
+        <img
+            class="search-person-avatar"
+            src="${escapeHtml(avatar)}"
+            alt="Profile">
+
+        <div class="search-person-info">
+
+            <div class="search-person-name">
+                ${escapeHtml(
+                    person.name ||
+                    person.username ||
+                    "User"
+                )}
+            </div>
+
+            <div class="search-person-username">
+                @${escapeHtml(
+                    person.username || "user"
+                )}
+            </div>
+
+        </div>
+
+        <button
+            type="button"
+            class="search-follow-btn"
+            data-search-user-id="${escapeHtml(person.id)}">
+            Following
+        </button>
+
+    `;
+
+    const button =
+        row.querySelector(
+            ".search-follow-btn"
+        );
+
+    button.classList.add("following");
+
+    button.addEventListener(
+        "click",
+        async function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            await toggleSearchFollow(
+                person,
+                button
+            );
+
+        }
+    );
+
+    row.addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target.closest(
+                    ".search-follow-btn"
+                )
+            ){
+                return;
+            }
+
+            window.location.href =
+                "/profile/" +
+                encodeURIComponent(
+                    person.username
+                );
+
+        }
+    );
+
+    row.style.cursor = "pointer";
+
+    searchResults.appendChild(row);
+
+}
+
+
+/* ==========================================
+   SEARCH FOLLOW / UNFOLLOW
+========================================== */
+
+async function toggleSearchFollow(
+    person,
+    button
+){
+
+    if(
+        !currentUser ||
+        !person ||
+        !person.id
+    ){
+
+        return;
+
+    }
+
+    if(
+        button.dataset.processing ===
+        "true"
+    ){
+
+        return;
+
+    }
+
+    button.dataset.processing =
+        "true";
+
+    button.disabled = true;
+
+    const currentlyFollowing =
+        button.classList.contains(
+            "following"
+        );
+
+    try{
+
+        if(currentlyFollowing){
+
+            const {
+                error
+            } =
+            await supabaseClient
+                .from("followers")
+                .delete()
+                .eq(
+                    "follower_id",
+                    currentUser.id
+                )
+                .eq(
+                    "following_id",
+                    person.id
+                );
+
+            if(error){
+                throw error;
+            }
+
+            button.innerText =
+                "Follow";
+
+            button.classList.remove(
+                "following"
+            );
+
+        }
+        else{
+
+            const {
+                error
+            } =
+            await supabaseClient
+                .from("followers")
+                .insert({
+                    follower_id:
+                        currentUser.id,
+                    following_id:
+                        person.id
+                });
+
+            if(error){
+                throw error;
+            }
+
+            button.innerText =
+                "Following";
+
+            button.classList.add(
+                "following"
+            );
+
+            /*
+            Notification only after successful
+            follower insert.
+            */
+
+            await createSearchFollowNotification(
+                person
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Search follow error:",
+            error
+        );
+
+        alert(
+            "Unable to update follow status: " +
+            error.message
+        );
+
+    }
+    finally{
+
+        button.disabled = false;
+
+        button.dataset.processing =
+            "false";
+
+    }
+
+}
+
+
+/* ==========================================
+   SEARCH FOLLOW NOTIFICATION
+========================================== */
+
+async function createSearchFollowNotification(
+    person
+){
+
+    try{
+
+        if(
+            !currentUser ||
+            !person?.id ||
+            person.id === currentUser.id
+        ){
+
+            return;
+
+        }
+
+        const senderName =
+            currentProfile?.name ||
+            currentProfile?.username ||
+            "Someone";
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("notifications")
+            .insert({
+                user_id:
+                    person.id,
+                sender_id:
+                    currentUser.id,
+                notification_type:
+                    "follow",
+                message:
+                    senderName +
+                    " started following you.",
+                is_read:
+                    false
+            });
+
+        if(error){
+
+            console.error(
+                "Search follow notification error:",
+                error
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Search follow notification exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   RENDER POST
+========================================== */
+
+function renderSearchPost(post){
+
+    const link =
+        document.createElement("a");
+
+    link.className =
+        "search-post-result";
+
+    link.href =
+        "/post/" +
+        encodeURIComponent(
+            post.id
+        );
+
+    const imageHtml =
+        post.image
+            ? `
+                <img
+                    class="search-post-image"
+                    src="${escapeHtml(post.image)}"
+                    alt="Post image">
+              `
+            : "";
+
+    link.innerHTML = `
+
+        <div class="search-post-header">
+
+            <img
+                class="search-post-avatar"
+                src="${escapeHtml(
+                    post.profile_url
+                )}"
+                alt="Profile">
+
+            <div>
+
+                <div class="search-post-user">
+                    ${escapeHtml(post.name)}
+                </div>
+
+                <div class="search-post-username">
+                    @${escapeHtml(post.username)}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="search-post-caption">
+            ${escapeHtml(
+                post.caption ||
+                ""
+            )}
+        </div>
+
+        ${imageHtml}
+
+        <div class="search-post-time">
+            ${formatSearchPostTime(
+                post.created_at
+            )}
+        </div>
+
+    `;
+
+    searchResults.appendChild(link);
+
+}
+
+
+/* ==========================================
+   SEARCH POST TIME
+========================================== */
+
+function formatSearchPostTime(
+    createdAt
+){
+
+    if(!createdAt){
+        return "";
+    }
+
+    const date =
+        new Date(createdAt);
+
+    if(Number.isNaN(date.getTime())){
+        return "";
+    }
+
+    const seconds =
+        Math.floor(
+            (Date.now() - date.getTime()) /
+            1000
+        );
+
+    if(seconds < 60){
+        return "Just now";
+    }
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    if(minutes < 60){
+        return minutes +
+            (minutes === 1 ? " minute ago" : " minutes ago");
+    }
+
+    const hours =
+        Math.floor(minutes / 60);
+
+    if(hours < 24){
+        return hours +
+            (hours === 1 ? " hour ago" : " hours ago");
+    }
+
+    const days =
+        Math.floor(hours / 24);
+
+    return days +
+        (days === 1 ? " day ago" : " days ago");
+
+}
 
 
 /* ==========================================
