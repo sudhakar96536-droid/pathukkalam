@@ -15,40 +15,52 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 <style>
 
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial;
+    font-family:Arial,sans-serif;
 }
 
 body{
     background:#f0f2f5;
-    padding-bottom:100px;
+    padding-bottom:120px;
+    color:#222;
 }
 
-/* HEADER */
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
     background:#1877f2;
     color:white;
-    padding:18px;
-    font-size:24px;
+    padding:16px;
+    font-size:22px;
     font-weight:bold;
     position:sticky;
     top:0;
     z-index:1000;
+    text-align:center;
 }
 
-/* SEARCH */
+
+/* =========================================================
+   SEARCH
+========================================================= */
 
 .search-box{
     background:white;
     padding:12px;
     position:sticky;
-    top:66px;
+    top:58px;
     z-index:999;
-    box-shadow:0 2px 5px rgba(0,0,0,0.05);
+    box-shadow:0 2px 5px rgba(0,0,0,.05);
 }
 
 .search-box input{
@@ -61,7 +73,10 @@ body{
     font-size:14px;
 }
 
-/* TOP BUTTONS */
+
+/* =========================================================
+   TOP BUTTONS
+========================================================= */
 
 .top-buttons{
     display:flex;
@@ -93,7 +108,10 @@ body{
     color:black;
 }
 
-/* POST FORM */
+
+/* =========================================================
+   POST FORM
+========================================================= */
 
 .post-form{
     background:white;
@@ -101,7 +119,7 @@ body{
     padding:18px;
     border-radius:18px;
     display:none;
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 .form-title{
@@ -134,9 +152,15 @@ body{
     font-size:14px;
 }
 
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    outline:2px solid rgba(24,119,242,.15);
+}
+
 textarea{
     resize:none;
-    height:90px;
+    height:100px;
 }
 
 .post-btn{
@@ -151,21 +175,55 @@ textarea{
     cursor:pointer;
 }
 
-/* SECTION */
+.post-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
 
 .section{
     display:none;
 }
 
-/* JOB CARD */
+.section-title{
+    font-size:20px;
+    font-weight:bold;
+    color:#1877f2;
+    margin:20px 15px 5px;
+}
+
+.section-subtitle{
+    margin:0 15px 12px;
+    color:gray;
+    font-size:13px;
+}
+
+
+/* =========================================================
+   JOB CARD
+========================================================= */
 
 .job{
     background:white;
-    margin:15px;
-    padding:18px;
+    margin:12px;
+    padding:17px;
     border-radius:18px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
+
+.job.inactive{
+    opacity:.72;
+    border:1px dashed #aaa;
+}
+
+
+/* =========================================================
+   COMPANY / POSTER
+========================================================= */
 
 .company-row{
     display:flex;
@@ -173,46 +231,133 @@ textarea{
     margin-bottom:14px;
 }
 
-.company-row img{
-    width:60px;
-    height:60px;
+.company-avatar{
+    width:58px;
+    height:58px;
     border-radius:50%;
     margin-right:12px;
     object-fit:cover;
+    flex-shrink:0;
+}
+
+.company-info{
+    min-width:0;
+    flex:1;
 }
 
 .job-title{
-    font-size:20px;
+    font-size:18px;
     font-weight:bold;
+    line-height:1.3;
+}
+
+.poster-name{
+    color:#333;
+    font-size:13px;
+    margin-top:5px;
+    font-weight:bold;
+}
+
+.poster-username{
+    color:#888;
+    font-size:12px;
+    margin-top:2px;
 }
 
 .company{
     color:#666;
     margin-top:4px;
-    font-size:14px;
+    font-size:13px;
 }
+
+.designation{
+    color:#777;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.profile-link{
+    border:none;
+    background:#e8f1ff;
+    color:#1877f2;
+    padding:7px 9px;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:bold;
+    cursor:pointer;
+    white-space:nowrap;
+}
+
+
+/* =========================================================
+   JOB INFO
+========================================================= */
 
 .job-info{
     margin-top:14px;
     line-height:1.8;
-    font-size:15px;
+    font-size:14px;
     color:#333;
     font-weight:bold;
 }
 
+.job-description{
+    margin-top:12px;
+    color:#555;
+    font-size:13px;
+    line-height:1.55;
+    white-space:pre-line;
+}
+
+.job-type-tag{
+    display:inline-block;
+    background:#e8f1ff;
+    color:#1877f2;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
 .post-date{
     margin-top:12px;
-    font-size:13px;
+    font-size:12px;
     color:gray;
 }
 
-/* ACTIONS */
+
+/* =========================================================
+   COUNTS
+========================================================= */
+
+.job-stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:13px;
+    padding-top:11px;
+    border-top:1px solid #eee;
+    color:#777;
+    font-size:11px;
+}
+
+.job-stats span{
+    display:flex;
+    align-items:center;
+    gap:4px;
+}
+
+
+/* =========================================================
+   ACTION ROW
+========================================================= */
 
 .action-row{
     display:flex;
     align-items:center;
-    gap:8px;
-    margin-top:16px;
+    gap:7px;
+    margin-top:15px;
 }
 
 .apply-btn{
@@ -220,25 +365,61 @@ textarea{
     border:none;
     background:#1877f2;
     color:white;
-    padding:13px;
-    border-radius:12px;
-    font-size:15px;
+    padding:12px 8px;
+    border-radius:11px;
+    font-size:13px;
     font-weight:bold;
     cursor:pointer;
 }
 
+.apply-btn.applied{
+    background:#00a86b;
+}
+
+.apply-btn.pending{
+    background:#a66b00;
+}
+
+.apply-btn.accepted{
+    background:#00a86b;
+}
+
+.apply-btn.rejected{
+    background:#777;
+}
+
+.apply-btn.owner{
+    background:#ddd;
+    color:#555;
+}
+
+.apply-btn:disabled{
+    opacity:.75;
+    cursor:not-allowed;
+}
+
+
+/* =========================================================
+   ICON BUTTONS
+========================================================= */
+
 .icon-btn{
-    width:46px;
-    height:46px;
+    width:44px;
+    height:44px;
     border:none;
-    border-radius:12px;
-    font-size:18px;
+    border-radius:11px;
+    font-size:17px;
     color:white;
     cursor:pointer;
+    flex-shrink:0;
 }
 
 .like-btn{
     background:#ff4d6d;
+}
+
+.like-btn.liked{
+    background:#00a86b;
 }
 
 .share-btn{
@@ -249,19 +430,248 @@ textarea{
     background:#25D366;
 }
 
-/* SECTION TITLE */
 
-.section-title{
-    font-size:22px;
-    font-weight:bold;
-    color:#1877f2;
-    margin:20px 15px 5px;
+/* =========================================================
+   OWNER ACTIONS
+========================================================= */
+
+.owner-actions{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
 }
 
-.section-subtitle{
-    margin:0 15px 10px;
-    color:gray;
+.owner-action-btn{
+    flex:1;
+    border:none;
+    padding:10px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.hide-btn{
+    background:#eee;
+    color:#555;
+}
+
+.activate-btn{
+    background:#e7f8ea;
+    color:#00834f;
+}
+
+
+/* =========================================================
+   APPLICANT MANAGEMENT
+========================================================= */
+
+.applicant-management{
+    margin-top:14px;
+    padding-top:13px;
+    border-top:1px solid #eee;
+}
+
+.applicant-title{
     font-size:14px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.applicant{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.applicant:last-child{
+    border-bottom:none;
+}
+
+.applicant-avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.applicant-info{
+    flex:1;
+    min-width:0;
+}
+
+.applicant-name{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.applicant-username{
+    color:#888;
+    font-size:11px;
+    margin-top:2px;
+}
+
+.applicant-actions{
+    display:flex;
+    gap:5px;
+}
+
+.applicant-action{
+    border:none;
+    padding:7px 8px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.view-applicant{
+    background:#e8f1ff;
+    color:#1877f2;
+}
+
+.accept-applicant{
+    background:#00a86b;
+    color:white;
+}
+
+.reject-applicant{
+    background:#ffe3e3;
+    color:#c62828;
+}
+
+
+/* =========================================================
+   APPLICATION STATUS
+========================================================= */
+
+.application-status{
+    margin-top:10px;
+    padding:9px;
+    border-radius:10px;
+    text-align:center;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status-pending{
+    background:#fff4d6;
+    color:#a66b00;
+}
+
+.status-accepted{
+    background:#dff7e9;
+    color:#00834f;
+}
+
+.status-rejected{
+    background:#ffe3e3;
+    color:#c62828;
+}
+
+.status-cancelled{
+    background:#eee;
+    color:#777;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty-state{
+    text-align:center;
+    padding:50px 20px;
+    color:#888;
+}
+
+.empty-state i{
+    font-size:40px;
+    color:#bbb;
+    margin-bottom:12px;
+}
+
+.empty-title{
+    font-size:16px;
+    font-weight:bold;
+    color:#555;
+}
+
+.empty-text{
+    font-size:13px;
+    margin-top:6px;
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+    text-align:center;
+    padding:40px;
+    color:#777;
+}
+
+.loading i{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:85px;
+    transform:translateX(-50%) translateY(20px);
+    background:#222;
+    color:white;
+    padding:12px 18px;
+    border-radius:25px;
+    font-size:13px;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:10000;
+    max-width:90%;
+    text-align:center;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:500px){
+
+    .header{
+        font-size:20px;
+    }
+
+    .job{
+        margin:10px;
+    }
+
+    .profile-link{
+        padding:6px 7px;
+    }
+
+    .job-title{
+        font-size:17px;
+    }
+
 }
 
 </style>
@@ -270,47 +680,65 @@ textarea{
 
 <body>
 
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
 <div class="header">
+
     💼 Pathukkalam Jobs
+
 </div>
 
-<!-- SEARCH -->
+
+<!-- =======================================================
+     SEARCH
+======================================================= -->
 
 <div class="search-box">
 
-    <input type="text"
-    id="searchInput"
-    placeholder="Search jobs like Python, Flutter, Chennai"
-    onkeyup="searchJobs()">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search jobs like Python, Flutter, Chennai"
+        autocomplete="off">
 
-    <!-- TOP BUTTONS INSIDE PAGE -->
+
+    <!-- TOP BUTTONS -->
 
     <div class="top-buttons">
 
-        <button class="top-btn active"
-        id="newJobBtn"
-        onclick="togglePostForm(this)">
+        <button
+            class="top-btn active"
+            id="newJobBtn">
 
             ➕ New Job
 
         </button>
 
-        <button class="top-btn"
-        onclick="toggleSection('postedJobs', this)">
+
+        <button
+            class="top-btn"
+            id="postedBtn">
 
             📂 Posted
 
         </button>
 
-        <button class="top-btn"
-        onclick="toggleSection('likedJobs', this)">
+
+        <button
+            class="top-btn"
+            id="likedBtn">
 
             ❤️ Liked
 
         </button>
 
-        <button class="top-btn"
-        onclick="toggleSection('appliedJobs', this)">
+
+        <button
+            class="top-btn"
+            id="appliedBtn">
 
             📝 Applied
 
@@ -320,512 +748,4040 @@ textarea{
 
 </div>
 
-<!-- NEW JOB FORM -->
 
-<div class="post-form"
-id="postForm">
+<!-- =======================================================
+     NEW JOB FORM
+======================================================= -->
+
+<div
+    class="post-form"
+    id="postForm">
 
     <div class="form-title">
+
+        <i class="fas fa-briefcase"></i>
         Create New Job Post
+
     </div>
 
+
     <div class="form-group">
+
         <label>Job Title</label>
-        <input type="text"
-        placeholder="Python Developer">
+
+        <input
+            type="text"
+            id="jobTitle"
+            placeholder="Python Developer">
+
     </div>
 
+
     <div class="form-group">
+
         <label>Company Name</label>
-        <input type="text"
-        placeholder="TCS">
+
+        <input
+            type="text"
+            id="companyName"
+            placeholder="TCS">
+
     </div>
 
+
     <div class="form-group">
+
+        <label>Designation</label>
+
+        <input
+            type="text"
+            id="designation"
+            placeholder="Software Engineer">
+
+    </div>
+
+
+    <div class="form-group">
+
         <label>Location</label>
-        <input type="text"
-        placeholder="Chennai">
+
+        <input
+            type="text"
+            id="location"
+            placeholder="Chennai / Remote">
+
     </div>
 
+
     <div class="form-group">
+
         <label>Salary</label>
-        <input type="text"
-        placeholder="₹6 LPA">
+
+        <input
+            type="text"
+            id="salary"
+            placeholder="₹6 LPA">
+
     </div>
 
+
     <div class="form-group">
+
         <label>Experience</label>
-        <input type="text"
-        placeholder="2 Years">
+
+        <input
+            type="text"
+            id="experience"
+            placeholder="2 Years">
+
     </div>
+
 
     <div class="form-group">
-        <label>Description</label>
-        <textarea
-        placeholder="Job details"></textarea>
+
+        <label>Job Type</label>
+
+        <select id="jobType">
+
+            <option value="Full Time">
+                Full Time
+            </option>
+
+            <option value="Part Time">
+                Part Time
+            </option>
+
+            <option value="Contract">
+                Contract
+            </option>
+
+            <option value="Internship">
+                Internship
+            </option>
+
+            <option value="Freelance">
+                Freelance
+            </option>
+
+            <option value="Remote">
+                Remote
+            </option>
+
+        </select>
+
     </div>
 
-    <button class="post-btn">
+
+    <div class="form-group">
+
+        <label>Description</label>
+
+        <textarea
+            id="description"
+            placeholder="Job details, responsibilities, skills required..."></textarea>
+
+    </div>
+
+
+    <button
+        class="post-btn"
+        id="postJobBtn">
+
+        <i class="fas fa-paper-plane"></i>
         Post Job
+
     </button>
 
 </div>
 
-<!-- POSTED JOBS -->
 
-<div class="section"
-id="postedJobs">
+<!-- =======================================================
+     POSTED JOBS
+======================================================= -->
+
+<div
+    class="section"
+    id="postedJobs">
 
     <div class="section-title">
+
         📂 Jobs Posted By Me
+
     </div>
 
     <div class="section-subtitle">
-        Below are your posted jobs
+
+        Manage your job posts and applicants
+
     </div>
 
-    <div class="job">
 
-        <div class="company-row">
-
-            <img src="https://i.pravatar.cc/150?img=11">
-
-            <div>
-
-                <div class="job-title">
-                    Full Stack Developer
-                </div>
-
-                <div class="company">
-                    Pathukkalam Technologies
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="job-info">
-            📍 Chennai <br>
-            💰 ₹8 LPA <br>
-            🧑‍💻 2+ Years Experience
-        </div>
-
-        <div class="post-date">
-            Posted 2 days ago
-        </div>
-
-        <div class="action-row">
-
-            <button class="apply-btn">
-                View Applicants
-            </button>
-
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
-
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
-
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
-
-        </div>
+    <div id="postedJobsContainer">
 
     </div>
 
 </div>
 
-<!-- LIKED JOBS -->
 
-<div class="section"
-id="likedJobs">
+<!-- =======================================================
+     LIKED JOBS
+======================================================= -->
+
+<div
+    class="section"
+    id="likedJobs">
 
     <div class="section-title">
+
         ❤️ Liked Jobs
+
     </div>
 
     <div class="section-subtitle">
+
         Jobs liked by you
+
     </div>
 
-    <div class="job">
 
-        <div class="company-row">
-
-            <img src="https://i.pravatar.cc/150?img=12">
-
-            <div>
-
-                <div class="job-title">
-                    UI UX Designer
-                </div>
-
-                <div class="company">
-                    Zoho
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="job-info">
-            📍 Chennai <br>
-            💰 ₹7 LPA <br>
-            🧑‍💻 3+ Years Experience
-        </div>
-
-        <div class="post-date">
-            Posted today
-        </div>
-
-        <div class="action-row">
-
-            <button class="apply-btn">
-                Apply Now
-            </button>
-
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
-
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
-
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
-
-        </div>
+    <div id="likedJobsContainer">
 
     </div>
 
 </div>
 
-<!-- APPLIED JOBS -->
 
-<div class="section"
-id="appliedJobs">
+<!-- =======================================================
+     APPLIED JOBS
+======================================================= -->
+
+<div
+    class="section"
+    id="appliedJobs">
 
     <div class="section-title">
+
         📝 Applied Jobs
+
     </div>
 
     <div class="section-subtitle">
-        Jobs applied by you
+
+        Jobs you have applied for
+
     </div>
 
-    <div class="job">
 
-        <div class="company-row">
-
-            <img src="https://i.pravatar.cc/150?img=13">
-
-            <div>
-
-                <div class="job-title">
-                    Flutter Developer
-                </div>
-
-                <div class="company">
-                    Infosys
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="job-info">
-            📍 Remote <br>
-            💰 ₹10 LPA <br>
-            🧑‍💻 1+ Years Experience
-        </div>
-
-        <div class="post-date">
-            Applied yesterday
-        </div>
-
-        <div class="action-row">
-
-            <button class="apply-btn">
-                Application Sent
-            </button>
-
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
-
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
-
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
-
-        </div>
+    <div id="appliedJobsContainer">
 
     </div>
 
 </div>
 
-<!-- MAIN JOB LIST -->
+
+<!-- =======================================================
+     ALL JOBS
+======================================================= -->
 
 <div id="allJobs">
 
-<!-- JOB 1 -->
+    <div class="section-title">
 
-<div class="job searchable">
-
-    <div class="company-row">
-
-        <img src="https://i.pravatar.cc/150?img=21">
-
-        <div>
-
-            <div class="job-title">
-                Python Developer
-            </div>
-
-            <div class="company">
-                TCS
-            </div>
-
-        </div>
+        🌍 Latest Jobs
 
     </div>
 
-    <div class="job-info">
-        📍 Chennai <br>
-        💰 ₹6 LPA <br>
-        🧑‍💻 2 Years Experience
+    <div class="section-subtitle">
+
+        Latest active jobs from Pathukkalam users
+
     </div>
 
-    <div class="post-date">
-        Posted today
-    </div>
 
-    <div class="action-row">
-
-        <button class="apply-btn">
-            Apply
-        </button>
-
-        <button class="icon-btn like-btn">
-            <i class="fa-solid fa-heart"></i>
-        </button>
-
-        <button class="icon-btn share-btn">
-            <i class="fa-solid fa-share"></i>
-        </button>
-
-        <button class="icon-btn whatsapp-btn">
-            <i class="fa-brands fa-whatsapp"></i>
-        </button>
+    <div id="allJobsContainer">
 
     </div>
 
 </div>
 
-<!-- JOB 2 -->
 
-<div class="job searchable">
+<!-- =======================================================
+     TOAST
+======================================================= -->
 
-    <div class="company-row">
-
-        <img src="https://i.pravatar.cc/150?img=22">
-
-        <div>
-
-            <div class="job-title">
-                Flutter Developer
-            </div>
-
-            <div class="company">
-                Infosys
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="job-info">
-        📍 Remote <br>
-        💰 ₹8 LPA <br>
-        🧑‍💻 1 Year Experience
-    </div>
-
-    <div class="post-date">
-        Posted 1 day ago
-    </div>
-
-    <div class="action-row">
-
-        <button class="apply-btn">
-            Apply
-        </button>
-
-        <button class="icon-btn like-btn">
-            <i class="fa-regular fa-heart"></i>
-        </button>
-
-        <button class="icon-btn share-btn">
-            <i class="fa-solid fa-share"></i>
-        </button>
-
-        <button class="icon-btn whatsapp-btn">
-            <i class="fa-brands fa-whatsapp"></i>
-        </button>
-
-    </div>
+<div
+    class="toast"
+    id="toast">
 
 </div>
 
-<!-- JOB 3 -->
 
-<div class="job searchable">
+<!-- =======================================================
+     SUPABASE
+======================================================= -->
 
-    <div class="company-row">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        <img src="https://i.pravatar.cc/150?img=23">
-
-        <div>
-
-            <div class="job-title">
-                React Developer
-            </div>
-
-            <div class="company">
-                Zoho
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="job-info">
-        📍 Chennai <br>
-        💰 ₹9 LPA <br>
-        🧑‍💻 3 Years Experience
-    </div>
-
-    <div class="post-date">
-        Posted today
-    </div>
-
-    <div class="action-row">
-
-        <button class="apply-btn">
-            Apply
-        </button>
-
-        <button class="icon-btn like-btn">
-            <i class="fa-regular fa-heart"></i>
-        </button>
-
-        <button class="icon-btn share-btn">
-            <i class="fa-solid fa-share"></i>
-        </button>
-
-        <button class="icon-btn whatsapp-btn">
-            <i class="fa-brands fa-whatsapp"></i>
-        </button>
-
-    </div>
-
-</div>
-
-</div>
 
 <script>
 
-function removeActive(){
+/* =========================================================
+   SUPABASE
+========================================================= */
 
-    let buttons =
-    document.querySelectorAll(".top-btn");
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
 
-    buttons.forEach(btn => {
 
-        btn.classList.remove("active");
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
 
-    });
-}
 
-function togglePostForm(button){
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 
-    removeActive();
 
-    button.classList.add("active");
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
 
-    let form =
+let currentUser = null;
+
+let currentProfile = null;
+
+let allJobsData = [];
+
+let myJobsData = [];
+
+let likedJobIds = new Set();
+
+let appliedJobsData = [];
+
+let searchText = "";
+
+let currentView = "all";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const postForm =
     document.getElementById("postForm");
 
-    if(form.style.display === "block"){
+const allJobsContainer =
+    document.getElementById("allJobsContainer");
 
-        form.style.display = "none";
+const postedJobsContainer =
+    document.getElementById("postedJobsContainer");
 
-    }else{
+const likedJobsContainer =
+    document.getElementById("likedJobsContainer");
 
-        form.style.display = "block";
+const appliedJobsContainer =
+    document.getElementById("appliedJobsContainer");
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.innerText =
+        message;
+
+    toast.classList.add("show");
+
+    setTimeout(
+        function(){
+
+            toast.classList.remove("show");
+
+        },
+        3000
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(dateValue){
+
+    if(!dateValue){
+
+        return "";
 
     }
-}
 
-function toggleSection(id, button){
+    const date =
+        new Date(dateValue);
 
-    removeActive();
+    if(Number.isNaN(date.getTime())){
 
-    button.classList.add("active");
+        return "";
 
-    let sections =
-    document.querySelectorAll(".section");
+    }
 
-    sections.forEach(section => {
-
-        section.style.display = "none";
-
-    });
-
-    let current =
-    document.getElementById(id);
-
-    current.style.display = "block";
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day:"numeric",
+            month:"short",
+            year:"numeric"
+        }
+    );
 
 }
 
-function searchJobs(){
 
-    let input =
-    document.getElementById("searchInput")
-    .value
-    .toLowerCase();
+/* =========================================================
+   TIME AGO
+========================================================= */
 
-    let jobs =
-    document.querySelectorAll(".searchable");
+function timeAgo(dateValue){
 
-    jobs.forEach(job => {
+    if(!dateValue){
 
-        let text =
-        job.innerText.toLowerCase();
+        return "";
 
-        if(text.includes(input)){
+    }
 
-            job.style.display = "block";
+    const date =
+        new Date(dateValue);
 
-        }else{
+    const now =
+        new Date();
 
-            job.style.display = "none";
+    const seconds =
+        Math.floor(
+            (now - date) / 1000
+        );
+
+
+    if(seconds < 60){
+
+        return "just now";
+
+    }
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    if(minutes < 60){
+
+        return minutes +
+            " min ago";
+
+    }
+
+
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
+
+
+    if(hours < 24){
+
+        return hours +
+            " hr ago";
+
+    }
+
+
+    const days =
+        Math.floor(
+            hours / 24
+        );
+
+
+    if(days < 30){
+
+        return days +
+            " day" +
+            (days === 1 ? "" : "s") +
+            " ago";
+
+    }
+
+
+    return formatDate(
+        dateValue
+    );
+
+}
+
+
+/* =========================================================
+   PROFILE URL
+========================================================= */
+
+function profileUrl(username){
+
+    if(!username){
+
+        return "#";
+
+    }
+
+    return (
+        "/profile/" +
+        encodeURIComponent(
+            username
+        )
+    );
+
+}
+
+
+/* =========================================================
+   CURRENT USER
+========================================================= */
+
+async function loadCurrentUser(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
+
+
+    if(
+        error ||
+        !data.user
+    ){
+
+        window.location.href =
+            "/login";
+
+        return false;
+
+    }
+
+
+    currentUser =
+        data.user;
+
+
+    const {
+        data:profile,
+        error:profileError
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(`
+            id,
+            username,
+            name,
+            profile_url
+        `)
+        .eq(
+            "id",
+            currentUser.id
+        )
+        .single();
+
+
+    if(profileError){
+
+        console.error(
+            "Profile loading error:",
+            profileError
+        );
+
+        showToast(
+            "Unable to load your profile."
+        );
+
+        return false;
+
+    }
+
+
+    currentProfile =
+        profile;
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   LOAD ALL JOBS
+========================================================= */
+
+async function loadAllJobs(){
+
+    allJobsContainer.innerHTML = `
+
+        <div class="loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <div>
+                Loading latest jobs...
+            </div>
+
+        </div>
+
+    `;
+
+
+    const {
+        data:jobs,
+        error
+    } =
+    await supabaseClient
+        .from("jobs")
+        .select(`
+            id,
+            user_id,
+            job_title,
+            company_name,
+            designation,
+            location,
+            salary,
+            experience,
+            job_type,
+            description,
+            status,
+            views_count,
+            likes_count,
+            applied_count,
+            shares_count,
+            whatsapp_clicks_count,
+            created_at,
+            updated_at
+        `)
+        .eq(
+            "status",
+            "active"
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Jobs loading error:",
+            error
+        );
+
+        allJobsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                <div class="empty-title">
+                    Unable to load jobs
+                </div>
+
+                <div class="empty-text">
+                    ${escapeHtml(error.message)}
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    allJobsData =
+        jobs || [];
+
+
+    await attachProfiles(
+        allJobsData
+    );
+
+}
+
+
+/* =========================================================
+   LOAD MY JOBS
+========================================================= */
+
+async function loadMyJobs(){
+
+    const {
+        data:jobs,
+        error
+    } =
+    await supabaseClient
+        .from("jobs")
+        .select(`
+            id,
+            user_id,
+            job_title,
+            company_name,
+            designation,
+            location,
+            salary,
+            experience,
+            job_type,
+            description,
+            status,
+            views_count,
+            likes_count,
+            applied_count,
+            shares_count,
+            whatsapp_clicks_count,
+            created_at,
+            updated_at
+        `)
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "My jobs error:",
+            error
+        );
+
+        myJobsData = [];
+
+        return;
+
+    }
+
+
+    myJobsData =
+        jobs || [];
+
+
+    await attachProfiles(
+        myJobsData
+    );
+
+}
+
+
+/* =========================================================
+   ATTACH PROFILES
+========================================================= */
+
+async function attachProfiles(
+    jobs
+){
+
+    const userIds =
+        [
+            ...new Set(
+                jobs
+                    .map(
+                        job =>
+                            job.user_id
+                    )
+                    .filter(Boolean)
+            )
+        ];
+
+
+    if(!userIds.length){
+
+        return;
+
+    }
+
+
+    const {
+        data:profiles,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(`
+            id,
+            username,
+            name,
+            profile_url
+        `)
+        .in(
+            "id",
+            userIds
+        );
+
+
+    if(error){
+
+        console.error(
+            "Profiles error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    const profileMap =
+        new Map();
+
+
+    (
+        profiles || []
+    ).forEach(
+        profile => {
+
+            profileMap.set(
+                profile.id,
+                profile
+            );
+
+        }
+    );
+
+
+    jobs.forEach(
+        job => {
+
+            job.profile =
+                profileMap.get(
+                    job.user_id
+                ) || null;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOAD LIKES
+========================================================= */
+
+async function loadLikes(){
+
+    likedJobIds =
+        new Set();
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("job_likes")
+        .select(`
+            job_id
+        `)
+        .eq(
+            "user_id",
+            currentUser.id
+        );
+
+
+    if(error){
+
+        console.error(
+            "Likes loading error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    (
+        data || []
+    ).forEach(
+        row => {
+
+            likedJobIds.add(
+                Number(
+                    row.job_id
+                )
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOAD APPLICATIONS
+========================================================= */
+
+async function loadApplications(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("job_applications")
+        .select(`
+            id,
+            job_id,
+            applicant_id,
+            status,
+            message,
+            created_at,
+            updated_at
+        `)
+        .eq(
+            "applicant_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Applications loading error:",
+            error
+        );
+
+        appliedJobsData = [];
+
+        return;
+
+    }
+
+
+    appliedJobsData =
+        data || [];
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    function(){
+
+        searchText =
+            this.value
+                .trim()
+                .toLowerCase();
+
+
+        renderCurrentView();
+
+    }
+);
+
+
+/* =========================================================
+   SEARCH MATCH
+========================================================= */
+
+function jobMatchesSearch(
+    job
+){
+
+    if(!searchText){
+
+        return true;
+
+    }
+
+
+    const profile =
+        job.profile || {};
+
+
+    const searchable =
+        [
+
+            job.job_title,
+
+            job.company_name,
+
+            job.designation,
+
+            job.location,
+
+            job.salary,
+
+            job.experience,
+
+            job.job_type,
+
+            job.description,
+
+            profile.name,
+
+            profile.username
+
+        ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+
+    return searchable.includes(
+        searchText
+    );
+
+}
+
+
+/* =========================================================
+   CREATE JOB CARD
+========================================================= */
+
+function createJobCard(
+    job,
+    options={}
+){
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "job";
+
+
+    if(job.status !== "active"){
+
+        card.classList.add(
+            "inactive"
+        );
+
+    }
+
+
+    const profile =
+        job.profile || {};
+
+
+    const avatar =
+        profile.profile_url ||
+        "https://i.pravatar.cc/100";
+
+
+    const name =
+        profile.name ||
+        "Pathukkalam User";
+
+
+    const username =
+        profile.username ||
+        "user";
+
+
+    const isOwner =
+        job.user_id ===
+        currentUser.id;
+
+
+    const isLiked =
+        likedJobIds.has(
+            Number(job.id)
+        );
+
+
+    const application =
+        appliedJobsData.find(
+            item =>
+                Number(
+                    item.job_id
+                ) ===
+                Number(
+                    job.id
+                )
+        );
+
+
+    let applyHtml = "";
+
+
+    if(isOwner){
+
+        applyHtml = `
+
+            <button
+                class="apply-btn owner"
+                disabled>
+
+                <i class="fas fa-user-tie"></i>
+                My Job
+
+            </button>
+
+        `;
+
+    }
+    else if(application){
+
+        if(
+            application.status ===
+            "accepted"
+        ){
+
+            applyHtml = `
+
+                <button
+                    class="apply-btn accepted"
+                    disabled>
+
+                    <i class="fas fa-check"></i>
+                    Accepted
+
+                </button>
+
+            `;
+
+        }
+        else if(
+            application.status ===
+            "rejected"
+        ){
+
+            applyHtml = `
+
+                <button
+                    class="apply-btn rejected"
+                    disabled>
+
+                    <i class="fas fa-xmark"></i>
+                    Rejected
+
+                </button>
+
+            `;
+
+        }
+        else{
+
+            applyHtml = `
+
+                <button
+                    class="apply-btn pending"
+                    disabled>
+
+                    <i class="fas fa-clock"></i>
+                    Applied
+
+                </button>
+
+            `;
 
         }
 
-    });
+    }
+    else{
+
+        applyHtml = `
+
+            <button
+                class="apply-btn"
+                data-apply-job="${job.id}">
+
+                <i class="fas fa-paper-plane"></i>
+                Apply
+
+            </button>
+
+        `;
+
+    }
+
+
+    const conditionClass =
+        job.status === "active"
+            ? ""
+            : " inactive";
+
+
+    card.innerHTML = `
+
+        <div class="company-row">
+
+            <img
+                class="company-avatar"
+                src="${escapeHtml(avatar)}"
+                alt="Profile">
+
+
+            <div class="company-info">
+
+                <div class="job-title">
+
+                    ${escapeHtml(
+                        job.job_title
+                    )}
+
+                </div>
+
+
+                <div class="poster-name">
+
+                    ${escapeHtml(
+                        name
+                    )}
+
+                </div>
+
+
+                <div class="poster-username">
+
+                    @${escapeHtml(
+                        username
+                    )}
+
+                </div>
+
+
+                ${
+                    job.company_name
+                        ? `
+                            <div class="company">
+
+                                <i class="fas fa-building"></i>
+
+                                ${escapeHtml(
+                                    job.company_name
+                                )}
+
+                            </div>
+                          `
+                        : ""
+                }
+
+
+                ${
+                    job.designation
+                        ? `
+                            <div class="designation">
+
+                                <i class="fas fa-id-badge"></i>
+
+                                ${escapeHtml(
+                                    job.designation
+                                )}
+
+                            </div>
+                          `
+                        : ""
+                }
+
+            </div>
+
+
+            <button
+                class="profile-link"
+                data-profile-username="${escapeHtml(
+                    username
+                )}">
+
+                <i class="fas fa-user"></i>
+                Profile
+
+            </button>
+
+        </div>
+
+
+        <div class="job-info">
+
+            ${
+                job.location
+                    ? `
+                        📍 ${escapeHtml(
+                            job.location
+                        )}
+                      `
+                    : ""
+            }
+
+
+            ${
+                job.salary
+                    ? `
+                        <br>
+                        💰 ${escapeHtml(
+                            job.salary
+                        )}
+                      `
+                    : ""
+            }
+
+
+            ${
+                job.experience
+                    ? `
+                        <br>
+                        🧑‍💻 ${escapeHtml(
+                            job.experience
+                        )}
+                      `
+                    : ""
+            }
+
+        </div>
+
+
+        ${
+            job.job_type
+                ? `
+                    <div class="job-type-tag">
+
+                        💼 ${escapeHtml(
+                            job.job_type
+                        )}
+
+                    </div>
+                  `
+                : ""
+        }
+
+
+        ${
+            job.description
+                ? `
+                    <div class="job-description">
+
+                        ${escapeHtml(
+                            job.description
+                        )}
+
+                    </div>
+                  `
+                : ""
+        }
+
+
+        <div class="post-date">
+
+            <i class="far fa-clock"></i>
+
+            Posted
+            ${timeAgo(job.created_at)}
+
+            •
+            ${formatDate(job.created_at)}
+
+        </div>
+
+
+        <div class="job-stats">
+
+            <span>
+
+                <i class="fas fa-eye"></i>
+
+                ${Number(
+                    job.views_count || 0
+                )}
+
+                views
+
+            </span>
+
+
+            <span>
+
+                <i class="fas fa-heart"></i>
+
+                ${Number(
+                    job.likes_count || 0
+                )}
+
+                likes
+
+            </span>
+
+
+            <span>
+
+                <i class="fas fa-file-signature"></i>
+
+                ${Number(
+                    job.applied_count || 0
+                )}
+
+                applied
+
+            </span>
+
+
+            <span>
+
+                <i class="fas fa-share"></i>
+
+                ${Number(
+                    job.shares_count || 0
+                )}
+
+                shares
+
+            </span>
+
+
+            <span>
+
+                <i class="fab fa-whatsapp"></i>
+
+                ${Number(
+                    job.whatsapp_clicks_count || 0
+                )}
+
+            </span>
+
+        </div>
+
+
+        <div class="action-row">
+
+            ${applyHtml}
+
+
+            <button
+                class="icon-btn like-btn ${isLiked ? "liked" : ""}"
+                data-like-job="${job.id}"
+                title="Like">
+
+                <i class="fa-solid fa-heart"></i>
+
+            </button>
+
+
+            <button
+                class="icon-btn share-btn"
+                data-share-job="${job.id}"
+                title="Share">
+
+                <i class="fa-solid fa-share"></i>
+
+            </button>
+
+
+            <button
+                class="icon-btn whatsapp-btn"
+                data-whatsapp-job="${job.id}"
+                title="WhatsApp">
+
+                <i class="fa-brands fa-whatsapp"></i>
+
+            </button>
+
+        </div>
+
+
+        ${
+            isOwner
+                ? `
+
+                    <div class="owner-actions">
+
+                        ${
+                            job.status === "active"
+
+                                ? `
+
+                                    <button
+                                        class="owner-action-btn hide-btn"
+                                        data-hide-job="${job.id}">
+
+                                        <i class="fas fa-eye-slash"></i>
+                                        Hide Job
+
+                                    </button>
+
+                                  `
+
+                                : `
+
+                                    <button
+                                        class="owner-action-btn activate-btn"
+                                        data-activate-job="${job.id}">
+
+                                        <i class="fas fa-eye"></i>
+                                        Activate Job
+
+                                    </button>
+
+                                  `
+                        }
+
+                    </div>
+
+
+                    <div
+                        class="applicant-management"
+                        data-applicant-container="${job.id}">
+
+                        <div class="applicant-title">
+
+                            <i class="fas fa-users"></i>
+
+                            Applicants
+                            (${Number(
+                                job.applied_count || 0
+                            )})
+
+                        </div>
+
+                        <div
+                            class="applicant-list">
+
+                            Loading applicants...
+
+                        </div>
+
+                    </div>
+
+                  `
+                : ""
+        }
+
+    `;
+
+
+    /* =====================================================
+       PROFILE BUTTON
+    ===================================================== */
+
+    const profileButton =
+        card.querySelector(
+            "[data-profile-username]"
+        );
+
+
+    if(profileButton){
+
+        profileButton.addEventListener(
+            "click",
+            function(){
+
+                const profileUsername =
+                    this.dataset.profileUsername;
+
+                if(
+                    profileUsername &&
+                    profileUsername !== "user"
+                ){
+
+                    window.location.href =
+                        profileUrl(
+                            profileUsername
+                        );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       APPLY
+    ===================================================== */
+
+    const applyButton =
+        card.querySelector(
+            "[data-apply-job]"
+        );
+
+
+    if(applyButton){
+
+        applyButton.addEventListener(
+            "click",
+            function(){
+
+                applyForJob(
+                    job,
+                    this
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       LIKE
+    ===================================================== */
+
+    const likeButton =
+        card.querySelector(
+            "[data-like-job]"
+        );
+
+
+    if(likeButton){
+
+        likeButton.addEventListener(
+            "click",
+            function(){
+
+                toggleJobLike(
+                    job,
+                    this
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SHARE
+    ===================================================== */
+
+    const shareButton =
+        card.querySelector(
+            "[data-share-job]"
+        );
+
+
+    if(shareButton){
+
+        shareButton.addEventListener(
+            "click",
+            function(){
+
+                shareJob(
+                    job
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       WHATSAPP
+    ===================================================== */
+
+    const whatsappButton =
+        card.querySelector(
+            "[data-whatsapp-job]"
+        );
+
+
+    if(whatsappButton){
+
+        whatsappButton.addEventListener(
+            "click",
+            function(){
+
+                whatsappJob(
+                    job
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       HIDE
+    ===================================================== */
+
+    const hideButton =
+        card.querySelector(
+            "[data-hide-job]"
+        );
+
+
+    if(hideButton){
+
+        hideButton.addEventListener(
+            "click",
+            function(){
+
+                changeJobStatus(
+                    job,
+                    "hidden"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ACTIVATE
+    ===================================================== */
+
+    const activateButton =
+        card.querySelector(
+            "[data-activate-job]"
+        );
+
+
+    if(activateButton){
+
+        activateButton.addEventListener(
+            "click",
+            function(){
+
+                changeJobStatus(
+                    job,
+                    "active"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       LOAD APPLICANTS
+    ===================================================== */
+
+    if(isOwner){
+
+        const applicantContainer =
+            card.querySelector(
+                ".applicant-list"
+            );
+
+
+        loadJobApplicants(
+            job,
+            applicantContainer
+        );
+
+    }
+
+
+    return card;
 
 }
+
+
+/* =========================================================
+   RENDER ALL JOBS
+========================================================= */
+
+function renderAllJobs(){
+
+    allJobsContainer.innerHTML =
+        "";
+
+
+    let jobs =
+        allJobsData.filter(
+            job =>
+                jobMatchesSearch(
+                    job
+                )
+        );
+
+
+    if(!jobs.length){
+
+        allJobsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-briefcase"></i>
+
+                <div class="empty-title">
+
+                    ${
+                        searchText
+                            ? "No jobs found"
+                            : "No active jobs yet"
+                    }
+
+                </div>
+
+                <div class="empty-text">
+
+                    ${
+                        searchText
+                            ? "Try another keyword, company, location or person."
+                            : "Be the first person to post a job."
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    jobs.forEach(
+        job => {
+
+            allJobsContainer.appendChild(
+                createJobCard(job)
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER POSTED
+========================================================= */
+
+function renderPostedJobs(){
+
+    postedJobsContainer.innerHTML =
+        "";
+
+
+    let jobs =
+        myJobsData.filter(
+            job =>
+                jobMatchesSearch(
+                    job
+                )
+        );
+
+
+    if(!jobs.length){
+
+        postedJobsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-folder-open"></i>
+
+                <div class="empty-title">
+
+                    No jobs posted by you
+
+                </div>
+
+                <div class="empty-text">
+
+                    Your job posts will appear here.
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    jobs.forEach(
+        job => {
+
+            postedJobsContainer.appendChild(
+                createJobCard(job)
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER LIKED
+========================================================= */
+
+function renderLikedJobs(){
+
+    likedJobsContainer.innerHTML =
+        "";
+
+
+    const jobs =
+        allJobsData
+            .filter(
+                job =>
+                    likedJobIds.has(
+                        Number(job.id)
+                    )
+            )
+            .filter(
+                job =>
+                    jobMatchesSearch(
+                        job
+                    )
+            );
+
+
+    if(!jobs.length){
+
+        likedJobsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="far fa-heart"></i>
+
+                <div class="empty-title">
+
+                    No liked jobs
+
+                </div>
+
+                <div class="empty-text">
+
+                    Jobs you like will appear here.
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    jobs.forEach(
+        job => {
+
+            likedJobsContainer.appendChild(
+                createJobCard(job)
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER APPLIED
+========================================================= */
+
+async function renderAppliedJobs(){
+
+    appliedJobsContainer.innerHTML = `
+
+        <div class="loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <div>
+                Loading your applications...
+            </div>
+
+        </div>
+
+    `;
+
+
+    const jobIds =
+        appliedJobsData.map(
+            item =>
+                Number(
+                    item.job_id
+                )
+        );
+
+
+    if(!jobIds.length){
+
+        appliedJobsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-file-signature"></i>
+
+                <div class="empty-title">
+
+                    No applications yet
+
+                </div>
+
+                <div class="empty-text">
+
+                    Jobs you apply for will appear here.
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const {
+        data:jobs,
+        error
+    } =
+    await supabaseClient
+        .from("jobs")
+        .select(`
+            id,
+            user_id,
+            job_title,
+            company_name,
+            designation,
+            location,
+            salary,
+            experience,
+            job_type,
+            description,
+            status,
+            views_count,
+            likes_count,
+            applied_count,
+            shares_count,
+            whatsapp_clicks_count,
+            created_at,
+            updated_at
+        `)
+        .in(
+            "id",
+            jobIds
+        );
+
+
+    if(error){
+
+        console.error(
+            "Applied jobs error:",
+            error
+        );
+
+        appliedJobsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                <div class="empty-title">
+
+                    Unable to load applications
+
+                </div>
+
+                <div class="empty-text">
+
+                    ${escapeHtml(
+                        error.message
+                    )}
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    await attachProfiles(
+        jobs || []
+    );
+
+
+    const jobMap =
+        new Map();
+
+
+    (
+        jobs || []
+    ).forEach(
+        job => {
+
+            jobMap.set(
+                Number(job.id),
+                job
+            );
+
+        }
+    );
+
+
+    appliedJobsContainer.innerHTML =
+        "";
+
+
+    const ordered =
+        appliedJobsData
+            .map(
+                application => {
+
+                    const job =
+                        jobMap.get(
+                            Number(
+                                application.job_id
+                            )
+                        );
+
+                    if(!job){
+
+                        return null;
+
+                    }
+
+                    return {
+                        job,
+                        application
+                    };
+
+                }
+            )
+            .filter(Boolean)
+            .filter(
+                item =>
+                    jobMatchesSearch(
+                        item.job
+                    )
+            );
+
+
+    if(!ordered.length){
+
+        appliedJobsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-search"></i>
+
+                <div class="empty-title">
+
+                    No matching applied jobs
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    ordered.forEach(
+        item => {
+
+            const card =
+                createJobCard(
+                    item.job
+                );
+
+
+            const status =
+                document.createElement(
+                    "div"
+                );
+
+
+            status.className =
+                "application-status status-" +
+                escapeHtml(
+                    item.application.status
+                );
+
+
+            if(
+                item.application.status ===
+                "accepted"
+            ){
+
+                status.innerHTML =
+                    "✓ Application Accepted";
+
+            }
+            else if(
+                item.application.status ===
+                "rejected"
+            ){
+
+                status.innerHTML =
+                    "✕ Application Rejected";
+
+            }
+            else if(
+                item.application.status ===
+                "cancelled"
+            ){
+
+                status.innerHTML =
+                    "Application Cancelled";
+
+            }
+            else{
+
+                status.innerHTML =
+                    "⏳ Application Pending";
+
+            }
+
+
+            card.appendChild(
+                status
+            );
+
+
+            appliedJobsContainer.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER CURRENT VIEW
+========================================================= */
+
+async function renderCurrentView(){
+
+    if(currentView === "posted"){
+
+        renderPostedJobs();
+
+    }
+    else if(currentView === "liked"){
+
+        renderLikedJobs();
+
+    }
+    else if(currentView === "applied"){
+
+        await renderAppliedJobs();
+
+    }
+    else{
+
+        renderAllJobs();
+
+    }
+
+}
+
+
+/* =========================================================
+   TOGGLE VIEW
+========================================================= */
+
+function setView(
+    view,
+    button
+){
+
+    currentView =
+        view;
+
+
+    document
+        .querySelectorAll(".top-btn")
+        .forEach(
+            btn => {
+
+                btn.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    if(button){
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+
+    postForm.style.display =
+        "none";
+
+
+    document.getElementById(
+        "postedJobs"
+    ).style.display =
+        view === "posted"
+            ? "block"
+            : "none";
+
+
+    document.getElementById(
+        "likedJobs"
+    ).style.display =
+        view === "liked"
+            ? "block"
+            : "none";
+
+
+    document.getElementById(
+        "appliedJobs"
+    ).style.display =
+        view === "applied"
+            ? "block"
+            : "none";
+
+
+    document.getElementById(
+        "allJobs"
+    ).style.display =
+        view === "all"
+            ? "block"
+            : "none";
+
+
+    renderCurrentView();
+
+}
+
+
+/* =========================================================
+   NEW JOB BUTTON
+========================================================= */
+
+document.getElementById(
+    "newJobBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        const visible =
+            postForm.style.display ===
+            "block";
+
+
+        if(visible){
+
+            postForm.style.display =
+                "none";
+
+            this.classList.remove(
+                "active"
+            );
+
+            currentView =
+                "all";
+
+            document.getElementById(
+                "allJobs"
+            ).style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        document
+            .querySelectorAll(".top-btn")
+            .forEach(
+                btn =>
+                    btn.classList.remove(
+                        "active"
+                    )
+            );
+
+
+        this.classList.add(
+            "active"
+        );
+
+
+        document.getElementById(
+            "postedJobs"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "likedJobs"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "appliedJobs"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "allJobs"
+        ).style.display =
+            "block";
+
+
+        currentView =
+            "all";
+
+
+        postForm.style.display =
+            "block";
+
+
+        postForm.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+    }
+);
+
+
+/* =========================================================
+   POSTED BUTTON
+========================================================= */
+
+document.getElementById(
+    "postedBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        setView(
+            "posted",
+            this
+        );
+
+    }
+);
+
+
+/* =========================================================
+   LIKED BUTTON
+========================================================= */
+
+document.getElementById(
+    "likedBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        await loadLikes();
+
+        setView(
+            "liked",
+            this
+        );
+
+    }
+);
+
+
+/* =========================================================
+   APPLIED BUTTON
+========================================================= */
+
+document.getElementById(
+    "appliedBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        await loadApplications();
+
+        setView(
+            "applied",
+            this
+        );
+
+    }
+);
+
+
+/* =========================================================
+   POST JOB
+========================================================= */
+
+document.getElementById(
+    "postJobBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        const button =
+            this;
+
+
+        const jobTitle =
+            document.getElementById(
+                "jobTitle"
+            ).value.trim();
+
+
+        const companyName =
+            document.getElementById(
+                "companyName"
+            ).value.trim();
+
+
+        const designation =
+            document.getElementById(
+                "designation"
+            ).value.trim();
+
+
+        const location =
+            document.getElementById(
+                "location"
+            ).value.trim();
+
+
+        const salary =
+            document.getElementById(
+                "salary"
+            ).value.trim();
+
+
+        const experience =
+            document.getElementById(
+                "experience"
+            ).value.trim();
+
+
+        const jobType =
+            document.getElementById(
+                "jobType"
+            ).value;
+
+
+        const description =
+            document.getElementById(
+                "description"
+            ).value.trim();
+
+
+        if(!jobTitle){
+
+            showToast(
+                "Please enter job title."
+            );
+
+            return;
+
+        }
+
+
+        button.disabled =
+            true;
+
+
+        button.innerHTML = `
+
+            <i class="fas fa-spinner fa-spin"></i>
+            Posting...
+
+        `;
+
+
+        try{
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient
+                .from("jobs")
+                .insert({
+
+                    user_id:
+                        currentUser.id,
+
+                    job_title:
+                        jobTitle,
+
+                    company_name:
+                        companyName ||
+                        null,
+
+                    designation:
+                        designation ||
+                        null,
+
+                    location:
+                        location ||
+                        null,
+
+                    salary:
+                        salary ||
+                        null,
+
+                    experience:
+                        experience ||
+                        null,
+
+                    job_type:
+                        jobType ||
+                        null,
+
+                    description:
+                        description ||
+                        null,
+
+                    status:
+                        "active"
+
+                })
+                .select()
+                .single();
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            showToast(
+                "Job posted successfully! ✓"
+            );
+
+
+            /* Reset form */
+
+            document.getElementById(
+                "jobTitle"
+            ).value = "";
+
+            document.getElementById(
+                "companyName"
+            ).value = "";
+
+            document.getElementById(
+                "designation"
+            ).value = "";
+
+            document.getElementById(
+                "location"
+            ).value = "";
+
+            document.getElementById(
+                "salary"
+            ).value = "";
+
+            document.getElementById(
+                "experience"
+            ).value = "";
+
+            document.getElementById(
+                "description"
+            ).value = "";
+
+
+            postForm.style.display =
+                "none";
+
+
+            await reloadEverything();
+
+
+            setView(
+                "posted",
+                document.getElementById(
+                    "postedBtn"
+                )
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Post job error:",
+                error
+            );
+
+            showToast(
+                "Unable to post job: " +
+                error.message
+            );
+
+        }
+        finally{
+
+            button.disabled =
+                false;
+
+            button.innerHTML = `
+
+                <i class="fas fa-paper-plane"></i>
+                Post Job
+
+            `;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LIKE / UNLIKE
+========================================================= */
+
+async function toggleJobLike(
+    job,
+    button
+){
+
+    if(!currentUser){
+
+        window.location.href =
+            "/login";
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .rpc(
+                "job_toggle_like",
+                {
+                    p_job_id:
+                        job.id
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        const liked =
+            data === true;
+
+
+        if(liked){
+
+            likedJobIds.add(
+                Number(job.id)
+            );
+
+            job.likes_count =
+                Number(
+                    job.likes_count || 0
+                ) + 1;
+
+
+            if(
+                job.user_id !==
+                currentUser.id
+            ){
+
+                await createNotification({
+
+                    receiverId:
+                        job.user_id,
+
+                    type:
+                        "job_like",
+
+                    message:
+                        (
+                            currentProfile?.name ||
+                            currentProfile?.username ||
+                            "Someone"
+                        ) +
+                        " liked your job post: " +
+                        job.job_title
+
+                });
+
+            }
+
+
+            showToast(
+                "Job liked ❤️"
+            );
+
+        }
+        else{
+
+            likedJobIds.delete(
+                Number(job.id)
+            );
+
+            job.likes_count =
+                Math.max(
+                    Number(
+                        job.likes_count || 0
+                    ) - 1,
+                    0
+                );
+
+
+            showToast(
+                "Job unliked"
+            );
+
+        }
+
+
+        button.classList.toggle(
+            "liked",
+            liked
+        );
+
+
+        renderCurrentView();
+
+    }
+    catch(error){
+
+        console.error(
+            "Like error:",
+            error
+        );
+
+        showToast(
+            "Unable to like job: " +
+            error.message
+        );
+
+    }
+    finally{
+
+        button.disabled =
+            false;
+
+    }
+
+}
+
+
+/* =========================================================
+   APPLY FOR JOB
+========================================================= */
+
+async function applyForJob(
+    job,
+    button
+){
+
+    if(!currentUser){
+
+        window.location.href =
+            "/login";
+
+        return;
+
+    }
+
+
+    const message =
+        prompt(
+            "Optional message to the job poster:"
+        );
+
+
+    if(message === null){
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+
+    button.innerHTML = `
+
+        <i class="fas fa-spinner fa-spin"></i>
+        Applying...
+
+    `;
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .rpc(
+                "job_apply",
+                {
+                    p_job_id:
+                        job.id,
+
+                    p_message:
+                        message ||
+                        null
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        appliedJobsData.push({
+
+            id:
+                data,
+
+            job_id:
+                job.id,
+
+            applicant_id:
+                currentUser.id,
+
+            status:
+                "pending",
+
+            message:
+                message ||
+                null,
+
+            created_at:
+                new Date().toISOString()
+
+        });
+
+
+        job.applied_count =
+            Number(
+                job.applied_count || 0
+            ) + 1;
+
+
+        await createNotification({
+
+            receiverId:
+                job.user_id,
+
+            type:
+                "job_application",
+
+            message:
+                (
+                    currentProfile?.name ||
+                    currentProfile?.username ||
+                    "Someone"
+                ) +
+                " applied for your job: " +
+                job.job_title
+
+        });
+
+
+        showToast(
+            "Job application sent! ✓"
+        );
+
+
+        renderCurrentView();
+
+    }
+    catch(error){
+
+        console.error(
+            "Application error:",
+            error
+        );
+
+
+        showToast(
+            "Unable to apply: " +
+            error.message
+        );
+
+
+        button.disabled =
+            false;
+
+        button.innerHTML = `
+
+            <i class="fas fa-paper-plane"></i>
+            Apply
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   SHARE JOB
+========================================================= */
+
+async function shareJob(
+    job
+){
+
+    const url =
+        window.location.origin +
+        "/jobs?job=" +
+        encodeURIComponent(
+            job.id
+        );
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .rpc(
+                "job_record_share",
+                {
+                    p_job_id:
+                        job.id
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Share tracking error:",
+                error
+            );
+
+        }
+
+
+        job.shares_count =
+            Number(
+                job.shares_count || 0
+            ) + 1;
+
+
+        if(
+            navigator.share
+        ){
+
+            await navigator.share({
+
+                title:
+                    job.job_title,
+
+                text:
+                    "Check this job on Pathukkalam",
+
+                url:
+                    url
+
+            });
+
+        }
+        else{
+
+            await navigator.clipboard.writeText(
+                url
+            );
+
+            showToast(
+                "Job link copied! ✓"
+            );
+
+        }
+
+    }
+    catch(error){
+
+        if(
+            error.name !==
+            "AbortError"
+        ){
+
+            console.error(
+                "Share error:",
+                error
+            );
+
+            showToast(
+                "Unable to share job."
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+async function whatsappJob(
+    job
+){
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .rpc(
+                "job_record_whatsapp",
+                {
+                    p_job_id:
+                        job.id
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "WhatsApp tracking error:",
+                error
+            );
+
+        }
+
+
+        job.whatsapp_clicks_count =
+            Number(
+                job.whatsapp_clicks_count || 0
+            ) + 1;
+
+
+        const url =
+            window.location.origin +
+            "/jobs?job=" +
+            encodeURIComponent(
+                job.id
+            );
+
+
+        const text =
+            "Check this job on Pathukkalam:\n\n" +
+            job.job_title +
+            "\n" +
+            (
+                job.company_name ||
+                ""
+            ) +
+            "\n" +
+            url;
+
+
+        window.open(
+            "https://wa.me/?text=" +
+            encodeURIComponent(
+                text
+            ),
+            "_blank"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "WhatsApp error:",
+            error
+        );
+
+        showToast(
+            "Unable to open WhatsApp."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RECORD JOB VIEW
+========================================================= */
+
+async function recordJobView(
+    job
+){
+
+    if(
+        !currentUser ||
+        job.user_id ===
+        currentUser.id
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .rpc(
+                "job_record_view",
+                {
+                    p_job_id:
+                        job.id
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "View tracking error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        job.views_count =
+            Number(
+                job.views_count || 0
+            ) + 1;
+
+    }
+    catch(error){
+
+        console.error(
+            "View exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CHANGE JOB STATUS
+========================================================= */
+
+async function changeJobStatus(
+    job,
+    newStatus
+){
+
+    const text =
+        newStatus === "active"
+            ? "Activate this job?"
+            : "Hide this job?";
+
+
+    if(!confirm(text)){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("jobs")
+            .update({
+
+                status:
+                    newStatus,
+
+                updated_at:
+                    new Date().toISOString()
+
+            })
+            .eq(
+                "id",
+                job.id
+            )
+            .eq(
+                "user_id",
+                currentUser.id
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        job.status =
+            newStatus;
+
+
+        showToast(
+            newStatus === "active"
+                ? "Job activated ✓"
+                : "Job hidden"
+        );
+
+
+        await reloadEverything();
+
+        renderCurrentView();
+
+    }
+    catch(error){
+
+        console.error(
+            "Job status error:",
+            error
+        );
+
+        showToast(
+            "Unable to change job status: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD APPLICANTS FOR OWNER
+========================================================= */
+
+async function loadJobApplicants(
+    job,
+    container
+){
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    const {
+        data:applications,
+        error
+    } =
+    await supabaseClient
+        .from("job_applications")
+        .select(`
+            id,
+            applicant_id,
+            status,
+            message,
+            created_at,
+            updated_at
+        `)
+        .eq(
+            "job_id",
+            job.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        container.innerHTML = `
+
+            <div
+                style="
+                    color:#c62828;
+                    font-size:12px;
+                ">
+
+                Unable to load applicants.
+
+            </div>
+
+        `;
+
+        console.error(
+            "Applicants error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if(!applications?.length){
+
+        container.innerHTML = `
+
+            <div
+                style="
+                    color:#888;
+                    font-size:12px;
+                ">
+
+                No applicants yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const applicantIds =
+        [
+            ...new Set(
+                applications.map(
+                    item =>
+                        item.applicant_id
+                )
+            )
+        ];
+
+
+    const {
+        data:profiles,
+        error:profileError
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(`
+            id,
+            username,
+            name,
+            profile_url
+        `)
+        .in(
+            "id",
+            applicantIds
+        );
+
+
+    if(profileError){
+
+        console.error(
+            "Applicant profiles error:",
+            profileError
+        );
+
+    }
+
+
+    const profileMap =
+        new Map();
+
+
+    (
+        profiles || []
+    ).forEach(
+        profile => {
+
+            profileMap.set(
+                profile.id,
+                profile
+            );
+
+        }
+    );
+
+
+    container.innerHTML =
+        "";
+
+
+    applications.forEach(
+        application => {
+
+            const profile =
+                profileMap.get(
+                    application.applicant_id
+                ) || {};
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "applicant";
+
+
+            const avatar =
+                profile.profile_url ||
+                "https://i.pravatar.cc/100";
+
+
+            const name =
+                profile.name ||
+                profile.username ||
+                "User";
+
+
+            let actions = `
+
+                <button
+                    class="applicant-action view-applicant"
+                    data-view-applicant="${escapeHtml(
+                        profile.username || ""
+                    )}">
+
+                    View
+
+                </button>
+
+            `;
+
+
+            if(
+                application.status ===
+                "pending"
+            ){
+
+                actions += `
+
+                    <button
+                        class="applicant-action accept-applicant"
+                        data-accept-application="${application.id}">
+
+                        Accept
+
+                    </button>
+
+
+                    <button
+                        class="applicant-action reject-applicant"
+                        data-reject-application="${application.id}">
+
+                        Reject
+
+                    </button>
+
+                `;
+
+            }
+            else{
+
+                actions += `
+
+                    <span
+                        style="
+                            font-size:10px;
+                            font-weight:bold;
+                            color:${
+                                application.status ===
+                                "accepted"
+                                    ? "#00834f"
+                                    : "#c62828"
+                            };
+                        ">
+
+                        ${
+                            application.status ===
+                            "accepted"
+                                ? "Accepted"
+                                : "Rejected"
+                        }
+
+                    </span>
+
+                `;
+
+            }
+
+
+            row.innerHTML = `
+
+                <img
+                    class="applicant-avatar"
+                    src="${escapeHtml(
+                        avatar
+                    )}">
+
+
+                <div class="applicant-info">
+
+                    <div class="applicant-name">
+
+                        ${escapeHtml(
+                            name
+                        )}
+
+                    </div>
+
+
+                    <div class="applicant-username">
+
+                        @${escapeHtml(
+                            profile.username ||
+                            "user"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="applicant-actions">
+
+                    ${actions}
+
+                </div>
+
+            `;
+
+
+            const viewButton =
+                row.querySelector(
+                    "[data-view-applicant]"
+                );
+
+
+            if(viewButton){
+
+                viewButton.addEventListener(
+                    "click",
+                    function(){
+
+                        const username =
+                            this.dataset.viewApplicant;
+
+
+                        if(username){
+
+                            window.location.href =
+                                profileUrl(
+                                    username
+                                );
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            const acceptButton =
+                row.querySelector(
+                    "[data-accept-application]"
+                );
+
+
+            if(acceptButton){
+
+                acceptButton.addEventListener(
+                    "click",
+                    function(){
+
+                        updateApplicationStatus(
+                            job,
+                            application,
+                            "accepted"
+                        );
+
+                    }
+                );
+
+            }
+
+
+            const rejectButton =
+                row.querySelector(
+                    "[data-reject-application]"
+                );
+
+
+            if(rejectButton){
+
+                rejectButton.addEventListener(
+                    "click",
+                    function(){
+
+                        updateApplicationStatus(
+                            job,
+                            application,
+                            "rejected"
+                        );
+
+                    }
+                );
+
+            }
+
+
+            container.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ACCEPT / REJECT APPLICATION
+========================================================= */
+
+async function updateApplicationStatus(
+    job,
+    application,
+    status
+){
+
+    const confirmation =
+        status === "accepted"
+            ? "Accept this applicant?"
+            : "Reject this applicant?";
+
+
+    if(!confirm(confirmation)){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .rpc(
+                "job_update_application",
+                {
+                    p_application_id:
+                        application.id,
+
+                    p_status:
+                        status
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        application.status =
+            status;
+
+
+        await createNotification({
+
+            receiverId:
+                application.applicant_id,
+
+            type:
+                "job_" + status,
+
+            message:
+                (
+                    currentProfile?.name ||
+                    currentProfile?.username ||
+                    "The job poster"
+                ) +
+                " " +
+                (
+                    status === "accepted"
+                        ? "accepted"
+                        : "rejected"
+                ) +
+                " your application for " +
+                job.job_title
+
+        });
+
+
+        showToast(
+            status === "accepted"
+                ? "Applicant accepted ✓"
+                : "Applicant rejected"
+        );
+
+
+        await reloadEverything();
+
+        renderCurrentView();
+
+    }
+    catch(error){
+
+        console.error(
+            "Application status error:",
+            error
+        );
+
+        showToast(
+            "Unable to update application: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE NOTIFICATION
+========================================================= */
+
+async function createNotification({
+    receiverId,
+    type,
+    message
+}){
+
+    if(
+        !receiverId ||
+        receiverId ===
+        currentUser?.id
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("notifications")
+            .insert({
+
+                user_id:
+                    receiverId,
+
+                sender_id:
+                    currentUser.id,
+
+                notification_type:
+                    type,
+
+                message:
+                    message,
+
+                is_read:
+                    false
+
+            });
+
+
+        if(error){
+
+            console.error(
+                "Notification error:",
+                error
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Notification exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RELOAD EVERYTHING
+========================================================= */
+
+async function reloadEverything(){
+
+    await Promise.all([
+
+        loadAllJobs(),
+
+        loadMyJobs(),
+
+        loadLikes(),
+
+        loadApplications()
+
+    ]);
+
+
+    renderCurrentView();
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initializePage(){
+
+    const loggedIn =
+        await loadCurrentUser();
+
+
+    if(!loggedIn){
+
+        return;
+
+    }
+
+
+    await reloadEverything();
+
+
+    setView(
+        "all",
+        document.getElementById(
+            "newJobBtn"
+        )
+    );
+
+
+    /*
+       New Job button is active but
+       form remains closed initially.
+    */
+
+    postForm.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   PERIODIC REFRESH
+========================================================= */
+
+setInterval(
+    async function(){
+
+        if(!currentUser){
+
+            return;
+
+        }
+
+
+        await reloadEverything();
+
+    },
+    30000
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+initializePage();
 
 </script>
 
 </body>
+
 </html>
