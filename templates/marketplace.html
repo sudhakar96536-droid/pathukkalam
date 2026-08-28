@@ -6,12 +6,12 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+      content="width=device-width, initial-scale=1.0">
 
 <title>Pathukkalam Marketplace</title>
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 
@@ -40,8 +40,8 @@ body{
 .header{
     background:#1877f2;
     color:white;
-    padding:18px;
-    font-size:24px;
+    padding:17px;
+    font-size:22px;
     font-weight:bold;
     position:sticky;
     top:0;
@@ -56,19 +56,20 @@ body{
 
 .search-box{
     background:white;
-    padding:15px;
+    padding:12px;
     position:sticky;
-    top:66px;
+    top:58px;
     z-index:999;
+    border-bottom:1px solid #eee;
 }
 
 .search-wrapper{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:8px;
     background:#f0f2f5;
     border-radius:14px;
-    padding:0 14px;
+    padding:0 13px;
 }
 
 .search-wrapper i{
@@ -77,7 +78,7 @@ body{
 
 .search-box input{
     width:100%;
-    padding:15px 5px;
+    padding:13px 5px;
     border:none;
     background:transparent;
     outline:none;
@@ -90,20 +91,20 @@ body{
 ========================================================= */
 
 .top-action{
-    padding:0 15px;
+    padding:0 12px;
     display:flex;
-    gap:10px;
-    margin-top:14px;
+    gap:8px;
+    margin-top:12px;
 }
 
 .top-btn{
     flex:1;
-    padding:18px 10px;
+    padding:14px 7px;
     border:none;
     background:#1877f2;
     color:white;
-    border-radius:18px;
-    font-size:15px;
+    border-radius:15px;
+    font-size:13px;
     font-weight:bold;
     cursor:pointer;
     transition:.2s;
@@ -111,7 +112,7 @@ body{
 
 .top-btn.active{
     background:#ffb400;
-    color:black;
+    color:#222;
     transform:scale(1.02);
 }
 
@@ -126,7 +127,7 @@ body{
 
 .sell-form{
     background:white;
-    margin:15px;
+    margin:14px 12px;
     padding:18px;
     border-radius:18px;
     display:none;
@@ -134,10 +135,10 @@ body{
 }
 
 .form-title{
-    font-size:22px;
+    font-size:21px;
     font-weight:bold;
     color:#1877f2;
-    margin-bottom:15px;
+    margin-bottom:17px;
 }
 
 .form-group{
@@ -147,7 +148,7 @@ body{
 .form-group label{
     display:block;
     margin-bottom:6px;
-    font-size:14px;
+    font-size:13px;
     font-weight:bold;
 }
 
@@ -171,7 +172,16 @@ body{
 
 textarea{
     resize:none;
-    height:90px;
+    height:95px;
+}
+
+.image-preview{
+    display:none;
+    width:100%;
+    max-height:240px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-top:10px;
 }
 
 .btn-group{
@@ -203,23 +213,6 @@ textarea{
 
 
 /* =========================================================
-   IMAGE PREVIEW
-========================================================= */
-
-.image-preview{
-    display:none;
-    margin-top:10px;
-}
-
-.image-preview img{
-    width:100%;
-    max-height:220px;
-    object-fit:cover;
-    border-radius:12px;
-}
-
-
-/* =========================================================
    SECTION
 ========================================================= */
 
@@ -227,43 +220,51 @@ textarea{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:20px 15px 5px;
+    padding:19px 14px 6px;
 }
 
 .section-title{
-    font-size:22px;
+    font-size:19px;
     font-weight:bold;
     color:#1877f2;
 }
 
 .section-subtitle{
-    margin:0 15px 15px;
-    color:gray;
-    font-size:14px;
+    margin:0 14px 12px;
+    color:#888;
+    font-size:13px;
+}
+
+.refresh-btn{
+    width:38px;
+    height:38px;
+    border:none;
+    background:white;
+    color:#1877f2;
+    border-radius:50%;
+    cursor:pointer;
+    box-shadow:0 2px 5px rgba(0,0,0,.08);
 }
 
 
 /* =========================================================
-   PRODUCT
+   PRODUCT CARD
 ========================================================= */
 
 .product{
     background:white;
-    margin:15px;
+    margin:12px;
     border-radius:18px;
     overflow:hidden;
     box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 .product-image{
-    position:relative;
-}
-
-.product img.product-main-image{
     width:100%;
     height:220px;
     object-fit:cover;
     display:block;
+    background:#eee;
 }
 
 .product-details{
@@ -271,72 +272,34 @@ textarea{
 }
 
 .product-title{
-    font-size:20px;
+    font-size:19px;
     font-weight:bold;
     margin-bottom:8px;
-}
-
-.product-description{
-    color:#555;
-    font-size:13px;
-    line-height:1.5;
-    margin-top:8px;
+    word-break:break-word;
 }
 
 .condition{
     display:inline-block;
-    padding:6px 12px;
+    padding:6px 11px;
     border-radius:20px;
     font-size:12px;
     font-weight:bold;
-    margin-bottom:10px;
+    margin-bottom:9px;
 }
 
-.new{
+.condition-new{
     background:#e7f8ea;
-    color:green;
+    color:#008a28;
 }
 
-.used{
+.condition-used{
     background:#fff4e5;
-    color:#ff8800;
+    color:#d66f00;
 }
 
-.rebuild{
+.condition-rebuild{
     background:#e8f1ff;
     color:#1877f2;
-}
-
-
-/* =========================================================
-   PRICE
-========================================================= */
-
-.price-row{
-    margin-top:8px;
-}
-
-.mrp{
-    text-decoration:line-through;
-    color:gray;
-    margin-right:10px;
-}
-
-.offer{
-    color:green;
-    font-size:22px;
-    font-weight:bold;
-}
-
-
-/* =========================================================
-   LOCATION
-========================================================= */
-
-.location{
-    margin-top:10px;
-    color:#666;
-    font-size:14px;
 }
 
 
@@ -344,27 +307,25 @@ textarea{
    SELLER
 ========================================================= */
 
-.seller-box{
+.seller{
     display:flex;
     align-items:center;
     gap:10px;
-    margin-top:14px;
-    padding:10px;
-    background:#f7f8fa;
-    border-radius:12px;
-    cursor:pointer;
+    margin:7px 0 10px;
+    padding:8px 0;
 }
 
 .seller-avatar{
-    width:42px;
-    height:42px;
+    width:43px;
+    height:43px;
     border-radius:50%;
     object-fit:cover;
+    flex-shrink:0;
 }
 
 .seller-info{
-    flex:1;
     min-width:0;
+    flex:1;
 }
 
 .seller-name{
@@ -373,27 +334,76 @@ textarea{
 }
 
 .seller-username{
+    font-size:11px;
     color:#888;
-    font-size:12px;
-    margin-top:3px;
+    margin-top:2px;
 }
 
-.seller-arrow{
+.profile-link{
+    border:none;
+    background:#e8f1ff;
     color:#1877f2;
+    border-radius:10px;
+    padding:7px 9px;
+    font-size:11px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 
 /* =========================================================
-   STATS
+   PRICE
+========================================================= */
+
+.price-row{
+    margin-top:7px;
+}
+
+.mrp{
+    text-decoration:line-through;
+    color:#999;
+    margin-right:9px;
+    font-size:14px;
+}
+
+.offer{
+    color:#008a28;
+    font-size:21px;
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   LOCATION / DESCRIPTION
+========================================================= */
+
+.location{
+    margin-top:10px;
+    color:#666;
+    font-size:13px;
+}
+
+.description{
+    margin-top:10px;
+    color:#555;
+    font-size:13px;
+    line-height:1.5;
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   STATISTICS
 ========================================================= */
 
 .product-stats{
     display:flex;
-    gap:14px;
-    flex-wrap:wrap;
+    gap:15px;
     margin-top:12px;
-    color:#777;
-    font-size:12px;
+    padding-top:10px;
+    border-top:1px solid #eee;
+    color:#888;
+    font-size:11px;
 }
 
 .product-stats span{
@@ -411,48 +421,40 @@ textarea{
     display:flex;
     align-items:center;
     gap:7px;
-    margin-top:18px;
+    margin-top:15px;
+}
+
+.view-btn,
+.interested-btn{
+    flex:1;
+    padding:12px 7px;
+    border:none;
+    border-radius:11px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .view-btn{
-    flex:1;
-    padding:13px;
-    border:none;
     background:#1877f2;
     color:white;
-    border-radius:12px;
-    font-size:14px;
-    font-weight:bold;
-    cursor:pointer;
 }
 
 .interested-btn{
-    flex:1;
-    padding:13px;
-    border:none;
     background:#00a86b;
     color:white;
-    border-radius:12px;
-    font-size:14px;
-    font-weight:bold;
-    cursor:pointer;
 }
 
-.interested-btn.interested{
-    background:#00834f;
+.interested-btn.active{
+    background:#007d51;
 }
-
-
-/* =========================================================
-   ICON BUTTONS
-========================================================= */
 
 .icon-btn{
-    width:46px;
-    height:46px;
+    width:43px;
+    height:43px;
     border:none;
-    border-radius:12px;
-    font-size:18px;
+    border-radius:11px;
+    font-size:17px;
     cursor:pointer;
     color:white;
     flex-shrink:0;
@@ -468,7 +470,7 @@ textarea{
 
 .share-btn{
     background:#ffb400;
-    color:black;
+    color:#222;
 }
 
 .whatsapp-btn{
@@ -481,40 +483,28 @@ textarea{
 ========================================================= */
 
 .owner-controls{
-    margin-top:14px;
-    padding-top:14px;
-    border-top:1px solid #eee;
-}
-
-.owner-title{
-    font-size:13px;
-    font-weight:bold;
-    margin-bottom:10px;
-    color:#1877f2;
-}
-
-.owner-buttons{
     display:flex;
-    gap:8px;
+    gap:7px;
+    margin-top:10px;
 }
 
 .owner-btn{
     flex:1;
-    padding:11px;
+    padding:10px 5px;
     border:none;
     border-radius:10px;
-    cursor:pointer;
-    font-size:12px;
+    font-size:11px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .hide-btn{
-    background:#eee;
-    color:#555;
+    background:#fff4d6;
+    color:#9b6800;
 }
 
 .activate-btn{
-    background:#e7f8ea;
+    background:#dff7e9;
     color:#00834f;
 }
 
@@ -523,29 +513,61 @@ textarea{
     color:#c62828;
 }
 
-
-/* =========================================================
-   STATUS
-========================================================= */
-
 .status-badge{
-    position:absolute;
-    top:12px;
-    left:12px;
-    padding:7px 10px;
-    border-radius:20px;
-    font-size:11px;
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    font-size:10px;
     font-weight:bold;
+    margin-bottom:8px;
 }
 
 .status-active{
-    background:#e7f8ea;
+    background:#dff7e9;
     color:#00834f;
 }
 
 .status-hidden{
     background:#eee;
-    color:#666;
+    color:#777;
+}
+
+
+/* =========================================================
+   MY / LIKED SECTIONS
+========================================================= */
+
+.special-section{
+    display:none;
+}
+
+.special-section-title{
+    font-size:19px;
+    font-weight:bold;
+    margin:20px 14px 4px;
+    color:#1877f2;
+}
+
+.special-section-subtitle{
+    margin:0 14px 12px;
+    color:#888;
+    font-size:13px;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+    text-align:center;
+    padding:50px 20px;
+    color:#777;
+}
+
+.loading i{
+    font-size:28px;
+    margin-bottom:12px;
 }
 
 
@@ -562,35 +584,70 @@ textarea{
 .empty-state i{
     font-size:42px;
     color:#bbb;
-    margin-bottom:12px;
+    margin-bottom:13px;
 }
 
 .empty-title{
-    font-size:17px;
+    font-size:16px;
     font-weight:bold;
     color:#555;
 }
 
 .empty-text{
     font-size:13px;
-    margin-top:7px;
+    margin-top:6px;
     line-height:1.5;
 }
 
 
 /* =========================================================
-   LOADING
+   MODAL
 ========================================================= */
 
-.loading{
-    text-align:center;
-    padding:45px;
-    color:#777;
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    z-index:20000;
 }
 
-.loading i{
-    font-size:25px;
-    margin-bottom:10px;
+.modal{
+    background:white;
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow-y:auto;
+    border-radius:20px;
+    padding:20px;
+}
+
+.modal-close{
+    float:right;
+    border:none;
+    background:#eee;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.modal-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:14px;
+    padding-right:40px;
+}
+
+.modal-image{
+    width:100%;
+    max-height:300px;
+    object-fit:cover;
+    border-radius:14px;
+    margin-bottom:14px;
 }
 
 
@@ -611,7 +668,7 @@ textarea{
     opacity:0;
     pointer-events:none;
     transition:.25s;
-    z-index:10000;
+    z-index:30000;
     max-width:90%;
     text-align:center;
 }
@@ -626,33 +683,22 @@ textarea{
    RESPONSIVE
 ========================================================= */
 
-@media(max-width:600px){
+@media(max-width:500px){
 
     .header{
         font-size:20px;
-    }
-
-    .top-action{
-        gap:6px;
-        padding:0 10px;
-    }
-
-    .top-btn{
-        font-size:12px;
-        padding:15px 5px;
     }
 
     .product{
         margin:10px;
     }
 
-    .action-row{
-        flex-wrap:wrap;
+    .top-action{
+        padding:0 10px;
     }
 
-    .view-btn,
-    .interested-btn{
-        min-width:120px;
+    .top-btn{
+        font-size:11px;
     }
 
 }
@@ -689,7 +735,7 @@ textarea{
         <input
             type="text"
             id="searchInput"
-            placeholder="Search product, seller, location, description..."
+            placeholder="Search product, person, location..."
             autocomplete="off">
 
     </div>
@@ -707,7 +753,8 @@ textarea{
         class="top-btn"
         id="sellBtn">
 
-        ➕ Sell Product
+        <i class="fas fa-plus"></i>
+        Sell Product
 
     </button>
 
@@ -716,7 +763,8 @@ textarea{
         class="top-btn"
         id="listedBtn">
 
-        📦 My Listings
+        <i class="fas fa-box"></i>
+        My Listings
 
     </button>
 
@@ -725,7 +773,8 @@ textarea{
         class="top-btn"
         id="likedBtn">
 
-        ❤️ Liked
+        <i class="fas fa-heart"></i>
+        Liked
 
     </button>
 
@@ -740,22 +789,17 @@ textarea{
     class="sell-form"
     id="sellForm">
 
-
     <div class="form-title">
 
-        <i class="fas fa-box"></i>
+        <i class="fas fa-store"></i>
         Create Product Post
 
     </div>
 
 
-    <!-- PRODUCT NAME -->
-
     <div class="form-group">
 
-        <label>
-            Product Name *
-        </label>
+        <label>Product Name *</label>
 
         <input
             type="text"
@@ -765,13 +809,9 @@ textarea{
     </div>
 
 
-    <!-- CONDITION -->
-
     <div class="form-group">
 
-        <label>
-            Product Condition
-        </label>
+        <label>Product Condition *</label>
 
         <select id="productCondition">
 
@@ -792,13 +832,9 @@ textarea{
     </div>
 
 
-    <!-- MRP -->
-
     <div class="form-group">
 
-        <label>
-            MRP Price
-        </label>
+        <label>MRP Price</label>
 
         <input
             type="number"
@@ -809,13 +845,9 @@ textarea{
     </div>
 
 
-    <!-- OFFER -->
-
     <div class="form-group">
 
-        <label>
-            Offer Price *
-        </label>
+        <label>Offer Price *</label>
 
         <input
             type="number"
@@ -826,13 +858,9 @@ textarea{
     </div>
 
 
-    <!-- LOCATION -->
-
     <div class="form-group">
 
-        <label>
-            Location *
-        </label>
+        <label>Location *</label>
 
         <input
             type="text"
@@ -842,13 +870,9 @@ textarea{
     </div>
 
 
-    <!-- DESCRIPTION -->
-
     <div class="form-group">
 
-        <label>
-            Description
-        </label>
+        <label>Description</label>
 
         <textarea
             id="productDescription"
@@ -857,29 +881,19 @@ textarea{
     </div>
 
 
-    <!-- IMAGE -->
-
     <div class="form-group">
 
-        <label>
-            Product Image
-        </label>
+        <label>Upload Product Image</label>
 
         <input
             type="file"
             id="productImage"
-            accept="image/*">
+            accept="image/jpeg,image/png,image/webp">
 
-        <div
+        <img
+            id="imagePreview"
             class="image-preview"
-            id="imagePreview">
-
-            <img
-                id="previewImage"
-                src=""
-                alt="Preview">
-
-        </div>
+            alt="Preview">
 
     </div>
 
@@ -910,86 +924,28 @@ textarea{
 
 
 <!-- =======================================================
-     MAIN GLOBAL MARKETPLACE
-======================================================= -->
-
-<div
-    id="globalSection">
-
-
-    <div class="section-header">
-
-        <div class="section-title">
-
-            🛍️ Marketplace
-
-        </div>
-
-
-        <button
-            class="icon-btn"
-            id="refreshBtn"
-            style="
-                width:40px;
-                height:40px;
-                background:white;
-                color:#1877f2;
-                box-shadow:0 2px 5px rgba(0,0,0,.08);
-            ">
-
-            <i class="fas fa-rotate"></i>
-
-        </button>
-
-    </div>
-
-
-    <div
-        class="section-subtitle">
-
-        Latest products from Pathukkalam users
-
-    </div>
-
-
-    <div
-        id="globalProductsContainer">
-
-    </div>
-
-</div>
-
-
-<!-- =======================================================
      MY LISTINGS
 ======================================================= -->
 
 <div
-    class="my-listed-section"
-    id="listedProducts"
-    style="display:none;">
+    class="special-section"
+    id="listedProducts">
 
-    <div class="section-header">
+    <div class="special-section-title">
 
-        <div class="section-title">
+        📦 My Listed Products
 
-            📦 My Listed Products
+    </div>
 
-        </div>
+    <div class="special-section-subtitle">
+
+        Manage your Marketplace products.
+        Active products are visible to everyone.
 
     </div>
 
 
-    <div class="section-subtitle">
-
-        Manage products posted by you.
-        Hidden products are not visible to other users.
-
-    </div>
-
-
-    <div
-        id="myProductsContainer">
+    <div id="listedProductsContainer">
 
     </div>
 
@@ -1001,30 +957,92 @@ textarea{
 ======================================================= -->
 
 <div
-    class="liked-products-section"
-    id="likedProducts"
-    style="display:none;">
+    class="special-section"
+    id="likedProducts">
+
+    <div class="special-section-title">
+
+        ❤️ Products Liked By Me
+
+    </div>
+
+    <div class="special-section-subtitle">
+
+        Products you have liked.
+
+    </div>
+
+
+    <div id="likedProductsContainer">
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     GLOBAL MARKETPLACE
+======================================================= -->
+
+<div id="globalSection">
 
     <div class="section-header">
 
         <div class="section-title">
 
-            ❤️ Products Liked By Me
+            🌍 Marketplace
 
         </div>
+
+
+        <button
+            class="refresh-btn"
+            id="refreshBtn"
+            title="Refresh">
+
+            <i class="fas fa-rotate"></i>
+
+        </button>
 
     </div>
 
 
     <div class="section-subtitle">
 
-        Products you have liked
+        Latest products from Pathukkalam users
 
     </div>
 
 
-    <div
-        id="likedProductsContainer">
+    <div id="productsContainer">
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     PRODUCT VIEW MODAL
+======================================================= -->
+
+<div
+    class="modal-overlay"
+    id="productModal">
+
+    <div class="modal">
+
+        <button
+            class="modal-close"
+            id="closeModalBtn">
+
+            <i class="fas fa-xmark"></i>
+
+        </button>
+
+
+        <div id="modalContent">
+
+        </div>
 
     </div>
 
@@ -1066,14 +1084,7 @@ const SUPABASE_ANON_KEY =
 const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_ANON_KEY,
-        {
-            auth:{
-                persistSession:true,
-                autoRefreshToken:true,
-                detectSessionInUrl:true
-            }
-        }
+        SUPABASE_ANON_KEY
     );
 
 
@@ -1089,8 +1100,6 @@ let allProducts = [];
 
 let myLikedProductIds = new Set();
 
-let currentMode = "global";
-
 let searchText = "";
 
 
@@ -1098,14 +1107,14 @@ let searchText = "";
    ELEMENTS
 ========================================================= */
 
-const globalProductsContainer =
+const productsContainer =
     document.getElementById(
-        "globalProductsContainer"
+        "productsContainer"
     );
 
-const myProductsContainer =
+const listedProductsContainer =
     document.getElementById(
-        "myProductsContainer"
+        "listedProductsContainer"
     );
 
 const likedProductsContainer =
@@ -1113,9 +1122,9 @@ const likedProductsContainer =
         "likedProductsContainer"
     );
 
-const globalSection =
+const sellForm =
     document.getElementById(
-        "globalSection"
+        "sellForm"
     );
 
 const listedProducts =
@@ -1128,9 +1137,14 @@ const likedProducts =
         "likedProducts"
     );
 
-const sellForm =
+const globalSection =
     document.getElementById(
-        "sellForm"
+        "globalSection"
+    );
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
     );
 
 
@@ -1167,7 +1181,7 @@ function showToast(message){
 
 
 /* =========================================================
-   HTML ESCAPE
+   ESCAPE HTML
 ========================================================= */
 
 function escapeHtml(value){
@@ -1186,79 +1200,6 @@ function escapeHtml(value){
 
 
 /* =========================================================
-   LOGIN CHECK
-========================================================= */
-
-async function loadCurrentUser(){
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-        .auth
-        .getUser();
-
-
-    if(
-        error ||
-        !data.user
-    ){
-
-        currentUser =
-            null;
-
-        currentProfile =
-            null;
-
-        return false;
-
-    }
-
-
-    currentUser =
-        data.user;
-
-
-    const {
-        data:profile,
-        error:profileError
-    } =
-    await supabaseClient
-        .from("profiles")
-        .select(`
-            id,
-            username,
-            name,
-            profile_url
-        `)
-        .eq(
-            "id",
-            currentUser.id
-        )
-        .maybeSingle();
-
-
-    if(profileError){
-
-        console.error(
-            "Profile loading error:",
-            profileError
-        );
-
-    }
-
-
-    currentProfile =
-        profile || null;
-
-
-    return true;
-
-}
-
-
-/* =========================================================
    REQUIRE LOGIN
 ========================================================= */
 
@@ -1271,16 +1212,20 @@ function requireLogin(){
     }
 
 
-    const currentPath =
-        window.location.pathname +
-        window.location.search;
+    showToast(
+        "Please login to continue."
+    );
 
 
-    window.location.href =
-        "/login?next=" +
-        encodeURIComponent(
-            currentPath
-        );
+    setTimeout(
+        function(){
+
+            window.location.href =
+                "/login";
+
+        },
+        700
+    );
 
 
     return false;
@@ -1289,19 +1234,99 @@ function requireLogin(){
 
 
 /* =========================================================
-   LOAD GLOBAL PRODUCTS
+   CURRENT USER
+========================================================= */
+
+async function loadCurrentUser(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(
+            !error &&
+            data &&
+            data.user
+        ){
+
+            currentUser =
+                data.user;
+
+
+            const {
+                data:profile,
+                error:profileError
+            } =
+            await supabaseClient
+                .from("profiles")
+                .select(`
+                    id,
+                    username,
+                    name,
+                    profile_url
+                `)
+                .eq(
+                    "id",
+                    currentUser.id
+                )
+                .maybeSingle();
+
+
+            if(!profileError){
+
+                currentProfile =
+                    profile || null;
+
+            }
+
+
+            return true;
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Current user error:",
+            error
+        );
+
+    }
+
+
+    currentUser =
+        null;
+
+    currentProfile =
+        null;
+
+    return false;
+
+}
+
+
+/* =========================================================
+   LOAD PRODUCTS
 ========================================================= */
 
 async function loadGlobalProducts(){
 
-    globalProductsContainer.innerHTML = `
+    productsContainer.innerHTML = `
 
         <div class="loading">
 
             <i class="fas fa-spinner fa-spin"></i>
 
             <div>
-                Loading marketplace...
+                Loading Marketplace...
             </div>
 
         </div>
@@ -1309,17 +1334,14 @@ async function loadGlobalProducts(){
     `;
 
 
-    /*
-     * Only ACTIVE products appear
-     * in the public marketplace.
-     */
-
     const {
-        data,
+        data:products,
         error
     } =
     await supabaseClient
-        .from("marketplace_products")
+        .from(
+            "marketplace_products"
+        )
         .select(`
             id,
             user_id,
@@ -1336,7 +1358,8 @@ async function loadGlobalProducts(){
             interests_count,
             shares_count,
             whatsapp_clicks_count,
-            created_at
+            created_at,
+            updated_at
         `)
         .eq(
             "status",
@@ -1358,14 +1381,14 @@ async function loadGlobalProducts(){
         );
 
 
-        globalProductsContainer.innerHTML = `
+        productsContainer.innerHTML = `
 
             <div class="empty-state">
 
                 <i class="fas fa-circle-exclamation"></i>
 
                 <div class="empty-title">
-                    Unable to load marketplace
+                    Unable to load Marketplace
                 </div>
 
                 <div class="empty-text">
@@ -1382,25 +1405,30 @@ async function loadGlobalProducts(){
 
 
     allProducts =
-        data || [];
+        products || [];
 
 
-    await attachProductProfiles(
+    await attachProfiles(
         allProducts
     );
+
+
+    await loadMyLikes();
+
+    renderGlobalProducts();
 
 }
 
 
 /* =========================================================
-   ATTACH SELLER PROFILES
+   ATTACH PROFILES
 ========================================================= */
 
-async function attachProductProfiles(
+async function attachProfiles(
     products
 ){
 
-    const ids =
+    const userIds =
         [
             ...new Set(
                 products
@@ -1413,11 +1441,7 @@ async function attachProductProfiles(
         ];
 
 
-    if(!ids.length){
-
-        await loadMyLikes();
-
-        renderGlobalProducts();
+    if(!userIds.length){
 
         return;
 
@@ -1438,16 +1462,18 @@ async function attachProductProfiles(
         `)
         .in(
             "id",
-            ids
+            userIds
         );
 
 
     if(error){
 
         console.error(
-            "Seller profile error:",
+            "Profile loading error:",
             error
         );
+
+        return;
 
     }
 
@@ -1470,28 +1496,16 @@ async function attachProductProfiles(
     );
 
 
-    allProducts =
-        products.map(
-            product => {
+    products.forEach(
+        product => {
 
-                return {
+            product.profile =
+                profileMap.get(
+                    product.user_id
+                ) || null;
 
-                    ...product,
-
-                    seller:
-                        profileMap.get(
-                            product.user_id
-                        ) || null
-
-                };
-
-            }
-        );
-
-
-    await loadMyLikes();
-
-    renderGlobalProducts();
+        }
+    );
 
 }
 
@@ -1518,7 +1532,9 @@ async function loadMyLikes(){
         error
     } =
     await supabaseClient
-        .from("marketplace_likes")
+        .from(
+            "marketplace_likes"
+        )
         .select(
             "product_id"
         )
@@ -1543,11 +1559,11 @@ async function loadMyLikes(){
     (
         data || []
     ).forEach(
-        row => {
+        item => {
 
             myLikedProductIds.add(
                 Number(
-                    row.product_id
+                    item.product_id
                 )
             );
 
@@ -1561,9 +1577,7 @@ async function loadMyLikes(){
    SEARCH
 ========================================================= */
 
-document.getElementById(
-    "searchInput"
-).addEventListener(
+searchInput.addEventListener(
     "input",
     function(){
 
@@ -1573,25 +1587,21 @@ document.getElementById(
                 .toLowerCase();
 
 
+        renderGlobalProducts();
+
         if(
-            currentMode ===
-            "global"
+            listedProducts.style.display ===
+            "block"
         ){
 
-            renderGlobalProducts();
+            renderMyListings();
 
         }
-        else if(
-            currentMode ===
-            "listed"
-        ){
 
-            renderMyProducts();
 
-        }
-        else if(
-            currentMode ===
-            "liked"
+        if(
+            likedProducts.style.display ===
+            "block"
         ){
 
             renderLikedProducts();
@@ -1603,10 +1613,10 @@ document.getElementById(
 
 
 /* =========================================================
-   SEARCH MATCH
+   SEARCH FILTER
 ========================================================= */
 
-function productMatchesSearch(
+function matchesSearch(
     product
 ){
 
@@ -1617,40 +1627,24 @@ function productMatchesSearch(
     }
 
 
-    /*
-     * Partial matching.
-     *
-     * Example:
-     *
-     * "iphone"
-     * matches
-     * "Apple iPhone 14 Pro"
-     *
-     * "chen"
-     * matches
-     * "Chennai"
-     *
-     * "sudha"
-     * matches
-     * "Sudhakar"
-     *
-     * No complete-word requirement.
-     */
+    const profile =
+        product.profile || {};
 
-    const text =
+
+    const searchableText =
         [
 
             product.product_name,
 
-            product.description,
+            product.condition,
 
             product.location,
 
-            product.condition,
+            product.description,
 
-            product.seller?.name,
+            profile.name,
 
-            product.seller?.username
+            profile.username
 
         ]
         .filter(Boolean)
@@ -1658,7 +1652,7 @@ function productMatchesSearch(
         .toLowerCase();
 
 
-    return text.includes(
+    return searchableText.includes(
         searchText
     );
 
@@ -1666,70 +1660,82 @@ function productMatchesSearch(
 
 
 /* =========================================================
-   FORMAT PRICE
+   FILTER GLOBAL
 ========================================================= */
 
-function formatPrice(
-    value
-){
+function getFilteredGlobalProducts(){
 
-    if(
-        value === null ||
-        value === undefined ||
-        value === ""
-    ){
-
-        return "";
-
-    }
-
-
-    return "₹" +
-        Number(
-            value
-        ).toLocaleString(
-            "en-IN"
-        );
+    return allProducts.filter(
+        product =>
+            matchesSearch(product)
+    );
 
 }
 
 
 /* =========================================================
-   FORMAT DATE
+   RENDER GLOBAL
 ========================================================= */
 
-function formatDate(
-    value
-){
+function renderGlobalProducts(){
 
-    if(!value){
+    const products =
+        getFilteredGlobalProducts();
 
-        return "";
+
+    productsContainer.innerHTML =
+        "";
+
+
+    if(!products.length){
+
+        productsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-box-open"></i>
+
+                <div class="empty-title">
+
+                    ${
+                        searchText
+                            ? "No products found"
+                            : "No active products yet"
+                    }
+
+                </div>
+
+                <div class="empty-text">
+
+                    ${
+                        searchText
+                            ? "Try another product, person, location or keyword."
+                            : "Be the first person to list a product."
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
 
     }
 
 
-    try{
+    products.forEach(
+        product => {
 
-        return new Date(
-            value
-        ).toLocaleString(
-            "en-IN",
-            {
-                day:"2-digit",
-                month:"short",
-                year:"numeric",
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
+            productsContainer.appendChild(
+                createProductCard(
+                    product,
+                    false
+                )
+            );
 
-    }
-    catch{
-
-        return "";
-
-    }
+        }
+    );
 
 }
 
@@ -1742,84 +1748,19 @@ function getConditionClass(
     condition
 ){
 
-    const value =
-        String(
-            condition || ""
-        ).toLowerCase();
+    if(condition === "New"){
 
-
-    if(value === "new"){
-
-        return "new";
+        return "condition-new";
 
     }
 
+    if(condition === "Rebuild"){
 
-    if(value === "used"){
-
-        return "used";
-
-    }
-
-
-    return "rebuild";
-
-}
-
-
-/* =========================================================
-   CONDITION ICON
-========================================================= */
-
-function getConditionIcon(
-    condition
-){
-
-    const value =
-        String(
-            condition || ""
-        ).toLowerCase();
-
-
-    if(value === "new"){
-
-        return "🟢";
+        return "condition-rebuild";
 
     }
 
-
-    if(value === "used"){
-
-        return "🟠";
-
-    }
-
-
-    return "🔵";
-
-}
-
-
-/* =========================================================
-   SELLER PROFILE
-========================================================= */
-
-function openSellerProfile(
-    username
-){
-
-    if(!username){
-
-        return;
-
-    }
-
-
-    window.location.href =
-        "/profile/" +
-        encodeURIComponent(
-            username
-        );
+    return "condition-used";
 
 }
 
@@ -1830,7 +1771,7 @@ function openSellerProfile(
 
 function createProductCard(
     product,
-    ownerMode = false
+    ownerMode
 ){
 
     const card =
@@ -1838,127 +1779,98 @@ function createProductCard(
             "div"
         );
 
-
     card.className =
         "product";
 
 
-    const seller =
-        product.seller ||
-        {};
+    const profile =
+        product.profile || {};
+
+
+    const avatar =
+        profile.profile_url ||
+        "https://i.pravatar.cc/100";
 
 
     const sellerName =
-        seller.name ||
-        seller.username ||
+        profile.name ||
+        profile.username ||
         "Pathukkalam User";
 
 
     const username =
-        seller.username ||
+        profile.username ||
         "user";
-
-
-    const avatar =
-        seller.profile_url ||
-        "https://i.pravatar.cc/100";
 
 
     const liked =
         myLikedProductIds.has(
-            Number(
-                product.id
-            )
+            Number(product.id)
         );
 
 
-    const conditionClass =
-        getConditionClass(
-            product.condition
-        );
+    const isOwner =
+        currentUser &&
+        product.user_id ===
+        currentUser.id;
 
 
-    const conditionIcon =
-        getConditionIcon(
-            product.condition
-        );
-
-
-    const statusBadge =
+    const statusHtml =
         ownerMode
             ? `
-                <div class="status-badge ${
-                    product.status === "active"
-                        ? "status-active"
-                        : "status-hidden"
-                }">
+
+                <span class="
+                    status-badge
+                    ${
+                        product.status === "active"
+                            ? "status-active"
+                            : "status-hidden"
+                    }">
 
                     ${
                         product.status === "active"
-                            ? "● ACTIVE"
-                            : "● HIDDEN"
+                            ? "ACTIVE"
+                            : "HIDDEN"
                     }
 
-                </div>
+                </span>
+
               `
             : "";
 
 
-    const likeCount =
-        Number(
-            product.likes_count || 0
-        );
-
-
-    const viewCount =
-        Number(
-            product.views_count || 0
-        );
-
-
-    const interestCount =
-        Number(
-            product.interests_count || 0
-        );
-
-
-    const shareCount =
-        Number(
-            product.shares_count || 0
-        );
-
-
-    const whatsappCount =
-        Number(
-            product.whatsapp_clicks_count || 0
-        );
-
-
     card.innerHTML = `
 
-        <div class="product-image">
+        ${
+            product.image_url
+                ? `
+                    <img
+                        class="product-image"
+                        src="${escapeHtml(product.image_url)}"
+                        alt="${escapeHtml(product.product_name)}">
+                  `
+                : `
+                    <div
+                        class="product-image"
+                        style="
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            color:#aaa;
+                            font-size:45px;
+                        ">
 
-            <img
-                class="product-main-image"
-                src="${
-                    escapeHtml(
-                        product.image_url ||
-                        "https://picsum.photos/600/400"
-                    )
-                }"
-                alt="${escapeHtml(
-                    product.product_name
-                )}">
+                        <i class="fas fa-image"></i>
 
-            ${statusBadge}
-
-        </div>
+                    </div>
+                  `
+        }
 
 
         <div class="product-details">
 
+            ${statusHtml}
 
-            <!-- PRODUCT TITLE -->
 
             <div class="product-title">
 
@@ -1969,18 +1881,69 @@ function createProductCard(
             </div>
 
 
-            <!-- CONDITION -->
-
             <div class="
                 condition
-                ${conditionClass}
+                ${getConditionClass(
+                    product.condition
+                )}
             ">
 
-                ${conditionIcon}
+                ${
+                    product.condition === "New"
+                        ? "🟢"
+                        : product.condition === "Rebuild"
+                            ? "🔵"
+                            : "🟠"
+                }
+
                 ${escapeHtml(
-                    product.condition ||
-                    "Used"
+                    product.condition
                 )}
+
+            </div>
+
+
+            <!-- SELLER -->
+
+            <div class="seller">
+
+                <img
+                    class="seller-avatar"
+                    src="${escapeHtml(avatar)}"
+                    alt="Seller">
+
+
+                <div class="seller-info">
+
+                    <div class="seller-name">
+
+                        ${escapeHtml(
+                            sellerName
+                        )}
+
+                    </div>
+
+                    <div class="seller-username">
+
+                        @${escapeHtml(
+                            username
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="profile-link"
+                    data-profile-user="${escapeHtml(
+                        username
+                    )}">
+
+                    <i class="fas fa-user"></i>
+                    Profile
+
+                </button>
 
             </div>
 
@@ -1990,11 +1953,13 @@ function createProductCard(
             <div class="price-row">
 
                 ${
-                    product.mrp_price
+                    product.mrp_price !== null &&
+                    product.mrp_price !== undefined &&
+                    product.mrp_price !== ""
                         ? `
                             <span class="mrp">
 
-                                ${formatPrice(
+                                ₹${formatNumber(
                                     product.mrp_price
                                 )}
 
@@ -2006,7 +1971,7 @@ function createProductCard(
 
                 <span class="offer">
 
-                    ${formatPrice(
+                    ₹${formatNumber(
                         product.offer_price
                     )}
 
@@ -2033,7 +1998,7 @@ function createProductCard(
             ${
                 product.description
                     ? `
-                        <div class="product-description">
+                        <div class="description">
 
                             ${escapeHtml(
                                 product.description
@@ -2045,51 +2010,6 @@ function createProductCard(
             }
 
 
-            <!-- SELLER -->
-
-            <div
-                class="seller-box"
-                data-profile-username="${escapeHtml(
-                    username
-                )}">
-
-                <img
-                    class="seller-avatar"
-                    src="${escapeHtml(
-                        avatar
-                    )}"
-                    alt="Seller">
-
-                <div class="seller-info">
-
-                    <div class="seller-name">
-
-                        Listed by
-                        ${escapeHtml(
-                            sellerName
-                        )}
-
-                    </div>
-
-                    <div class="seller-username">
-
-                        @${escapeHtml(
-                            username
-                        )}
-
-                    </div>
-
-                </div>
-
-                <div class="seller-arrow">
-
-                    <i class="fas fa-chevron-right"></i>
-
-                </div>
-
-            </div>
-
-
             <!-- STATS -->
 
             <div class="product-stats">
@@ -2098,9 +2018,9 @@ function createProductCard(
 
                     <i class="fas fa-eye"></i>
 
-                    ${viewCount}
-
-                    views
+                    ${Number(
+                        product.views_count || 0
+                    )}
 
                 </span>
 
@@ -2109,20 +2029,20 @@ function createProductCard(
 
                     <i class="fas fa-heart"></i>
 
-                    ${likeCount}
-
-                    likes
+                    ${Number(
+                        product.likes_count || 0
+                    )}
 
                 </span>
 
 
                 <span>
 
-                    <i class="fas fa-user-check"></i>
+                    <i class="fas fa-star"></i>
 
-                    ${interestCount}
-
-                    interested
+                    ${Number(
+                        product.interests_count || 0
+                    )}
 
                 </span>
 
@@ -2131,18 +2051,9 @@ function createProductCard(
 
                     <i class="fas fa-share"></i>
 
-                    ${shareCount}
-
-                    shares
-
-                </span>
-
-
-                <span>
-
-                    <i class="fab fa-whatsapp"></i>
-
-                    ${whatsappCount}
+                    ${Number(
+                        product.shares_count || 0
+                    )}
 
                 </span>
 
@@ -2151,50 +2062,86 @@ function createProductCard(
 
             <!-- ACTIONS -->
 
-            <div class="action-row">
+            ${
+                isOwner && ownerMode
+                    ? `
+                        <div class="owner-controls">
+
+                            ${
+                                product.status === "active"
+                                    ? `
+                                        <button
+                                            class="owner-btn hide-btn"
+                                            data-owner-action="hide">
+
+                                            <i class="fas fa-eye-slash"></i>
+                                            Hide
+
+                                        </button>
+                                      `
+                                    : `
+                                        <button
+                                            class="owner-btn activate-btn"
+                                            data-owner-action="activate">
+
+                                            <i class="fas fa-eye"></i>
+                                            Activate
+
+                                        </button>
+                                      `
+                            }
 
 
-                <button
-                    class="view-btn"
-                    data-view-product="${product.id}">
+                            <button
+                                class="owner-btn delete-btn"
+                                data-owner-action="delete">
 
-                    <i class="fas fa-eye"></i>
+                                <i class="fas fa-trash"></i>
+                                Delete
 
-                    View
+                            </button>
 
-                </button>
+                        </div>
+                      `
+                    : ""
+            }
 
 
-                ${
-                    ownerMode
-                        ? ""
-                        : `
+            ${
+                !ownerMode
+                    ? `
+                        <div class="action-row">
+
+                            <button
+                                class="view-btn"
+                                data-action="view">
+
+                                <i class="fas fa-eye"></i>
+                                View
+
+                            </button>
+
+
                             <button
                                 class="
                                     interested-btn
                                     ${
-                                        product.user_interest
-                                            ? "interested"
+                                        product._interested
+                                            ? "active"
                                             : ""
                                     }
                                 "
-                                data-interest-product="${product.id}">
+                                data-action="interest">
 
                                 ${
-                                    product.user_interest
+                                    product._interested
                                         ? "✓ Interested"
                                         : "Interested"
                                 }
 
                             </button>
-                          `
-                }
 
 
-                ${
-                    ownerMode
-                        ? ""
-                        : `
                             <button
                                 class="
                                     icon-btn
@@ -2205,113 +2152,49 @@ function createProductCard(
                                             : ""
                                     }
                                 "
-                                data-like-product="${product.id}">
+                                data-action="like">
 
-                                <i class="fa-solid fa-heart"></i>
-
-                            </button>
-
-
-                            <button
-                                class="icon-btn share-btn"
-                                data-share-product="${product.id}">
-
-                                <i class="fa-solid fa-share-nodes"></i>
+                                <i class="
+                                    fa-solid
+                                    fa-heart
+                                "></i>
 
                             </button>
 
 
                             <button
-                                class="icon-btn whatsapp-btn"
-                                data-whatsapp-product="${product.id}">
+                                class="
+                                    icon-btn
+                                    share-btn
+                                "
+                                data-action="share">
 
-                                <i class="fab fa-whatsapp"></i>
+                                <i class="
+                                    fa-solid
+                                    fa-share-nodes
+                                "></i>
 
                             </button>
-                          `
-                }
-
-            </div>
 
 
-            <!-- OWNER CONTROLS -->
+                            <button
+                                class="
+                                    icon-btn
+                                    whatsapp-btn
+                                "
+                                data-action="whatsapp">
 
-            ${
-                ownerMode
-                    ? `
-                        <div class="owner-controls">
+                                <i class="
+                                    fab
+                                    fa-whatsapp
+                                "></i>
 
-                            <div class="owner-title">
-
-                                <i class="fas fa-sliders"></i>
-
-                                Listing Management
-
-                            </div>
-
-
-                            <div class="owner-buttons">
-
-                                ${
-                                    product.status === "active"
-                                        ? `
-                                            <button
-                                                class="owner-btn hide-btn"
-                                                data-toggle-product="${product.id}"
-                                                data-new-status="hidden">
-
-                                                <i class="fas fa-eye-slash"></i>
-
-                                                Hide Listing
-
-                                            </button>
-                                          `
-                                        : `
-                                            <button
-                                                class="owner-btn activate-btn"
-                                                data-toggle-product="${product.id}"
-                                                data-new-status="active">
-
-                                                <i class="fas fa-eye"></i>
-
-                                                Activate Listing
-
-                                            </button>
-                                          `
-                                }
-
-
-                                <button
-                                    class="owner-btn delete-btn"
-                                    data-delete-product="${product.id}">
-
-                                    <i class="fas fa-trash"></i>
-
-                                    Delete
-
-                                </button>
-
-                            </div>
+                            </button>
 
                         </div>
                       `
                     : ""
             }
-
-
-            <div
-                style="
-                    margin-top:10px;
-                    color:#999;
-                    font-size:11px;
-                ">
-
-                ${formatDate(
-                    product.created_at
-                )}
-
-            </div>
-
 
         </div>
 
@@ -2319,24 +2202,36 @@ function createProductCard(
 
 
     /* =====================================================
-       SELLER PROFILE CLICK
+       PROFILE BUTTON
     ===================================================== */
 
-    const sellerBox =
+    const profileButton =
         card.querySelector(
-            "[data-profile-username]"
+            "[data-profile-user]"
         );
 
 
-    if(sellerBox){
+    if(profileButton){
 
-        sellerBox.addEventListener(
+        profileButton.addEventListener(
             "click",
             function(){
 
-                openSellerProfile(
-                    this.dataset.profileUsername
-                );
+                const username =
+                    this.getAttribute(
+                        "data-profile-user"
+                    );
+
+
+                if(username){
+
+                    window.location.href =
+                        "/profile/" +
+                        encodeURIComponent(
+                            username
+                        );
+
+                }
 
             }
         );
@@ -2345,12 +2240,70 @@ function createProductCard(
 
 
     /* =====================================================
-       VIEW
+       OWNER CONTROLS
+    ===================================================== */
+
+    const ownerActionButtons =
+        card.querySelectorAll(
+            "[data-owner-action]"
+        );
+
+
+    ownerActionButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                function(){
+
+                    const action =
+                        this.getAttribute(
+                            "data-owner-action"
+                        );
+
+
+                    if(action === "hide"){
+
+                        updateProductStatus(
+                            product,
+                            "hidden"
+                        );
+
+                    }
+
+
+                    if(action === "activate"){
+
+                        updateProductStatus(
+                            product,
+                            "active"
+                        );
+
+                    }
+
+
+                    if(action === "delete"){
+
+                        deleteProduct(
+                            product
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       NORMAL ACTIONS
     ===================================================== */
 
     const viewButton =
         card.querySelector(
-            "[data-view-product]"
+            '[data-action="view"]'
         );
 
 
@@ -2360,7 +2313,7 @@ function createProductCard(
             "click",
             function(){
 
-                openProduct(
+                openProductView(
                     product
                 );
 
@@ -2370,13 +2323,9 @@ function createProductCard(
     }
 
 
-    /* =====================================================
-       LIKE
-    ===================================================== */
-
     const likeButton =
         card.querySelector(
-            "[data-like-product]"
+            '[data-action="like"]'
         );
 
 
@@ -2388,7 +2337,7 @@ function createProductCard(
 
                 toggleLike(
                     product,
-                    likeButton
+                    this
                 );
 
             }
@@ -2397,13 +2346,9 @@ function createProductCard(
     }
 
 
-    /* =====================================================
-       INTEREST
-    ===================================================== */
-
     const interestButton =
         card.querySelector(
-            "[data-interest-product]"
+            '[data-action="interest"]'
         );
 
 
@@ -2413,9 +2358,9 @@ function createProductCard(
             "click",
             function(){
 
-                toggleInterest(
+                addInterest(
                     product,
-                    interestButton
+                    this
                 );
 
             }
@@ -2424,13 +2369,9 @@ function createProductCard(
     }
 
 
-    /* =====================================================
-       SHARE
-    ===================================================== */
-
     const shareButton =
         card.querySelector(
-            "[data-share-product]"
+            '[data-action="share"]'
         );
 
 
@@ -2450,13 +2391,9 @@ function createProductCard(
     }
 
 
-    /* =====================================================
-       WHATSAPP
-    ===================================================== */
-
     const whatsappButton =
         card.querySelector(
-            "[data-whatsapp-product]"
+            '[data-action="whatsapp"]'
         );
 
 
@@ -2466,60 +2403,7 @@ function createProductCard(
             "click",
             function(){
 
-                whatsappProduct(
-                    product
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       OWNER STATUS
-    ===================================================== */
-
-    const toggleButton =
-        card.querySelector(
-            "[data-toggle-product]"
-        );
-
-
-    if(toggleButton){
-
-        toggleButton.addEventListener(
-            "click",
-            function(){
-
-                updateProductStatus(
-                    product,
-                    this.dataset.newStatus
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       DELETE
-    ===================================================== */
-
-    const deleteButton =
-        card.querySelector(
-            "[data-delete-product]"
-        );
-
-
-    if(deleteButton){
-
-        deleteButton.addEventListener(
-            "click",
-            function(){
-
-                deleteProduct(
+                openWhatsApp(
                     product
                 );
 
@@ -2535,685 +2419,29 @@ function createProductCard(
 
 
 /* =========================================================
-   GLOBAL RENDER
+   NUMBER FORMAT
 ========================================================= */
 
-function renderGlobalProducts(){
-
-    const filtered =
-        allProducts.filter(
-            product =>
-                productMatchesSearch(
-                    product
-                )
-        );
-
-
-    globalProductsContainer.innerHTML =
-        "";
-
-
-    if(!filtered.length){
-
-        globalProductsContainer.innerHTML = `
-
-            <div class="empty-state">
-
-                <i class="fas fa-box-open"></i>
-
-                <div class="empty-title">
-
-                    ${
-                        searchText
-                            ? "No products found"
-                            : "No marketplace products yet"
-                    }
-
-                </div>
-
-                <div class="empty-text">
-
-                    ${
-                        searchText
-                            ? "Try another product name, seller, location or keyword."
-                            : "Be the first person to list a product."
-                    }
-
-                </div>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    filtered.forEach(
-        product => {
-
-            globalProductsContainer.appendChild(
-                createProductCard(
-                    product,
-                    false
-                )
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   LOAD MY PRODUCTS
-========================================================= */
-
-async function loadMyProducts(){
-
-    if(!requireLogin()){
-
-        return;
-
-    }
-
-
-    myProductsContainer.innerHTML = `
-
-        <div class="loading">
-
-            <i class="fas fa-spinner fa-spin"></i>
-
-            <div>
-                Loading your listings...
-            </div>
-
-        </div>
-
-    `;
-
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-        .from("marketplace_products")
-        .select(`
-            id,
-            user_id,
-            product_name,
-            condition,
-            mrp_price,
-            offer_price,
-            location,
-            description,
-            image_url,
-            status,
-            views_count,
-            likes_count,
-            interests_count,
-            shares_count,
-            whatsapp_clicks_count,
-            created_at
-        `)
-        .eq(
-            "user_id",
-            currentUser.id
-        )
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
-
-
-    if(error){
-
-        console.error(
-            "My products error:",
-            error
-        );
-
-
-        myProductsContainer.innerHTML = `
-
-            <div class="empty-state">
-
-                <i class="fas fa-circle-exclamation"></i>
-
-                <div class="empty-title">
-                    Unable to load your listings
-                </div>
-
-                <div class="empty-text">
-                    ${escapeHtml(error.message)}
-                </div>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    const products =
-        data || [];
-
-
-    if(!products.length){
-
-        myProductsContainer.innerHTML = `
-
-            <div class="empty-state">
-
-                <i class="fas fa-box-open"></i>
-
-                <div class="empty-title">
-                    You have no listings
-                </div>
-
-                <div class="empty-text">
-                    Use "Sell Product" to create your first marketplace listing.
-                </div>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    const profile =
-        currentProfile;
-
-
-    products.forEach(
-        product => {
-
-            product.seller =
-                profile;
-
-            myProductsContainer.appendChild(
-                createProductCard(
-                    product,
-                    true
-                )
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   LOAD LIKED PRODUCTS
-========================================================= */
-
-async function loadLikedProducts(){
-
-    if(!requireLogin()){
-
-        return;
-
-    }
-
-
-    likedProductsContainer.innerHTML = `
-
-        <div class="loading">
-
-            <i class="fas fa-spinner fa-spin"></i>
-
-            <div>
-                Loading liked products...
-            </div>
-
-        </div>
-
-    `;
-
-
-    const {
-        data:likes,
-        error:likesError
-    } =
-    await supabaseClient
-        .from("marketplace_likes")
-        .select(
-            "product_id,created_at"
-        )
-        .eq(
-            "user_id",
-            currentUser.id
-        )
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
-
-
-    if(likesError){
-
-        console.error(
-            "Liked products error:",
-            likesError
-        );
-
-
-        likedProductsContainer.innerHTML = `
-
-            <div class="empty-state">
-
-                <i class="fas fa-circle-exclamation"></i>
-
-                <div class="empty-title">
-                    Unable to load liked products
-                </div>
-
-                <div class="empty-text">
-                    ${escapeHtml(
-                        likesError.message
-                    )}
-                </div>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    if(!likes?.length){
-
-        likedProductsContainer.innerHTML = `
-
-            <div class="empty-state">
-
-                <i class="far fa-heart"></i>
-
-                <div class="empty-title">
-                    No liked products
-                </div>
-
-                <div class="empty-text">
-                    Products you like will appear here.
-                </div>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    const productIds =
-        likes.map(
-            like =>
-                like.product_id
-        );
-
-
-    const {
-        data:products,
-        error:productsError
-    } =
-    await supabaseClient
-        .from("marketplace_products")
-        .select(`
-            id,
-            user_id,
-            product_name,
-            condition,
-            mrp_price,
-            offer_price,
-            location,
-            description,
-            image_url,
-            status,
-            views_count,
-            likes_count,
-            interests_count,
-            shares_count,
-            whatsapp_clicks_count,
-            created_at
-        `)
-        .in(
-            "id",
-            productIds
-        );
-
-
-    if(productsError){
-
-        console.error(
-            "Liked products loading error:",
-            productsError
-        );
-
-        return;
-
-    }
-
-
-    if(!products?.length){
-
-        likedProductsContainer.innerHTML = `
-
-            <div class="empty-state">
-
-                <i class="far fa-heart"></i>
-
-                <div class="empty-title">
-                    No available liked products
-                </div>
-
-                <div class="empty-text">
-                    Some products may have been removed.
-                </div>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    /*
-     * Keep the same order in which
-     * the user liked them.
-     */
-
-    const productMap =
-        new Map();
-
-
-    products.forEach(
-        product => {
-
-            productMap.set(
-                Number(product.id),
-                product
-            );
-
-        }
-    );
-
-
-    const orderedProducts =
-        productIds
-            .map(
-                id =>
-                    productMap.get(
-                        Number(id)
-                    )
-            )
-            .filter(Boolean);
-
-
-    /* -----------------------------------------------------
-       Load seller profiles
-    ----------------------------------------------------- */
-
-    const sellerIds =
-        [
-            ...new Set(
-                orderedProducts
-                    .map(
-                        product =>
-                            product.user_id
-                    )
-            )
-        ];
-
-
-    const {
-        data:profiles
-    } =
-    await supabaseClient
-        .from("profiles")
-        .select(`
-            id,
-            username,
-            name,
-            profile_url
-        `)
-        .in(
-            "id",
-            sellerIds
-        );
-
-
-    const profileMap =
-        new Map();
-
-
-    (
-        profiles || []
-    ).forEach(
-        profile => {
-
-            profileMap.set(
-                profile.id,
-                profile
-            );
-
-        }
-    );
-
-
-    likedProductsContainer.innerHTML =
-        "";
-
-
-    orderedProducts.forEach(
-        product => {
-
-            product.seller =
-                profileMap.get(
-                    product.user_id
-                ) || null;
-
-
-            if(
-                productMatchesSearch(
-                    product
-                )
-            ){
-
-                likedProductsContainer.appendChild(
-                    createProductCard(
-                        product,
-                        false
-                    )
-                );
-
-            }
-
-        }
-    );
+function formatNumber(
+    value
+){
+
+    const number =
+        Number(value);
 
 
     if(
-        !likedProductsContainer.children.length
+        Number.isNaN(number)
     ){
 
-        likedProductsContainer.innerHTML = `
-
-            <div class="empty-state">
-
-                <i class="fas fa-search"></i>
-
-                <div class="empty-title">
-                    No liked products match your search
-                </div>
-
-            </div>
-
-        `;
+        return "0";
 
     }
 
-}
 
-
-/* =========================================================
-   OPEN PRODUCT
-========================================================= */
-
-async function openProduct(
-    product
-){
-
-    /*
-     * Register a view only when
-     * someone actually opens/views it.
-     */
-
-    await registerProductView(
-        product
+    return number.toLocaleString(
+        "en-IN"
     );
-
-
-    /*
-     * For now show product information
-     * in a simple alert.
-     *
-     * Later this can become:
-     * /marketplace/<product_id>
-     */
-
-    alert(
-        product.product_name +
-        "\n\n" +
-
-        "Listed by: " +
-        (
-            product.seller?.name ||
-            product.seller?.username ||
-            "Pathukkalam User"
-        ) +
-
-        "\n\n" +
-
-        "Price: " +
-        formatPrice(
-            product.offer_price
-        ) +
-
-        "\n\n" +
-
-        (
-            product.description ||
-            "No description available."
-        )
-    );
-
-}
-
-
-/* =========================================================
-   REGISTER VIEW
-========================================================= */
-
-async function registerProductView(
-    product
-){
-
-    /*
-     * Don't count owner's own view.
-     */
-
-    if(
-        !currentUser ||
-        product.user_id ===
-        currentUser.id
-    ){
-
-        return;
-
-    }
-
-
-    try{
-
-        const {
-            error
-        } =
-        await supabaseClient
-            .from("marketplace_views")
-            .insert({
-
-                product_id:
-                    product.id,
-
-                user_id:
-                    currentUser.id
-
-            });
-
-
-        if(error){
-
-            console.error(
-                "View tracking error:",
-                error
-            );
-
-            return;
-
-        }
-
-
-        /*
-         * Increment cached counter.
-         */
-
-        await supabaseClient
-            .from("marketplace_products")
-            .update({
-
-                views_count:
-                    Number(
-                        product.views_count || 0
-                    ) + 1
-
-            })
-            .eq(
-                "id",
-                product.id
-            );
-
-
-        product.views_count =
-            Number(
-                product.views_count || 0
-            ) + 1;
-
-
-    }
-    catch(error){
-
-        console.error(
-            error
-        );
-
-    }
 
 }
 
@@ -3234,145 +2462,52 @@ async function toggleLike(
     }
 
 
-    const productId =
-        Number(
-            product.id
-        );
-
-
-    const alreadyLiked =
-        myLikedProductIds.has(
-            productId
-        );
-
-
     button.disabled =
         true;
 
 
     try{
 
-        if(alreadyLiked){
-
-            const {
-                error
-            } =
-            await supabaseClient
-                .from("marketplace_likes")
-                .delete()
-                .eq(
-                    "product_id",
-                    productId
-                )
-                .eq(
-                    "user_id",
-                    currentUser.id
-                );
-
-
-            if(error){
-
-                throw error;
-
-            }
-
-
-            myLikedProductIds.delete(
-                productId
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .rpc(
+                "marketplace_toggle_like",
+                {
+                    p_product_id:
+                        Number(
+                            product.id
+                        )
+                }
             );
 
 
-            product.likes_count =
-                Math.max(
-                    0,
-                    Number(
-                        product.likes_count || 0
-                    ) - 1
-                );
+        if(error){
+
+            throw error;
+
+        }
 
 
-            await supabaseClient
-                .from("marketplace_products")
-                .update({
-
-                    likes_count:
-                        product.likes_count
-
-                })
-                .eq(
-                    "id",
-                    productId
-                );
+        const liked =
+            data === true;
 
 
-            button.classList.remove(
-                "liked"
+        if(liked){
+
+            myLikedProductIds.add(
+                Number(
+                    product.id
+                )
             );
 
 
             showToast(
-                "Removed from liked products."
+                "Product liked ❤️"
             );
 
-        }
-        else{
-
-            const {
-                error
-            } =
-            await supabaseClient
-                .from("marketplace_likes")
-                .insert({
-
-                    product_id:
-                        productId,
-
-                    user_id:
-                        currentUser.id
-
-                });
-
-
-            if(error){
-
-                throw error;
-
-            }
-
-
-            myLikedProductIds.add(
-                productId
-            );
-
-
-            product.likes_count =
-                Number(
-                    product.likes_count || 0
-                ) + 1;
-
-
-            await supabaseClient
-                .from("marketplace_products")
-                .update({
-
-                    likes_count:
-                        product.likes_count
-
-                })
-                .eq(
-                    "id",
-                    productId
-                );
-
-
-            button.classList.add(
-                "liked"
-            );
-
-
-            /*
-             * Notify seller.
-             */
 
             await createMarketplaceNotification({
 
@@ -3394,22 +2529,24 @@ async function toggleLike(
 
             });
 
+        }
+        else{
+
+            myLikedProductIds.delete(
+                Number(
+                    product.id
+                )
+            );
+
 
             showToast(
-                "Product liked ❤️"
+                "Removed from liked products."
             );
 
         }
 
 
-        if(
-            currentMode ===
-            "global"
-        ){
-
-            renderGlobalProducts();
-
-        }
+        await loadGlobalProducts();
 
     }
     catch(error){
@@ -3440,26 +2577,12 @@ async function toggleLike(
    INTEREST
 ========================================================= */
 
-async function toggleInterest(
+async function addInterest(
     product,
     button
 ){
 
     if(!requireLogin()){
-
-        return;
-
-    }
-
-
-    if(
-        product.user_id ===
-        currentUser.id
-    ){
-
-        showToast(
-            "You cannot show interest in your own product."
-        );
 
         return;
 
@@ -3473,57 +2596,19 @@ async function toggleInterest(
     try{
 
         const {
-            data:existing,
-            error:checkError
-        } =
-        await supabaseClient
-            .from("marketplace_interests")
-            .select(
-                "id"
-            )
-            .eq(
-                "product_id",
-                product.id
-            )
-            .eq(
-                "user_id",
-                currentUser.id
-            )
-            .maybeSingle();
-
-
-        if(checkError){
-
-            throw checkError;
-
-        }
-
-
-        if(existing){
-
-            showToast(
-                "You already showed interest."
-            );
-
-            return;
-
-        }
-
-
-        const {
+            data,
             error
         } =
         await supabaseClient
-            .from("marketplace_interests")
-            .insert({
-
-                product_id:
-                    product.id,
-
-                user_id:
-                    currentUser.id
-
-            });
+            .rpc(
+                "marketplace_add_interest",
+                {
+                    p_product_id:
+                        Number(
+                            product.id
+                        )
+                }
+            );
 
 
         if(error){
@@ -3533,63 +2618,54 @@ async function toggleInterest(
         }
 
 
-        product.interests_count =
-            Number(
-                product.interests_count || 0
-            ) + 1;
+        if(data === true){
+
+            product._interested =
+                true;
 
 
-        await supabaseClient
-            .from("marketplace_products")
-            .update({
-
-                interests_count:
-                    product.interests_count
-
-            })
-            .eq(
-                "id",
-                product.id
+            button.classList.add(
+                "active"
             );
 
 
-        button.classList.add(
-            "interested"
-        );
+            button.innerText =
+                "✓ Interested";
 
 
-        button.innerText =
-            "✓ Interested";
+            await createMarketplaceNotification({
+
+                receiverId:
+                    product.user_id,
+
+                type:
+                    "marketplace_interest",
+
+                message:
+                    (
+                        currentProfile?.name ||
+                        currentProfile?.username ||
+                        "Someone"
+                    ) +
+                    " is interested in your product \"" +
+                    product.product_name +
+                    "\"."
+
+            });
 
 
-        /*
-         * Notify seller.
-         */
+            showToast(
+                "Interest sent successfully! ✓"
+            );
 
-        await createMarketplaceNotification({
+        }
+        else{
 
-            receiverId:
-                product.user_id,
+            showToast(
+                "You already showed interest."
+            );
 
-            type:
-                "marketplace_interest",
-
-            message:
-                (
-                    currentProfile?.name ||
-                    currentProfile?.username ||
-                    "Someone"
-                ) +
-                " is interested in your product \"" +
-                product.product_name +
-                "\"."
-
-        });
-
-
-        showToast(
-            "Interest sent successfully! ✓"
-        );
+        }
 
     }
     catch(error){
@@ -3617,27 +2693,23 @@ async function toggleInterest(
 
 
 /* =========================================================
-   SHARE
+   SHARE PRODUCT
 ========================================================= */
 
 async function shareProduct(
     product
 ){
 
-    const url =
+    if(!requireLogin()){
+
+        return;
+
+    }
+
+
+    const shareUrl =
         window.location.origin +
-        "/marketplace/" +
-        product.id;
-
-
-    const text =
-        product.product_name +
-        " - " +
-        formatPrice(
-            product.offer_price
-        ) +
-        "\n" +
-        url;
+        "/marketplace";
 
 
     try{
@@ -3652,10 +2724,10 @@ async function shareProduct(
                     product.product_name,
 
                 text:
-                    text,
+                    "Check this product on Pathukkalam Marketplace",
 
                 url:
-                    url
+                    shareUrl
 
             });
 
@@ -3663,91 +2735,74 @@ async function shareProduct(
         else{
 
             await navigator.clipboard.writeText(
-                text
+                shareUrl
             );
+
 
             showToast(
-                "Product link copied!"
+                "Marketplace link copied."
             );
 
         }
 
 
-        /*
-         * Count share after successful
-         * share/copy action.
-         */
-
-        if(
-            currentUser &&
-            product.user_id !==
-            currentUser.id
-        ){
-
-            await supabaseClient
-                .from("marketplace_shares")
-                .insert({
-
-                    product_id:
-                        product.id,
-
-                    user_id:
-                        currentUser.id
-
-                });
+        await supabaseClient
+            .rpc(
+                "marketplace_record_share",
+                {
+                    p_product_id:
+                        Number(
+                            product.id
+                        )
+                }
+            );
 
 
-            product.shares_count =
-                Number(
-                    product.shares_count || 0
-                ) + 1;
+        await createMarketplaceNotification({
+
+            receiverId:
+                product.user_id,
+
+            type:
+                "marketplace_share",
+
+            message:
+                (
+                    currentProfile?.name ||
+                    currentProfile?.username ||
+                    "Someone"
+                ) +
+                " shared your product \"" +
+                product.product_name +
+                "\"."
+
+        });
 
 
-            await supabaseClient
-                .from("marketplace_products")
-                .update({
-
-                    shares_count:
-                        product.shares_count
-
-                })
-                .eq(
-                    "id",
-                    product.id
-                );
-
-
-            await createMarketplaceNotification({
-
-                receiverId:
-                    product.user_id,
-
-                type:
-                    "marketplace_share",
-
-                message:
-                    (
-                        currentProfile?.name ||
-                        currentProfile?.username ||
-                        "Someone"
-                    ) +
-                    " shared your product \"" +
-                    product.product_name +
-                    "\"."
-
-            });
-
-        }
+        showToast(
+            "Product shared ✓"
+        );
 
     }
     catch(error){
 
         /*
-         * User cancelled share.
-         */
+           User cancelling native share
+           should not show an error.
+        */
 
-        console.log(
-            "Share cancelled or failed:",
+        if(
+            error.name ===
+            "AbortError"
+        ){
+
+            return;
+
+        }
+
+
+        console.error(
+            "Share error:",
             error
         );
 
@@ -3760,38 +2815,182 @@ async function shareProduct(
    WHATSAPP
 ========================================================= */
 
-async function whatsappProduct(
+async function openWhatsApp(
     product
 ){
 
+    if(!requireLogin()){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .rpc(
+                "marketplace_record_whatsapp",
+                {
+                    p_product_id:
+                        Number(
+                            product.id
+                        )
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "WhatsApp tracking error:",
+                error
+            );
+
+        }
+
+
+        await createMarketplaceNotification({
+
+            receiverId:
+                product.user_id,
+
+            type:
+                "marketplace_whatsapp",
+
+            message:
+                (
+                    currentProfile?.name ||
+                    currentProfile?.username ||
+                    "Someone"
+                ) +
+                " clicked WhatsApp for your product \"" +
+                product.product_name +
+                "\"."
+
+        });
+
+
+        /*
+           We do not have a phone-number field
+           specifically for Marketplace.
+
+           So open WhatsApp with a product
+           enquiry message. The seller can continue
+           the conversation after choosing a number
+           through their normal WhatsApp flow.
+
+           If your profiles.mobile contains a
+           WhatsApp number, we use it.
+        */
+
+        const mobile =
+            product.profile?.mobile ||
+            "";
+
+
+        const text =
+            "Hi, I am interested in your Pathukkalam Marketplace product: " +
+            product.product_name;
+
+
+        let whatsappUrl;
+
+
+        if(mobile){
+
+            const cleanNumber =
+                String(mobile)
+                    .replace(
+                        /[^0-9]/g,
+                        ""
+                    );
+
+
+            whatsappUrl =
+                "https://wa.me/" +
+                cleanNumber +
+                "?text=" +
+                encodeURIComponent(
+                    text
+                );
+
+        }
+        else{
+
+            whatsappUrl =
+                "https://wa.me/?text=" +
+                encodeURIComponent(
+                    text
+                );
+
+        }
+
+
+        window.open(
+            whatsappUrl,
+            "_blank"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "WhatsApp error:",
+            error
+        );
+
+
+        showToast(
+            "Unable to open WhatsApp."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PRODUCT VIEW
+========================================================= */
+
+async function openProductView(
+    product
+){
+
+    const modal =
+        document.getElementById(
+            "productModal"
+        );
+
+
+    const content =
+        document.getElementById(
+            "modalContent"
+        );
+
+
+    const profile =
+        product.profile || {};
+
+
+    const avatar =
+        profile.profile_url ||
+        "https://i.pravatar.cc/100";
+
+
     const sellerName =
-        product.seller?.name ||
-        product.seller?.username ||
-        "Seller";
-
-
-    const message =
-        "Hi " +
-        sellerName +
-        ", I am interested in your Pathukkalam Marketplace product:\n\n" +
-
-        product.product_name +
-        "\n" +
-
-        "Price: " +
-        formatPrice(
-            product.offer_price
-        ) +
-        "\n" +
-
-        "Location: " +
-        product.location;
+        profile.name ||
+        profile.username ||
+        "Pathukkalam User";
 
 
     /*
-     * Register click before opening
-     * WhatsApp.
-     */
+       Record view before displaying.
+    */
 
     if(
         currentUser &&
@@ -3802,63 +3001,21 @@ async function whatsappProduct(
         try{
 
             await supabaseClient
-                .from("marketplace_whatsapp_clicks")
-                .insert({
-
-                    product_id:
-                        product.id,
-
-                    user_id:
-                        currentUser.id
-
-                });
-
-
-            product.whatsapp_clicks_count =
-                Number(
-                    product.whatsapp_clicks_count || 0
-                ) + 1;
-
-
-            await supabaseClient
-                .from("marketplace_products")
-                .update({
-
-                    whatsapp_clicks_count:
-                        product.whatsapp_clicks_count
-
-                })
-                .eq(
-                    "id",
-                    product.id
+                .rpc(
+                    "marketplace_record_view",
+                    {
+                        p_product_id:
+                            Number(
+                                product.id
+                            )
+                    }
                 );
-
-
-            await createMarketplaceNotification({
-
-                receiverId:
-                    product.user_id,
-
-                type:
-                    "marketplace_whatsapp",
-
-                message:
-                    (
-                        currentProfile?.name ||
-                        currentProfile?.username ||
-                        "Someone"
-                    ) +
-                    " clicked WhatsApp for your product \"" +
-                    product.product_name +
-                    "\"."
-
-            });
 
         }
         catch(error){
 
             console.error(
-                "WhatsApp tracking error:",
+                "View error:",
                 error
             );
 
@@ -3867,32 +3024,202 @@ async function whatsappProduct(
     }
 
 
-    /*
-     * Open WhatsApp.
-     *
-     * No phone number is stored in
-     * this page. The seller's contact
-     * number can later be added from
-     * profile data.
-     */
+    content.innerHTML = `
 
-    const whatsappUrl =
-        "https://wa.me/?text=" +
-        encodeURIComponent(
-            message
+        ${
+            product.image_url
+                ? `
+                    <img
+                        class="modal-image"
+                        src="${escapeHtml(product.image_url)}"
+                        alt="${escapeHtml(product.product_name)}">
+                  `
+                : ""
+        }
+
+
+        <div class="modal-title">
+
+            ${escapeHtml(
+                product.product_name
+            )}
+
+        </div>
+
+
+        <div class="
+            condition
+            ${getConditionClass(
+                product.condition
+            )}
+        ">
+
+            ${escapeHtml(
+                product.condition
+            )}
+
+        </div>
+
+
+        <div class="seller">
+
+            <img
+                class="seller-avatar"
+                src="${escapeHtml(avatar)}">
+
+
+            <div class="seller-info">
+
+                <div class="seller-name">
+
+                    ${escapeHtml(
+                        sellerName
+                    )}
+
+                </div>
+
+                <div class="seller-username">
+
+                    @${escapeHtml(
+                        profile.username ||
+                        "user"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="profile-link"
+                id="modalProfileBtn">
+
+                <i class="fas fa-user"></i>
+                Profile
+
+            </button>
+
+        </div>
+
+
+        <div class="price-row">
+
+            ${
+                product.mrp_price
+                    ? `
+                        <span class="mrp">
+
+                            ₹${formatNumber(
+                                product.mrp_price
+                            )}
+
+                        </span>
+                      `
+                    : ""
+            }
+
+
+            <span class="offer">
+
+                ₹${formatNumber(
+                    product.offer_price
+                )}
+
+            </span>
+
+        </div>
+
+
+        <div class="location">
+
+            <i class="fas fa-location-dot"></i>
+
+            ${escapeHtml(
+                product.location
+            )}
+
+        </div>
+
+
+        ${
+            product.description
+                ? `
+                    <div class="description">
+
+                        ${escapeHtml(
+                            product.description
+                        )}
+
+                    </div>
+                  `
+                : ""
+        }
+
+
+        <div class="product-stats">
+
+            <span>
+                👁 ${Number(
+                    product.views_count || 0
+                )}
+            </span>
+
+            <span>
+                ❤️ ${Number(
+                    product.likes_count || 0
+                )}
+            </span>
+
+            <span>
+                ⭐ ${Number(
+                    product.interests_count || 0
+                )}
+            </span>
+
+            <span>
+                🔗 ${Number(
+                    product.shares_count || 0
+                )}
+            </span>
+
+        </div>
+
+    `;
+
+
+    const modalProfileBtn =
+        document.getElementById(
+            "modalProfileBtn"
         );
 
 
-    window.open(
-        whatsappUrl,
-        "_blank"
-    );
+    if(modalProfileBtn){
+
+        modalProfileBtn.addEventListener(
+            "click",
+            function(){
+
+                window.location.href =
+                    "/profile/" +
+                    encodeURIComponent(
+                        profile.username ||
+                        ""
+                    );
+
+            }
+        );
+
+    }
+
+
+    modal.style.display =
+        "flex";
 
 }
 
 
 /* =========================================================
-   OWNER: UPDATE STATUS
+   UPDATE PRODUCT STATUS
 ========================================================= */
 
 async function updateProductStatus(
@@ -3913,7 +3240,7 @@ async function updateProductStatus(
     ){
 
         showToast(
-            "You can only manage your own listings."
+            "You can only manage your own products."
         );
 
         return;
@@ -3927,7 +3254,9 @@ async function updateProductStatus(
             error
         } =
         await supabaseClient
-            .from("marketplace_products")
+            .from(
+                "marketplace_products"
+            )
             .update({
 
                 status:
@@ -3953,14 +3282,14 @@ async function updateProductStatus(
 
         showToast(
             newStatus === "active"
-                ? "Listing activated ✓"
-                : "Listing hidden."
+                ? "Product activated ✓"
+                : "Product hidden."
         );
 
 
         await loadGlobalProducts();
 
-        await loadMyProducts();
+        await renderMyListings();
 
     }
     catch(error){
@@ -3972,7 +3301,7 @@ async function updateProductStatus(
 
 
         showToast(
-            "Unable to update listing: " +
+            "Unable to update product: " +
             error.message
         );
 
@@ -3982,7 +3311,7 @@ async function updateProductStatus(
 
 
 /* =========================================================
-   OWNER: DELETE
+   DELETE PRODUCT
 ========================================================= */
 
 async function deleteProduct(
@@ -4027,7 +3356,9 @@ async function deleteProduct(
             error
         } =
         await supabaseClient
-            .from("marketplace_products")
+            .from(
+                "marketplace_products"
+            )
             .delete()
             .eq(
                 "id",
@@ -4053,7 +3384,7 @@ async function deleteProduct(
 
         await loadGlobalProducts();
 
-        await loadMyProducts();
+        await renderMyListings();
 
     }
     catch(error){
@@ -4075,34 +3406,466 @@ async function deleteProduct(
 
 
 /* =========================================================
-   NOTIFICATION
+   LOAD MY LISTINGS
 ========================================================= */
 
-async function createMarketplaceNotification({
-    receiverId,
-    type,
-    message
-}){
+async function loadMyListings(){
 
-    if(
-        !currentUser ||
-        !receiverId ||
-        receiverId ===
-        currentUser.id
-    ){
+    if(!requireLogin()){
 
         return;
 
     }
 
 
+    listedProductsContainer.innerHTML = `
+
+        <div class="loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <div>
+                Loading your listings...
+            </div>
+
+        </div>
+
+    `;
+
+
+    const {
+        data:products,
+        error
+    } =
+    await supabaseClient
+        .from(
+            "marketplace_products"
+        )
+        .select(`
+            id,
+            user_id,
+            product_name,
+            condition,
+            mrp_price,
+            offer_price,
+            location,
+            description,
+            image_url,
+            status,
+            views_count,
+            likes_count,
+            interests_count,
+            shares_count,
+            whatsapp_clicks_count,
+            created_at,
+            updated_at
+        `)
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "My listings error:",
+            error
+        );
+
+
+        listedProductsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                <div class="empty-title">
+                    Unable to load your listings
+                </div>
+
+                <div class="empty-text">
+                    ${escapeHtml(error.message)}
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const myProducts =
+        products || [];
+
+
+    await attachProfiles(
+        myProducts
+    );
+
+
+    allMyListings =
+        myProducts;
+
+
+    renderMyListings();
+
+}
+
+
+/* =========================================================
+   MY LISTINGS CACHE
+========================================================= */
+
+let allMyListings = [];
+
+
+/* =========================================================
+   RENDER MY LISTINGS
+========================================================= */
+
+function renderMyListings(){
+
+    let products =
+        allMyListings;
+
+
+    if(searchText){
+
+        products =
+            products.filter(
+                product =>
+                    matchesSearch(product)
+            );
+
+    }
+
+
+    listedProductsContainer.innerHTML =
+        "";
+
+
+    if(!products.length){
+
+        listedProductsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-box-open"></i>
+
+                <div class="empty-title">
+
+                    ${
+                        searchText
+                            ? "No matching listings"
+                            : "You have no listings yet"
+                    }
+
+                </div>
+
+                <div class="empty-text">
+
+                    ${
+                        searchText
+                            ? "Try another keyword."
+                            : "Use Sell Product to create your first listing."
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    products.forEach(
+        product => {
+
+            listedProductsContainer.appendChild(
+                createProductCard(
+                    product,
+                    true
+                )
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOAD LIKED PRODUCTS
+========================================================= */
+
+async function loadLikedProducts(){
+
+    if(!requireLogin()){
+
+        return;
+
+    }
+
+
+    likedProductsContainer.innerHTML = `
+
+        <div class="loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <div>
+                Loading liked products...
+            </div>
+
+        </div>
+
+    `;
+
+
+    const {
+        data:likes,
+        error
+    } =
+    await supabaseClient
+        .from(
+            "marketplace_likes"
+        )
+        .select(
+            "product_id"
+        )
+        .eq(
+            "user_id",
+            currentUser.id
+        );
+
+
+    if(error){
+
+        console.error(
+            "Liked products error:",
+            error
+        );
+
+
+        likedProductsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-circle-exclamation"></i>
+
+                <div class="empty-title">
+                    Unable to load liked products
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const productIds =
+        (
+            likes || []
+        ).map(
+            item =>
+                item.product_id
+        );
+
+
+    if(!productIds.length){
+
+        likedProductsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="far fa-heart"></i>
+
+                <div class="empty-title">
+                    No liked products yet
+                </div>
+
+                <div class="empty-text">
+                    Products you like will appear here.
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const {
+        data:products,
+        error:productError
+    } =
+    await supabaseClient
+        .from(
+            "marketplace_products"
+        )
+        .select(`
+            id,
+            user_id,
+            product_name,
+            condition,
+            mrp_price,
+            offer_price,
+            location,
+            description,
+            image_url,
+            status,
+            views_count,
+            likes_count,
+            interests_count,
+            shares_count,
+            whatsapp_clicks_count,
+            created_at,
+            updated_at
+        `)
+        .in(
+            "id",
+            productIds
+        )
+        .eq(
+            "status",
+            "active"
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(productError){
+
+        console.error(
+            productError
+        );
+
+        likedProductsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                Unable to load liked products.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const liked =
+        products || [];
+
+
+    await attachProfiles(
+        liked
+    );
+
+
+    likedProductsContainer.innerHTML =
+        "";
+
+
+    const filtered =
+        liked.filter(
+            product =>
+                matchesSearch(product)
+        );
+
+
+    if(!filtered.length){
+
+        likedProductsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-search"></i>
+
+                <div class="empty-title">
+                    No matching liked products
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    filtered.forEach(
+        product => {
+
+            likedProductsContainer.appendChild(
+                createProductCard(
+                    product,
+                    false
+                )
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CREATE MARKETPLACE NOTIFICATION
+========================================================= */
+
+async function createMarketplaceNotification({
+
+    receiverId,
+    type,
+    message
+
+}){
+
     try{
+
+        if(
+            !receiverId ||
+            !currentUser ||
+            receiverId ===
+            currentUser.id
+        ){
+
+            return;
+
+        }
+
 
         const {
             error
         } =
         await supabaseClient
-            .from("notifications")
+            .from(
+                "notifications"
+            )
             .insert({
 
                 user_id:
@@ -4125,8 +3888,14 @@ async function createMarketplaceNotification({
 
         if(error){
 
+            /*
+               Do not break the actual
+               marketplace action if notification
+               insertion has a policy issue.
+            */
+
             console.error(
-                "Notification error:",
+                "Marketplace notification error:",
                 error
             );
 
@@ -4136,7 +3905,7 @@ async function createMarketplaceNotification({
     catch(error){
 
         console.error(
-            "Notification exception:",
+            "Marketplace notification exception:",
             error
         );
 
@@ -4146,7 +3915,566 @@ async function createMarketplaceNotification({
 
 
 /* =========================================================
-   SELL FORM TOGGLE
+   RESET SELL FORM
+========================================================= */
+
+function resetSellForm(){
+
+    document.getElementById(
+        "productName"
+    ).value = "";
+
+
+    document.getElementById(
+        "productCondition"
+    ).value = "New";
+
+
+    document.getElementById(
+        "mrpPrice"
+    ).value = "";
+
+
+    document.getElementById(
+        "offerPrice"
+    ).value = "";
+
+
+    document.getElementById(
+        "productLocation"
+    ).value = "";
+
+
+    document.getElementById(
+        "productDescription"
+    ).value = "";
+
+
+    document.getElementById(
+        "productImage"
+    ).value = "";
+
+
+    const preview =
+        document.getElementById(
+            "imagePreview"
+        );
+
+
+    preview.src =
+        "";
+
+    preview.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+document.getElementById(
+    "productImage"
+).addEventListener(
+    "change",
+    function(){
+
+        const file =
+            this.files?.[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        if(
+            file.size >
+            5 * 1024 * 1024
+        ){
+
+            showToast(
+                "Image must be 5 MB or smaller."
+            );
+
+
+            this.value =
+                "";
+
+            return;
+
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(event){
+
+                const preview =
+                    document.getElementById(
+                        "imagePreview"
+                    );
+
+
+                preview.src =
+                    event.target.result;
+
+
+                preview.style.display =
+                    "block";
+
+            };
+
+
+        reader.readAsDataURL(
+            file
+        );
+
+    }
+);
+
+
+/* =========================================================
+   UPLOAD PRODUCT IMAGE
+========================================================= */
+
+async function uploadProductImage(
+    file
+){
+
+    if(!file){
+
+        return null;
+
+    }
+
+
+    const extension =
+        file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+    const safeExtension =
+        [
+            "jpg",
+            "jpeg",
+            "png",
+            "webp"
+        ].includes(
+            extension
+        )
+            ? extension
+            : "jpg";
+
+
+    const fileName =
+        Date.now() +
+        "-" +
+        crypto.randomUUID() +
+        "." +
+        safeExtension;
+
+
+    /*
+       IMPORTANT:
+
+       Storage RLS expects:
+
+       USER_ID / filename
+    */
+
+    const filePath =
+        currentUser.id +
+        "/" +
+        fileName;
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .storage
+        .from(
+            "marketplace"
+        )
+        .upload(
+            filePath,
+            file,
+            {
+                cacheControl:
+                    "3600",
+
+                upsert:
+                    false,
+
+                contentType:
+                    file.type
+            }
+        );
+
+
+    if(error){
+
+        throw error;
+
+    }
+
+
+    const {
+        data
+    } =
+    supabaseClient
+        .storage
+        .from(
+            "marketplace"
+        )
+        .getPublicUrl(
+            filePath
+        );
+
+
+    return data.publicUrl;
+
+}
+
+
+/* =========================================================
+   POST PRODUCT
+========================================================= */
+
+document.getElementById(
+    "postProductBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        if(!requireLogin()){
+
+            return;
+
+        }
+
+
+        const productName =
+            document.getElementById(
+                "productName"
+            )
+            .value
+            .trim();
+
+
+        const condition =
+            document.getElementById(
+                "productCondition"
+            )
+            .value;
+
+
+        const mrpValue =
+            document.getElementById(
+                "mrpPrice"
+            )
+            .value
+            .trim();
+
+
+        const offerValue =
+            document.getElementById(
+                "offerPrice"
+            )
+            .value
+            .trim();
+
+
+        const location =
+            document.getElementById(
+                "productLocation"
+            )
+            .value
+            .trim();
+
+
+        const description =
+            document.getElementById(
+                "productDescription"
+            )
+            .value
+            .trim();
+
+
+        const imageFile =
+            document.getElementById(
+                "productImage"
+            )
+            .files?.[0];
+
+
+        if(
+            !productName ||
+            !offerValue ||
+            !location
+        ){
+
+            showToast(
+                "Please fill Product Name, Offer Price and Location."
+            );
+
+            return;
+
+        }
+
+
+        const offerPrice =
+            Number(
+                offerValue
+            );
+
+
+        const mrpPrice =
+            mrpValue
+                ? Number(
+                    mrpValue
+                )
+                : null;
+
+
+        if(
+            Number.isNaN(
+                offerPrice
+            ) ||
+            offerPrice < 0
+        ){
+
+            showToast(
+                "Please enter a valid offer price."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            mrpPrice !== null &&
+            (
+                Number.isNaN(
+                    mrpPrice
+                ) ||
+                mrpPrice < 0
+            )
+        ){
+
+            showToast(
+                "Please enter a valid MRP."
+            );
+
+            return;
+
+        }
+
+
+        const button =
+            this;
+
+
+        button.disabled =
+            true;
+
+
+        button.innerHTML = `
+
+            <i class="fas fa-spinner fa-spin"></i>
+            Posting...
+
+        `;
+
+
+        try{
+
+            let imageUrl =
+                null;
+
+
+            if(imageFile){
+
+                imageUrl =
+                    await uploadProductImage(
+                        imageFile
+                    );
+
+            }
+
+
+            const {
+                error
+            } =
+            await supabaseClient
+                .from(
+                    "marketplace_products"
+                )
+                .insert({
+
+                    user_id:
+                        currentUser.id,
+
+                    product_name:
+                        productName,
+
+                    condition:
+                        condition,
+
+                    mrp_price:
+                        mrpPrice,
+
+                    offer_price:
+                        offerPrice,
+
+                    location:
+                        location,
+
+                    description:
+                        description ||
+                        null,
+
+                    image_url:
+                        imageUrl,
+
+                    status:
+                        "active"
+
+                });
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            showToast(
+                "Product posted successfully! 🛒"
+            );
+
+
+            resetSellForm();
+
+
+            sellForm.style.display =
+                "none";
+
+
+            removeActiveButtons();
+
+
+            await loadGlobalProducts();
+
+
+            if(
+                listedProducts.style.display ===
+                "block"
+            ){
+
+                await loadMyListings();
+
+            }
+
+        }
+        catch(error){
+
+            console.error(
+                "Post product error:",
+                error
+            );
+
+
+            showToast(
+                "Unable to post product: " +
+                error.message
+            );
+
+        }
+        finally{
+
+            button.disabled =
+                false;
+
+            button.innerHTML = `
+
+                <i class="fas fa-paper-plane"></i>
+                Post Product
+
+            `;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BUTTON STATE
+========================================================= */
+
+function removeActiveButtons(){
+
+    document.getElementById(
+        "sellBtn"
+    )
+    .classList.remove(
+        "active"
+    );
+
+
+    document.getElementById(
+        "listedBtn"
+    )
+    .classList.remove(
+        "active"
+    );
+
+
+    document.getElementById(
+        "likedBtn"
+    )
+    .classList.remove(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   SHOW ONLY GLOBAL
+========================================================= */
+
+function showGlobal(){
+
+    sellForm.style.display =
+        "none";
+
+    listedProducts.style.display =
+        "none";
+
+    likedProducts.style.display =
+        "none";
+
+    globalSection.style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   SELL BUTTON
 ========================================================= */
 
 document.getElementById(
@@ -4167,49 +4495,48 @@ document.getElementById(
             "block";
 
 
+        removeActiveButtons();
+
+
         if(visible){
 
             sellForm.style.display =
                 "none";
 
-            this.classList.remove(
-                "active"
-            );
-
-        }
-        else{
-
-            sellForm.style.display =
-                "block";
-
-            listedProducts.style.display =
-                "none";
-
-            likedProducts.style.display =
-                "none";
 
             globalSection.style.display =
                 "block";
 
-            currentMode =
-                "global";
-
-            removeActiveButtons();
-
-            this.classList.add(
-                "active"
-            );
-
-
-            sellForm.scrollIntoView({
-
-                behavior:"smooth",
-
-                block:"start"
-
-            });
+            return;
 
         }
+
+
+        sellForm.style.display =
+            "block";
+
+
+        listedProducts.style.display =
+            "none";
+
+
+        likedProducts.style.display =
+            "none";
+
+
+        globalSection.style.display =
+            "block";
+
+
+        this.classList.add(
+            "active"
+        );
+
+
+        sellForm.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
 
     }
 );
@@ -4228,64 +4555,10 @@ document.getElementById(
         sellForm.style.display =
             "none";
 
-
         removeActiveButtons();
 
     }
 );
-
-
-/* =========================================================
-   REMOVE ACTIVE TOP BUTTONS
-========================================================= */
-
-function removeActiveButtons(){
-
-    document.getElementById(
-        "sellBtn"
-    ).classList.remove(
-        "active"
-    );
-
-
-    document.getElementById(
-        "listedBtn"
-    ).classList.remove(
-        "active"
-    );
-
-
-    document.getElementById(
-        "likedBtn"
-    ).classList.remove(
-        "active"
-    );
-
-}
-
-
-/* =========================================================
-   SHOW GLOBAL
-========================================================= */
-
-function showGlobal(){
-
-    currentMode =
-        "global";
-
-
-    globalSection.style.display =
-        "block";
-
-
-    listedProducts.style.display =
-        "none";
-
-
-    likedProducts.style.display =
-        "none";
-
-}
 
 
 /* =========================================================
@@ -4305,24 +4578,34 @@ document.getElementById(
         }
 
 
-        const alreadyVisible =
+        const visible =
             listedProducts.style.display ===
             "block";
 
 
-        if(alreadyVisible){
+        removeActiveButtons();
 
-            showGlobal();
 
-            removeActiveButtons();
+        if(visible){
+
+            listedProducts.style.display =
+                "none";
+
+
+            globalSection.style.display =
+                "block";
 
             return;
 
         }
 
 
-        currentMode =
-            "listed";
+        sellForm.style.display =
+            "none";
+
+
+        likedProducts.style.display =
+            "none";
 
 
         globalSection.style.display =
@@ -4333,23 +4616,12 @@ document.getElementById(
             "block";
 
 
-        likedProducts.style.display =
-            "none";
-
-
-        sellForm.style.display =
-            "none";
-
-
-        removeActiveButtons();
-
-
         this.classList.add(
             "active"
         );
 
 
-        await loadMyProducts();
+        await loadMyListings();
 
     }
 );
@@ -4372,27 +4644,29 @@ document.getElementById(
         }
 
 
-        const alreadyVisible =
+        const visible =
             likedProducts.style.display ===
             "block";
 
 
-        if(alreadyVisible){
+        removeActiveButtons();
 
-            showGlobal();
 
-            removeActiveButtons();
+        if(visible){
+
+            likedProducts.style.display =
+                "none";
+
+
+            globalSection.style.display =
+                "block";
 
             return;
 
         }
 
 
-        currentMode =
-            "liked";
-
-
-        globalSection.style.display =
+        sellForm.style.display =
             "none";
 
 
@@ -4400,15 +4674,12 @@ document.getElementById(
             "none";
 
 
-        likedProducts.style.display =
-            "block";
-
-
-        sellForm.style.display =
+        globalSection.style.display =
             "none";
 
 
-        removeActiveButtons();
+        likedProducts.style.display =
+            "block";
 
 
         this.classList.add(
@@ -4417,388 +4688,6 @@ document.getElementById(
 
 
         await loadLikedProducts();
-
-    }
-);
-
-
-/* =========================================================
-   POST PRODUCT
-========================================================= */
-
-document.getElementById(
-    "postProductBtn"
-).addEventListener(
-    "click",
-    async function(){
-
-        if(!requireLogin()){
-
-            return;
-
-        }
-
-
-        const button =
-            this;
-
-
-        const productName =
-            document.getElementById(
-                "productName"
-            ).value.trim();
-
-
-        const condition =
-            document.getElementById(
-                "productCondition"
-            ).value;
-
-
-        const mrpPrice =
-            document.getElementById(
-                "mrpPrice"
-            ).value;
-
-
-        const offerPrice =
-            document.getElementById(
-                "offerPrice"
-            ).value;
-
-
-        const location =
-            document.getElementById(
-                "productLocation"
-            ).value.trim();
-
-
-        const description =
-            document.getElementById(
-                "productDescription"
-            ).value.trim();
-
-
-        const imageFile =
-            document.getElementById(
-                "productImage"
-            ).files[0];
-
-
-        if(
-            !productName ||
-            !offerPrice ||
-            !location
-        ){
-
-            alert(
-                "Please fill Product Name, Offer Price and Location."
-            );
-
-            return;
-
-        }
-
-
-        button.disabled =
-            true;
-
-
-        button.innerHTML = `
-
-            <i class="fas fa-spinner fa-spin"></i>
-
-            Posting...
-
-        `;
-
-
-        try{
-
-            let imageUrl =
-                null;
-
-
-            /* =================================================
-               IMAGE UPLOAD
-            ================================================= */
-
-            if(imageFile){
-
-                const extension =
-                    imageFile.name
-                        .split(".")
-                        .pop()
-                        .toLowerCase();
-
-
-                const fileName =
-                    currentUser.id +
-                    "_" +
-                    Date.now() +
-                    "." +
-                    extension;
-
-
-                const filePath =
-                    "marketplace/" +
-                    fileName;
-
-
-                const {
-                    error:uploadError
-                } =
-                await supabaseClient
-                    .storage
-                    .from(
-                        "marketplace"
-                    )
-                    .upload(
-                        filePath,
-                        imageFile,
-                        {
-                            upsert:false
-                        }
-                    );
-
-
-                if(uploadError){
-
-                    throw uploadError;
-
-                }
-
-
-                const {
-                    data:publicData
-                } =
-                supabaseClient
-                    .storage
-                    .from(
-                        "marketplace"
-                    )
-                    .getPublicUrl(
-                        filePath
-                    );
-
-
-                imageUrl =
-                    publicData.publicUrl;
-
-            }
-
-
-            /* =================================================
-               INSERT PRODUCT
-            ================================================= */
-
-            const {
-                error
-            } =
-            await supabaseClient
-                .from(
-                    "marketplace_products"
-                )
-                .insert({
-
-                    user_id:
-                        currentUser.id,
-
-                    product_name:
-                        productName,
-
-                    condition:
-                        condition,
-
-                    mrp_price:
-                        mrpPrice
-                            ? Number(
-                                mrpPrice
-                              )
-                            : null,
-
-                    offer_price:
-                        Number(
-                            offerPrice
-                        ),
-
-                    location:
-                        location,
-
-                    description:
-                        description ||
-                        null,
-
-                    image_url:
-                        imageUrl,
-
-                    status:
-                        "active",
-
-                    views_count:
-                        0,
-
-                    likes_count:
-                        0,
-
-                    interests_count:
-                        0,
-
-                    shares_count:
-                        0,
-
-                    whatsapp_clicks_count:
-                        0
-
-                });
-
-
-            if(error){
-
-                throw error;
-
-            }
-
-
-            showToast(
-                "Product posted successfully! 🛒"
-            );
-
-
-            /* =================================================
-               RESET FORM
-            ================================================= */
-
-            document.getElementById(
-                "productName"
-            ).value = "";
-
-
-            document.getElementById(
-                "mrpPrice"
-            ).value = "";
-
-
-            document.getElementById(
-                "offerPrice"
-            ).value = "";
-
-
-            document.getElementById(
-                "productLocation"
-            ).value = "";
-
-
-            document.getElementById(
-                "productDescription"
-            ).value = "";
-
-
-            document.getElementById(
-                "productImage"
-            ).value = "";
-
-
-            document.getElementById(
-                "imagePreview"
-            ).style.display =
-                "none";
-
-
-            sellForm.style.display =
-                "none";
-
-
-            removeActiveButtons();
-
-
-            await loadGlobalProducts();
-
-        }
-        catch(error){
-
-            console.error(
-                "Post product error:",
-                error
-            );
-
-
-            alert(
-                "Unable to post product:\n\n" +
-                error.message
-            );
-
-        }
-        finally{
-
-            button.disabled =
-                false;
-
-
-            button.innerHTML = `
-
-                <i class="fas fa-paper-plane"></i>
-
-                Post Product
-
-            `;
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   IMAGE PREVIEW
-========================================================= */
-
-document.getElementById(
-    "productImage"
-).addEventListener(
-    "change",
-    function(){
-
-        const file =
-            this.files[0];
-
-
-        if(!file){
-
-            document.getElementById(
-                "imagePreview"
-            ).style.display =
-                "none";
-
-            return;
-
-        }
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function(event){
-
-                document.getElementById(
-                    "previewImage"
-                ).src =
-                    event.target.result;
-
-
-                document.getElementById(
-                    "imagePreview"
-                ).style.display =
-                    "block";
-
-            };
-
-
-        reader.readAsDataURL(
-            file
-        );
 
     }
 );
@@ -4829,44 +4718,41 @@ document.getElementById(
 
 
 /* =========================================================
-   PERIODIC REFRESH
+   CLOSE MODAL
 ========================================================= */
 
-setInterval(
-    async function(){
+document.getElementById(
+    "closeModalBtn"
+).addEventListener(
+    "click",
+    function(){
 
-        await loadCurrentUser();
+        document.getElementById(
+            "productModal"
+        ).style.display =
+            "none";
 
+    }
+);
+
+
+document.getElementById(
+    "productModal"
+).addEventListener(
+    "click",
+    function(event){
 
         if(
-            currentMode ===
-            "global"
+            event.target ===
+            this
         ){
 
-            await loadGlobalProducts();
-
-        }
-        else if(
-            currentMode ===
-            "listed" &&
-            currentUser
-        ){
-
-            await loadMyProducts();
-
-        }
-        else if(
-            currentMode ===
-            "liked" &&
-            currentUser
-        ){
-
-            await loadLikedProducts();
+            this.style.display =
+                "none";
 
         }
 
-    },
-    30000
+    }
 );
 
 
@@ -4882,31 +4768,28 @@ supabaseClient
             session
         ){
 
-            console.log(
-                "Marketplace auth:",
-                event
-            );
+            if(
+                session?.user
+            ){
 
+                currentUser =
+                    session.user;
 
-            currentUser =
-                session?.user ||
-                null;
-
-
-            if(currentUser){
 
                 await loadCurrentUser();
 
-                await loadMyLikes();
+                await loadGlobalProducts();
 
-                if(
-                    currentMode ===
-                    "global"
-                ){
+            }
+            else{
 
-                    renderGlobalProducts();
+                currentUser =
+                    null;
 
-                }
+                currentProfile =
+                    null;
+
+                await loadGlobalProducts();
 
             }
 
@@ -4928,6 +4811,46 @@ async function initializeMarketplace(){
 
 
 initializeMarketplace();
+
+
+/* =========================================================
+   PERIODIC REFRESH
+========================================================= */
+
+setInterval(
+    async function(){
+
+        /*
+           Keep global active listings reasonably fresh.
+        */
+
+        await loadGlobalProducts();
+
+
+        if(
+            listedProducts.style.display ===
+            "block" &&
+            currentUser
+        ){
+
+            await loadMyListings();
+
+        }
+
+
+        if(
+            likedProducts.style.display ===
+            "block" &&
+            currentUser
+        ){
+
+            await loadLikedProducts();
+
+        }
+
+    },
+    30000
+);
 
 </script>
 
