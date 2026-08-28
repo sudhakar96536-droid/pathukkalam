@@ -1,61 +1,4239 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+      content="width=device-width, initial-scale=1.0">
 
-<title>YouTube Shorts</title>
+<title>Pathukkalam Reels</title>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 
-body{
+*{
     margin:0;
-    background:black;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#000;
+    color:white;
+    padding-bottom:90px;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#111;
+    padding:15px;
+    text-align:center;
+    font-size:21px;
+    font-weight:bold;
+    border-bottom:1px solid #333;
+}
+
+.top-actions{
+    display:flex;
+    gap:8px;
+    padding:10px;
+    background:#111;
+    overflow-x:auto;
+}
+
+.top-btn{
+    flex-shrink:0;
+    border:none;
+    background:#222;
+    color:white;
+    padding:11px 15px;
+    border-radius:12px;
+    font-weight:bold;
+}
+
+.top-btn.active{
+    background:#1877f2;
+}
+
+.feed{
+    max-width:600px;
+    margin:auto;
+}
+
+.reel-card{
+    position:relative;
+    background:#111;
+    margin-bottom:12px;
+    overflow:hidden;
+}
+
+.reel-video{
+    width:100%;
+    max-height:78vh;
+    display:block;
+    background:#000;
+    object-fit:contain;
+}
+
+.reel-info{
+    padding:14px;
+    background:#111;
+}
+
+.poster-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.poster-avatar{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.poster-name{
+    font-weight:bold;
+}
+
+.poster-username{
+    color:#999;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.profile-btn{
+    margin-left:auto;
+    background:#1877f2;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:8px 10px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.caption{
+    margin-top:12px;
+    line-height:1.5;
+}
+
+.hashtags{
+    margin-top:8px;
+    color:#58a6ff;
+}
+
+.stats{
+    display:flex;
+    gap:16px;
+    margin-top:12px;
+    color:#bbb;
+    font-size:13px;
+}
+
+.reel-actions{
+    display:flex;
+    gap:7px;
+    margin-top:13px;
+}
+
+.action-btn{
+    flex:1;
+    border:none;
+    padding:11px 5px;
+    border-radius:10px;
+    background:#222;
+    color:white;
+    font-size:13px;
+}
+
+.action-btn.liked{
+    background:#e91e63;
+}
+
+.action-btn.whatsapp{
+    background:#25d366;
+}
+
+.action-btn.share{
+    background:#1877f2;
+}
+
+.comments{
+    display:none;
+    margin-top:12px;
+}
+
+.comment-input{
+    display:flex;
+    gap:7px;
+}
+
+.comment-input input{
+    flex:1;
+    border:none;
+    border-radius:10px;
+    padding:11px;
+}
+
+.comment-input button{
+    border:none;
+    background:#1877f2;
+    color:white;
+    border-radius:10px;
+    padding:0 14px;
+}
+
+.comment-list{
+    margin-top:10px;
+}
+
+.comment-item{
+    background:#1c1c1c;
+    padding:9px;
+    border-radius:9px;
+    margin-bottom:5px;
+    font-size:13px;
+}
+
+.empty{
+    text-align:center;
+    padding:70px 20px;
+    color:#999;
+}
+
+.loading{
+    text-align:center;
+    padding:60px;
+    color:#aaa;
+}
+
+
+/* =========================================================
+   UPLOAD PANEL
+========================================================= */
+
+.upload-panel{
+    display:none;
+    max-width:600px;
+    margin:12px auto;
+    background:#151515;
+    border-radius:18px;
+    padding:16px;
+}
+
+.panel-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:14px;
+}
+
+.input-group{
+    margin-bottom:12px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:13px;
+    font-weight:bold;
+    color:#ddd;
+}
+
+.input-group input,
+.input-group textarea{
+    width:100%;
+    border:none;
+    border-radius:10px;
+    background:#222;
+    color:white;
+    padding:12px;
+    outline:none;
+}
+
+.input-group textarea{
+    min-height:80px;
+    resize:vertical;
+}
+
+.file-input{
+    background:#222;
+    padding:12px;
+    border-radius:10px;
+}
+
+
+/* =========================================================
+   EDITOR
+========================================================= */
+
+.editor{
+    display:none;
+    background:#0d0d0d;
+    border-radius:15px;
+    padding:12px;
+    margin-top:12px;
+}
+
+.editor-title{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.editor-video-wrap{
+    position:relative;
+    width:100%;
+    background:#000;
+    border-radius:12px;
+    overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
-    font-family:Arial;
 }
 
-.open-btn{
-    background:red;
-    color:white;
-    padding:18px 30px;
+#sourceVideo{
+    width:100%;
+    max-height:450px;
+    object-fit:contain;
+}
+
+.crop-overlay{
+    position:absolute;
+    border:2px solid #fff;
+    box-shadow:
+        0 0 0 9999px rgba(0,0,0,.55);
+    pointer-events:none;
+}
+
+.ratio-buttons{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+.ratio-btn{
+    flex-shrink:0;
     border:none;
-    border-radius:14px;
-    font-size:20px;
+    background:#222;
+    color:white;
+    padding:8px 11px;
+    border-radius:9px;
+    font-size:12px;
+}
+
+.ratio-btn.active{
+    background:#1877f2;
+}
+
+.editor-controls{
+    margin-top:12px;
+}
+
+.range-row{
+    margin-top:10px;
+}
+
+.range-row label{
+    display:block;
+    color:#bbb;
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.range-row input{
+    width:100%;
+}
+
+.time-label{
+    color:#58a6ff;
     font-weight:bold;
-    cursor:pointer;
+    font-size:13px;
+}
+
+.editor-buttons{
+    display:flex;
+    gap:7px;
+    margin-top:12px;
+}
+
+.editor-buttons button{
+    flex:1;
+    padding:11px;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.preview-btn{
+    background:#1877f2;
+    color:white;
+}
+
+.reset-btn{
+    background:#333;
+    color:white;
+}
+
+.export-btn{
+    background:#00a86b;
+    color:white;
+}
+
+.export-progress{
+    display:none;
+    margin-top:10px;
+    color:#58a6ff;
+    font-size:13px;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard{
+    display:none;
+    max-width:600px;
+    margin:auto;
+    padding:12px;
+}
+
+.dashboard-title{
+    font-size:21px;
+    font-weight:bold;
+    margin:10px 0 15px;
+}
+
+.metric-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.metric{
+    background:#151515;
+    padding:18px;
+    border-radius:14px;
+}
+
+.metric-value{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.metric-label{
+    color:#999;
+    margin-top:5px;
+    font-size:12px;
+}
+
+.dashboard-reel{
+    background:#151515;
+    margin-top:10px;
+    padding:13px;
+    border-radius:14px;
+}
+
+.dashboard-reel-title{
+    font-weight:bold;
+}
+
+.dashboard-reel-stats{
+    color:#aaa;
+    font-size:12px;
+    margin-top:7px;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translate(-50%,20px);
+    background:#fff;
+    color:#111;
+    padding:12px 18px;
+    border-radius:25px;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:99999;
+    max-width:90%;
+    text-align:center;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:500px){
+
+    .reel-video{
+        max-height:70vh;
+    }
+
+    .metric-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
 
-<button class="open-btn"
-onclick="openShorts()">
 
-    ▶ Open YouTube Shorts
+<div class="header">
 
-</button>
+    🎬 Pathukkalam Reels
+
+</div>
+
+
+<!-- =======================================================
+     TOP BUTTONS
+======================================================= -->
+
+<div class="top-actions">
+
+    <button
+        class="top-btn active"
+        id="feedBtn">
+
+        🎬 Reels
+
+    </button>
+
+    <button
+        class="top-btn"
+        id="uploadBtn">
+
+        ➕ Upload
+
+    </button>
+
+    <button
+        class="top-btn"
+        id="myReelsBtn">
+
+        👤 My Reels
+
+    </button>
+
+    <button
+        class="top-btn"
+        id="dashboardBtn">
+
+        📊 Dashboard
+
+    </button>
+
+</div>
+
+
+<!-- =======================================================
+     UPLOAD PANEL
+======================================================= -->
+
+<div
+    class="upload-panel"
+    id="uploadPanel">
+
+    <div class="panel-title">
+
+        🎬 Create New Reel
+
+    </div>
+
+
+    <div class="input-group">
+
+        <label>
+            Select Video
+        </label>
+
+        <input
+            class="file-input"
+            type="file"
+            id="videoFile"
+            accept="video/*">
+
+    </div>
+
+
+    <!-- EDITOR -->
+
+    <div
+        class="editor"
+        id="editor">
+
+        <div class="editor-title">
+
+            ✂️ Reel Editor
+
+        </div>
+
+
+        <div class="editor-video-wrap">
+
+            <video
+                id="sourceVideo"
+                playsinline
+                controls>
+            </video>
+
+            <div
+                class="crop-overlay"
+                id="cropOverlay">
+            </div>
+
+        </div>
+
+
+        <!-- CROP RATIOS -->
+
+        <div class="ratio-buttons">
+
+            <button
+                class="ratio-btn active"
+                data-ratio="original">
+
+                Original
+
+            </button>
+
+            <button
+                class="ratio-btn"
+                data-ratio="9:16">
+
+                9:16
+
+            </button>
+
+            <button
+                class="ratio-btn"
+                data-ratio="1:1">
+
+                1:1
+
+            </button>
+
+            <button
+                class="ratio-btn"
+                data-ratio="4:5">
+
+                4:5
+
+            </button>
+
+            <button
+                class="ratio-btn"
+                data-ratio="16:9">
+
+                16:9
+
+            </button>
+
+            <button
+                class="ratio-btn"
+                data-ratio="free">
+
+                Free
+
+            </button>
+
+        </div>
+
+
+        <!-- TRIM -->
+
+        <div class="editor-controls">
+
+            <div class="range-row">
+
+                <label>
+                    Start
+                </label>
+
+                <input
+                    type="range"
+                    id="startRange"
+                    min="0"
+                    max="50"
+                    step="0.1"
+                    value="0">
+
+            </div>
+
+
+            <div class="range-row">
+
+                <label>
+                    End
+                </label>
+
+                <input
+                    type="range"
+                    id="endRange"
+                    min="30"
+                    max="50"
+                    step="0.1"
+                    value="30">
+
+            </div>
+
+
+            <div class="time-label"
+                 id="trimLabel">
+
+                Selected duration: 30 seconds
+
+            </div>
+
+        </div>
+
+
+        <div class="editor-buttons">
+
+            <button
+                class="reset-btn"
+                id="resetCropBtn">
+
+                Reset
+
+            </button>
+
+            <button
+                class="preview-btn"
+                id="previewCropBtn">
+
+                Preview
+
+            </button>
+
+            <button
+                class="export-btn"
+                id="exportBtn">
+
+                Export Crop
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="export-progress"
+            id="exportProgress">
+
+            Processing video...
+
+        </div>
+
+    </div>
+
+
+    <!-- CAPTION -->
+
+    <div class="input-group">
+
+        <label>
+            Caption
+        </label>
+
+        <textarea
+            id="caption"
+            placeholder="Write something about your Reel...">
+        </textarea>
+
+    </div>
+
+
+    <!-- HASHTAGS -->
+
+    <div class="input-group">
+
+        <label>
+            Hashtags
+        </label>
+
+        <input
+            type="text"
+            id="hashtags"
+            placeholder="#chennai #technology #travel">
+
+    </div>
+
+
+    <button
+        class="post-btn"
+        id="publishBtn"
+        style="
+            width:100%;
+            border:none;
+            background:#1877f2;
+            color:white;
+            padding:13px;
+            border-radius:11px;
+            font-weight:bold;
+        ">
+
+        🚀 Publish Reel
+
+    </button>
+
+</div>
+
+
+<!-- =======================================================
+     FEED
+======================================================= -->
+
+<div
+    class="feed"
+    id="feed">
+
+    <div class="loading">
+
+        <i class="fas fa-spinner fa-spin"></i>
+
+        <div>
+            Loading Reels...
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     DASHBOARD
+======================================================= -->
+
+<div
+    class="dashboard"
+    id="dashboard">
+
+    <div class="dashboard-title">
+
+        📊 My Reel Dashboard
+
+    </div>
+
+
+    <div class="metric-grid">
+
+        <div class="metric">
+
+            <div
+                class="metric-value"
+                id="dashViews">
+
+                0
+
+            </div>
+
+            <div class="metric-label">
+                Total Views
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div
+                class="metric-value"
+                id="dashLikes">
+
+                0
+
+            </div>
+
+            <div class="metric-label">
+                Likes
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div
+                class="metric-value"
+                id="dashComments">
+
+                0
+
+            </div>
+
+            <div class="metric-label">
+                Comments
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div
+                class="metric-value"
+                id="dashShares">
+
+                0
+
+            </div>
+
+            <div class="metric-label">
+                Shares
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="dashboard-title"
+        style="font-size:17px;margin-top:25px;">
+
+        📅 Last 7 Days
+
+    </div>
+
+
+    <div id="dailyStats">
+
+    </div>
+
+
+    <div
+        class="dashboard-title"
+        style="font-size:17px;margin-top:25px;">
+
+        🎬 My Reels Performance
+
+    </div>
+
+
+    <div id="dashboardReels">
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<!-- =======================================================
+     SUPABASE
+======================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
 
-function openShorts(){
+/* =========================================================
+   SUPABASE
+========================================================= */
 
-    window.location.href =
-    "https://m.youtube.com/shorts/";
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNWi8DZkZF2g_frSEW_OX";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =========================================================
+   GLOBALS
+========================================================= */
+
+let currentUser = null;
+let currentProfile = null;
+
+let allReels = [];
+
+let selectedFile = null;
+let sourceUrl = null;
+
+let cropRatio = "original";
+
+let cropX = 0;
+let cropY = 0;
+
+let zoom = 1;
+
+let trimStart = 0;
+let trimEnd = 30;
+
+let exportedBlob = null;
+
+let exportedMime =
+    "video/webm";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const feed =
+    document.getElementById("feed");
+
+const uploadPanel =
+    document.getElementById("uploadPanel");
+
+const dashboard =
+    document.getElementById("dashboard");
+
+const sourceVideo =
+    document.getElementById("sourceVideo");
+
+const cropOverlay =
+    document.getElementById("cropOverlay");
+
+const videoFile =
+    document.getElementById("videoFile");
+
+const startRange =
+    document.getElementById("startRange");
+
+const endRange =
+    document.getElementById("endRange");
+
+const trimLabel =
+    document.getElementById("trimLabel");
+
+const exportProgress =
+    document.getElementById("exportProgress");
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message){
+
+    const el =
+        document.getElementById("toast");
+
+    el.innerText =
+        message;
+
+    el.classList.add("show");
+
+    setTimeout(
+        () => el.classList.remove("show"),
+        3000
+    );
 
 }
 
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   FORMAT
+========================================================= */
+
+function formatCount(number){
+
+    number =
+        Number(number || 0);
+
+    if(number >= 1000000)
+        return (
+            (number / 1000000)
+                .toFixed(1)
+                .replace(".0","") +
+            "M"
+        );
+
+    if(number >= 1000)
+        return (
+            (number / 1000)
+                .toFixed(1)
+                .replace(".0","") +
+            "K"
+        );
+
+    return String(number);
+
+}
+
+
+/* =========================================================
+   CURRENT USER
+========================================================= */
+
+async function loadCurrentUser(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
+
+
+    if(error || !data.user){
+
+        window.location.href =
+            "/login";
+
+        return false;
+
+    }
+
+
+    currentUser =
+        data.user;
+
+
+    const {
+        data:profile
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(`
+            id,
+            username,
+            name,
+            profile_url
+        `)
+        .eq(
+            "id",
+            currentUser.id
+        )
+        .maybeSingle();
+
+
+    currentProfile =
+        profile;
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   LOAD REELS
+========================================================= */
+
+async function loadReels(){
+
+    feed.innerHTML = `
+
+        <div class="loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <div>
+                Loading Reels...
+            </div>
+
+        </div>
+
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("reels")
+        .select(`
+            id,
+            user_id,
+            video_url,
+            caption,
+            hashtags,
+            duration_seconds,
+            crop_ratio,
+            views_count,
+            likes_count,
+            comments_count,
+            shares_count,
+            whatsapp_clicks_count,
+            created_at
+        `)
+        .eq(
+            "status",
+            "active"
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        feed.innerHTML = `
+
+            <div class="empty">
+                Unable to load Reels.
+                <br><br>
+                ${escapeHtml(error.message)}
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    allReels =
+        data || [];
+
+
+    await attachProfiles();
+
+}
+
+
+/* =========================================================
+   ATTACH PROFILES
+========================================================= */
+
+async function attachProfiles(){
+
+    const ids =
+        [
+            ...new Set(
+                allReels
+                    .map(
+                        r => r.user_id
+                    )
+            )
+        ];
+
+
+    if(!ids.length){
+
+        renderFeed();
+
+        return;
+
+    }
+
+
+    const {
+        data:profiles
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(`
+            id,
+            username,
+            name,
+            profile_url
+        `)
+        .in(
+            "id",
+            ids
+        );
+
+
+    const map =
+        new Map();
+
+
+    (profiles || [])
+        .forEach(
+            p =>
+                map.set(
+                    p.id,
+                    p
+                )
+        );
+
+
+    allReels =
+        allReels.map(
+            reel => ({
+
+                ...reel,
+
+                profile:
+                    map.get(
+                        reel.user_id
+                    ) || null
+
+            })
+        );
+
+
+    renderFeed();
+
+}
+
+
+/* =========================================================
+   RENDER FEED
+========================================================= */
+
+function renderFeed(){
+
+    feed.innerHTML = "";
+
+
+    if(!allReels.length){
+
+        feed.innerHTML = `
+
+            <div class="empty">
+
+                🎬
+
+                <br><br>
+
+                No Reels yet.
+
+                <br><br>
+
+                Be the first to upload!
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    allReels.forEach(
+        reel => {
+
+            feed.appendChild(
+                createReelCard(reel)
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CREATE REEL
+========================================================= */
+
+function createReelCard(reel){
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "reel-card";
+
+
+    const profile =
+        reel.profile;
+
+
+    const avatar =
+        profile?.profile_url ||
+        "https://i.pravatar.cc/100";
+
+
+    const name =
+        profile?.name ||
+        profile?.username ||
+        "Pathukkalam User";
+
+
+    const username =
+        profile?.username ||
+        "user";
+
+
+    const hashtags =
+        (reel.hashtags || [])
+            .map(
+                h =>
+                    h.startsWith("#")
+                        ? h
+                        : "#" + h
+            )
+            .join(" ");
+
+
+    card.innerHTML = `
+
+        <video
+            class="reel-video"
+            src="${escapeHtml(reel.video_url)}"
+            playsinline
+            controls
+            preload="metadata">
+        </video>
+
+
+        <div class="reel-info">
+
+            <div class="poster-row">
+
+                <img
+                    class="poster-avatar"
+                    src="${escapeHtml(avatar)}">
+
+                <div>
+
+                    <div class="poster-name">
+
+                        ${escapeHtml(name)}
+
+                    </div>
+
+                    <div class="poster-username">
+
+                        @${escapeHtml(username)}
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="profile-btn">
+
+                    Profile
+
+                </button>
+
+            </div>
+
+
+            ${
+                reel.caption
+                    ? `
+                        <div class="caption">
+                            ${escapeHtml(
+                                reel.caption
+                            )}
+                        </div>
+                      `
+                    : ""
+            }
+
+
+            ${
+                hashtags
+                    ? `
+                        <div class="hashtags">
+                            ${escapeHtml(
+                                hashtags
+                            )}
+                        </div>
+                      `
+                    : ""
+            }
+
+
+            <div class="stats">
+
+                <span>
+                    👁 ${formatCount(
+                        reel.views_count
+                    )}
+                </span>
+
+                <span>
+                    ❤️ ${formatCount(
+                        reel.likes_count
+                    )}
+                </span>
+
+                <span>
+                    💬 ${formatCount(
+                        reel.comments_count
+                    )}
+                </span>
+
+                <span>
+                    ↗ ${formatCount(
+                        reel.shares_count
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="reel-actions">
+
+                <button
+                    class="action-btn"
+                    data-action="like">
+
+                    ❤️ Like
+
+                </button>
+
+
+                <button
+                    class="action-btn"
+                    data-action="comment">
+
+                    💬 Comment
+
+                </button>
+
+
+                <button
+                    class="action-btn share"
+                    data-action="share">
+
+                    ↗ Share
+
+                </button>
+
+
+                <button
+                    class="action-btn whatsapp"
+                    data-action="whatsapp">
+
+                    <i class="fab fa-whatsapp"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="comments">
+
+                <div class="comment-input">
+
+                    <input
+                        type="text"
+                        placeholder="Write a comment...">
+
+                    <button>
+                        Send
+                    </button>
+
+                </div>
+
+
+                <div class="comment-list">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /* =====================================================
+       VIEW COUNT
+    ===================================================== */
+
+    const video =
+        card.querySelector(
+            ".reel-video"
+        );
+
+
+    let viewRecorded = false;
+
+
+    video.addEventListener(
+        "play",
+        async function(){
+
+            if(viewRecorded)
+                return;
+
+            viewRecorded = true;
+
+            await recordView(
+                reel
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       LIKE
+    ===================================================== */
+
+    const likeBtn =
+        card.querySelector(
+            '[data-action="like"]'
+        );
+
+
+    likeBtn.addEventListener(
+        "click",
+        async function(){
+
+            await toggleLike(
+                reel,
+                likeBtn
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       COMMENT
+    ===================================================== */
+
+    const commentBtn =
+        card.querySelector(
+            '[data-action="comment"]'
+        );
+
+
+    const commentsBox =
+        card.querySelector(
+            ".comments"
+        );
+
+
+    commentBtn.addEventListener(
+        "click",
+        async function(){
+
+            commentsBox.style.display =
+                commentsBox.style.display ===
+                "block"
+                    ? "none"
+                    : "block";
+
+            if(
+                commentsBox.style.display ===
+                "block"
+            ){
+
+                await loadComments(
+                    reel,
+                    commentsBox
+                );
+
+            }
+
+        }
+    );
+
+
+    const sendComment =
+        commentsBox.querySelector(
+            "button"
+        );
+
+
+    const commentInput =
+        commentsBox.querySelector(
+            "input"
+        );
+
+
+    sendComment.addEventListener(
+        "click",
+        async function(){
+
+            await addComment(
+                reel,
+                commentInput,
+                commentsBox
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       SHARE
+    ===================================================== */
+
+    const shareBtn =
+        card.querySelector(
+            '[data-action="share"]'
+        );
+
+
+    shareBtn.addEventListener(
+        "click",
+        async function(){
+
+            const url =
+                window.location.origin +
+                "/reels#reel-" +
+                reel.id;
+
+
+            if(
+                navigator.share
+            ){
+
+                try{
+
+                    await navigator.share({
+
+                        title:
+                            "Pathukkalam Reel",
+
+                        text:
+                            reel.caption ||
+                            "Check this Reel",
+
+                        url:url
+
+                    });
+
+                }
+                catch(e){}
+
+            }
+            else{
+
+                await navigator.clipboard.writeText(
+                    url
+                );
+
+                toast(
+                    "Reel link copied ✓"
+                );
+
+            }
+
+
+            await recordShare(
+                reel,
+                "native"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       WHATSAPP
+    ===================================================== */
+
+    const whatsappBtn =
+        card.querySelector(
+            '[data-action="whatsapp"]'
+        );
+
+
+    whatsappBtn.addEventListener(
+        "click",
+        async function(){
+
+            const url =
+                window.location.origin +
+                "/reels#reel-" +
+                reel.id;
+
+
+            const text =
+                (
+                    reel.caption ||
+                    "Check this Reel on Pathukkalam"
+                ) +
+                "\n" +
+                url;
+
+
+            window.open(
+                "https://wa.me/?text=" +
+                encodeURIComponent(text),
+                "_blank"
+            );
+
+
+            await supabaseClient
+                .from(
+                    "reel_whatsapp_clicks"
+                )
+                .insert({
+
+                    reel_id:
+                        reel.id,
+
+                    user_id:
+                        currentUser.id
+
+                });
+
+
+            await incrementReelCounter(
+                reel.id,
+                "whatsapp_clicks_count"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       PROFILE
+    ===================================================== */
+
+    card.querySelector(
+        ".profile-btn"
+    ).addEventListener(
+        "click",
+        async function(){
+
+            await supabaseClient
+                .from(
+                    "reel_profile_views"
+                )
+                .insert({
+
+                    reel_id:
+                        reel.id,
+
+                    viewer_id:
+                        currentUser.id,
+
+                    owner_id:
+                        reel.user_id
+
+                });
+
+
+            window.location.href =
+                "/profile/" +
+                encodeURIComponent(
+                    username
+                );
+
+        }
+    );
+
+
+    return card;
+
+}
+
+
+/* =========================================================
+   RECORD VIEW
+========================================================= */
+
+async function recordView(reel){
+
+    await supabaseClient
+        .from("reel_views")
+        .insert({
+
+            reel_id:
+                reel.id,
+
+            user_id:
+                currentUser.id
+
+        });
+
+
+    await incrementReelCounter(
+        reel.id,
+        "views_count"
+    );
+
+}
+
+
+/* =========================================================
+   LIKE
+========================================================= */
+
+async function toggleLike(
+    reel,
+    button
+){
+
+    const {
+        data:existing
+    } =
+    await supabaseClient
+        .from("reel_likes")
+        .select("id")
+        .eq(
+            "reel_id",
+            reel.id
+        )
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .maybeSingle();
+
+
+    if(existing){
+
+        await supabaseClient
+            .from("reel_likes")
+            .delete()
+            .eq(
+                "id",
+                existing.id
+            );
+
+
+        await decrementReelCounter(
+            reel.id,
+            "likes_count"
+        );
+
+
+        button.classList.remove(
+            "liked"
+        );
+
+    }
+    else{
+
+        await supabaseClient
+            .from("reel_likes")
+            .insert({
+
+                reel_id:
+                    reel.id,
+
+                user_id:
+                    currentUser.id
+
+            });
+
+
+        await incrementReelCounter(
+            reel.id,
+            "likes_count"
+        );
+
+
+        button.classList.add(
+            "liked"
+        );
+
+
+        if(
+            reel.user_id !==
+            currentUser.id
+        ){
+
+            await createNotification({
+
+                user_id:
+                    reel.user_id,
+
+                sender_id:
+                    currentUser.id,
+
+                reel_id:
+                    reel.id,
+
+                notification_type:
+                    "reel_like",
+
+                message:
+                    (
+                        currentProfile?.name ||
+                        "Someone"
+                    ) +
+                    " liked your Reel."
+
+            });
+
+        }
+
+    }
+
+
+    await loadReels();
+
+}
+
+
+/* =========================================================
+   COMMENTS
+========================================================= */
+
+async function loadComments(
+    reel,
+    commentsBox
+){
+
+    const list =
+        commentsBox.querySelector(
+            ".comment-list"
+        );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("reel_comments")
+        .select(`
+            id,
+            user_id,
+            comment,
+            created_at
+        `)
+        .eq(
+            "reel_id",
+            reel.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        list.innerHTML =
+            "Unable to load comments.";
+
+        return;
+
+    }
+
+
+    if(!data?.length){
+
+        list.innerHTML =
+            '<div style="color:#777;font-size:12px;">No comments yet.</div>';
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    const ids =
+        [
+            ...new Set(
+                data.map(
+                    c => c.user_id
+                )
+            )
+        ];
+
+
+    const {
+        data:profiles
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(`
+            id,
+            username,
+            name
+        `)
+        .in(
+            "id",
+            ids
+        );
+
+
+    const map =
+        new Map();
+
+
+    (profiles || [])
+        .forEach(
+            p =>
+                map.set(
+                    p.id,
+                    p
+                )
+        );
+
+
+    data.forEach(
+        comment => {
+
+            const p =
+                map.get(
+                    comment.user_id
+                );
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "comment-item";
+
+
+            item.innerHTML = `
+
+                <b>
+                    ${escapeHtml(
+                        p?.name ||
+                        p?.username ||
+                        "User"
+                    )}
+                </b>
+
+                <br>
+
+                ${escapeHtml(
+                    comment.comment
+                )}
+
+            `;
+
+
+            list.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ADD COMMENT
+========================================================= */
+
+async function addComment(
+    reel,
+    input,
+    commentsBox
+){
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("reel_comments")
+        .insert({
+
+            reel_id:
+                reel.id,
+
+            user_id:
+                currentUser.id,
+
+            comment:
+                text
+
+        });
+
+
+    if(error){
+
+        toast(
+            "Unable to add comment."
+        );
+
+        return;
+
+    }
+
+
+    await incrementReelCounter(
+        reel.id,
+        "comments_count"
+    );
+
+
+    if(
+        reel.user_id !==
+        currentUser.id
+    ){
+
+        await createNotification({
+
+            user_id:
+                reel.user_id,
+
+            sender_id:
+                currentUser.id,
+
+            reel_id:
+                reel.id,
+
+            notification_type:
+                "reel_comment",
+
+            message:
+                (
+                    currentProfile?.name ||
+                    "Someone"
+                ) +
+                " commented on your Reel."
+
+        });
+
+    }
+
+
+    input.value = "";
+
+    await loadComments(
+        reel,
+        commentsBox
+    );
+
+    await loadReels();
+
+}
+
+
+/* =========================================================
+   SHARE
+========================================================= */
+
+async function recordShare(
+    reel,
+    shareType
+){
+
+    await supabaseClient
+        .from("reel_shares")
+        .insert({
+
+            reel_id:
+                reel.id,
+
+            user_id:
+                currentUser.id,
+
+            share_type:
+                shareType
+
+        });
+
+
+    await incrementReelCounter(
+        reel.id,
+        "shares_count"
+    );
+
+}
+
+
+/* =========================================================
+   COUNTER
+========================================================= */
+
+async function incrementReelCounter(
+    reelId,
+    column
+){
+
+    const {
+        data
+    } =
+    await supabaseClient
+        .from("reels")
+        .select(column)
+        .eq(
+            "id",
+            reelId
+        )
+        .single();
+
+
+    if(!data)
+        return;
+
+
+    const value =
+        Number(
+            data[column] || 0
+        );
+
+
+    await supabaseClient
+        .from("reels")
+        .update({
+
+            [column]:
+                value + 1
+
+        })
+        .eq(
+            "id",
+            reelId
+        );
+
+}
+
+
+async function decrementReelCounter(
+    reelId,
+    column
+){
+
+    const {
+        data
+    } =
+    await supabaseClient
+        .from("reels")
+        .select(column)
+        .eq(
+            "id",
+            reelId
+        )
+        .single();
+
+
+    if(!data)
+        return;
+
+
+    const value =
+        Math.max(
+            0,
+            Number(
+                data[column] || 0
+            ) - 1
+        );
+
+
+    await supabaseClient
+        .from("reels")
+        .update({
+
+            [column]:
+                value
+
+        })
+        .eq(
+            "id",
+            reelId
+        );
+
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+async function createNotification(data){
+
+    try{
+
+        await supabaseClient
+            .from("reel_notifications")
+            .insert(data);
+
+    }
+    catch(error){
+
+        console.error(
+            "Notification error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   VIDEO FILE
+========================================================= */
+
+videoFile.addEventListener(
+    "change",
+    async function(){
+
+        const file =
+            this.files?.[0];
+
+
+        if(!file)
+            return;
+
+
+        if(
+            !file.type.startsWith(
+                "video/"
+            )
+        ){
+
+            toast(
+                "Please select a video."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+
+        selectedFile =
+            file;
+
+
+        if(sourceUrl){
+
+            URL.revokeObjectURL(
+                sourceUrl
+            );
+
+        }
+
+
+        sourceUrl =
+            URL.createObjectURL(
+                file
+            );
+
+
+        sourceVideo.src =
+            sourceUrl;
+
+
+        await new Promise(
+            resolve => {
+
+                sourceVideo.onloadedmetadata =
+                    resolve;
+
+            }
+        );
+
+
+        const duration =
+            sourceVideo.duration;
+
+
+        if(duration < 30){
+
+            toast(
+                "Video must be at least 30 seconds."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+
+        editor.style.display =
+            "block";
+
+
+        startRange.max =
+            Math.max(
+                0,
+                duration - 30
+            );
+
+
+        endRange.min =
+            30;
+
+
+        endRange.max =
+            Math.min(
+                50,
+                duration
+            );
+
+
+        trimStart = 0;
+
+        trimEnd =
+            Math.min(
+                50,
+                duration
+            );
+
+
+        startRange.value =
+            trimStart;
+
+        endRange.value =
+            trimEnd;
+
+
+        updateTrimLabel();
+
+        updateCropOverlay();
+
+    }
+);
+
+
+/* =========================================================
+   CROP RATIO
+========================================================= */
+
+document.querySelectorAll(
+    ".ratio-btn"
+).forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .querySelectorAll(
+                        ".ratio-btn"
+                    )
+                    .forEach(
+                        b =>
+                            b.classList.remove(
+                                "active"
+                            )
+                    );
+
+
+                this.classList.add(
+                    "active"
+                );
+
+
+                cropRatio =
+                    this.dataset.ratio;
+
+
+                updateCropOverlay();
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CROP OVERLAY
+========================================================= */
+
+function getRatio(){
+
+    if(cropRatio === "9:16")
+        return 9 / 16;
+
+    if(cropRatio === "1:1")
+        return 1;
+
+    if(cropRatio === "4:5")
+        return 4 / 5;
+
+    if(cropRatio === "16:9")
+        return 16 / 9;
+
+    return null;
+
+}
+
+
+function updateCropOverlay(){
+
+    const wrap =
+        document.querySelector(
+            ".editor-video-wrap"
+        );
+
+
+    if(!sourceVideo.videoWidth){
+
+        return;
+
+    }
+
+
+    const videoRatio =
+        sourceVideo.videoWidth /
+        sourceVideo.videoHeight;
+
+
+    const ratio =
+        getRatio();
+
+
+    let width =
+        wrap.clientWidth;
+
+
+    let height =
+        width /
+        videoRatio;
+
+
+    if(
+        ratio &&
+        ratio < videoRatio
+    ){
+
+        width =
+            height *
+            ratio;
+
+    }
+    else if(
+        ratio
+    ){
+
+        height =
+            width /
+            ratio;
+
+    }
+
+
+    const maxWidth =
+        wrap.clientWidth;
+
+
+    const maxHeight =
+        sourceVideo.clientHeight;
+
+
+    width =
+        Math.min(
+            width,
+            maxWidth
+        );
+
+
+    height =
+        Math.min(
+            height,
+            maxHeight
+        );
+
+
+    cropOverlay.style.width =
+        width + "px";
+
+    cropOverlay.style.height =
+        height + "px";
+
+    cropOverlay.style.left =
+        (
+            (maxWidth - width) / 2
+        ) + "px";
+
+    cropOverlay.style.top =
+        (
+            (maxHeight - height) / 2
+        ) + "px";
+
+}
+
+
+/* =========================================================
+   TRIM
+========================================================= */
+
+startRange.addEventListener(
+    "input",
+    function(){
+
+        trimStart =
+            Number(
+                this.value
+            );
+
+
+        if(
+            trimEnd -
+            trimStart <
+            30
+        ){
+
+            trimStart =
+                Math.max(
+                    0,
+                    trimEnd - 30
+                );
+
+            this.value =
+                trimStart;
+
+        }
+
+
+        updateTrimLabel();
+
+    }
+);
+
+
+endRange.addEventListener(
+    "input",
+    function(){
+
+        trimEnd =
+            Number(
+                this.value
+            );
+
+
+        if(
+            trimEnd -
+            trimStart >
+            50
+        ){
+
+            trimEnd =
+                trimStart + 50;
+
+            this.value =
+                trimEnd;
+
+        }
+
+
+        if(
+            trimEnd -
+            trimStart <
+            30
+        ){
+
+            trimEnd =
+                trimStart + 30;
+
+            this.value =
+                trimEnd;
+
+        }
+
+
+        updateTrimLabel();
+
+    }
+);
+
+
+function updateTrimLabel(){
+
+    const duration =
+        trimEnd -
+        trimStart;
+
+
+    trimLabel.innerText =
+        "Selected duration: " +
+        duration.toFixed(1) +
+        " seconds";
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+document.getElementById(
+    "resetCropBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        cropRatio =
+            "original";
+
+        cropX = 0;
+
+        cropY = 0;
+
+        zoom = 1;
+
+        trimStart = 0;
+
+        trimEnd =
+            Math.min(
+                50,
+                sourceVideo.duration
+            );
+
+
+        document
+            .querySelectorAll(
+                ".ratio-btn"
+            )
+            .forEach(
+                b =>
+                    b.classList.remove(
+                        "active"
+                    )
+            );
+
+
+        document
+            .querySelector(
+                '[data-ratio="original"]'
+            )
+            .classList.add(
+                "active"
+            );
+
+
+        startRange.value =
+            trimStart;
+
+        endRange.value =
+            trimEnd;
+
+
+        updateTrimLabel();
+
+        updateCropOverlay();
+
+    }
+);
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+document.getElementById(
+    "previewCropBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        sourceVideo.currentTime =
+            trimStart;
+
+        sourceVideo.play();
+
+    }
+);
+
+
+/* =========================================================
+   EXPORT REAL CROP
+========================================================= */
+
+document.getElementById(
+    "exportBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        try{
+
+            const duration =
+                trimEnd -
+                trimStart;
+
+
+            if(
+                duration < 30 ||
+                duration > 50
+            ){
+
+                toast(
+                    "Final Reel must be 30–50 seconds."
+                );
+
+                return;
+
+            }
+
+
+            await exportProcessedVideo();
+
+        }
+        catch(error){
+
+            console.error(
+                error
+            );
+
+            toast(
+                "Video processing failed: " +
+                error.message
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REAL VIDEO PROCESSOR
+========================================================= */
+
+async function exportProcessedVideo(){
+
+    exportProgress.style.display =
+        "block";
+
+
+    exportProgress.innerText =
+        "Preparing video processor...";
+
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    const videoWidth =
+        sourceVideo.videoWidth;
+
+    const videoHeight =
+        sourceVideo.videoHeight;
+
+
+    const ratio =
+        getRatio();
+
+
+    let cropWidth =
+        videoWidth;
+
+    let cropHeight =
+        videoHeight;
+
+
+    if(ratio){
+
+        if(
+            videoWidth /
+            videoHeight >
+            ratio
+        ){
+
+            cropHeight =
+                videoHeight;
+
+            cropWidth =
+                cropHeight *
+                ratio;
+
+        }
+        else{
+
+            cropWidth =
+                videoWidth;
+
+            cropHeight =
+                cropWidth /
+                ratio;
+
+        }
+
+    }
+
+
+    cropWidth =
+        Math.floor(
+            cropWidth
+        );
+
+    cropHeight =
+        Math.floor(
+            cropHeight
+        );
+
+
+    /*
+       Keep output manageable.
+    */
+
+    const maxOutput =
+        720;
+
+
+    let outputWidth =
+        cropWidth;
+
+    let outputHeight =
+        cropHeight;
+
+
+    if(
+        outputWidth >
+        maxOutput
+    ){
+
+        const scale =
+            maxOutput /
+            outputWidth;
+
+        outputWidth =
+            Math.floor(
+                outputWidth *
+                scale
+            );
+
+        outputHeight =
+            Math.floor(
+                outputHeight *
+                scale
+            );
+
+    }
+
+
+    canvas.width =
+        outputWidth;
+
+    canvas.height =
+        outputHeight;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    const stream =
+        canvas.captureStream(
+            30
+        );
+
+
+    /*
+       Add audio from the video
+       when browser supports it.
+    */
+
+    try{
+
+        if(
+            typeof sourceVideo.captureStream ===
+            "function"
+        ){
+
+            const videoStream =
+                sourceVideo.captureStream();
+
+
+            videoStream
+                .getAudioTracks()
+                .forEach(
+                    track =>
+                        stream.addTrack(
+                            track
+                        )
+                );
+
+        }
+
+    }
+    catch(error){
+
+        console.warn(
+            "Audio capture unavailable",
+            error
+        );
+
+    }
+
+
+    const mimeTypes = [
+
+        "video/webm;codecs=vp9,opus",
+
+        "video/webm;codecs=vp8,opus",
+
+        "video/webm"
+
+    ];
+
+
+    let mimeType = "";
+
+
+    for(
+        const type
+        of mimeTypes
+    ){
+
+        if(
+            MediaRecorder.isTypeSupported(
+                type
+            )
+        ){
+
+            mimeType =
+                type;
+
+            break;
+
+        }
+
+    }
+
+
+    if(!mimeType){
+
+        throw new Error(
+            "This browser does not support video recording."
+        );
+
+    }
+
+
+    exportedMime =
+        mimeType;
+
+
+    const recorder =
+        new MediaRecorder(
+            stream,
+            {
+                mimeType
+            }
+        );
+
+
+    const chunks = [];
+
+
+    recorder.ondataavailable =
+        event => {
+
+            if(
+                event.data &&
+                event.data.size
+            ){
+
+                chunks.push(
+                    event.data
+                );
+
+            }
+
+        };
+
+
+    const finished =
+        new Promise(
+            (resolve,reject) => {
+
+                recorder.onerror =
+                    reject;
+
+                recorder.onstop =
+                    resolve;
+
+            }
+        );
+
+
+    /*
+       Determine crop position.
+       Current default is center crop.
+    */
+
+    const sx =
+        Math.max(
+            0,
+            Math.floor(
+                (
+                    videoWidth -
+                    cropWidth
+                ) / 2
+            )
+        );
+
+
+    const sy =
+        Math.max(
+            0,
+            Math.floor(
+                (
+                    videoHeight -
+                    cropHeight
+                ) / 2
+            )
+        );
+
+
+    sourceVideo.currentTime =
+        trimStart;
+
+
+    await new Promise(
+        resolve => {
+
+            const handler =
+                () => {
+
+                    sourceVideo.removeEventListener(
+                        "seeked",
+                        handler
+                    );
+
+                    resolve();
+
+                };
+
+
+            sourceVideo.addEventListener(
+                "seeked",
+                handler
+            );
+
+        }
+    );
+
+
+    recorder.start(
+        250
+    );
+
+
+    const started =
+        performance.now();
+
+
+    function drawFrame(){
+
+        if(
+            recorder.state !==
+            "recording"
+        ){
+
+            return;
+
+        }
+
+
+        ctx.drawImage(
+
+            sourceVideo,
+
+            sx,
+            sy,
+            cropWidth,
+            cropHeight,
+
+            0,
+            0,
+            outputWidth,
+            outputHeight
+
+        );
+
+
+        const elapsed =
+            (
+                performance.now() -
+                started
+            ) / 1000;
+
+
+        const current =
+            trimStart +
+            elapsed;
+
+
+        if(
+            current >=
+            trimEnd
+        ){
+
+            recorder.stop();
+
+            return;
+
+        }
+
+
+        requestAnimationFrame(
+            drawFrame
+        );
+
+    }
+
+
+    sourceVideo.currentTime =
+        trimStart;
+
+
+    await sourceVideo.play();
+
+
+    drawFrame();
+
+
+    await finished;
+
+
+    sourceVideo.pause();
+
+
+    stream
+        .getTracks()
+        .forEach(
+            track =>
+                track.stop()
+        );
+
+
+    exportedBlob =
+        new Blob(
+            chunks,
+            {
+                type:
+                    mimeType
+            }
+        );
+
+
+    exportProgress.innerText =
+        "✓ Cropped Reel ready — " +
+        (
+            durationText()
+        ) +
+        " seconds";
+
+
+    toast(
+        "Real cropped Reel created ✓"
+    );
+
+}
+
+
+/* =========================================================
+   DURATION
+========================================================= */
+
+function durationText(){
+
+    return (
+        trimEnd -
+        trimStart
+    ).toFixed(1);
+
+}
+
+
+/* =========================================================
+   PUBLISH
+========================================================= */
+
+document.getElementById(
+    "publishBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        if(!currentUser){
+
+            window.location.href =
+                "/login";
+
+            return;
+
+        }
+
+
+        if(!exportedBlob){
+
+            toast(
+                "Please click Export Crop first."
+            );
+
+            return;
+
+        }
+
+
+        const caption =
+            document.getElementById(
+                "caption"
+            )
+            .value
+            .trim();
+
+
+        const hashtagText =
+            document.getElementById(
+                "hashtags"
+            )
+            .value
+            .trim();
+
+
+        const hashtags =
+            hashtagText
+                .split(/\s+/)
+                .filter(Boolean)
+                .map(
+                    h =>
+                        h.replace(
+                            /^#/,
+                            ""
+                        )
+                );
+
+
+        const duration =
+            trimEnd -
+            trimStart;
+
+
+        if(
+            duration < 30 ||
+            duration > 50
+        ){
+
+            toast(
+                "Reel must be 30–50 seconds."
+            );
+
+            return;
+
+        }
+
+
+        const button =
+            this;
+
+
+        button.disabled =
+            true;
+
+
+        button.innerText =
+            "Uploading...";
+
+
+        try{
+
+            const extension =
+                exportedMime.includes(
+                    "webm"
+                )
+                    ? "webm"
+                    : "mp4";
+
+
+            const path =
+                currentUser.id +
+                "/" +
+                crypto.randomUUID() +
+                "." +
+                extension;
+
+
+            /* ---------------------------------------------
+               Upload processed/cropped video
+            --------------------------------------------- */
+
+            const {
+                error:uploadError
+            } =
+            await supabaseClient
+                .storage
+                .from("reels")
+                .upload(
+                    path,
+                    exportedBlob,
+                    {
+                        contentType:
+                            exportedMime,
+                        upsert:false
+                    }
+                );
+
+
+            if(uploadError){
+
+                throw uploadError;
+
+            }
+
+
+            const {
+                data:urlData
+            } =
+            supabaseClient
+                .storage
+                .from("reels")
+                .getPublicUrl(
+                    path
+                );
+
+
+            const videoUrl =
+                urlData.publicUrl;
+
+
+            /* ---------------------------------------------
+               Create database record
+            --------------------------------------------- */
+
+            const {
+                data:reel,
+                error
+            } =
+            await supabaseClient
+                .from("reels")
+                .insert({
+
+                    user_id:
+                        currentUser.id,
+
+                    video_url:
+                        videoUrl,
+
+                    storage_path:
+                        path,
+
+                    caption:
+                        caption ||
+                        null,
+
+                    hashtags:
+                        hashtags,
+
+                    duration_seconds:
+                        Number(
+                            duration.toFixed(2)
+                        ),
+
+                    crop_ratio:
+                        cropRatio,
+
+                    trim_start:
+                        trimStart,
+
+                    trim_end:
+                        trimEnd,
+
+                    status:
+                        "active"
+
+                })
+                .select()
+                .single();
+
+
+            if(error){
+
+                await supabaseClient
+                    .storage
+                    .from("reels")
+                    .remove([
+                        path
+                    ]);
+
+                throw error;
+
+            }
+
+
+            toast(
+                "Reel published successfully! 🎬"
+            );
+
+
+            /* ---------------------------------------------
+               Reset
+            --------------------------------------------- */
+
+            exportedBlob =
+                null;
+
+            videoFile.value =
+                "";
+
+            document.getElementById(
+                "caption"
+            ).value =
+                "";
+
+            document.getElementById(
+                "hashtags"
+            ).value =
+                "";
+
+
+            editor.style.display =
+                "none";
+
+
+            uploadPanel.style.display =
+                "none";
+
+
+            activateButton(
+                "feedBtn"
+            );
+
+
+            await loadReels();
+
+        }
+        catch(error){
+
+            console.error(
+                "Publish Reel error:",
+                error
+            );
+
+
+            toast(
+                "Unable to publish Reel: " +
+                error.message
+            );
+
+        }
+        finally{
+
+            button.disabled =
+                false;
+
+            button.innerText =
+                "🚀 Publish Reel";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function activateButton(
+    id
+){
+
+    document
+        .querySelectorAll(
+            ".top-btn"
+        )
+        .forEach(
+            btn =>
+                btn.classList.remove(
+                    "active"
+                )
+        );
+
+
+    document.getElementById(
+        id
+    )
+    .classList.add(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   FEED BUTTON
+========================================================= */
+
+document.getElementById(
+    "feedBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        activateButton(
+            "feedBtn"
+        );
+
+        uploadPanel.style.display =
+            "none";
+
+        dashboard.style.display =
+            "none";
+
+        feed.style.display =
+            "block";
+
+        await loadReels();
+
+    }
+);
+
+
+/* =========================================================
+   UPLOAD BUTTON
+========================================================= */
+
+document.getElementById(
+    "uploadBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        activateButton(
+            "uploadBtn"
+        );
+
+        feed.style.display =
+            "none";
+
+        dashboard.style.display =
+            "none";
+
+        uploadPanel.style.display =
+            "block";
+
+    }
+);
+
+
+/* =========================================================
+   MY REELS
+========================================================= */
+
+document.getElementById(
+    "myReelsBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        activateButton(
+            "myReelsBtn"
+        );
+
+        uploadPanel.style.display =
+            "none";
+
+        dashboard.style.display =
+            "none";
+
+        feed.style.display =
+            "block";
+
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("reels")
+            .select(`
+                id,
+                user_id,
+                video_url,
+                caption,
+                hashtags,
+                duration_seconds,
+                crop_ratio,
+                status,
+                views_count,
+                likes_count,
+                comments_count,
+                shares_count,
+                whatsapp_clicks_count,
+                created_at
+            `)
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            toast(
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        const previous =
+            allReels;
+
+
+        allReels =
+            data || [];
+
+
+        await attachProfiles();
+
+
+        allReels =
+            allReels.map(
+                reel => ({
+
+                    ...reel,
+
+                    isMine:true
+
+                })
+            );
+
+    }
+);
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+document.getElementById(
+    "dashboardBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        activateButton(
+            "dashboardBtn"
+        );
+
+        feed.style.display =
+            "none";
+
+        uploadPanel.style.display =
+            "none";
+
+        dashboard.style.display =
+            "block";
+
+
+        await loadDashboard();
+
+    }
+);
+
+
+/* =========================================================
+   DASHBOARD DATA
+========================================================= */
+
+async function loadDashboard(){
+
+    const {
+        data:reels
+    } =
+    await supabaseClient
+        .from("reels")
+        .select(`
+            id,
+            caption,
+            views_count,
+            likes_count,
+            comments_count,
+            shares_count,
+            whatsapp_clicks_count,
+            created_at
+        `)
+        .eq(
+            "user_id",
+            currentUser.id
+        );
+
+
+    const rows =
+        reels || [];
+
+
+    let views = 0;
+    let likes = 0;
+    let comments = 0;
+    let shares = 0;
+
+
+    rows.forEach(
+        reel => {
+
+            views +=
+                Number(
+                    reel.views_count || 0
+                );
+
+            likes +=
+                Number(
+                    reel.likes_count || 0
+                );
+
+            comments +=
+                Number(
+                    reel.comments_count || 0
+                );
+
+            shares +=
+                Number(
+                    reel.shares_count || 0
+                );
+
+        }
+    );
+
+
+    document.getElementById(
+        "dashViews"
+    ).innerText =
+        formatCount(views);
+
+
+    document.getElementById(
+        "dashLikes"
+    ).innerText =
+        formatCount(likes);
+
+
+    document.getElementById(
+        "dashComments"
+    ).innerText =
+        formatCount(comments);
+
+
+    document.getElementById(
+        "dashShares"
+    ).innerText =
+        formatCount(shares);
+
+
+    /* -----------------------------------------------------
+       Daily stats
+    ----------------------------------------------------- */
+
+    const {
+        data:daily
+    } =
+    await supabaseClient
+        .from("reel_daily_stats")
+        .select(`
+            stat_date,
+            views_count,
+            likes_count,
+            comments_count,
+            shares_count
+        `)
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .gte(
+            "stat_date",
+            new Date(
+                Date.now() -
+                6 *
+                86400000
+            )
+            .toISOString()
+            .slice(0,10)
+        )
+        .order(
+            "stat_date",
+            {
+                ascending:false
+            }
+        );
+
+
+    const dailyContainer =
+        document.getElementById(
+            "dailyStats"
+        );
+
+
+    dailyContainer.innerHTML =
+        "";
+
+
+    if(!daily?.length){
+
+        dailyContainer.innerHTML = `
+
+            <div class="dashboard-reel">
+
+                No daily statistics yet.
+
+                <br>
+
+                Statistics will appear as
+                your Reels receive activity.
+
+            </div>
+
+        `;
+
+    }
+    else{
+
+        daily.forEach(
+            row => {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "dashboard-reel";
+
+
+                div.innerHTML = `
+
+                    <div class="dashboard-reel-title">
+
+                        ${escapeHtml(
+                            row.stat_date
+                        )}
+
+                    </div>
+
+                    <div class="dashboard-reel-stats">
+
+                        👁 ${formatCount(
+                            row.views_count
+                        )}
+
+                        &nbsp;&nbsp;
+
+                        ❤️ ${formatCount(
+                            row.likes_count
+                        )}
+
+                        &nbsp;&nbsp;
+
+                        💬 ${formatCount(
+                            row.comments_count
+                        )}
+
+                        &nbsp;&nbsp;
+
+                        ↗ ${formatCount(
+                            row.shares_count
+                        )}
+
+                    </div>
+
+                `;
+
+
+                dailyContainer.appendChild(
+                    div
+                );
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       Reel performance
+    ----------------------------------------------------- */
+
+    const dashboardReels =
+        document.getElementById(
+            "dashboardReels"
+        );
+
+
+    dashboardReels.innerHTML =
+        "";
+
+
+    rows
+        .sort(
+            (
+                a,
+                b
+            ) =>
+                Number(
+                    b.views_count
+                ) -
+                Number(
+                    a.views_count
+                )
+        )
+        .forEach(
+            reel => {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "dashboard-reel";
+
+
+                div.innerHTML = `
+
+                    <div class="dashboard-reel-title">
+
+                        ${
+                            escapeHtml(
+                                reel.caption ||
+                                "Untitled Reel"
+                            )
+                        }
+
+                    </div>
+
+
+                    <div class="dashboard-reel-stats">
+
+                        👁 ${formatCount(
+                            reel.views_count
+                        )}
+
+                        &nbsp;
+
+                        ❤️ ${formatCount(
+                            reel.likes_count
+                        )}
+
+                        &nbsp;
+
+                        💬 ${formatCount(
+                            reel.comments_count
+                        )}
+
+                        &nbsp;
+
+                        ↗ ${formatCount(
+                            reel.shares_count
+                        )}
+
+                        &nbsp;
+
+                        🟢 ${formatCount(
+                            reel.whatsapp_clicks_count
+                        )}
+
+                    </div>
+
+                `;
+
+
+                dashboardReels.appendChild(
+                    div
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initialize(){
+
+    const loggedIn =
+        await loadCurrentUser();
+
+
+    if(!loggedIn)
+        return;
+
+
+    await loadReels();
+
+}
+
+
+initialize();
+
 </script>
+
 
 </body>
 
