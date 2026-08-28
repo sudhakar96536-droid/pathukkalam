@@ -1,575 +1,3022 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "base.html" %}
 
-<meta charset="UTF-8">
+{% block title %}
+Pathukkalam News
+{% endblock %}
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
 
-<title>Pathukkalam News</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+{% block head %}
 
 <style>
 
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
-    font-family:Arial;
 }
 
 body{
+    margin:0;
     background:#f0f2f5;
-    padding-bottom:100px;
+    font-family:Arial,sans-serif;
+    color:#222;
+    padding-bottom:120px;
 }
 
-/* HEADER */
 
-.header{
+/* =========================================================
+   HEADER
+========================================================= */
+
+.news-header{
     background:#1877f2;
     color:white;
-    padding:18px;
-    font-size:24px;
-    font-weight:bold;
+    padding:16px;
     position:sticky;
     top:0;
     z-index:1000;
-}
-
-/* NEWS CARD */
-
-.news-card{
-    background:white;
-    margin:15px;
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
-}
-
-.news-card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-}
-
-.news-content{
-    padding:15px;
-}
-
-.news-title{
-    font-size:20px;
+    text-align:center;
+    font-size:21px;
     font-weight:bold;
-    line-height:1.5;
-    margin-bottom:10px;
 }
 
-.news-desc{
-    color:#555;
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.news-search{
+    background:white;
+    padding:12px;
+    position:sticky;
+    top:57px;
+    z-index:999;
+    box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+
+.search-wrapper{
+    position:relative;
+}
+
+.search-wrapper i{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#888;
+}
+
+#newsSearch{
+    width:100%;
+    border:none;
+    outline:none;
+    background:#f0f2f5;
+    border-radius:13px;
+    padding:13px 42px;
     font-size:14px;
-    line-height:1.7;
-    margin-bottom:15px;
 }
 
-.news-date{
-    color:gray;
-    font-size:13px;
-    margin-bottom:15px;
-}
 
-/* BUTTONS */
+/* =========================================================
+   FEED BUTTONS
+========================================================= */
 
-.news-actions{
+.feed-buttons{
     display:flex;
+    gap:8px;
+    margin-top:11px;
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+
+.feed-buttons::-webkit-scrollbar{
+    display:none;
+}
+
+.feed-btn{
+    border:none;
+    background:#1877f2;
+    color:white;
+    padding:10px 14px;
+    border-radius:12px;
+    font-size:13px;
+    font-weight:bold;
+    white-space:nowrap;
+    cursor:pointer;
+}
+
+.feed-btn.active{
+    background:#FFD600;
+    color:#111;
+}
+
+
+/* =========================================================
+   PINNED TOPICS
+========================================================= */
+
+.topic-area{
+    background:white;
+    margin:12px;
+    padding:14px;
+    border-radius:17px;
+    box-shadow:0 2px 7px rgba(0,0,0,.06);
+}
+
+.topic-header{
+    display:flex;
+    justify-content:space-between;
     align-items:center;
     gap:10px;
 }
 
-.read-btn{
-    flex:1;
-    padding:12px;
+.topic-title{
+    font-size:16px;
+    font-weight:bold;
+}
+
+.manage-topic-btn{
     border:none;
-    background:#ffcc00;
-    color:black;
-    border-radius:12px;
-    font-size:15px;
+    background:#1877f2;
+    color:white;
+    padding:8px 11px;
+    border-radius:10px;
+    font-size:11px;
     font-weight:bold;
     cursor:pointer;
 }
 
-.icon-btn{
-    width:45px;
-    height:45px;
-    border:none;
-    border-radius:12px;
+.topic-list{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    margin-top:12px;
+    scrollbar-width:none;
+}
+
+.topic-list::-webkit-scrollbar{
+    display:none;
+}
+
+.topic-chip{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:#e8f1ff;
+    color:#1877f2;
+    padding:8px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.topic-chip.active{
+    background:#1877f2;
     color:white;
-    font-size:18px;
+}
+
+.topic-chip button{
+    border:none;
+    background:transparent;
+    color:inherit;
+    cursor:pointer;
+    font-size:11px;
+    padding:0;
+}
+
+
+/* =========================================================
+   TOPIC MANAGER
+========================================================= */
+
+.topic-manager{
+    display:none;
+    background:white;
+    margin:12px;
+    padding:16px;
+    border-radius:17px;
+    box-shadow:0 2px 7px rgba(0,0,0,.07);
+}
+
+.topic-manager-title{
+    font-size:17px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.topic-add-row{
+    display:flex;
+    gap:8px;
+}
+
+#topicInput{
+    flex:1;
+    border:none;
+    outline:none;
+    background:#f0f2f5;
+    border-radius:11px;
+    padding:12px;
+    font-size:13px;
+}
+
+.add-topic-btn{
+    border:none;
+    background:#00a86b;
+    color:white;
+    padding:0 15px;
+    border-radius:11px;
+    font-weight:bold;
     cursor:pointer;
 }
 
-.like-btn{
-    background:#ff4d6d;
+.manage-list{
+    margin-top:14px;
 }
 
-.share-btn{
+.manage-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.manage-item:last-child{
+    border-bottom:none;
+}
+
+.topic-number{
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:#e8f1ff;
+    color:#1877f2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.manage-name{
+    flex:1;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.move-btn,
+.delete-topic-btn{
+    width:31px;
+    height:31px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.move-btn{
+    background:#eee;
+    color:#555;
+}
+
+.delete-topic-btn{
+    background:#ffe5e5;
+    color:#d00;
+}
+
+
+/* =========================================================
+   FEED HEADER
+========================================================= */
+
+.feed-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:18px 12px 10px;
+}
+
+.feed-title{
+    font-size:20px;
+    font-weight:bold;
+    color:#1877f2;
+}
+
+.refresh-btn{
+    border:none;
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    background:white;
+    color:#1877f2;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+
+
+/* =========================================================
+   NEWS CARD
+========================================================= */
+
+.news-card{
+    background:white;
+    margin:12px;
+    border-radius:17px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+}
+
+.news-image{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    display:block;
+    background:#e9edf2;
+}
+
+.news-body{
+    padding:15px;
+}
+
+.news-source-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+}
+
+.news-source{
+    color:#1877f2;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.news-time{
+    color:#888;
+    font-size:10px;
+}
+
+.news-title{
+    font-size:17px;
+    font-weight:bold;
+    line-height:1.35;
+}
+
+.news-description{
+    margin-top:9px;
+    color:#666;
+    font-size:13px;
+    line-height:1.55;
+}
+
+.news-actions{
+    display:flex;
+    gap:8px;
+    margin-top:14px;
+}
+
+.read-btn{
+    flex:1;
+    border:none;
     background:#1877f2;
+    color:white;
+    border-radius:11px;
+    padding:11px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:12px;
 }
 
-.whatsapp-btn{
-    background:#25d366;
+.share-news-btn{
+    width:43px;
+    border:none;
+    background:#eee;
+    color:#333;
+    border-radius:11px;
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   SEARCH RESULT INFO
+========================================================= */
+
+.search-info{
+    display:none;
+    margin:0 12px 10px;
+    color:#777;
+    font-size:12px;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+    text-align:center;
+    padding:45px 20px;
+    color:#777;
+}
+
+.loading i{
+    font-size:26px;
+    margin-bottom:10px;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty-state{
+    text-align:center;
+    padding:50px 20px;
+    color:#888;
+}
+
+.empty-state i{
+    font-size:40px;
+    margin-bottom:12px;
+    color:#bbb;
+}
+
+.empty-title{
+    font-size:16px;
+    font-weight:bold;
+    color:#555;
+}
+
+.empty-text{
+    margin-top:7px;
+    font-size:13px;
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:80px;
+    transform:translateX(-50%) translateY(20px);
+    background:#222;
+    color:white;
+    padding:11px 17px;
+    border-radius:25px;
+    font-size:12px;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:10000;
+    max-width:90%;
+    text-align:center;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:500px){
+
+    .news-image{
+        height:180px;
+    }
+
+    .news-title{
+        font-size:16px;
+    }
+
 }
 
 </style>
 
-</head>
+{% endblock %}
 
-<body>
 
-<div class="header">
-    📰 Pathukkalam Tamil Politics
+{% block content %}
+
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<div class="news-header">
+
+    📰 Pathukkalam News
+
 </div>
 
-<!-- NEWS 1 -->
 
-<div class="news-card">
+<!-- =======================================================
+     SEARCH + FEEDS
+======================================================= -->
 
-    <img src="https://picsum.photos/600/350?1">
+<div class="news-search">
 
-    <div class="news-content">
+    <div class="search-wrapper">
 
-        <div class="news-title">
-            Vijay CM campaign meeting gets huge public response in Chennai
+        <i class="fas fa-search"></i>
+
+        <input
+            type="text"
+            id="newsSearch"
+            placeholder="Search news, finance, Chennai, games..."
+            autocomplete="off">
+
+    </div>
+
+
+    <div class="feed-buttons">
+
+        <button
+            class="feed-btn active"
+            id="forYouBtn">
+
+            ⭐ For You
+
+        </button>
+
+
+        <button
+            class="feed-btn"
+            id="indiaBtn">
+
+            🇮🇳 India
+
+        </button>
+
+
+        <button
+            class="feed-btn"
+            id="worldBtn">
+
+            🌍 World
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     PINNED TOPICS
+======================================================= -->
+
+<div class="topic-area">
+
+    <div class="topic-header">
+
+        <div class="topic-title">
+
+            📌 Your News Topics
+
         </div>
 
-        <div class="news-desc">
-            Thousands of supporters gathered in Chennai as Vijay discussed youth employment, education and corruption-free governance during his latest public speech.
-        </div>
 
-        <div class="news-date">
-            📅 Posted: Today • Chennai
-        </div>
+        <button
+            class="manage-topic-btn"
+            id="manageTopicsBtn">
 
-        <div class="news-actions">
+            Manage
 
-            <button class="read-btn">
-                Read Full News
-            </button>
+        </button>
 
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
+    </div>
 
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
 
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
+    <div
+        class="topic-list"
+        id="topicList">
 
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     TOPIC MANAGER
+======================================================= -->
+
+<div
+    class="topic-manager"
+    id="topicManager">
+
+    <div class="topic-manager-title">
+
+        📌 Customize Your News
+
+    </div>
+
+
+    <div class="topic-add-row">
+
+        <input
+            type="text"
+            id="topicInput"
+            placeholder="Add topic e.g. Cricket, Chennai, AI">
+
+        <button
+            class="add-topic-btn"
+            id="addTopicBtn">
+
+            Add
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="manage-list"
+        id="manageList">
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     FEED TITLE
+======================================================= -->
+
+<div class="feed-header">
+
+    <div
+        class="feed-title"
+        id="feedTitle">
+
+        ⭐ Latest For You
+
+    </div>
+
+
+    <button
+        class="refresh-btn"
+        id="refreshBtn"
+        title="Refresh">
+
+        <i class="fas fa-rotate"></i>
+
+    </button>
+
+</div>
+
+
+<div
+    class="search-info"
+    id="searchInfo">
+
+</div>
+
+
+<!-- =======================================================
+     NEWS CONTAINER
+======================================================= -->
+
+<div id="newsContainer">
+
+    <div class="loading">
+
+        <i class="fas fa-spinner fa-spin"></i>
+
+        <div>
+            Loading latest news...
         </div>
 
     </div>
 
 </div>
 
-<!-- NEWS 2 -->
 
-<div class="news-card">
+<!-- =======================================================
+     TOAST
+======================================================= -->
 
-    <img src="https://picsum.photos/600/350?2">
-
-    <div class="news-content">
-
-        <div class="news-title">
-            TVK party members begin district-level political discussions
-        </div>
-
-        <div class="news-desc">
-            Tamilaga Vettri Kazhagam volunteers started district-level meetings focusing on booth setup and youth participation ahead of upcoming elections.
-        </div>
-
-        <div class="news-date">
-            📅 Posted: Today • Madurai
-        </div>
-
-        <div class="news-actions">
-
-            <button class="read-btn">
-                Read Full News
-            </button>
-
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
-
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
-
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
-
-        </div>
-
-    </div>
+<div
+    class="toast"
+    id="toast">
 
 </div>
 
-<!-- NEWS 3 -->
 
-<div class="news-card">
+{% endblock %}
 
-    <img src="https://picsum.photos/600/350?3">
 
-    <div class="news-content">
+{% block scripts %}
 
-        <div class="news-title">
-            Vijay promises transparent governance model for Tamil Nadu
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://jxpvkamxtedgzztozonl.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let currentUser = null;
+
+let pinnedTopics = [];
+
+let currentFeed = "for-you";
+
+let currentNews = [];
+
+let searchText = "";
+
+let newsCache = {};
+
+
+/* =========================================================
+   DEFAULT TOPICS
+========================================================= */
+
+const DEFAULT_TOPICS = [
+
+    "Finance",
+
+    "Share Market",
+
+    "Games",
+
+    "Automobiles",
+
+    "Travelling",
+
+    "Political",
+
+    "Chennai General",
+
+    "Weather"
+
+];
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const topicList =
+    document.getElementById(
+        "topicList"
+    );
+
+const manageList =
+    document.getElementById(
+        "manageList"
+    );
+
+const topicManager =
+    document.getElementById(
+        "topicManager"
+    );
+
+const newsContainer =
+    document.getElementById(
+        "newsContainer"
+    );
+
+const newsSearch =
+    document.getElementById(
+        "newsSearch"
+    );
+
+const feedTitle =
+    document.getElementById(
+        "feedTitle"
+    );
+
+const searchInfo =
+    document.getElementById(
+        "searchInfo"
+    );
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        function(){
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        2500
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value || "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   DEFAULT IMAGE
+========================================================= */
+
+function defaultNewsImage(){
+
+    return "data:image/svg+xml," +
+        encodeURIComponent(`
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="800"
+                height="450">
+
+                <rect
+                    width="100%"
+                    height="100%"
+                    fill="#e9edf2"/>
+
+                <text
+                    x="50%"
+                    y="50%"
+                    dominant-baseline="middle"
+                    text-anchor="middle"
+                    fill="#999"
+                    font-family="Arial"
+                    font-size="30">
+
+                    Pathukkalam News
+
+                </text>
+
+            </svg>
+
+        `);
+
+}
+
+
+/* =========================================================
+   CURRENT USER
+========================================================= */
+
+async function loadCurrentUser(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
+
+
+    if(
+        error ||
+        !data.user
+    ){
+
+        window.location.href =
+            "/login";
+
+        return false;
+
+    }
+
+
+    currentUser =
+        data.user;
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   LOAD USER TOPICS
+========================================================= */
+
+async function loadUserTopics(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("news_preferences")
+        .select(`
+            id,
+            keyword,
+            position
+        `)
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .order(
+            "position",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "News preferences error:",
+            error
+        );
+
+        pinnedTopics =
+            [...DEFAULT_TOPICS];
+
+        return;
+
+    }
+
+
+    if(
+        !data ||
+        data.length === 0
+    ){
+
+        /*
+        First login:
+        create default topics
+        */
+
+        await createDefaultTopics();
+
+        return;
+
+    }
+
+
+    pinnedTopics =
+        data.map(
+            row =>
+                row.keyword
+        );
+
+}
+
+
+/* =========================================================
+   CREATE DEFAULT TOPICS
+========================================================= */
+
+async function createDefaultTopics(){
+
+    const rows =
+        DEFAULT_TOPICS.map(
+            (keyword,index) => ({
+
+                user_id:
+                    currentUser.id,
+
+                keyword:
+                    keyword,
+
+                position:
+                    index
+
+            })
+        );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("news_preferences")
+        .insert(
+            rows
+        )
+        .select();
+
+
+    if(error){
+
+        console.error(
+            "Default topic insert error:",
+            error
+        );
+
+        pinnedTopics =
+            [...DEFAULT_TOPICS];
+
+        return;
+
+    }
+
+
+    pinnedTopics =
+        (
+            data || []
+        )
+        .sort(
+            (a,b) =>
+                a.position -
+                b.position
+        )
+        .map(
+            row =>
+                row.keyword
+        );
+
+}
+
+
+/* =========================================================
+   SAVE TOPIC ORDER
+========================================================= */
+
+async function saveTopicOrder(){
+
+    for(
+        let index = 0;
+        index < pinnedTopics.length;
+        index++
+    ){
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("news_preferences")
+            .update({
+
+                position:
+                    index,
+
+                updated_at:
+                    new Date().toISOString()
+
+            })
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .eq(
+                "keyword",
+                pinnedTopics[index]
+            );
+
+
+        if(error){
+
+            console.error(
+                "Topic order error:",
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER TOPICS
+========================================================= */
+
+function renderTopics(){
+
+    topicList.innerHTML =
+        "";
+
+
+    if(!pinnedTopics.length){
+
+        topicList.innerHTML = `
+
+            <div
+                style="
+                    color:#888;
+                    font-size:12px;
+                    padding:8px;
+                ">
+
+                No pinned topics.
+                Add your interests.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    pinnedTopics.forEach(
+        (topic,index) => {
+
+            const chip =
+                document.createElement(
+                    "div"
+                );
+
+
+            chip.className =
+                "topic-chip";
+
+
+            chip.classList.toggle(
+                "active",
+                currentFeed === "for-you"
+            );
+
+
+            chip.innerHTML = `
+
+                <span>
+                    ${escapeHtml(topic)}
+                </span>
+
+                <button
+                    title="Remove"
+                    data-remove-topic="${index}">
+
+                    <i class="fas fa-xmark"></i>
+
+                </button>
+
+            `;
+
+
+            chip.addEventListener(
+                "click",
+                function(event){
+
+                    if(
+                        event.target.closest(
+                            "[data-remove-topic]"
+                        )
+                    ){
+
+                        return;
+
+                    }
+
+
+                    if(
+                        currentFeed ===
+                        "for-you"
+                    ){
+
+                        loadForYouNews(
+                            topic
+                        );
+
+                    }
+
+                }
+            );
+
+
+            topicList.appendChild(
+                chip
+            );
+
+        }
+    );
+
+
+    topicList
+        .querySelectorAll(
+            "[data-remove-topic]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        removeTopic(
+                            Number(
+                                this.dataset.removeTopic
+                            )
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   RENDER MANAGER
+========================================================= */
+
+function renderTopicManager(){
+
+    manageList.innerHTML =
+        "";
+
+
+    pinnedTopics.forEach(
+        (topic,index) => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "manage-item";
+
+
+            item.innerHTML = `
+
+                <div class="topic-number">
+
+                    ${index + 1}
+
+                </div>
+
+
+                <div class="manage-name">
+
+                    ${escapeHtml(topic)}
+
+                </div>
+
+
+                <button
+                    class="move-btn"
+                    data-up="${index}"
+                    title="Move up">
+
+                    <i class="fas fa-arrow-up"></i>
+
+                </button>
+
+
+                <button
+                    class="move-btn"
+                    data-down="${index}"
+                    title="Move down">
+
+                    <i class="fas fa-arrow-down"></i>
+
+                </button>
+
+
+                <button
+                    class="delete-topic-btn"
+                    data-delete="${index}"
+                    title="Remove">
+
+                    <i class="fas fa-trash"></i>
+
+                </button>
+
+            `;
+
+
+            manageList.appendChild(
+                item
+            );
+
+        }
+    );
+
+
+    manageList
+        .querySelectorAll(
+            "[data-up]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        moveTopic(
+                            Number(
+                                this.dataset.up
+                            ),
+                            -1
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    manageList
+        .querySelectorAll(
+            "[data-down]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        moveTopic(
+                            Number(
+                                this.dataset.down
+                            ),
+                            1
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    manageList
+        .querySelectorAll(
+            "[data-delete]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        removeTopic(
+                            Number(
+                                this.dataset.delete
+                            )
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   ADD TOPIC
+========================================================= */
+
+async function addTopic(){
+
+    const input =
+        document.getElementById(
+            "topicInput"
+        );
+
+
+    const keyword =
+        input.value
+            .trim();
+
+
+    if(!keyword){
+
+        showToast(
+            "Enter a topic."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        pinnedTopics.some(
+            topic =>
+                topic.toLowerCase() ===
+                keyword.toLowerCase()
+        )
+    ){
+
+        showToast(
+            "This topic is already pinned."
+        );
+
+        return;
+
+    }
+
+
+    const position =
+        pinnedTopics.length;
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("news_preferences")
+        .insert({
+
+            user_id:
+                currentUser.id,
+
+            keyword:
+                keyword,
+
+            position:
+                position
+
+        });
+
+
+    if(error){
+
+        console.error(
+            "Add topic error:",
+            error
+        );
+
+        showToast(
+            "Unable to add topic."
+        );
+
+        return;
+
+    }
+
+
+    pinnedTopics.push(
+        keyword
+    );
+
+
+    input.value =
+        "";
+
+
+    renderTopics();
+
+    renderTopicManager();
+
+
+    showToast(
+        "Topic pinned 📌"
+    );
+
+
+    if(
+        currentFeed ===
+        "for-you"
+    ){
+
+        loadForYouNews();
+
+    }
+
+}
+
+
+/* =========================================================
+   REMOVE TOPIC
+========================================================= */
+
+async function removeTopic(
+    index
+){
+
+    if(
+        index < 0 ||
+        index >= pinnedTopics.length
+    ){
+
+        return;
+
+    }
+
+
+    const keyword =
+        pinnedTopics[index];
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("news_preferences")
+        .delete()
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .eq(
+            "keyword",
+            keyword
+        );
+
+
+    if(error){
+
+        console.error(
+            "Remove topic error:",
+            error
+        );
+
+        showToast(
+            "Unable to remove topic."
+        );
+
+        return;
+
+    }
+
+
+    pinnedTopics.splice(
+        index,
+        1
+    );
+
+
+    await saveTopicOrder();
+
+
+    renderTopics();
+
+    renderTopicManager();
+
+
+    showToast(
+        "Topic removed"
+    );
+
+
+    if(
+        currentFeed ===
+        "for-you"
+    ){
+
+        loadForYouNews();
+
+    }
+
+}
+
+
+/* =========================================================
+   MOVE TOPIC
+========================================================= */
+
+async function moveTopic(
+    index,
+    direction
+){
+
+    const newIndex =
+        index + direction;
+
+
+    if(
+        newIndex < 0 ||
+        newIndex >= pinnedTopics.length
+    ){
+
+        return;
+
+    }
+
+
+    const temp =
+        pinnedTopics[index];
+
+
+    pinnedTopics[index] =
+        pinnedTopics[newIndex];
+
+
+    pinnedTopics[newIndex] =
+        temp;
+
+
+    await saveTopicOrder();
+
+
+    renderTopics();
+
+    renderTopicManager();
+
+
+    if(
+        currentFeed ===
+        "for-you"
+    ){
+
+        loadForYouNews();
+
+    }
+
+}
+
+
+/* =========================================================
+   BUILD GOOGLE NEWS RSS URL
+========================================================= */
+
+function googleNewsUrl(
+    query,
+    country="IN"
+){
+
+    let encoded =
+        encodeURIComponent(
+            query
+        );
+
+
+    if(
+        country ===
+        "WORLD"
+    ){
+
+        return (
+            "https://news.google.com/rss/search?q=" +
+            encoded +
+            "&hl=en&gl=US&ceid=US:en"
+        );
+
+    }
+
+
+    return (
+        "https://news.google.com/rss/search?q=" +
+        encoded +
+        "&hl=en-IN&gl=IN&ceid=IN:en"
+    );
+
+}
+
+
+/* =========================================================
+   FETCH RSS
+========================================================= */
+
+async function fetchNews(
+    query,
+    country="IN"
+){
+
+    const cacheKey =
+        country +
+        ":" +
+        query;
+
+
+    /*
+       Keep a short cache so repeated
+       topic clicks do not hammer the
+       free RSS service.
+    */
+
+    if(
+        newsCache[cacheKey] &&
+        Date.now() -
+        newsCache[cacheKey].time
+        < 120000
+    ){
+
+        return newsCache[cacheKey].items;
+
+    }
+
+
+    const rssUrl =
+        googleNewsUrl(
+            query,
+            country
+        );
+
+
+    const apiUrl =
+        "https://api.rss2json.com/v1/api.json?rss_url=" +
+        encodeURIComponent(
+            rssUrl
+        );
+
+
+    const response =
+        await fetch(
+            apiUrl
+        );
+
+
+    if(!response.ok){
+
+        throw new Error(
+            "News service unavailable"
+        );
+
+    }
+
+
+    const result =
+        await response.json();
+
+
+    if(
+        result.status !==
+        "ok"
+    ){
+
+        throw new Error(
+            result.message ||
+            "Unable to read news"
+        );
+
+    }
+
+
+    const items =
+        (
+            result.items ||
+            []
+        ).map(
+            item => ({
+
+                title:
+                    item.title ||
+                    "",
+
+                description:
+                    stripHtml(
+                        item.description ||
+                        ""
+                    ),
+
+                link:
+                    item.link ||
+                    "#",
+
+                image:
+                    item.thumbnail ||
+                    item.enclosure?.link ||
+                    "",
+
+                pubDate:
+                    item.pubDate ||
+                    "",
+
+                source:
+                    item.author ||
+                    extractSource(
+                        item.title
+                    )
+
+            })
+        );
+
+
+    newsCache[cacheKey] = {
+
+        time:
+            Date.now(),
+
+        items:
+            items
+
+    };
+
+
+    return items;
+
+}
+
+
+/* =========================================================
+   STRIP HTML
+========================================================= */
+
+function stripHtml(
+    html
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.innerHTML =
+        html;
+
+
+    return div.textContent ||
+        div.innerText ||
+        "";
+
+}
+
+
+/* =========================================================
+   EXTRACT SOURCE
+========================================================= */
+
+function extractSource(
+    title
+){
+
+    if(!title){
+
+        return "News Source";
+
+    }
+
+
+    /*
+       Google News titles frequently
+       contain source after " - ".
+    */
+
+    const parts =
+        title.split(
+            " - "
+        );
+
+
+    if(parts.length > 1){
+
+        return parts[
+            parts.length - 1
+        ].trim();
+
+    }
+
+
+    return "News Source";
+
+}
+
+
+/* =========================================================
+   FORMAT TIME
+========================================================= */
+
+function formatNewsTime(
+    date
+){
+
+    if(!date){
+
+        return "";
+
+    }
+
+
+    const d =
+        new Date(date);
+
+
+    if(
+        Number.isNaN(
+            d.getTime()
+        )
+    ){
+
+        return "";
+
+    }
+
+
+    const diff =
+        Date.now() -
+        d.getTime();
+
+
+    const minutes =
+        Math.floor(
+            diff / 60000
+        );
+
+
+    if(minutes < 1){
+
+        return "Just now";
+
+    }
+
+
+    if(minutes < 60){
+
+        return minutes +
+            " min ago";
+
+    }
+
+
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
+
+
+    if(hours < 24){
+
+        return hours +
+            " hr ago";
+
+    }
+
+
+    return d.toLocaleDateString(
+        "en-IN",
+        {
+            day:"numeric",
+            month:"short"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER NEWS
+========================================================= */
+
+function renderNews(
+    items
+){
+
+    newsContainer.innerHTML =
+        "";
+
+
+    if(!items.length){
+
+        newsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fas fa-newspaper"></i>
+
+                <div class="empty-title">
+
+                    No news found
+
+                </div>
+
+                <div class="empty-text">
+
+                    Try another topic or search keyword.
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    items.forEach(
+        item => {
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "news-card";
+
+
+            const image =
+                item.image ||
+                defaultNewsImage();
+
+
+            const description =
+                item.description ||
+                "Read the complete story from the original source.";
+
+
+            card.innerHTML = `
+
+                <img
+                    class="news-image"
+                    src="${escapeHtml(image)}"
+                    alt="News"
+                    onerror="this.src='${defaultNewsImage()}'">
+
+
+                <div class="news-body">
+
+                    <div class="news-source-row">
+
+                        <div class="news-source">
+
+                            <i class="fas fa-circle-info"></i>
+
+                            ${escapeHtml(
+                                item.source ||
+                                "News Source"
+                            )}
+
+                        </div>
+
+
+                        <div class="news-time">
+
+                            ${escapeHtml(
+                                formatNewsTime(
+                                    item.pubDate
+                                )
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="news-title">
+
+                        ${escapeHtml(
+                            cleanTitle(
+                                item.title
+                            )
+                        )}
+
+                    </div>
+
+
+                    <div class="news-description">
+
+                        ${escapeHtml(
+                            shortenText(
+                                description,
+                                220
+                            )
+                        )}
+
+                    </div>
+
+
+                    <div class="news-actions">
+
+                        <button
+                            class="read-btn"
+                            data-news-link="${escapeHtml(
+                                item.link
+                            )}">
+
+                            Read Full Story
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+
+                        </button>
+
+
+                        <button
+                            class="share-news-btn"
+                            data-share-link="${escapeHtml(
+                                item.link
+                            )}">
+
+                            <i class="fas fa-share-nodes"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            newsContainer.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    /*
+       Open original story
+    */
+
+    newsContainer
+        .querySelectorAll(
+            "[data-news-link]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        const url =
+                            this.dataset.newsLink;
+
+
+                        if(url){
+
+                            window.open(
+                                url,
+                                "_blank"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    /*
+       Share
+    */
+
+    newsContainer
+        .querySelectorAll(
+            "[data-share-link]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    async function(){
+
+                        const url =
+                            this.dataset.shareLink;
+
+
+                        if(
+                            navigator.share
+                        ){
+
+                            try{
+
+                                await navigator.share({
+
+                                    title:
+                                        "Pathukkalam News",
+
+                                    url:
+                                        url
+
+                                });
+
+                            }
+                            catch(error){
+
+                                if(
+                                    error.name !==
+                                    "AbortError"
+                                ){
+
+                                    console.error(
+                                        error
+                                    );
+
+                                }
+
+                            }
+
+                        }
+                        else{
+
+                            await navigator.clipboard.writeText(
+                                url
+                            );
+
+                            showToast(
+                                "News link copied ✓"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   CLEAN TITLE
+========================================================= */
+
+function cleanTitle(
+    title
+){
+
+    if(!title){
+
+        return "";
+
+    }
+
+
+    const parts =
+        title.split(
+            " - "
+        );
+
+
+    /*
+       Google News sometimes returns:
+       Headline - Source
+    */
+
+    if(parts.length > 1){
+
+        return parts
+            .slice(
+                0,
+                -1
+            )
+            .join(
+                " - "
+            );
+
+    }
+
+
+    return title;
+
+}
+
+
+/* =========================================================
+   SHORTEN
+========================================================= */
+
+function shortenText(
+    text,
+    max
+){
+
+    if(
+        text.length <= max
+    ){
+
+        return text;
+
+    }
+
+
+    return (
+        text.substring(
+            0,
+            max
+        ).trim() +
+        "..."
+    );
+
+}
+
+
+/* =========================================================
+   REMOVE DUPLICATES
+========================================================= */
+
+function uniqueNews(
+    items
+){
+
+    const seen =
+        new Set();
+
+
+    return items.filter(
+        item => {
+
+            const key =
+                item.link ||
+                item.title;
+
+
+            if(
+                seen.has(key)
+            ){
+
+                return false;
+
+            }
+
+
+            seen.add(key);
+
+            return true;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FOR YOU
+========================================================= */
+
+async function loadForYouNews(
+    selectedTopic=null
+){
+
+    currentFeed =
+        "for-you";
+
+
+    feedTitle.innerText =
+        selectedTopic
+            ? "⭐ " + selectedTopic
+            : "⭐ Latest For You";
+
+
+    newsContainer.innerHTML = `
+
+        <div class="loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <div>
+                Loading your latest news...
+            </div>
+
         </div>
 
-        <div class="news-desc">
-            Vijay stated that digital transparency and public accountability will become key pillars of governance if his party comes to power.
-        </div>
+    `;
 
-        <div class="news-date">
-            📅 Posted: Yesterday • Coimbatore
-        </div>
 
-        <div class="news-actions">
+    try{
 
-            <button class="read-btn">
-                Read Full News
-            </button>
+        let topics =
+            selectedTopic
+                ? [selectedTopic]
+                : pinnedTopics;
 
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
 
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
+        if(!topics.length){
 
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
+            topics =
+                [...DEFAULT_TOPICS];
 
-        </div>
+        }
 
-    </div>
 
-</div>
+        /*
+           Fetch multiple topics.
+        */
 
-<!-- NEWS 4 -->
+        const results =
+            await Promise.all(
+                topics.map(
+                    topic =>
+                        fetchNews(
+                            topic,
+                            "IN"
+                        )
+                )
+            );
 
-<div class="news-card">
 
-    <img src="https://picsum.photos/600/350?4">
+        let combined =
+            [];
 
-    <div class="news-content">
 
-        <div class="news-title">
-            Youth supporters celebrate Vijay political growth across Tamil Nadu
-        </div>
+        results.forEach(
+            items => {
 
-        <div class="news-desc">
-            College students and first-time voters are actively participating in TVK events and online campaigns supporting Vijay's political journey.
-        </div>
+                combined =
+                    combined.concat(
+                        items
+                    );
 
-        <div class="news-date">
-            📅 Posted: Yesterday • Trichy
-        </div>
+            }
+        );
 
-        <div class="news-actions">
 
-            <button class="read-btn">
-                Read Full News
-            </button>
+        combined =
+            uniqueNews(
+                combined
+            );
 
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
 
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
+        combined.sort(
+            (a,b) =>
+                new Date(
+                    b.pubDate
+                ) -
+                new Date(
+                    a.pubDate
+                )
+        );
 
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
 
-        </div>
+        currentNews =
+            combined;
 
-    </div>
 
-</div>
+        applySearchAndRender();
 
-<!-- NEWS 5 -->
+    }
+    catch(error){
 
-<div class="news-card">
+        console.error(
+            "For You news error:",
+            error
+        );
 
-    <img src="https://picsum.photos/600/350?5">
 
-    <div class="news-content">
+        showNewsError(
+            "Unable to load latest news. Please try again."
+        );
 
-        <div class="news-title">
-            Vijay discusses startup support and AI future in Tamil Nadu
-        </div>
+    }
 
-        <div class="news-desc">
-            During a business interaction session, Vijay highlighted startup growth, artificial intelligence and employment opportunities for young professionals.
-        </div>
+}
 
-        <div class="news-date">
-            📅 Posted: 2 days ago • Chennai
-        </div>
 
-        <div class="news-actions">
+/* =========================================================
+   INDIA NEWS
+========================================================= */
 
-            <button class="read-btn">
-                Read Full News
-            </button>
+async function loadIndiaNews(){
 
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
+    currentFeed =
+        "india";
 
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
 
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
+    feedTitle.innerText =
+        "🇮🇳 India News";
 
-        </div>
 
-    </div>
+    newsContainer.innerHTML = `
 
-</div>
+        <div class="loading">
 
-<!-- NEWS 6 -->
+            <i class="fas fa-spinner fa-spin"></i>
 
-<div class="news-card">
-
-    <img src="https://picsum.photos/600/350?6">
-
-    <div class="news-content">
-
-        <div class="news-title">
-            TVK announces major public welfare consultation programs
-        </div>
-
-        <div class="news-desc">
-            Public consultation events are planned across districts to collect direct feedback from citizens regarding infrastructure and education.
-        </div>
-
-        <div class="news-date">
-            📅 Posted: 2 days ago • Salem
-        </div>
-
-        <div class="news-actions">
-
-            <button class="read-btn">
-                Read Full News
-            </button>
-
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
-
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
-
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
+            <div>
+                Loading India news...
+            </div>
 
         </div>
 
-    </div>
+    `;
 
-</div>
 
-<!-- NEWS 7 -->
+    try{
 
-<div class="news-card">
+        const items =
+            await fetchNews(
+                "India latest news",
+                "IN"
+            );
 
-    <img src="https://picsum.photos/600/350?7">
 
-    <div class="news-content">
+        currentNews =
+            uniqueNews(
+                items
+            );
 
-        <div class="news-title">
-            Vijay supporters trend social media hashtags across Tamil Nadu
-        </div>
 
-        <div class="news-desc">
-            Supporters created multiple trending hashtags supporting Vijay’s leadership vision and upcoming public rallies.
-        </div>
+        applySearchAndRender();
 
-        <div class="news-date">
-            📅 Posted: 3 days ago • Online
-        </div>
+    }
+    catch(error){
 
-        <div class="news-actions">
+        console.error(
+            error
+        );
 
-            <button class="read-btn">
-                Read Full News
-            </button>
 
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
+        showNewsError(
+            "Unable to load India news."
+        );
 
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
+    }
 
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
+}
 
-        </div>
 
-    </div>
+/* =========================================================
+   WORLD NEWS
+========================================================= */
 
-</div>
+async function loadWorldNews(){
 
-<!-- NEWS 8 -->
+    currentFeed =
+        "world";
 
-<div class="news-card">
 
-    <img src="https://picsum.photos/600/350?8">
+    feedTitle.innerText =
+        "🌍 World News";
 
-    <div class="news-content">
 
-        <div class="news-title">
-            Political analysts discuss Vijay’s impact on youth voters
-        </div>
+    newsContainer.innerHTML = `
 
-        <div class="news-desc">
-            Analysts say Vijay’s popularity among first-time voters may influence political campaigning styles across Tamil Nadu.
-        </div>
+        <div class="loading">
 
-        <div class="news-date">
-            📅 Posted: 3 days ago • Chennai
-        </div>
+            <i class="fas fa-spinner fa-spin"></i>
 
-        <div class="news-actions">
-
-            <button class="read-btn">
-                Read Full News
-            </button>
-
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
-
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
-
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
+            <div>
+                Loading world news...
+            </div>
 
         </div>
 
-    </div>
+    `;
 
-</div>
 
-<!-- NEWS 9 -->
+    try{
 
-<div class="news-card">
+        const items =
+            await fetchNews(
+                "world latest news",
+                "WORLD"
+            );
 
-    <img src="https://picsum.photos/600/350?9">
 
-    <div class="news-content">
+        currentNews =
+            uniqueNews(
+                items
+            );
 
-        <div class="news-title">
-            Vijay fans organize welfare activities in multiple districts
+
+        applySearchAndRender();
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        showNewsError(
+            "Unable to load world news."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+newsSearch.addEventListener(
+    "input",
+    function(){
+
+        searchText =
+            this.value
+                .trim()
+                .toLowerCase();
+
+
+        applySearchAndRender();
+
+    }
+);
+
+
+/* =========================================================
+   SEARCH CURRENT RESULTS
+========================================================= */
+
+function applySearchAndRender(){
+
+    let items =
+        currentNews;
+
+
+    if(searchText){
+
+        items =
+            currentNews.filter(
+                item => {
+
+                    const text =
+                        (
+
+                            item.title +
+                            " " +
+                            item.description +
+                            " " +
+                            item.source
+
+                        )
+                        .toLowerCase();
+
+
+                    return text.includes(
+                        searchText
+                    );
+
+                }
+            );
+
+
+        searchInfo.style.display =
+            "block";
+
+
+        searchInfo.innerText =
+            items.length +
+            " result" +
+            (
+                items.length === 1
+                    ? ""
+                    : "s"
+            ) +
+            " found";
+
+    }
+    else{
+
+        searchInfo.style.display =
+            "none";
+
+    }
+
+
+    renderNews(
+        items
+    );
+
+}
+
+
+/* =========================================================
+   NEWS ERROR
+========================================================= */
+
+function showNewsError(
+    message
+){
+
+    newsContainer.innerHTML = `
+
+        <div class="empty-state">
+
+            <i class="fas fa-wifi"></i>
+
+            <div class="empty-title">
+
+                News temporarily unavailable
+
+            </div>
+
+            <div class="empty-text">
+
+                ${escapeHtml(
+                    message
+                )}
+
+            </div>
+
         </div>
 
-        <div class="news-desc">
-            Volunteers conducted blood donation camps, food distribution and student support activities under TVK welfare programs.
-        </div>
+    `;
 
-        <div class="news-date">
-            📅 Posted: 4 days ago • Erode
-        </div>
+}
 
-        <div class="news-actions">
 
-            <button class="read-btn">
-                Read Full News
-            </button>
+/* =========================================================
+   FEED BUTTONS
+========================================================= */
 
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
+document.getElementById(
+    "forYouBtn"
+).addEventListener(
+    "click",
+    function(){
 
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
+        setFeedButton(
+            this
+        );
 
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
+        loadForYouNews();
 
-        </div>
+    }
+);
 
-    </div>
 
-</div>
+document.getElementById(
+    "indiaBtn"
+).addEventListener(
+    "click",
+    function(){
 
-<!-- NEWS 10 -->
+        setFeedButton(
+            this
+        );
 
-<div class="news-card">
+        loadIndiaNews();
 
-    <img src="https://picsum.photos/600/350?10">
+    }
+);
 
-    <div class="news-content">
 
-        <div class="news-title">
-            Vijay says people-centric politics is the future of Tamil Nadu
-        </div>
+document.getElementById(
+    "worldBtn"
+).addEventListener(
+    "click",
+    function(){
 
-        <div class="news-desc">
-            Vijay emphasized transparent leadership, people participation and modern governance during his latest interview.
-        </div>
+        setFeedButton(
+            this
+        );
 
-        <div class="news-date">
-            📅 Posted: 5 days ago • Chennai
-        </div>
+        loadWorldNews();
 
-        <div class="news-actions">
+    }
+);
 
-            <button class="read-btn">
-                Read Full News
-            </button>
 
-            <button class="icon-btn like-btn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
+/* =========================================================
+   SET ACTIVE FEED BUTTON
+========================================================= */
 
-            <button class="icon-btn share-btn">
-                <i class="fa-solid fa-share"></i>
-            </button>
+function setFeedButton(
+    button
+){
 
-            <button class="icon-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
+    document
+        .querySelectorAll(
+            ".feed-btn"
+        )
+        .forEach(
+            btn =>
+                btn.classList.remove(
+                    "active"
+                )
+        );
 
-        </div>
 
-    </div>
+    button.classList.add(
+        "active"
+    );
 
-</div>
 
-</body>
-</html>
+    renderTopics();
+
+}
+
+
+/* =========================================================
+   MANAGE TOPICS
+========================================================= */
+
+document.getElementById(
+    "manageTopicsBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        const open =
+            topicManager.style.display ===
+            "block";
+
+
+        topicManager.style.display =
+            open
+                ? "none"
+                : "block";
+
+
+        if(!open){
+
+            renderTopicManager();
+
+            topicManager.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ADD TOPIC BUTTON
+========================================================= */
+
+document.getElementById(
+    "addTopicBtn"
+).addEventListener(
+    "click",
+    addTopic
+);
+
+
+/* =========================================================
+   ENTER TO ADD TOPIC
+========================================================= */
+
+document.getElementById(
+    "topicInput"
+).addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            event.preventDefault();
+
+            addTopic();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+document.getElementById(
+    "refreshBtn"
+).addEventListener(
+    "click",
+    async function(){
+
+        this.innerHTML =
+            `<i class="fas fa-spinner fa-spin"></i>`;
+
+
+        /*
+           Clear cache so refresh
+           actually requests latest news.
+        */
+
+        newsCache = {};
+
+
+        try{
+
+            if(
+                currentFeed ===
+                "for-you"
+            ){
+
+                await loadForYouNews();
+
+            }
+            else if(
+                currentFeed ===
+                "india"
+            ){
+
+                await loadIndiaNews();
+
+            }
+            else{
+
+                await loadWorldNews();
+
+            }
+
+        }
+        finally{
+
+            this.innerHTML =
+                `<i class="fas fa-rotate"></i>`;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initializeNews(){
+
+    const loggedIn =
+        await loadCurrentUser();
+
+
+    if(!loggedIn){
+
+        return;
+
+    }
+
+
+    await loadUserTopics();
+
+
+    renderTopics();
+
+    renderTopicManager();
+
+
+    /*
+       FIRST PAGE = FOR YOU
+    */
+
+    await loadForYouNews();
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+initializeNews();
+
+</script>
+
+{% endblock %}
