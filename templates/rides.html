@@ -243,6 +243,7 @@ body{
     display:flex;
     align-items:center;
     margin-bottom:14px;
+    cursor:pointer;
 }
 
 .profile-avatar{
@@ -274,6 +275,32 @@ body{
     color:#666;
     margin-top:4px;
     font-size:13px;
+}
+
+
+/* =========================================================
+   PROFILE VIEW BUTTON
+   NEW - DOES NOT CHANGE EXISTING OPTIONS
+========================================================= */
+
+.view-profile-btn{
+    margin-top:8px;
+    padding:7px 11px;
+    border:none;
+    background:#eef4ff;
+    color:#1877f2;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.view-profile-btn:hover{
+    background:#dfeaff;
+}
+
+.view-profile-btn:active{
+    transform:scale(.97);
 }
 
 
@@ -448,11 +475,13 @@ body{
     height:42px;
     border-radius:50%;
     object-fit:cover;
+    cursor:pointer;
 }
 
 .request-user-info{
     flex:1;
     min-width:0;
+    cursor:pointer;
 }
 
 .request-user-name{
@@ -489,6 +518,29 @@ body{
 .reject-btn{
     background:#ffe3e3;
     color:#c62828;
+}
+
+
+/* =========================================================
+   REQUESTER PROFILE BUTTON
+   NEW
+========================================================= */
+
+.request-profile-btn{
+    width:100%;
+    margin-top:8px;
+    padding:8px;
+    border:none;
+    background:#eef4ff;
+    color:#1877f2;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.request-profile-btn:hover{
+    background:#dfeaff;
 }
 
 
@@ -927,6 +979,7 @@ body{
 
     </div>
 
+
 </div>
 
 
@@ -958,8 +1011,7 @@ const SUPABASE_URL =
     "https://jxpvkamxtedgzztozonl.supabase.co";
 
 const SUPABASE_ANON_KEY =
-    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
-
+    "sb_publishable_DCI0qvAlYNBi8DZkZF2g_frSEW_OX";
 
 const supabaseClient =
     supabase.createClient(
@@ -1049,6 +1101,33 @@ function escapeHtml(value){
         value ?? "";
 
     return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   VIEW PROFILE
+   NEW FUNCTION
+========================================================= */
+
+function viewProfile(username){
+
+    if(!username){
+
+        showToast(
+            "Profile unavailable"
+        );
+
+        return;
+
+    }
+
+
+    window.location.href =
+        "/profile/" +
+        encodeURIComponent(
+            username
+        );
 
 }
 
@@ -1727,7 +1806,13 @@ function createRideCard(ride){
 
     card.innerHTML = `
 
-        <div class="profile">
+        <!-- =================================================
+             RIDE OWNER PROFILE
+        ================================================== -->
+
+        <div
+            class="profile"
+            data-profile-username="${escapeHtml(username)}">
 
             <img
                 class="profile-avatar"
@@ -1754,7 +1839,7 @@ function createRideCard(ride){
                         ride.age
                             ? escapeHtml(
                                 ride.age
-                            ) + " yrs"
+                              ) + " yrs"
                             : ""
                     }
 
@@ -1777,6 +1862,23 @@ function createRideCard(ride){
                     }
 
                 </div>
+
+                <!-- NEW PROFILE BUTTON -->
+
+                ${
+                    !isOwnRide
+                        ? `
+                            <button
+                                class="view-profile-btn"
+                                data-view-profile="${escapeHtml(username)}">
+
+                                <i class="fas fa-user"></i>
+                                View Profile
+
+                            </button>
+                          `
+                        : ""
+                }
 
                 <div class="tags">
 
@@ -1910,6 +2012,99 @@ function createRideCard(ride){
     `;
 
 
+    /* =====================================================
+       VIEW OWNER PROFILE
+    ===================================================== */
+
+    const viewProfileButton =
+        card.querySelector(
+            "[data-view-profile]"
+        );
+
+
+    if(viewProfileButton){
+
+        viewProfileButton.addEventListener(
+            "click",
+            function(event){
+
+                event.stopPropagation();
+
+                const profileUsername =
+                    this.getAttribute(
+                        "data-view-profile"
+                    );
+
+                viewProfile(
+                    profileUsername
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CLICK OWNER PROFILE
+       Avatar / name / username
+    ===================================================== */
+
+    const profileArea =
+        card.querySelector(
+            "[data-profile-username]"
+        );
+
+
+    if(profileArea){
+
+        profileArea.addEventListener(
+            "click",
+            function(event){
+
+                /*
+                 * Don't trigger when clicking
+                 * View Profile button.
+                 */
+
+                if(
+                    event.target.closest(
+                        ".view-profile-btn"
+                    )
+                ){
+
+                    return;
+
+                }
+
+
+                const profileUsername =
+                    this.getAttribute(
+                        "data-profile-username"
+                    );
+
+
+                if(
+                    profileUsername &&
+                    profileUsername !== "user"
+                ){
+
+                    viewProfile(
+                        profileUsername
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       REQUEST LIFT
+    ===================================================== */
+
     const requestButton =
         card.querySelector(
             "[data-request-ride-id]"
@@ -1932,6 +2127,10 @@ function createRideCard(ride){
 
     }
 
+
+    /* =====================================================
+       OWNER REQUEST MANAGEMENT
+    ===================================================== */
 
     if(isOwnRide){
 
@@ -2340,10 +2539,16 @@ async function loadRideRequests(
 
             row.innerHTML = `
 
-                <img
-                    src="${escapeHtml(avatar)}">
+                <!-- REQUESTER PROFILE -->
 
-                <div class="request-user-info">
+                <img
+                    src="${escapeHtml(avatar)}"
+                    class="requester-profile-click"
+                    alt="Profile">
+
+
+                <div
+                    class="request-user-info requester-profile-click">
 
                     <div class="request-user-name">
 
@@ -2362,10 +2567,120 @@ async function loadRideRequests(
 
                 </div>
 
+
                 ${actions}
 
             `;
 
+
+            /* =================================================
+               NEW: VIEW REQUESTER PROFILE
+            ================================================= */
+
+            const requesterUsername =
+                profile?.username;
+
+
+            const requesterProfileElements =
+                row.querySelectorAll(
+                    ".requester-profile-click"
+                );
+
+
+            requesterProfileElements.forEach(
+                element => {
+
+                    element.addEventListener(
+                        "click",
+                        function(){
+
+                            if(
+                                requesterUsername &&
+                                requesterUsername !==
+                                "user"
+                            ){
+
+                                viewProfile(
+                                    requesterUsername
+                                );
+
+                            }
+                            else{
+
+                                showToast(
+                                    "Requester profile unavailable"
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+            /* =================================================
+               NEW: PROFILE BUTTON
+               Inserted before actions
+            ================================================= */
+
+            const requestInfo =
+                row.querySelector(
+                    ".request-user-info"
+                );
+
+
+            if(
+                requestInfo &&
+                requesterUsername &&
+                requesterUsername !== "user"
+            ){
+
+                const profileButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                profileButton.className =
+                    "request-profile-btn";
+
+
+                profileButton.innerHTML = `
+
+                    <i class="fas fa-user"></i>
+                    View Profile
+
+                `;
+
+
+                profileButton.addEventListener(
+                    "click",
+                    function(){
+
+                        viewProfile(
+                            requesterUsername
+                        );
+
+                    }
+                );
+
+
+                /*
+                 * Put button below username.
+                 */
+
+                requestInfo.appendChild(
+                    profileButton
+                );
+
+            }
+
+
+            /* =================================================
+               ACCEPT / REJECT
+            ================================================= */
 
             const acceptBtn =
                 row.querySelector(
@@ -2612,9 +2927,22 @@ async function renderMyRequests(){
             "https://i.pravatar.cc/100";
 
 
+        const ownerUsername =
+            profile?.username ||
+            "user";
+
+
         card.innerHTML = `
 
-            <div class="profile">
+            <!-- =================================================
+                 RIDE OWNER PROFILE
+            ================================================== -->
+
+            <div
+                class="profile"
+                data-my-request-owner-profile="${escapeHtml(
+                    ownerUsername
+                )}">
 
                 <img
                     class="profile-avatar"
@@ -2634,11 +2962,30 @@ async function renderMyRequests(){
                     <div class="username">
 
                         @${escapeHtml(
-                            profile?.username ||
-                            "user"
+                            ownerUsername
                         )}
 
                     </div>
+
+
+                    <!-- NEW -->
+
+                    ${
+                        ownerUsername !== "user"
+                            ? `
+                                <button
+                                    class="view-profile-btn"
+                                    data-view-profile="${escapeHtml(
+                                        ownerUsername
+                                    )}">
+
+                                    <i class="fas fa-user"></i>
+                                    View Profile
+
+                                </button>
+                              `
+                            : ""
+                    }
 
                 </div>
 
@@ -2706,6 +3053,86 @@ async function renderMyRequests(){
             </div>
 
         `;
+
+
+        /* =====================================================
+           VIEW OWNER PROFILE BUTTON
+        ===================================================== */
+
+        const viewProfileButton =
+            card.querySelector(
+                "[data-view-profile]"
+            );
+
+
+        if(viewProfileButton){
+
+            viewProfileButton.addEventListener(
+                "click",
+                function(event){
+
+                    event.stopPropagation();
+
+                    viewProfile(
+                        this.getAttribute(
+                            "data-view-profile"
+                        )
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           CLICK OWNER PROFILE
+        ===================================================== */
+
+        const ownerProfileArea =
+            card.querySelector(
+                "[data-my-request-owner-profile]"
+            );
+
+
+        if(ownerProfileArea){
+
+            ownerProfileArea.addEventListener(
+                "click",
+                function(event){
+
+                    if(
+                        event.target.closest(
+                            ".view-profile-btn"
+                        )
+                    ){
+
+                        return;
+
+                    }
+
+
+                    const username =
+                        this.getAttribute(
+                            "data-my-request-owner-profile"
+                        );
+
+
+                    if(
+                        username &&
+                        username !== "user"
+                    ){
+
+                        viewProfile(
+                            username
+                        );
+
+                    }
+
+                }
+            );
+
+        }
 
 
         myRequestsContainer.appendChild(
