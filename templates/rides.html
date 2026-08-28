@@ -279,8 +279,7 @@ body{
 
 
 /* =========================================================
-   PROFILE VIEW BUTTON
-   NEW - DOES NOT CHANGE EXISTING OPTIONS
+   VIEW PROFILE
 ========================================================= */
 
 .view-profile-btn{
@@ -523,24 +522,18 @@ body{
 
 /* =========================================================
    REQUESTER PROFILE BUTTON
-   NEW
 ========================================================= */
 
 .request-profile-btn{
-    width:100%;
-    margin-top:8px;
-    padding:8px;
+    margin-top:6px;
+    padding:6px 9px;
     border:none;
     background:#eef4ff;
     color:#1877f2;
-    border-radius:9px;
-    font-size:12px;
+    border-radius:8px;
+    font-size:11px;
     font-weight:bold;
     cursor:pointer;
-}
-
-.request-profile-btn:hover{
-    background:#dfeaff;
 }
 
 
@@ -602,6 +595,22 @@ body{
 .loading i{
     font-size:25px;
     margin-bottom:10px;
+}
+
+
+/* =========================================================
+   AUTH LOADING
+========================================================= */
+
+.auth-loading{
+    text-align:center;
+    padding:70px 20px;
+    color:#777;
+}
+
+.auth-loading i{
+    font-size:30px;
+    margin-bottom:12px;
 }
 
 
@@ -737,8 +746,6 @@ body{
     </div>
 
 
-    <!-- FULL NAME -->
-
     <div class="form-group">
 
         <label>Full Name</label>
@@ -750,8 +757,6 @@ body{
 
     </div>
 
-
-    <!-- AGE -->
 
     <div class="form-group">
 
@@ -767,8 +772,6 @@ body{
     </div>
 
 
-    <!-- COMPANY -->
-
     <div class="form-group">
 
         <label>Company Name</label>
@@ -780,8 +783,6 @@ body{
 
     </div>
 
-
-    <!-- PROFESSION -->
 
     <div class="form-group">
 
@@ -795,8 +796,6 @@ body{
     </div>
 
 
-    <!-- CITY -->
-
     <div class="form-group">
 
         <label>City</label>
@@ -808,8 +807,6 @@ body{
 
     </div>
 
-
-    <!-- PICKUP -->
 
     <div class="form-group">
 
@@ -823,8 +820,6 @@ body{
     </div>
 
 
-    <!-- DESTINATION -->
-
     <div class="form-group">
 
         <label>Destination</label>
@@ -837,8 +832,6 @@ body{
     </div>
 
 
-    <!-- TIME -->
-
     <div class="form-group">
 
         <label>Pickup Time</label>
@@ -849,8 +842,6 @@ body{
 
     </div>
 
-
-    <!-- VEHICLE -->
 
     <div class="form-group">
 
@@ -870,8 +861,6 @@ body{
 
     </div>
 
-
-    <!-- GENDER -->
 
     <div class="form-group">
 
@@ -977,8 +966,17 @@ body{
 
     <div id="ridesContainer">
 
-    </div>
+        <div class="auth-loading">
 
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <div>
+                Checking login...
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -1013,10 +1011,18 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
     "sb_publishable_DCI0qvAlYNBi8DZkZF2g_frSEW_OX";
 
+
 const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_ANON_KEY
+        SUPABASE_ANON_KEY,
+        {
+            auth:{
+                persistSession:true,
+                autoRefreshToken:true,
+                detectSessionInUrl:true
+            }
+        }
     );
 
 
@@ -1072,18 +1078,27 @@ const rideForm =
 function showToast(message){
 
     const toast =
-        document.getElementById("toast");
+        document.getElementById(
+            "toast"
+        );
 
     toast.innerText =
         message;
 
-    toast.classList.add("show");
+    toast.classList.add(
+        "show"
+    );
 
-    setTimeout(function(){
+    setTimeout(
+        function(){
 
-        toast.classList.remove("show");
+            toast.classList.remove(
+                "show"
+            );
 
-    },3000);
+        },
+        3000
+    );
 
 }
 
@@ -1095,7 +1110,9 @@ function showToast(message){
 function escapeHtml(value){
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     div.textContent =
         value ?? "";
@@ -1107,12 +1124,14 @@ function escapeHtml(value){
 
 /* =========================================================
    VIEW PROFILE
-   NEW FUNCTION
 ========================================================= */
 
 function viewProfile(username){
 
-    if(!username){
+    if(
+        !username ||
+        username === "user"
+    ){
 
         showToast(
             "Profile unavailable"
@@ -1133,91 +1152,262 @@ function viewProfile(username){
 
 
 /* =========================================================
-   CURRENT USER
+   AUTHENTICATION
+   IMPORTANT:
+   Use getSession() first instead of immediately
+   using getUser().
 ========================================================= */
 
 async function loadCurrentUser(){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-        .auth
-        .getUser();
+    try{
+
+        /* -------------------------------------------------
+           First check existing browser session
+        ------------------------------------------------- */
+
+        const {
+            data:sessionData,
+            error:sessionError
+        } =
+        await supabaseClient
+            .auth
+            .getSession();
 
 
-    if(
-        error ||
-        !data.user
-    ){
+        if(sessionError){
 
-        window.location.href =
-            "/login";
+            console.error(
+                "Session error:",
+                sessionError
+            );
 
-        return false;
+        }
+
+
+        let session =
+            sessionData?.session || null;
+
+
+        /* -------------------------------------------------
+           If session exists
+        ------------------------------------------------- */
+
+        if(session){
+
+            currentUser =
+                session.user;
+
+        }
+
+
+        /* -------------------------------------------------
+           If session was not immediately available,
+           give Supabase a moment to restore it.
+        ------------------------------------------------- */
+
+        if(!currentUser){
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        500
+                    )
+            );
+
+
+            const {
+                data:retrySession
+            } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+            session =
+                retrySession?.session ||
+                null;
+
+
+            if(session){
+
+                currentUser =
+                    session.user;
+
+            }
+
+        }
+
+
+        /* -------------------------------------------------
+           Still no session
+        ------------------------------------------------- */
+
+        if(!currentUser){
+
+            /*
+             * IMPORTANT:
+             * Preserve the page the user wanted.
+             */
+
+            window.location.href =
+                "/login?next=/rides";
+
+            return false;
+
+        }
+
+
+        /* -------------------------------------------------
+           Load profile
+        ------------------------------------------------- */
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select(`
+                id,
+                username,
+                name,
+                profile_url
+            `)
+            .eq(
+                "id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+
+        if(profileError){
+
+            console.error(
+                "Profile error:",
+                profileError
+            );
+
+            /*
+             * Don't throw user back to login.
+             * The authentication is already valid.
+             */
+
+            currentProfile = {
+
+                id:
+                    currentUser.id,
+
+                username:
+                    null,
+
+                name:
+                    currentUser.email ||
+                    "Pathukkalam User",
+
+                profile_url:
+                    null
+
+            };
+
+        }
+        else{
+
+            currentProfile =
+                profile;
+
+        }
+
+
+        /* -------------------------------------------------
+           Automatically fill name
+        ------------------------------------------------- */
+
+        document.getElementById(
+            "fullName"
+        ).value =
+            currentProfile?.name ||
+            currentProfile?.username ||
+            "";
+
+
+        return true;
 
     }
-
-
-    currentUser =
-        data.user;
-
-
-    /* -----------------------------------------------------
-       Load profile
-    ----------------------------------------------------- */
-
-    const {
-        data:profile,
-        error:profileError
-    } =
-    await supabaseClient
-        .from("profiles")
-        .select(`
-            id,
-            username,
-            name,
-            profile_url
-        `)
-        .eq(
-            "id",
-            currentUser.id
-        )
-        .single();
-
-
-    if(profileError){
+    catch(error){
 
         console.error(
-            "Profile error:",
-            profileError
+            "Authentication loading error:",
+            error
         );
 
-        return false;
+
+        /*
+         * Only redirect when we are genuinely
+         * not authenticated.
+         */
+
+        const {
+            data
+        } =
+        await supabaseClient
+            .auth
+            .getSession();
+
+
+        if(!data?.session){
+
+            window.location.href =
+                "/login?next=/rides";
+
+            return false;
+
+        }
+
+
+        return true;
 
     }
 
-
-    currentProfile =
-        profile;
-
-
-    /* -----------------------------------------------------
-       Automatically fill name
-    ----------------------------------------------------- */
-
-    document.getElementById(
-        "fullName"
-    ).value =
-        profile.name ||
-        profile.username ||
-        "";
-
-
-    return true;
-
 }
+
+
+/* =========================================================
+   AUTH STATE LISTENER
+========================================================= */
+
+supabaseClient
+    .auth
+    .onAuthStateChange(
+        async function(
+            event,
+            session
+        ){
+
+            console.log(
+                "Auth event:",
+                event
+            );
+
+
+            if(
+                session &&
+                !currentUser
+            ){
+
+                currentUser =
+                    session.user;
+
+
+                await loadCurrentUser();
+
+                await loadRides();
+
+            }
+
+        }
+    );
 
 
 /* =========================================================
@@ -1293,7 +1483,9 @@ async function loadRides(){
                 </div>
 
                 <div class="empty-text">
-                    ${escapeHtml(error.message)}
+                    ${escapeHtml(
+                        error.message
+                    )}
                 </div>
 
             </div>
@@ -1334,6 +1526,8 @@ async function loadRideProfiles(){
 
 
     if(!userIds.length){
+
+        await loadMyRequests();
 
         renderRides();
 
@@ -1403,7 +1597,8 @@ async function loadRideProfiles(){
                     ...ride,
 
                     profile:
-                        profile || null
+                        profile ||
+                        null
 
                 };
 
@@ -1425,6 +1620,8 @@ async function loadRideProfiles(){
 async function loadMyRequests(){
 
     if(!currentUser){
+
+        myRequests = [];
 
         return;
 
@@ -1620,6 +1817,7 @@ function formatRideTime(time){
     const parts =
         time.split(":");
 
+
     if(parts.length < 2){
 
         return time;
@@ -1632,6 +1830,7 @@ function formatRideTime(time){
             parts[0],
             10
         );
+
 
     const minute =
         parts[1];
@@ -1665,7 +1864,10 @@ function formatRideTime(time){
 function createRideCard(ride){
 
     const card =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     card.className =
         "ride-card";
@@ -1806,32 +2008,41 @@ function createRideCard(ride){
 
     card.innerHTML = `
 
-        <!-- =================================================
-             RIDE OWNER PROFILE
-        ================================================== -->
+        <!-- OWNER PROFILE -->
 
         <div
             class="profile"
-            data-profile-username="${escapeHtml(username)}">
+            data-profile-username="${escapeHtml(
+                username
+            )}">
 
             <img
                 class="profile-avatar"
-                src="${escapeHtml(avatar)}"
+                src="${escapeHtml(
+                    avatar
+                )}"
                 alt="Profile">
+
 
             <div class="profile-info">
 
                 <div class="name">
 
-                    ${escapeHtml(displayName)}
+                    ${escapeHtml(
+                        displayName
+                    )}
 
                 </div>
+
 
                 <div class="username">
 
-                    @${escapeHtml(username)}
+                    @${escapeHtml(
+                        username
+                    )}
 
                 </div>
+
 
                 <div class="details">
 
@@ -1863,14 +2074,16 @@ function createRideCard(ride){
 
                 </div>
 
-                <!-- NEW PROFILE BUTTON -->
 
                 ${
-                    !isOwnRide
+                    !isOwnRide &&
+                    username !== "user"
                         ? `
                             <button
                                 class="view-profile-btn"
-                                data-view-profile="${escapeHtml(username)}">
+                                data-view-profile="${escapeHtml(
+                                    username
+                                )}">
 
                                 <i class="fas fa-user"></i>
                                 View Profile
@@ -1879,6 +2092,7 @@ function createRideCard(ride){
                           `
                         : ""
                 }
+
 
                 <div class="tags">
 
@@ -1937,6 +2151,8 @@ function createRideCard(ride){
         </div>
 
 
+        <!-- ROUTE -->
+
         <div class="route">
 
             <div class="city">
@@ -1948,6 +2164,7 @@ function createRideCard(ride){
                 )}
 
             </div>
+
 
             <div class="route-line">
 
@@ -1966,6 +2183,8 @@ function createRideCard(ride){
         </div>
 
 
+        <!-- TIME -->
+
         <div class="time">
 
             <i class="far fa-clock"></i>
@@ -1982,6 +2201,8 @@ function createRideCard(ride){
         ${requestButtonHtml}
 
 
+        <!-- OWNER REQUEST MANAGEMENT -->
+
         ${
             isOwnRide
                 ? `
@@ -1996,6 +2217,7 @@ function createRideCard(ride){
                             Lift Requests
 
                         </div>
+
 
                         <div
                             class="ride-request-list">
@@ -2013,7 +2235,7 @@ function createRideCard(ride){
 
 
     /* =====================================================
-       VIEW OWNER PROFILE
+       VIEW PROFILE BUTTON
     ===================================================== */
 
     const viewProfileButton =
@@ -2030,13 +2252,10 @@ function createRideCard(ride){
 
                 event.stopPropagation();
 
-                const profileUsername =
+                viewProfile(
                     this.getAttribute(
                         "data-view-profile"
-                    );
-
-                viewProfile(
-                    profileUsername
+                    )
                 );
 
             }
@@ -2047,7 +2266,6 @@ function createRideCard(ride){
 
     /* =====================================================
        CLICK OWNER PROFILE
-       Avatar / name / username
     ===================================================== */
 
     const profileArea =
@@ -2062,11 +2280,6 @@ function createRideCard(ride){
             "click",
             function(event){
 
-                /*
-                 * Don't trigger when clicking
-                 * View Profile button.
-                 */
-
                 if(
                     event.target.closest(
                         ".view-profile-btn"
@@ -2078,19 +2291,19 @@ function createRideCard(ride){
                 }
 
 
-                const profileUsername =
+                const username =
                     this.getAttribute(
                         "data-profile-username"
                     );
 
 
                 if(
-                    profileUsername &&
-                    profileUsername !== "user"
+                    username &&
+                    username !== "user"
                 ){
 
                     viewProfile(
-                        profileUsername
+                        username
                     );
 
                 }
@@ -2160,7 +2373,7 @@ async function requestLift(
 
     if(!currentUser){
 
-        alert(
+        showToast(
             "Please login first."
         );
 
@@ -2172,6 +2385,7 @@ async function requestLift(
     button.disabled =
         true;
 
+
     button.innerHTML = `
 
         <i class="fas fa-spinner fa-spin"></i>
@@ -2181,10 +2395,6 @@ async function requestLift(
 
 
     try{
-
-        /* -------------------------------------------------
-           Check existing request
-        ------------------------------------------------- */
 
         const {
             data:existing,
@@ -2226,10 +2436,6 @@ async function requestLift(
         }
 
 
-        /* -------------------------------------------------
-           Insert request
-        ------------------------------------------------- */
-
         const {
             data:request,
             error
@@ -2258,10 +2464,6 @@ async function requestLift(
 
         }
 
-
-        /* -------------------------------------------------
-           Notify ride owner
-        ------------------------------------------------- */
 
         await createRideNotification({
 
@@ -2313,6 +2515,7 @@ async function requestLift(
         button.disabled =
             false;
 
+
         button.innerHTML = `
 
             <i class="fas fa-paper-plane"></i>
@@ -2326,7 +2529,7 @@ async function requestLift(
 
 
 /* =========================================================
-   LOAD RIDE REQUESTS FOR OWNER
+   LOAD RIDE REQUESTS
 ========================================================= */
 
 async function loadRideRequests(
@@ -2460,7 +2663,10 @@ async function loadRideRequests(
 
 
             const row =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             row.className =
                 "request-user";
@@ -2475,6 +2681,11 @@ async function loadRideRequests(
                 profile?.name ||
                 profile?.username ||
                 "User";
+
+
+            const username =
+                profile?.username ||
+                "user";
 
 
             let actions = "";
@@ -2496,6 +2707,7 @@ async function loadRideRequests(
                             Accept
 
                         </button>
+
 
                         <button
                             class="reject-btn"
@@ -2539,31 +2751,48 @@ async function loadRideRequests(
 
             row.innerHTML = `
 
-                <!-- REQUESTER PROFILE -->
-
                 <img
-                    src="${escapeHtml(avatar)}"
+                    src="${escapeHtml(
+                        avatar
+                    )}"
                     class="requester-profile-click"
                     alt="Profile">
 
 
                 <div
-                    class="request-user-info requester-profile-click">
+                    class="request-user-info">
 
                     <div class="request-user-name">
 
-                        ${escapeHtml(name)}
+                        ${escapeHtml(
+                            name
+                        )}
 
                     </div>
+
 
                     <div class="request-user-time">
 
                         @${escapeHtml(
-                            profile?.username ||
-                            "user"
+                            username
                         )}
 
                     </div>
+
+
+                    ${
+                        username !== "user"
+                            ? `
+                                <button
+                                    class="request-profile-btn">
+
+                                    <i class="fas fa-user"></i>
+                                    View Profile
+
+                                </button>
+                              `
+                            : ""
+                    }
 
                 </div>
 
@@ -2574,44 +2803,25 @@ async function loadRideRequests(
 
 
             /* =================================================
-               NEW: VIEW REQUESTER PROFILE
+               REQUESTER PROFILE
             ================================================= */
 
-            const requesterUsername =
-                profile?.username;
-
-
-            const requesterProfileElements =
+            const profileElements =
                 row.querySelectorAll(
                     ".requester-profile-click"
                 );
 
 
-            requesterProfileElements.forEach(
+            profileElements.forEach(
                 element => {
 
                     element.addEventListener(
                         "click",
                         function(){
 
-                            if(
-                                requesterUsername &&
-                                requesterUsername !==
-                                "user"
-                            ){
-
-                                viewProfile(
-                                    requesterUsername
-                                );
-
-                            }
-                            else{
-
-                                showToast(
-                                    "Requester profile unavailable"
-                                );
-
-                            }
+                            viewProfile(
+                                username
+                            );
 
                         }
                     );
@@ -2620,77 +2830,35 @@ async function loadRideRequests(
             );
 
 
-            /* =================================================
-               NEW: PROFILE BUTTON
-               Inserted before actions
-            ================================================= */
-
-            const requestInfo =
+            const profileButton =
                 row.querySelector(
-                    ".request-user-info"
+                    ".request-profile-btn"
                 );
 
 
-            if(
-                requestInfo &&
-                requesterUsername &&
-                requesterUsername !== "user"
-            ){
-
-                const profileButton =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                profileButton.className =
-                    "request-profile-btn";
-
-
-                profileButton.innerHTML = `
-
-                    <i class="fas fa-user"></i>
-                    View Profile
-
-                `;
-
+            if(profileButton){
 
                 profileButton.addEventListener(
                     "click",
                     function(){
 
                         viewProfile(
-                            requesterUsername
+                            username
                         );
 
                     }
-                );
-
-
-                /*
-                 * Put button below username.
-                 */
-
-                requestInfo.appendChild(
-                    profileButton
                 );
 
             }
 
 
             /* =================================================
-               ACCEPT / REJECT
+               ACCEPT
             ================================================= */
 
             const acceptBtn =
                 row.querySelector(
                     '[data-action="accept"]'
-                );
-
-
-            const rejectBtn =
-                row.querySelector(
-                    '[data-action="reject"]'
                 );
 
 
@@ -2710,6 +2878,16 @@ async function loadRideRequests(
                 );
 
             }
+
+
+            /* =================================================
+               REJECT
+            ================================================= */
+
+            const rejectBtn =
+                row.querySelector(
+                    '[data-action="reject"]'
+                );
 
 
             if(rejectBtn){
@@ -2776,10 +2954,6 @@ async function updateRideRequest(
         }
 
 
-        /* -------------------------------------------------
-           Notify requester
-        ------------------------------------------------- */
-
         const message =
             newStatus ===
             "accepted"
@@ -2811,7 +2985,8 @@ async function updateRideRequest(
                 request.requester_id,
 
             type:
-                "ride_" + newStatus,
+                "ride_" +
+                newStatus,
 
             message:
                 message
@@ -2899,8 +3074,12 @@ async function renderMyRequests(){
         const ride =
             allRides.find(
                 item =>
-                    Number(item.id) ===
-                    Number(request.ride_id)
+                    Number(
+                        item.id
+                    ) ===
+                    Number(
+                        request.ride_id
+                    )
             );
 
 
@@ -2912,7 +3091,10 @@ async function renderMyRequests(){
 
 
         const card =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         card.className =
             "ride-card";
@@ -2934,10 +3116,6 @@ async function renderMyRequests(){
 
         card.innerHTML = `
 
-            <!-- =================================================
-                 RIDE OWNER PROFILE
-            ================================================== -->
-
             <div
                 class="profile"
                 data-my-request-owner-profile="${escapeHtml(
@@ -2946,7 +3124,10 @@ async function renderMyRequests(){
 
                 <img
                     class="profile-avatar"
-                    src="${escapeHtml(avatar)}">
+                    src="${escapeHtml(
+                        avatar
+                    )}">
+
 
                 <div class="profile-info">
 
@@ -2959,6 +3140,7 @@ async function renderMyRequests(){
 
                     </div>
 
+
                     <div class="username">
 
                         @${escapeHtml(
@@ -2967,8 +3149,6 @@ async function renderMyRequests(){
 
                     </div>
 
-
-                    <!-- NEW -->
 
                     ${
                         ownerUsername !== "user"
@@ -3001,6 +3181,7 @@ async function renderMyRequests(){
                     )}
 
                 </div>
+
 
                 <div class="route-line">
 
@@ -3055,10 +3236,6 @@ async function renderMyRequests(){
         `;
 
 
-        /* =====================================================
-           VIEW OWNER PROFILE BUTTON
-        ===================================================== */
-
         const viewProfileButton =
             card.querySelector(
                 "[data-view-profile]"
@@ -3084,10 +3261,6 @@ async function renderMyRequests(){
 
         }
 
-
-        /* =====================================================
-           CLICK OWNER PROFILE
-        ===================================================== */
 
         const ownerProfileArea =
             card.querySelector(
@@ -3277,7 +3450,7 @@ document.getElementById(
 
         if(!currentUser){
 
-            alert(
+            showToast(
                 "Please login first."
             );
 
@@ -3448,10 +3621,6 @@ document.getElementById(
             );
 
 
-            /* ------------------------------------------------
-               Reset form
-            ------------------------------------------------ */
-
             document.getElementById(
                 "age"
             ).value = "";
@@ -3507,6 +3676,7 @@ document.getElementById(
             button.disabled =
                 false;
 
+
             button.innerHTML = `
 
                 <i class="fas fa-paper-plane"></i>
@@ -3539,6 +3709,7 @@ document.getElementById(
 
             requestSection.style.display =
                 "none";
+
 
             document.getElementById(
                 "availableSection"
@@ -3626,6 +3797,12 @@ setInterval(
 ========================================================= */
 
 async function initializePage(){
+
+    /*
+     * DO NOT redirect immediately based on getUser().
+     *
+     * First restore the existing Supabase session.
+     */
 
     const loggedIn =
         await loadCurrentUser();
