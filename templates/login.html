@@ -221,6 +221,10 @@ body{
 
 <script>
 
+/* =========================================================
+   SUPABASE
+========================================================= */
+
 const SUPABASE_URL =
     "https://jxpvkamxtedgzztozonl.supabase.co";
 
@@ -232,7 +236,14 @@ const SUPABASE_ANON_KEY =
 const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_ANON_KEY
+        SUPABASE_ANON_KEY,
+        {
+            auth:{
+                persistSession:true,
+                autoRefreshToken:true,
+                detectSessionInUrl:true
+            }
+        }
     );
 
 
@@ -241,11 +252,68 @@ console.log(
 );
 
 
-/* ==========================================
-   LOGIN
-========================================== */
+/* =========================================================
+   GET REDIRECT DESTINATION
+========================================================= */
 
-document.getElementById("loginForm").addEventListener(
+function getNextPage(){
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    let next =
+        params.get("next");
+
+
+    /*
+     * Default behaviour remains Home.
+     *
+     * So normal login without ?next=
+     * still goes to "/".
+     */
+
+    if(!next){
+
+        return "/";
+
+    }
+
+
+    /*
+     * Security:
+     *
+     * Only allow internal Pathukkalam
+     * paths.
+     *
+     * Prevent external redirect such as:
+     * https://example.com
+     */
+
+    if(
+        !next.startsWith("/") ||
+        next.startsWith("//")
+    ){
+
+        return "/";
+
+    }
+
+
+    return next;
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+document.getElementById(
+    "loginForm"
+).addEventListener(
     "submit",
     async function(event){
 
@@ -253,7 +321,9 @@ document.getElementById("loginForm").addEventListener(
 
 
         const username =
-            document.getElementById("username")
+            document.getElementById(
+                "username"
+            )
             .value
             .trim()
             .replace("@","")
@@ -261,38 +331,47 @@ document.getElementById("loginForm").addEventListener(
 
 
         const password =
-            document.getElementById("password")
+            document.getElementById(
+                "password"
+            )
             .value;
 
 
         const button =
-            document.getElementById("loginBtn");
+            document.getElementById(
+                "loginBtn"
+            );
 
 
         const message =
-            document.getElementById("loginMessage");
+            document.getElementById(
+                "loginMessage"
+            );
 
 
-        button.disabled = true;
+        button.disabled =
+            true;
+
 
         button.innerText =
             "Logging in...";
 
-        message.innerText = "";
+
+        message.innerText =
+            "";
 
 
         try{
 
-            /*
-            ======================================
-            Find the email associated
-            with the username.
-            ======================================
-            */
+            /* =================================================
+               FIND EMAIL FROM USERNAME
+            ================================================= */
 
             const response =
                 await fetch(
-                    `/api/user-email/${encodeURIComponent(username)}`
+                    `/api/user-email/${encodeURIComponent(
+                        username
+                    )}`
                 );
 
 
@@ -310,25 +389,25 @@ document.getElementById("loginForm").addEventListener(
             }
 
 
-            /*
-            ======================================
-            Login using Supabase Auth
-            ======================================
-            */
+            /* =================================================
+               SUPABASE LOGIN
+            ================================================= */
 
             const {
                 data,
                 error
             } =
-            await supabaseClient.auth.signInWithPassword({
+            await supabaseClient
+                .auth
+                .signInWithPassword({
 
-                email:
-                    result.email,
+                    email:
+                        result.email,
 
-                password:
-                    password
+                    password:
+                        password
 
-            });
+                });
 
 
             if(error){
@@ -350,6 +429,47 @@ document.getElementById("loginForm").addEventListener(
             );
 
 
+            /* =================================================
+               VERIFY SESSION WAS CREATED
+            ================================================= */
+
+            const {
+                data:sessionData,
+                error:sessionError
+            } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+            if(sessionError){
+
+                throw sessionError;
+
+            }
+
+
+            if(
+                !sessionData ||
+                !sessionData.session
+            ){
+
+                throw new Error(
+                    "Login completed, but session could not be created. Please try again."
+                );
+
+            }
+
+
+            console.log(
+                "Supabase session confirmed."
+            );
+
+
+            /* =================================================
+               SUCCESS MESSAGE
+            ================================================= */
+
             message.style.color =
                 "green";
 
@@ -358,36 +478,70 @@ document.getElementById("loginForm").addEventListener(
                 "Login successful!";
 
 
-            setTimeout(function(){
+            /* =================================================
+               DETERMINE WHERE TO GO
+            ================================================= */
 
-                window.location.href =
-                    "/";
+            const nextPage =
+                getNextPage();
 
-            }, 500);
 
+            console.log(
+                "Redirecting to:",
+                nextPage
+            );
+
+
+            /* =================================================
+               REDIRECT
+            ================================================= */
+
+            setTimeout(
+                function(){
+
+                    window.location.replace(
+                        nextPage
+                    );
+
+                },
+                500
+            );
 
         }
         catch(error){
+
+            console.error(
+                "Login error:",
+                error
+            );
+
 
             message.style.color =
                 "red";
 
 
             message.innerText =
-                error.message;
+                error.message ||
+                "Login failed.";
+
+        }
+        finally{
+
+            /*
+             * If redirect is about to happen,
+             * this doesn't cause any problem.
+             */
+
+            button.disabled =
+                false;
+
+
+            button.innerText =
+                "Login";
 
         }
 
-
-        button.disabled =
-            false;
-
-
-        button.innerText =
-            "Login";
-
     }
-
 );
 
 </script>
