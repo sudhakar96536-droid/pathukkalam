@@ -3926,7 +3926,8 @@ async function exportProcessedVideo(){
                 failed,
                 {
                     once:true
-                );
+                }
+            );
 
         }
     );
@@ -5360,23 +5361,113 @@ supabaseClient
 
 async function initialize(){
 
-    /*
-       Supabase restores the existing browser
-       session automatically.
+    try{
 
-       We wait for that session before deciding
-       whether the user needs login.
-    */
-
-    const loggedIn =
-        await loadCurrentUser();
-
-
-    if(!loggedIn)
-        return;
+        const {
+            data: {
+                session
+            },
+            error
+        } =
+        await supabaseClient
+            .auth
+            .getSession();
 
 
-    await loadReels();
+        if(error){
+
+            console.error(
+                "Session error:",
+                error
+            );
+
+            window.location.href =
+                "/login";
+
+            return;
+
+        }
+
+
+        if(
+            !session ||
+            !session.user
+        ){
+
+            window.location.href =
+                "/login";
+
+            return;
+
+        }
+
+
+        currentUser =
+            session.user;
+
+
+        const {
+            data: profile,
+            error: profileError
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select(`
+                id,
+                username,
+                name,
+                profile_url
+            `)
+            .eq(
+                "id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+
+        if(profileError){
+
+            console.error(
+                "Profile loading error:",
+                profileError
+            );
+
+        }
+
+
+        currentProfile =
+            profile || null;
+
+
+        await loadReels();
+
+    }
+    catch(error){
+
+        console.error(
+            "Reels initialization error:",
+            error
+        );
+
+
+        feed.innerHTML = `
+
+            <div class="empty">
+
+                ❌ Unable to load Reels.
+
+                <br><br>
+
+                ${escapeHtml(
+                    error.message ||
+                    "Unknown error"
+                )}
+
+            </div>
+
+        `;
+
+    }
 
 }
 
