@@ -759,9 +759,6 @@ button:disabled{
 
         <!-- =================================================
              EDITOR BUTTONS
-
-             IMPORTANT:
-             NO EXPORT BUTTON
         ================================================== -->
 
         <div class="editor-buttons">
@@ -1204,20 +1201,64 @@ function formatDate(value){
 
 
 /* =========================================================
+   HASHTAGS
+   DATABASE COLUMN = TEXT
+========================================================= */
+
+function formatHashtags(value){
+
+    if(!value)
+        return "";
+
+
+    /*
+       The reels.hashtags column is TEXT.
+
+       Convert stored text into a clean display
+       format without assuming it is an array.
+    */
+
+    if(Array.isArray(value)){
+
+        return value
+            .map(
+                h =>
+                    String(h)
+                        .replace(
+                            /^#/,
+                            ""
+                        )
+            )
+            .filter(Boolean)
+            .map(
+                h =>
+                    "#" + h
+            )
+            .join(" ");
+
+    }
+
+
+    return String(value)
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .map(
+            h =>
+                h.startsWith("#")
+                    ? h
+                    : "#" + h
+        )
+        .join(" ");
+
+}
+
+
+/* =========================================================
    CURRENT USER
 ========================================================= */
 
 async function loadCurrentUser(){
-
-    /*
-       IMPORTANT:
-
-       getUser() reads the already existing
-       Supabase authentication session.
-
-       We do NOT ask the user to login again
-       if the session is already available.
-    */
 
     let {
         data,
@@ -1227,14 +1268,6 @@ async function loadCurrentUser(){
         .auth
         .getUser();
 
-
-    /*
-       Sometimes the auth state can still be
-       restoring when the page opens.
-
-       Give Supabase a moment before deciding
-       that the user is logged out.
-    */
 
     if(
         error ||
@@ -1342,6 +1375,33 @@ async function loadReels(){
     `;
 
 
+    /*
+       IMPORTANT:
+
+       Only columns that actually exist in the
+       reels table are selected.
+
+       Existing reels table:
+
+       id
+       user_id
+       video_url
+       video_path
+       thumbnail_url
+       caption
+       hashtags
+       duration_seconds
+       status
+       views_count
+       likes_count
+       comments_count
+       shares_count
+       whatsapp_clicks_count
+       profile_views_count
+       created_at
+       updated_at
+    */
+
     const {
         data,
         error
@@ -1352,16 +1412,20 @@ async function loadReels(){
             id,
             user_id,
             video_url,
+            video_path,
+            thumbnail_url,
             caption,
             hashtags,
             duration_seconds,
-            crop_ratio,
+            status,
             views_count,
             likes_count,
             comments_count,
             shares_count,
             whatsapp_clicks_count,
-            created_at
+            profile_views_count,
+            created_at,
+            updated_at
         `)
         .eq(
             "status",
@@ -1427,6 +1491,7 @@ async function attachProfiles(){
                         reel =>
                             reel.user_id
                     )
+                    .filter(Boolean)
             )
         ];
 
@@ -1588,17 +1653,21 @@ function createReelCard(reel){
 
 
     const hashtags =
-        Array.isArray(
+        formatHashtags(
             reel.hashtags
-        )
-            ? reel.hashtags
-                .map(
-                    h =>
-                        h.startsWith("#")
-                            ? h
-                            : "#" + h
-                )
-                .join(" ")
+        );
+
+
+    /*
+       Use thumbnail when available.
+       Otherwise video remains unchanged.
+    */
+
+    const posterAttribute =
+        reel.thumbnail_url
+            ? `poster="${escapeHtml(
+                reel.thumbnail_url
+              )}"`
             : "";
 
 
@@ -1609,6 +1678,7 @@ function createReelCard(reel){
             src="${escapeHtml(
                 reel.video_url
             )}"
+            ${posterAttribute}
             playsinline
             controls
             preload="metadata">
@@ -2032,11 +2102,6 @@ function createReelCard(reel){
                 }
                 catch(error){
 
-                    /*
-                       User cancelled native share.
-                       Do not count cancellation as share.
-                    */
-
                     console.log(
                         "Share cancelled."
                     );
@@ -2124,6 +2189,11 @@ function createReelCard(reel){
             );
 
 
+            /*
+               Keep your existing WhatsApp
+               tracking table.
+            */
+
             const {
                 error
             } =
@@ -2202,6 +2272,18 @@ function createReelCard(reel){
             }
 
 
+            /*
+               Profile views are also represented
+               by the reels.profile_views_count
+               column.
+            */
+
+            await incrementReelCounter(
+                reel.id,
+                "profile_views_count"
+            );
+
+
             window.location.href =
                 "/profile/" +
                 encodeURIComponent(
@@ -2240,11 +2322,6 @@ async function recordView(reel){
 
 
     if(error){
-
-        /*
-           If RLS/unique rule prevents duplicate
-           viewing, don't break the Reel.
-        */
 
         console.warn(
             "View record:",
@@ -2778,6 +2855,46 @@ async function incrementReelCounter(
     column
 ){
 
+    /*
+       Safety check.
+
+       Only allow columns that actually exist
+       in the reels table.
+    */
+
+    const allowedColumns = [
+
+        "views_count",
+
+        "likes_count",
+
+        "comments_count",
+
+        "shares_count",
+
+        "whatsapp_clicks_count",
+
+        "profile_views_count"
+
+    ];
+
+
+    if(
+        !allowedColumns.includes(
+            column
+        )
+    ){
+
+        console.warn(
+            "Invalid reel counter:",
+            column
+        );
+
+        return;
+
+    }
+
+
     const {
         data,
         error
@@ -2846,6 +2963,39 @@ async function decrementReelCounter(
     column
 ){
 
+    const allowedColumns = [
+
+        "views_count",
+
+        "likes_count",
+
+        "comments_count",
+
+        "shares_count",
+
+        "whatsapp_clicks_count",
+
+        "profile_views_count"
+
+    ];
+
+
+    if(
+        !allowedColumns.includes(
+            column
+        )
+    ){
+
+        console.warn(
+            "Invalid reel counter:",
+            column
+        );
+
+        return;
+
+    }
+
+
     const {
         data,
         error
@@ -2875,6 +3025,9 @@ async function decrementReelCounter(
         );
 
 
+    const {
+        error:updateError
+    } =
     await supabaseClient
         .from("reels")
         .update({
@@ -2887,6 +3040,16 @@ async function decrementReelCounter(
             "id",
             reelId
         );
+
+
+    if(updateError){
+
+        console.warn(
+            "Counter decrement error:",
+            updateError
+        );
+
+    }
 
 }
 
@@ -2971,6 +3134,10 @@ videoFile.addEventListener(
 
         selectedFile =
             file;
+
+
+        exportedBlob =
+            null;
 
 
         if(sourceUrl){
@@ -3097,6 +3264,34 @@ videoFile.addEventListener(
 
         endRange.value =
             trimEnd;
+
+
+        cropRatio =
+            "original";
+
+
+        document
+            .querySelectorAll(
+                ".ratio-btn"
+            )
+            .forEach(
+                b => {
+
+                    b.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+        document
+            .querySelector(
+                '[data-ratio="original"]'
+            )
+            .classList.add(
+                "active"
+            );
 
 
         editor.style.display =
@@ -3542,10 +3737,6 @@ document.getElementById(
         }
 
 
-        /*
-           Stop preview at selected End time.
-        */
-
         const stopPreview =
             function(){
 
@@ -3594,11 +3785,6 @@ async function exportProcessedVideo(){
         trimEnd -
         trimStart;
 
-
-    /*
-       Maximum 50 seconds.
-       No minimum.
-    */
 
     if(
         duration < 0 ||
@@ -3708,10 +3894,6 @@ async function exportProcessedVideo(){
         cropHeight;
 
 
-    /*
-       For vertical video, constrain height too.
-    */
-
     const maxOutputHeight =
         1280;
 
@@ -3770,10 +3952,6 @@ async function exportProcessedVideo(){
         );
 
 
-    /*
-       Some encoders prefer even dimensions.
-    */
-
     outputWidth -=
         outputWidth % 2;
 
@@ -3816,6 +3994,15 @@ async function exportProcessedVideo(){
         );
 
 
+    if(!ctx){
+
+        throw new Error(
+            "Unable to create video canvas."
+        );
+
+    }
+
+
     /*
        Center crop position.
     */
@@ -3853,83 +4040,9 @@ async function exportProcessedVideo(){
     sourceVideo.pause();
 
 
-    sourceVideo.currentTime =
-        trimStart;
-
-
-    await new Promise(
-        (resolve,reject) => {
-
-            let finished =
-                false;
-
-
-            const done =
-                () => {
-
-                    if(finished)
-                        return;
-
-
-                    finished =
-                        true;
-
-
-                    sourceVideo.removeEventListener(
-                        "seeked",
-                        done
-                    );
-
-
-                    resolve();
-
-                };
-
-
-            const failed =
-                () => {
-
-                    if(finished)
-                        return;
-
-
-                    finished =
-                        true;
-
-
-                    sourceVideo.removeEventListener(
-                        "error",
-                        failed
-                    );
-
-
-                    reject(
-                        new Error(
-                            "Unable to seek video."
-                        )
-                    );
-
-                };
-
-
-            sourceVideo.addEventListener(
-                "seeked",
-                done,
-                {
-                    once:true
-                }
-            );
-
-
-            sourceVideo.addEventListener(
-                "error",
-                failed,
-                {
-                    once:true
-                }
-            );
-
-        }
+    await seekVideo(
+        sourceVideo,
+        trimStart
     );
 
 
@@ -3944,8 +4057,7 @@ async function exportProcessedVideo(){
 
 
     /*
-       Capture audio from original video
-       when browser supports it.
+       Capture audio from original video.
     */
 
     let sourceCapture =
@@ -4092,11 +4204,13 @@ async function exportProcessedVideo(){
 
 
     /*
-       Playback for the processor.
+       Playback for processor.
     */
 
-    sourceVideo.currentTime =
-        trimStart;
+    await seekVideo(
+        sourceVideo,
+        trimStart
+    );
 
 
     await sourceVideo.play();
@@ -4108,6 +4222,24 @@ async function exportProcessedVideo(){
 
     processing.innerText =
         "⏳ Processing crop... 0%";
+
+
+    let animationFrame =
+        null;
+
+
+    function stopRecorder(){
+
+        if(
+            recorder.state ===
+            "recording"
+        ){
+
+            recorder.stop();
+
+        }
+
+    }
 
 
     function drawFrame(){
@@ -4168,44 +4300,50 @@ async function exportProcessedVideo(){
 
 
         if(
-            elapsed >=
-            duration
+            duration === 0
         ){
 
-            recorder.stop();
+            stopRecorder();
 
             return;
 
         }
 
 
-        /*
-           Extra safety:
-           stop if video reaches selected End.
-        */
+        if(
+            elapsed >=
+            duration
+        ){
+
+            stopRecorder();
+
+            return;
+
+        }
+
 
         if(
             sourceVideo.currentTime >=
             trimEnd
         ){
 
-            recorder.stop();
+            stopRecorder();
 
             return;
 
         }
 
 
-        requestAnimationFrame(
-            drawFrame
-        );
+        animationFrame =
+            requestAnimationFrame(
+                drawFrame
+            );
 
     }
 
 
     /*
-       Zero-duration selection:
-       capture one frame.
+       Zero-duration selection.
     */
 
     if(
@@ -4232,14 +4370,7 @@ async function exportProcessedVideo(){
         setTimeout(
             () => {
 
-                if(
-                    recorder.state ===
-                    "recording"
-                ){
-
-                    recorder.stop();
-
-                }
+                stopRecorder();
 
             },
             500
@@ -4254,6 +4385,15 @@ async function exportProcessedVideo(){
 
 
     await finished;
+
+
+    if(animationFrame){
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+    }
 
 
     sourceVideo.pause();
@@ -4307,17 +4447,140 @@ async function exportProcessedVideo(){
 
 
 /* =========================================================
+   SAFE VIDEO SEEK
+========================================================= */
+
+function seekVideo(
+    video,
+    time
+){
+
+    return new Promise(
+        (resolve,reject) => {
+
+            if(
+                Math.abs(
+                    video.currentTime -
+                    time
+                ) <
+                0.05
+            ){
+
+                resolve();
+
+                return;
+
+            }
+
+
+            let finished =
+                false;
+
+
+            const cleanup =
+                () => {
+
+                    video.removeEventListener(
+                        "seeked",
+                        onSeeked
+                    );
+
+                    video.removeEventListener(
+                        "error",
+                        onError
+                    );
+
+                };
+
+
+            const onSeeked =
+                () => {
+
+                    if(finished)
+                        return;
+
+
+                    finished =
+                        true;
+
+
+                    cleanup();
+
+                    resolve();
+
+                };
+
+
+            const onError =
+                () => {
+
+                    if(finished)
+                        return;
+
+
+                    finished =
+                        true;
+
+
+                    cleanup();
+
+                    reject(
+                        new Error(
+                            "Unable to seek video."
+                        )
+                    );
+
+                };
+
+
+            video.addEventListener(
+                "seeked",
+                onSeeked
+            );
+
+
+            video.addEventListener(
+                "error",
+                onError
+            );
+
+
+            try{
+
+                video.currentTime =
+                    time;
+
+            }
+            catch(error){
+
+                if(!finished){
+
+                    finished =
+                        true;
+
+                    cleanup();
+
+                    reject(
+                        error
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
    PUBLISH REEL
 ========================================================= */
 
 publishBtn.addEventListener(
     "click",
     async function(){
-
-        /*
-           Never ask login again when the current
-           Supabase session is already available.
-        */
 
         if(!currentUser){
 
@@ -4346,11 +4609,6 @@ publishBtn.addEventListener(
             trimEnd -
             trimStart;
 
-
-        /*
-           Maximum 50 seconds.
-           NO minimum.
-        */
 
         if(
             duration < 0 ||
@@ -4382,17 +4640,24 @@ publishBtn.addEventListener(
             .trim();
 
 
+        /*
+           reels.hashtags = TEXT
+
+           Store as normal text instead of an
+           array because the database column is TEXT.
+        */
+
         const hashtags =
             hashtagText
                 .split(/\s+/)
                 .filter(Boolean)
                 .map(
                     h =>
-                        h.replace(
-                            /^#/,
-                            ""
-                        )
-                );
+                        h.startsWith("#")
+                            ? h
+                            : "#" + h
+                )
+                .join(" ");
 
 
         publishBtn.disabled =
@@ -4409,8 +4674,6 @@ publishBtn.addEventListener(
                =================================================
                STEP 1
                Automatically process crop + trim.
-
-               User does NOT see an Export button.
                =================================================
             */
 
@@ -4505,6 +4768,9 @@ publishBtn.addEventListener(
                =================================================
                STEP 4
                Database record
+
+               IMPORTANT:
+               Only existing reels columns are used.
                =================================================
             */
 
@@ -4526,36 +4792,26 @@ publishBtn.addEventListener(
                     video_url:
                         videoUrl,
 
-                    storage_path:
+                    video_path:
                         path,
+
+                    /*
+                       thumbnail_url intentionally omitted
+                       because no thumbnail file is generated
+                       by the current browser processor.
+                    */
 
                     caption:
                         caption ||
                         null,
 
                     hashtags:
-                        hashtags,
+                        hashtags ||
+                        null,
 
                     duration_seconds:
                         Number(
                             duration.toFixed(
-                                2
-                            )
-                        ),
-
-                    crop_ratio:
-                        cropRatio,
-
-                    trim_start:
-                        Number(
-                            trimStart.toFixed(
-                                2
-                            )
-                        ),
-
-                    trim_end:
-                        Number(
-                            trimEnd.toFixed(
                                 2
                             )
                         ),
@@ -4690,14 +4946,24 @@ publishBtn.addEventListener(
             );
 
 
+            processing.style.display =
+                "block";
+
+
             processing.innerText =
                 "❌ " +
-                error.message;
+                (
+                    error?.message ||
+                    "Unknown error"
+                );
 
 
             toast(
                 "Unable to post Reel: " +
-                error.message
+                (
+                    error?.message ||
+                    "Unknown error"
+                )
             );
 
         }
@@ -4737,12 +5003,19 @@ function activateButton(id){
         );
 
 
-    document.getElementById(
-        id
-    )
-    .classList.add(
-        "active"
-    );
+    const button =
+        document.getElementById(
+            id
+        );
+
+
+    if(button){
+
+        button.classList.add(
+            "active"
+        );
+
+    }
 
 }
 
@@ -4820,6 +5093,18 @@ document.getElementById(
     "click",
     async function(){
 
+        if(!currentUser){
+
+            const loggedIn =
+                await loadCurrentUser();
+
+
+            if(!loggedIn)
+                return;
+
+        }
+
+
         activateButton(
             "myReelsBtn"
         );
@@ -4852,6 +5137,10 @@ document.getElementById(
         `;
 
 
+        /*
+           Only real reels table columns.
+        */
+
         const {
             data,
             error
@@ -4862,17 +5151,20 @@ document.getElementById(
                 id,
                 user_id,
                 video_url,
+                video_path,
+                thumbnail_url,
                 caption,
                 hashtags,
                 duration_seconds,
-                crop_ratio,
                 status,
                 views_count,
                 likes_count,
                 comments_count,
                 shares_count,
                 whatsapp_clicks_count,
-                created_at
+                profile_views_count,
+                created_at,
+                updated_at
             `)
             .eq(
                 "user_id",
@@ -4891,6 +5183,22 @@ document.getElementById(
             toast(
                 error.message
             );
+
+            feed.innerHTML = `
+
+                <div class="empty">
+
+                    Unable to load My Reels.
+
+                    <br><br>
+
+                    ${escapeHtml(
+                        error.message
+                    )}
+
+                </div>
+
+            `;
 
             return;
 
@@ -4916,6 +5224,18 @@ document.getElementById(
 ).addEventListener(
     "click",
     async function(){
+
+        if(!currentUser){
+
+            const loggedIn =
+                await loadCurrentUser();
+
+
+            if(!loggedIn)
+                return;
+
+        }
+
 
         activateButton(
             "dashboardBtn"
@@ -4946,6 +5266,10 @@ document.getElementById(
 
 async function loadDashboard(){
 
+    /*
+       Only columns that exist in reels table.
+    */
+
     const {
         data:reels,
         error
@@ -4960,6 +5284,7 @@ async function loadDashboard(){
             comments_count,
             shares_count,
             whatsapp_clicks_count,
+            profile_views_count,
             created_at
         `)
         .eq(
@@ -5321,11 +5646,6 @@ async function loadDashboard(){
 
 /* =========================================================
    AUTH STATE
-
-   IMPORTANT:
-   We listen for Supabase session changes but
-   DO NOT redirect to login just because an
-   INITIAL auth event is still being restored.
 ========================================================= */
 
 supabaseClient
