@@ -22,15 +22,34 @@
     font-family:Arial,sans-serif;
 }
 
+html{
+    background:#000;
+}
+
 body{
     background:#000;
-    color:white;
+    color:#fff;
     padding-bottom:90px;
 }
 
 button{
     cursor:pointer;
 }
+
+button:disabled{
+    cursor:not-allowed;
+    opacity:.6;
+}
+
+input,
+textarea{
+    font-family:Arial,sans-serif;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
     position:sticky;
@@ -44,12 +63,25 @@ button{
     border-bottom:1px solid #333;
 }
 
+
+/* =========================================================
+   TOP ACTIONS
+========================================================= */
+
 .top-actions{
+    position:sticky;
+    top:58px;
+    z-index:999;
     display:flex;
     gap:8px;
     padding:10px;
     background:#111;
     overflow-x:auto;
+    scrollbar-width:none;
+}
+
+.top-actions::-webkit-scrollbar{
+    display:none;
 }
 
 .top-btn{
@@ -60,11 +92,17 @@ button{
     padding:11px 15px;
     border-radius:12px;
     font-weight:bold;
+    white-space:nowrap;
 }
 
 .top-btn.active{
     background:#1877f2;
 }
+
+
+/* =========================================================
+   FEED
+========================================================= */
 
 .feed{
     max-width:600px;
@@ -76,6 +114,7 @@ button{
     background:#111;
     margin-bottom:12px;
     overflow:hidden;
+    border-bottom:1px solid #222;
 }
 
 .reel-video{
@@ -91,6 +130,11 @@ button{
     background:#111;
 }
 
+
+/* =========================================================
+   POSTER
+========================================================= */
+
 .poster-row{
     display:flex;
     align-items:center;
@@ -102,10 +146,12 @@ button{
     height:44px;
     border-radius:50%;
     object-fit:cover;
+    background:#222;
 }
 
 .poster-name{
     font-weight:bold;
+    font-size:15px;
 }
 
 .poster-username{
@@ -125,23 +171,49 @@ button{
     font-weight:bold;
 }
 
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
 .caption{
     margin-top:12px;
     line-height:1.5;
+    white-space:pre-wrap;
+    word-break:break-word;
 }
 
 .hashtags{
     margin-top:8px;
     color:#58a6ff;
+    line-height:1.6;
+    word-break:break-word;
 }
+
+.post-time{
+    color:#777;
+    font-size:11px;
+    margin-top:7px;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
 
 .stats{
     display:flex;
-    gap:16px;
+    flex-wrap:wrap;
+    gap:14px;
     margin-top:12px;
     color:#bbb;
     font-size:13px;
 }
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
 
 .reel-actions{
     display:flex;
@@ -157,6 +229,7 @@ button{
     background:#222;
     color:white;
     font-size:13px;
+    font-weight:bold;
 }
 
 .action-btn.liked{
@@ -171,6 +244,11 @@ button{
     background:#1877f2;
 }
 
+
+/* =========================================================
+   COMMENTS
+========================================================= */
+
 .comments{
     display:none;
     margin-top:12px;
@@ -183,9 +261,11 @@ button{
 
 .comment-input input{
     flex:1;
+    min-width:0;
     border:none;
     border-radius:10px;
     padding:11px;
+    outline:none;
 }
 
 .comment-input button{
@@ -194,6 +274,7 @@ button{
     color:white;
     border-radius:10px;
     padding:0 14px;
+    font-weight:bold;
 }
 
 .comment-list{
@@ -208,6 +289,22 @@ button{
     font-size:13px;
 }
 
+.comment-user{
+    font-weight:bold;
+    margin-bottom:4px;
+}
+
+.comment-date{
+    color:#777;
+    font-size:10px;
+    margin-top:5px;
+}
+
+
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
+
 .empty{
     text-align:center;
     padding:70px 20px;
@@ -218,6 +315,26 @@ button{
     text-align:center;
     padding:60px;
     color:#aaa;
+}
+
+.login-note{
+    background:#151515;
+    margin:12px;
+    padding:14px;
+    border-radius:14px;
+    text-align:center;
+    color:#aaa;
+    font-size:13px;
+}
+
+.login-note button{
+    margin-top:10px;
+    border:none;
+    background:#1877f2;
+    color:white;
+    padding:10px 18px;
+    border-radius:10px;
+    font-weight:bold;
 }
 
 
@@ -238,6 +355,13 @@ button{
     font-size:20px;
     font-weight:bold;
     margin-bottom:14px;
+}
+
+.panel-subtitle{
+    color:#999;
+    font-size:12px;
+    margin-top:-8px;
+    margin-bottom:15px;
 }
 
 .input-group{
@@ -292,6 +416,12 @@ button{
     margin-bottom:10px;
 }
 
+.editor-help{
+    color:#888;
+    font-size:11px;
+    margin-bottom:10px;
+}
+
 .editor-video-wrap{
     position:relative;
     width:100%;
@@ -301,12 +431,15 @@ button{
     display:flex;
     justify-content:center;
     align-items:center;
+    min-height:250px;
+    touch-action:none;
 }
 
 #sourceVideo{
     width:100%;
     max-height:450px;
     object-fit:contain;
+    display:block;
 }
 
 .crop-overlay{
@@ -314,14 +447,45 @@ button{
     border:2px solid #fff;
     box-shadow:
         0 0 0 9999px rgba(0,0,0,.55);
-    pointer-events:none;
+    cursor:move;
+    touch-action:none;
+    z-index:5;
 }
+
+.crop-overlay::before{
+    content:"";
+    position:absolute;
+    inset:33.33% 0 33.33% 0;
+    border-top:1px solid rgba(255,255,255,.4);
+    border-bottom:1px solid rgba(255,255,255,.4);
+}
+
+.crop-overlay::after{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:33.33%;
+    right:33.33%;
+    border-left:1px solid rgba(255,255,255,.4);
+    border-right:1px solid rgba(255,255,255,.4);
+}
+
+
+/* =========================================================
+   CROP RATIOS
+========================================================= */
 
 .ratio-buttons{
     display:flex;
     gap:6px;
     overflow-x:auto;
     margin-top:10px;
+    scrollbar-width:none;
+}
+
+.ratio-buttons::-webkit-scrollbar{
+    display:none;
 }
 
 .ratio-btn{
@@ -337,6 +501,11 @@ button{
 .ratio-btn.active{
     background:#1877f2;
 }
+
+
+/* =========================================================
+   TRIM
+========================================================= */
 
 .editor-controls{
     margin-top:12px;
@@ -361,7 +530,13 @@ button{
     color:#58a6ff;
     font-weight:bold;
     font-size:13px;
+    margin-top:8px;
 }
+
+
+/* =========================================================
+   EDITOR BUTTONS
+========================================================= */
 
 .editor-buttons{
     display:flex;
@@ -397,6 +572,23 @@ button{
     margin-top:10px;
     color:#58a6ff;
     font-size:13px;
+    text-align:center;
+}
+
+
+/* =========================================================
+   PUBLISH
+========================================================= */
+
+.post-btn{
+    width:100%;
+    border:none;
+    background:#1877f2;
+    color:white;
+    padding:13px;
+    border-radius:11px;
+    font-weight:bold;
+    font-size:15px;
 }
 
 
@@ -415,6 +607,13 @@ button{
     font-size:21px;
     font-weight:bold;
     margin:10px 0 15px;
+}
+
+.dashboard-subtitle{
+    color:#888;
+    font-size:12px;
+    margin-top:-8px;
+    margin-bottom:15px;
 }
 
 .metric-grid{
@@ -449,12 +648,40 @@ button{
 
 .dashboard-reel-title{
     font-weight:bold;
+    word-break:break-word;
 }
 
 .dashboard-reel-stats{
     color:#aaa;
     font-size:12px;
     margin-top:7px;
+    line-height:1.7;
+}
+
+.daily-date{
+    font-weight:bold;
+}
+
+.no-data{
+    color:#777;
+    text-align:center;
+    padding:20px;
+}
+
+
+/* =========================================================
+   MY REEL BADGE
+========================================================= */
+
+.mine-badge{
+    display:inline-block;
+    margin-top:7px;
+    padding:4px 8px;
+    border-radius:8px;
+    background:#222;
+    color:#58a6ff;
+    font-size:10px;
+    font-weight:bold;
 }
 
 
@@ -477,6 +704,7 @@ button{
     z-index:99999;
     max-width:90%;
     text-align:center;
+    font-size:13px;
 }
 
 .toast.show{
@@ -499,6 +727,10 @@ button{
         grid-template-columns:1fr 1fr;
     }
 
+    .action-btn{
+        font-size:12px;
+    }
+
 }
 
 </style>
@@ -508,6 +740,10 @@ button{
 
 <body>
 
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
 
 <div class="header">
 
@@ -558,6 +794,29 @@ button{
 
 
 <!-- =======================================================
+     OPTIONAL LOGIN NOTE
+======================================================= -->
+
+<div
+    class="login-note"
+    id="loginNote"
+    style="display:none;">
+
+    🔐 Some features require you to be logged in.
+
+    <br>
+
+    <button
+        onclick="goToLogin()">
+
+        Login
+
+    </button>
+
+</div>
+
+
+<!-- =======================================================
      UPLOAD PANEL
 ======================================================= -->
 
@@ -571,6 +830,14 @@ button{
 
     </div>
 
+    <div class="panel-subtitle">
+
+        Upload a 30–50 second video, crop it and publish.
+
+    </div>
+
+
+    <!-- VIDEO -->
 
     <div class="input-group">
 
@@ -599,8 +866,15 @@ button{
 
         </div>
 
+        <div class="editor-help">
 
-        <div class="editor-video-wrap">
+            Choose a crop ratio and drag the crop area to position it.
+
+        </div>
+
+
+        <div class="editor-video-wrap"
+             id="editorVideoWrap">
 
             <video
                 id="sourceVideo"
@@ -660,14 +934,6 @@ button{
 
             </button>
 
-            <button
-                class="ratio-btn"
-                data-ratio="free">
-
-                Free
-
-            </button>
-
         </div>
 
 
@@ -709,8 +975,9 @@ button{
             </div>
 
 
-            <div class="time-label"
-                 id="trimLabel">
+            <div
+                class="time-label"
+                id="trimLabel">
 
                 Selected duration: 30 seconds
 
@@ -718,6 +985,8 @@ button{
 
         </div>
 
+
+        <!-- EDITOR ACTIONS -->
 
         <div class="editor-buttons">
 
@@ -769,8 +1038,7 @@ button{
 
         <textarea
             id="caption"
-            placeholder="Write something about your Reel...">
-        </textarea>
+            placeholder="Write something about your Reel..."></textarea>
 
     </div>
 
@@ -791,18 +1059,11 @@ button{
     </div>
 
 
+    <!-- PUBLISH -->
+
     <button
         class="post-btn"
-        id="publishBtn"
-        style="
-            width:100%;
-            border:none;
-            background:#1877f2;
-            color:white;
-            padding:13px;
-            border-radius:11px;
-            font-weight:bold;
-        ">
+        id="publishBtn">
 
         🚀 Publish Reel
 
@@ -843,6 +1104,12 @@ button{
     <div class="dashboard-title">
 
         📊 My Reel Dashboard
+
+    </div>
+
+    <div class="dashboard-subtitle">
+
+        Your Reel performance and recent activity
 
     </div>
 
@@ -919,6 +1186,8 @@ button{
     </div>
 
 
+    <!-- LAST 7 DAYS -->
+
     <div
         class="dashboard-title"
         style="font-size:17px;margin-top:25px;">
@@ -932,6 +1201,8 @@ button{
 
     </div>
 
+
+    <!-- PERFORMANCE -->
 
     <div
         class="dashboard-title"
@@ -948,6 +1219,10 @@ button{
 
 </div>
 
+
+<!-- =======================================================
+     TOAST
+======================================================= -->
 
 <div
     class="toast"
@@ -978,7 +1253,14 @@ const SUPABASE_ANON_KEY =
 const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_ANON_KEY
+        SUPABASE_ANON_KEY,
+        {
+            auth:{
+                persistSession:true,
+                autoRefreshToken:true,
+                detectSessionInUrl:true
+            }
+        }
     );
 
 
@@ -999,7 +1281,7 @@ let cropRatio = "original";
 let cropX = 0;
 let cropY = 0;
 
-let zoom = 1;
+let cropState = null;
 
 let trimStart = 0;
 let trimEnd = 30;
@@ -1008,6 +1290,15 @@ let exportedBlob = null;
 
 let exportedMime =
     "video/webm";
+
+
+/*
+   Prevent multiple view records for the same
+   displayed Reel during this page session.
+*/
+
+const viewedReels =
+    new Set();
 
 
 /* =========================================================
@@ -1029,6 +1320,12 @@ const sourceVideo =
 const cropOverlay =
     document.getElementById("cropOverlay");
 
+const editorVideoWrap =
+    document.getElementById("editorVideoWrap");
+
+const editor =
+    document.getElementById("editor");
+
 const videoFile =
     document.getElementById("videoFile");
 
@@ -1043,6 +1340,9 @@ const trimLabel =
 
 const exportProgress =
     document.getElementById("exportProgress");
+
+const loginNote =
+    document.getElementById("loginNote");
 
 
 /* =========================================================
@@ -1059,16 +1359,78 @@ function toast(message){
 
     el.classList.add("show");
 
-    setTimeout(
-        () => el.classList.remove("show"),
-        3000
+    clearTimeout(
+        window.__toastTimer
     );
+
+    window.__toastTimer =
+        setTimeout(
+            () => {
+
+                el.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
 
 }
 
 
 /* =========================================================
-   ESCAPE
+   LOGIN
+========================================================= */
+
+function goToLogin(){
+
+    window.location.href =
+        "/login";
+
+}
+
+
+/* =========================================================
+   AUTH REQUIREMENT
+========================================================= */
+
+function requireLogin(){
+
+    if(currentUser){
+
+        return true;
+
+    }
+
+
+    toast(
+        "Please login to use this feature."
+    );
+
+
+    /*
+       Only go to login when the user
+       actually attempts a protected action.
+    */
+
+    setTimeout(
+        () => {
+
+            window.location.href =
+                "/login";
+
+        },
+        600
+    );
+
+
+    return false;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
 ========================================================= */
 
 function escapeHtml(value){
@@ -1085,7 +1447,7 @@ function escapeHtml(value){
 
 
 /* =========================================================
-   FORMAT
+   FORMAT COUNT
 ========================================================= */
 
 function formatCount(number){
@@ -1093,7 +1455,9 @@ function formatCount(number){
     number =
         Number(number || 0);
 
-    if(number >= 1000000)
+
+    if(number >= 1000000){
+
         return (
             (number / 1000000)
                 .toFixed(1)
@@ -1101,7 +1465,11 @@ function formatCount(number){
             "M"
         );
 
-    if(number >= 1000)
+    }
+
+
+    if(number >= 1000){
+
         return (
             (number / 1000)
                 .toFixed(1)
@@ -1109,42 +1477,174 @@ function formatCount(number){
             "K"
         );
 
+    }
+
+
     return String(number);
 
 }
 
 
 /* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(value){
+
+    if(!value)
+        return "";
+
+
+    const date =
+        new Date(value);
+
+
+    if(Number.isNaN(date.getTime()))
+        return "";
+
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================================
    CURRENT USER
+   IMPORTANT AUTH FIX
 ========================================================= */
 
 async function loadCurrentUser(){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-        .auth
-        .getUser();
+    try{
+
+        /*
+        ======================================================
+        FIRST: READ EXISTING PERSISTED SESSION
+        ======================================================
+        */
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .auth
+            .getSession();
 
 
-    if(error || !data.user){
+        if(error){
 
-        window.location.href =
-            "/login";
+            console.error(
+                "getSession error:",
+                error
+            );
+
+        }
+
+
+        if(
+            data?.session?.user
+        ){
+
+            currentUser =
+                data.session.user;
+
+
+            console.log(
+                "Existing session found:",
+                currentUser.id
+            );
+
+
+            await loadCurrentProfile();
+
+
+            loginNote.style.display =
+                "none";
+
+
+            return true;
+
+        }
+
+
+        /*
+        ======================================================
+        NO SESSION
+        Do NOT redirect automatically.
+        ======================================================
+        */
+
+        currentUser =
+            null;
+
+        currentProfile =
+            null;
+
+
+        loginNote.style.display =
+            "block";
+
+
+        console.log(
+            "No active session. Reels feed can still load."
+        );
+
+
+        return false;
+
+    }
+    catch(error){
+
+        console.error(
+            "Authentication error:",
+            error
+        );
+
+
+        currentUser =
+            null;
+
+
+        loginNote.style.display =
+            "block";
+
 
         return false;
 
     }
 
+}
 
-    currentUser =
-        data.user;
+
+/* =========================================================
+   LOAD PROFILE
+========================================================= */
+
+async function loadCurrentProfile(){
+
+    if(!currentUser){
+
+        currentProfile =
+            null;
+
+        return;
+
+    }
 
 
     const {
-        data:profile
+        data:profile,
+        error
     } =
     await supabaseClient
         .from("profiles")
@@ -1161,13 +1661,92 @@ async function loadCurrentUser(){
         .maybeSingle();
 
 
+    if(error){
+
+        console.warn(
+            "Profile loading error:",
+            error
+        );
+
+
+        currentProfile =
+            null;
+
+        return;
+
+    }
+
+
     currentProfile =
-        profile;
-
-
-    return true;
+        profile || null;
 
 }
+
+
+/* =========================================================
+   AUTH STATE CHANGE
+========================================================= */
+
+supabaseClient.auth.onAuthStateChange(
+    async (
+        event,
+        session
+    ) => {
+
+        console.log(
+            "Auth event:",
+            event
+        );
+
+
+        if(
+            session?.user
+        ){
+
+            currentUser =
+                session.user;
+
+
+            loginNote.style.display =
+                "none";
+
+
+            /*
+               Don't repeatedly perform expensive
+               operations on TOKEN_REFRESHED.
+            */
+
+            if(
+                event === "SIGNED_IN" ||
+                event === "INITIAL_SESSION"
+            ){
+
+                await loadCurrentProfile();
+
+            }
+
+        }
+        else{
+
+            currentUser =
+                null;
+
+            currentProfile =
+                null;
+
+
+            /*
+               IMPORTANT:
+               Do NOT redirect to login here.
+            */
+
+            loginNote.style.display =
+                "block";
+
+        }
+
+    }
+);
 
 
 /* =========================================================
@@ -1201,15 +1780,19 @@ async function loadReels(){
             id,
             user_id,
             video_url,
+            storage_path,
             caption,
             hashtags,
             duration_seconds,
             crop_ratio,
+            trim_start,
+            trim_end,
             views_count,
             likes_count,
             comments_count,
             shares_count,
             whatsapp_clicks_count,
+            status,
             created_at
         `)
         .eq(
@@ -1226,14 +1809,24 @@ async function loadReels(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "Load reels error:",
+            error
+        );
+
 
         feed.innerHTML = `
 
             <div class="empty">
-                Unable to load Reels.
+
+                ❌ Unable to load Reels.
+
                 <br><br>
-                ${escapeHtml(error.message)}
+
+                ${escapeHtml(
+                    error.message
+                )}
+
             </div>
 
         `;
@@ -1265,6 +1858,7 @@ async function attachProfiles(){
                     .map(
                         r => r.user_id
                     )
+                    .filter(Boolean)
             )
         ];
 
@@ -1279,7 +1873,8 @@ async function attachProfiles(){
 
 
     const {
-        data:profiles
+        data:profiles,
+        error
     } =
     await supabaseClient
         .from("profiles")
@@ -1295,17 +1890,30 @@ async function attachProfiles(){
         );
 
 
+    if(error){
+
+        console.warn(
+            "Profile list error:",
+            error
+        );
+
+    }
+
+
     const map =
         new Map();
 
 
     (profiles || [])
         .forEach(
-            p =>
+            p => {
+
                 map.set(
                     p.id,
                     p
-                )
+                );
+
+            }
         );
 
 
@@ -1367,7 +1975,9 @@ function renderFeed(){
         reel => {
 
             feed.appendChild(
-                createReelCard(reel)
+                createReelCard(
+                    reel
+                )
             );
 
         }
@@ -1377,7 +1987,7 @@ function renderFeed(){
 
 
 /* =========================================================
-   CREATE REEL
+   CREATE REEL CARD
 ========================================================= */
 
 function createReelCard(reel){
@@ -1385,8 +1995,14 @@ function createReelCard(reel){
     const card =
         document.createElement("div");
 
+
     card.className =
         "reel-card";
+
+
+    card.id =
+        "reel-" +
+        reel.id;
 
 
     const profile =
@@ -1424,7 +2040,9 @@ function createReelCard(reel){
 
         <video
             class="reel-video"
-            src="${escapeHtml(reel.video_url)}"
+            src="${escapeHtml(
+                reel.video_url
+            )}"
             playsinline
             controls
             preload="metadata">
@@ -1437,19 +2055,28 @@ function createReelCard(reel){
 
                 <img
                     class="poster-avatar"
-                    src="${escapeHtml(avatar)}">
+                    src="${escapeHtml(
+                        avatar
+                    )}"
+                    alt="Profile">
+
 
                 <div>
 
                     <div class="poster-name">
 
-                        ${escapeHtml(name)}
+                        ${escapeHtml(
+                            name
+                        )}
 
                     </div>
 
+
                     <div class="poster-username">
 
-                        @${escapeHtml(username)}
+                        @${escapeHtml(
+                            username
+                        )}
 
                     </div>
 
@@ -1492,30 +2119,68 @@ function createReelCard(reel){
             }
 
 
+            <div class="post-time">
+
+                ${escapeHtml(
+                    formatDate(
+                        reel.created_at
+                    )
+                )}
+
+            </div>
+
+
+            ${
+                reel.user_id ===
+                currentUser?.id
+                    ? `
+                        <div class="mine-badge">
+                            YOUR REEL
+                        </div>
+                      `
+                    : ""
+            }
+
+
             <div class="stats">
 
                 <span>
-                    👁 ${formatCount(
-                        reel.views_count
-                    )}
+                    👁
+                    <span class="view-count">
+                        ${formatCount(
+                            reel.views_count
+                        )}
+                    </span>
                 </span>
 
-                <span>
-                    ❤️ ${formatCount(
-                        reel.likes_count
-                    )}
-                </span>
 
                 <span>
-                    💬 ${formatCount(
-                        reel.comments_count
-                    )}
+                    ❤️
+                    <span class="like-count">
+                        ${formatCount(
+                            reel.likes_count
+                        )}
+                    </span>
                 </span>
 
+
                 <span>
-                    ↗ ${formatCount(
-                        reel.shares_count
-                    )}
+                    💬
+                    <span class="comment-count">
+                        ${formatCount(
+                            reel.comments_count
+                        )}
+                    </span>
+                </span>
+
+
+                <span>
+                    ↗
+                    <span class="share-count">
+                        ${formatCount(
+                            reel.shares_count
+                        )}
+                    </span>
                 </span>
 
             </div>
@@ -1567,6 +2232,7 @@ function createReelCard(reel){
 
                     <input
                         type="text"
+                        maxlength="1000"
                         placeholder="Write a comment...">
 
                     <button>
@@ -1588,7 +2254,7 @@ function createReelCard(reel){
 
 
     /* =====================================================
-       VIEW COUNT
+       VIDEO VIEW
     ===================================================== */
 
     const video =
@@ -1597,17 +2263,25 @@ function createReelCard(reel){
         );
 
 
-    let viewRecorded = false;
-
-
     video.addEventListener(
         "play",
         async function(){
 
-            if(viewRecorded)
+            if(
+                viewedReels.has(
+                    reel.id
+                )
+            ){
+
                 return;
 
-            viewRecorded = true;
+            }
+
+
+            viewedReels.add(
+                reel.id
+            );
+
 
             await recordView(
                 reel
@@ -1631,9 +2305,19 @@ function createReelCard(reel){
         "click",
         async function(){
 
+            if(
+                !requireLogin()
+            ){
+
+                return;
+
+            }
+
+
             await toggleLike(
                 reel,
-                likeBtn
+                likeBtn,
+                card
             );
 
         }
@@ -1660,11 +2344,21 @@ function createReelCard(reel){
         "click",
         async function(){
 
+            if(
+                !requireLogin()
+            ){
+
+                return;
+
+            }
+
+
             commentsBox.style.display =
                 commentsBox.style.display ===
                 "block"
                     ? "none"
                     : "block";
+
 
             if(
                 commentsBox.style.display ===
@@ -1698,11 +2392,55 @@ function createReelCard(reel){
         "click",
         async function(){
 
+            if(
+                !requireLogin()
+            ){
+
+                return;
+
+            }
+
+
             await addComment(
                 reel,
                 commentInput,
-                commentsBox
+                commentsBox,
+                card
             );
+
+        }
+    );
+
+
+    commentInput.addEventListener(
+        "keydown",
+        async function(event){
+
+            if(
+                event.key ===
+                "Enter"
+            ){
+
+                event.preventDefault();
+
+
+                if(
+                    !requireLogin()
+                ){
+
+                    return;
+
+                }
+
+
+                await addComment(
+                    reel,
+                    commentInput,
+                    commentsBox,
+                    card
+                );
+
+            }
 
         }
     );
@@ -1722,10 +2460,23 @@ function createReelCard(reel){
         "click",
         async function(){
 
+            if(
+                !requireLogin()
+            ){
+
+                return;
+
+            }
+
+
             const url =
                 window.location.origin +
                 "/reels#reel-" +
                 reel.id;
+
+
+            let shared =
+                false;
 
 
             if(
@@ -1741,33 +2492,68 @@ function createReelCard(reel){
 
                         text:
                             reel.caption ||
-                            "Check this Reel",
+                            "Check this Reel on Pathukkalam",
 
                         url:url
 
                     });
 
+
+                    shared =
+                        true;
+
                 }
-                catch(e){}
+                catch(error){
+
+                    /*
+                       User cancelled share.
+                       Do not count cancellation.
+                    */
+
+                    console.log(
+                        "Share cancelled."
+                    );
+
+                }
 
             }
             else{
 
-                await navigator.clipboard.writeText(
-                    url
-                );
+                try{
 
-                toast(
-                    "Reel link copied ✓"
-                );
+                    await navigator.clipboard.writeText(
+                        url
+                    );
+
+
+                    toast(
+                        "Reel link copied ✓"
+                    );
+
+
+                    shared =
+                        true;
+
+                }
+                catch(error){
+
+                    toast(
+                        "Unable to copy Reel link."
+                    );
+
+                }
 
             }
 
 
-            await recordShare(
-                reel,
-                "native"
-            );
+            if(shared){
+
+                await recordShare(
+                    reel,
+                    "native"
+                );
+
+            }
 
         }
     );
@@ -1787,6 +2573,15 @@ function createReelCard(reel){
         "click",
         async function(){
 
+            if(
+                !requireLogin()
+            ){
+
+                return;
+
+            }
+
+
             const url =
                 window.location.origin +
                 "/reels#reel-" +
@@ -1802,13 +2597,22 @@ function createReelCard(reel){
                 url;
 
 
-            window.open(
+            const whatsappUrl =
                 "https://wa.me/?text=" +
-                encodeURIComponent(text),
+                encodeURIComponent(
+                    text
+                );
+
+
+            window.open(
+                whatsappUrl,
                 "_blank"
             );
 
 
+            const {
+                error
+            } =
             await supabaseClient
                 .from(
                     "reel_whatsapp_clicks"
@@ -1822,6 +2626,16 @@ function createReelCard(reel){
                         currentUser.id
 
                 });
+
+
+            if(error){
+
+                console.warn(
+                    "WhatsApp tracking error:",
+                    error
+                );
+
+            }
 
 
             await incrementReelCounter(
@@ -1843,6 +2657,18 @@ function createReelCard(reel){
         "click",
         async function(){
 
+            if(
+                !requireLogin()
+            ){
+
+                return;
+
+            }
+
+
+            const {
+                error
+            } =
             await supabaseClient
                 .from(
                     "reel_profile_views"
@@ -1859,6 +2685,16 @@ function createReelCard(reel){
                         reel.user_id
 
                 });
+
+
+            if(error){
+
+                console.warn(
+                    "Profile view tracking error:",
+                    error
+                );
+
+            }
 
 
             window.location.href =
@@ -1882,6 +2718,22 @@ function createReelCard(reel){
 
 async function recordView(reel){
 
+    if(!currentUser){
+
+        /*
+           If your reel_views RLS requires
+           authenticated users, don't attempt
+           an insert for anonymous viewers.
+        */
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
     await supabaseClient
         .from("reel_views")
         .insert({
@@ -1895,10 +2747,56 @@ async function recordView(reel){
         });
 
 
+    if(error){
+
+        /*
+           Unique constraint can mean
+           this user already viewed it.
+        */
+
+        console.warn(
+            "View insert:",
+            error.message
+        );
+
+        return;
+
+    }
+
+
     await incrementReelCounter(
         reel.id,
         "views_count"
     );
+
+
+    const card =
+        document.getElementById(
+            "reel-" +
+            reel.id
+        );
+
+
+    if(card){
+
+        const element =
+            card.querySelector(
+                ".view-count"
+            );
+
+
+        if(element){
+
+            element.innerText =
+                formatCount(
+                    Number(
+                        reel.views_count || 0
+                    ) + 1
+                );
+
+        }
+
+    }
 
 }
 
@@ -1909,11 +2807,13 @@ async function recordView(reel){
 
 async function toggleLike(
     reel,
-    button
+    button,
+    card
 ){
 
     const {
-        data:existing
+        data:existing,
+        error:checkError
     } =
     await supabaseClient
         .from("reel_likes")
@@ -1929,8 +2829,29 @@ async function toggleLike(
         .maybeSingle();
 
 
+    if(checkError){
+
+        console.error(
+            "Like check error:",
+            checkError
+        );
+
+
+        toast(
+            "Unable to check Like."
+        );
+
+
+        return;
+
+    }
+
+
     if(existing){
 
+        const {
+            error
+        } =
         await supabaseClient
             .from("reel_likes")
             .delete()
@@ -1938,6 +2859,17 @@ async function toggleLike(
                 "id",
                 existing.id
             );
+
+
+        if(error){
+
+            toast(
+                error.message
+            );
+
+            return;
+
+        }
 
 
         await decrementReelCounter(
@@ -1950,9 +2882,41 @@ async function toggleLike(
             "liked"
         );
 
+
+        const count =
+            Math.max(
+                0,
+                Number(
+                    reel.likes_count || 0
+                ) - 1
+            );
+
+
+        reel.likes_count =
+            count;
+
+
+        const counter =
+            card.querySelector(
+                ".like-count"
+            );
+
+
+        if(counter){
+
+            counter.innerText =
+                formatCount(
+                    count
+                );
+
+        }
+
     }
     else{
 
+        const {
+            error
+        } =
         await supabaseClient
             .from("reel_likes")
             .insert({
@@ -1966,6 +2930,37 @@ async function toggleLike(
             });
 
 
+        if(error){
+
+            /*
+               Unique constraint can indicate
+               another click inserted it already.
+            */
+
+            if(
+                error.code ===
+                "23505"
+            ){
+
+                toast(
+                    "Already liked."
+                );
+
+            }
+            else{
+
+                toast(
+                    error.message
+                );
+
+            }
+
+
+            return;
+
+        }
+
+
         await incrementReelCounter(
             reel.id,
             "likes_count"
@@ -1975,6 +2970,32 @@ async function toggleLike(
         button.classList.add(
             "liked"
         );
+
+
+        const count =
+            Number(
+                reel.likes_count || 0
+            ) + 1;
+
+
+        reel.likes_count =
+            count;
+
+
+        const counter =
+            card.querySelector(
+                ".like-count"
+            );
+
+
+        if(counter){
+
+            counter.innerText =
+                formatCount(
+                    count
+                );
+
+        }
 
 
         if(
@@ -1999,6 +3020,7 @@ async function toggleLike(
                 message:
                     (
                         currentProfile?.name ||
+                        currentProfile?.username ||
                         "Someone"
                     ) +
                     " liked your Reel."
@@ -2009,14 +3031,11 @@ async function toggleLike(
 
     }
 
-
-    await loadReels();
-
 }
 
 
 /* =========================================================
-   COMMENTS
+   LOAD COMMENTS
 ========================================================= */
 
 async function loadComments(
@@ -2028,6 +3047,21 @@ async function loadComments(
         commentsBox.querySelector(
             ".comment-list"
         );
+
+
+    list.innerHTML = `
+
+        <div style="
+            color:#777;
+            font-size:12px;
+            padding:8px;
+        ">
+
+            Loading comments...
+
+        </div>
+
+    `;
 
 
     const {
@@ -2056,8 +3090,20 @@ async function loadComments(
 
     if(error){
 
-        list.innerHTML =
-            "Unable to load comments.";
+        list.innerHTML = `
+
+            <div style="
+                color:#ff7777;
+                font-size:12px;
+            ">
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
 
         return;
 
@@ -2067,54 +3113,67 @@ async function loadComments(
     if(!data?.length){
 
         list.innerHTML =
-            '<div style="color:#777;font-size:12px;">No comments yet.</div>';
+            '<div style="color:#777;font-size:12px;padding:8px;">No comments yet.</div>';
 
         return;
 
     }
 
 
-    list.innerHTML = "";
-
-
     const ids =
         [
             ...new Set(
-                data.map(
-                    c => c.user_id
-                )
+                data
+                    .map(
+                        c =>
+                            c.user_id
+                    )
+                    .filter(Boolean)
             )
         ];
 
 
-    const {
-        data:profiles
-    } =
-    await supabaseClient
-        .from("profiles")
-        .select(`
-            id,
-            username,
-            name
-        `)
-        .in(
-            "id",
-            ids
-        );
+    let profiles = [];
+
+
+    if(ids.length){
+
+        const {
+            data:profileData
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select(`
+                id,
+                username,
+                name
+            `)
+            .in(
+                "id",
+                ids
+            );
+
+
+        profiles =
+            profileData || [];
+
+    }
 
 
     const map =
         new Map();
 
 
-    (profiles || [])
-        .forEach(
-            p =>
-                map.set(
-                    p.id,
-                    p
-                )
-        );
+    profiles.forEach(
+        p =>
+            map.set(
+                p.id,
+                p
+            )
+    );
+
+
+    list.innerHTML = "";
 
 
     data.forEach(
@@ -2138,19 +3197,35 @@ async function loadComments(
 
             item.innerHTML = `
 
-                <b>
+                <div class="comment-user">
+
                     ${escapeHtml(
                         p?.name ||
                         p?.username ||
                         "User"
                     )}
-                </b>
 
-                <br>
+                </div>
 
-                ${escapeHtml(
-                    comment.comment
-                )}
+
+                <div>
+
+                    ${escapeHtml(
+                        comment.comment
+                    )}
+
+                </div>
+
+
+                <div class="comment-date">
+
+                    ${escapeHtml(
+                        formatDate(
+                            comment.created_at
+                        )
+                    )}
+
+                </div>
 
             `;
 
@@ -2172,7 +3247,8 @@ async function loadComments(
 async function addComment(
     reel,
     input,
-    commentsBox
+    commentsBox,
+    card
 ){
 
     const text =
@@ -2180,6 +3256,10 @@ async function addComment(
 
 
     if(!text){
+
+        toast(
+            "Write a comment first."
+        );
 
         return;
 
@@ -2207,9 +3287,16 @@ async function addComment(
 
     if(error){
 
-        toast(
-            "Unable to add comment."
+        console.error(
+            "Comment error:",
+            error
         );
+
+
+        toast(
+            error.message
+        );
+
 
         return;
 
@@ -2220,6 +3307,32 @@ async function addComment(
         reel.id,
         "comments_count"
     );
+
+
+    const commentCount =
+        Number(
+            reel.comments_count || 0
+        ) + 1;
+
+
+    reel.comments_count =
+        commentCount;
+
+
+    const counter =
+        card.querySelector(
+            ".comment-count"
+        );
+
+
+    if(counter){
+
+        counter.innerText =
+            formatCount(
+                commentCount
+            );
+
+    }
 
 
     if(
@@ -2244,6 +3357,7 @@ async function addComment(
             message:
                 (
                     currentProfile?.name ||
+                    currentProfile?.username ||
                     "Someone"
                 ) +
                 " commented on your Reel."
@@ -2253,20 +3367,20 @@ async function addComment(
     }
 
 
-    input.value = "";
+    input.value =
+        "";
+
 
     await loadComments(
         reel,
         commentsBox
     );
 
-    await loadReels();
-
 }
 
 
 /* =========================================================
-   SHARE
+   RECORD SHARE
 ========================================================= */
 
 async function recordShare(
@@ -2274,6 +3388,9 @@ async function recordShare(
     shareType
 ){
 
+    const {
+        error
+    } =
     await supabaseClient
         .from("reel_shares")
         .insert({
@@ -2290,16 +3407,66 @@ async function recordShare(
         });
 
 
+    if(error){
+
+        console.warn(
+            "Share record error:",
+            error
+        );
+
+
+        return;
+
+    }
+
+
     await incrementReelCounter(
         reel.id,
         "shares_count"
     );
 
+
+    const card =
+        document.getElementById(
+            "reel-" +
+            reel.id
+        );
+
+
+    if(card){
+
+        const counter =
+            card.querySelector(
+                ".share-count"
+            );
+
+
+        if(counter){
+
+            const newCount =
+                Number(
+                    reel.shares_count || 0
+                ) + 1;
+
+
+            reel.shares_count =
+                newCount;
+
+
+            counter.innerText =
+                formatCount(
+                    newCount
+                );
+
+        }
+
+    }
+
 }
 
 
 /* =========================================================
-   COUNTER
+   COUNTER UPDATE
 ========================================================= */
 
 async function incrementReelCounter(
@@ -2307,17 +3474,67 @@ async function incrementReelCounter(
     column
 ){
 
+    /*
+       This keeps your existing database structure.
+
+       NOTE:
+       For high traffic production,
+       database RPC counters are preferable
+       to read-then-update.
+    */
+
+    const allowed = [
+        "views_count",
+        "likes_count",
+        "comments_count",
+        "shares_count",
+        "whatsapp_clicks_count"
+    ];
+
+
+    if(
+        !allowed.includes(
+            column
+        )
+    ){
+
+        console.error(
+            "Invalid counter:",
+            column
+        );
+
+        return;
+
+    }
+
+
     const {
-        data
+        data,
+        error
     } =
     await supabaseClient
         .from("reels")
-        .select(column)
+        .select(
+            column
+        )
         .eq(
             "id",
             reelId
         )
         .single();
+
+
+    if(error){
+
+        console.warn(
+            "Counter read error:",
+            error
+        );
+
+
+        return;
+
+    }
 
 
     if(!data)
@@ -2330,6 +3547,9 @@ async function incrementReelCounter(
         );
 
 
+    const {
+        error:updateError
+    } =
     await supabaseClient
         .from("reels")
         .update({
@@ -2343,25 +3563,75 @@ async function incrementReelCounter(
             reelId
         );
 
+
+    if(updateError){
+
+        console.warn(
+            "Counter update error:",
+            updateError
+        );
+
+    }
+
 }
 
+
+/* =========================================================
+   DECREMENT COUNTER
+========================================================= */
 
 async function decrementReelCounter(
     reelId,
     column
 ){
 
+    const allowed = [
+        "views_count",
+        "likes_count",
+        "comments_count",
+        "shares_count",
+        "whatsapp_clicks_count"
+    ];
+
+
+    if(
+        !allowed.includes(
+            column
+        )
+    ){
+
+        return;
+
+    }
+
+
     const {
-        data
+        data,
+        error
     } =
     await supabaseClient
         .from("reels")
-        .select(column)
+        .select(
+            column
+        )
         .eq(
             "id",
             reelId
         )
         .single();
+
+
+    if(error){
+
+        console.warn(
+            "Counter read error:",
+            error
+        );
+
+
+        return;
+
+    }
 
 
     if(!data)
@@ -2377,6 +3647,9 @@ async function decrementReelCounter(
         );
 
 
+    const {
+        error:updateError
+    } =
     await supabaseClient
         .from("reels")
         .update({
@@ -2390,6 +3663,16 @@ async function decrementReelCounter(
             reelId
         );
 
+
+    if(updateError){
+
+        console.warn(
+            "Counter decrement error:",
+            updateError
+        );
+
+    }
+
 }
 
 
@@ -2401,15 +3684,52 @@ async function createNotification(data){
 
     try{
 
+        if(
+            !currentUser ||
+            !data?.user_id
+        ){
+
+            return;
+
+        }
+
+
+        /*
+           Don't notify yourself.
+        */
+
+        if(
+            data.user_id ===
+            currentUser.id
+        ){
+
+            return;
+
+        }
+
+
+        const {
+            error
+        } =
         await supabaseClient
             .from("reel_notifications")
             .insert(data);
 
+
+        if(error){
+
+            console.warn(
+                "Notification error:",
+                error
+            );
+
+        }
+
     }
     catch(error){
 
-        console.error(
-            "Notification error:",
+        console.warn(
+            "Notification exception:",
             error
         );
 
@@ -2444,7 +3764,10 @@ videoFile.addEventListener(
                 "Please select a video."
             );
 
-            this.value = "";
+
+            this.value =
+                "";
+
 
             return;
 
@@ -2453,6 +3776,10 @@ videoFile.addEventListener(
 
         selectedFile =
             file;
+
+
+        exportedBlob =
+            null;
 
 
         if(sourceUrl){
@@ -2474,27 +3801,124 @@ videoFile.addEventListener(
             sourceUrl;
 
 
-        await new Promise(
-            resolve => {
+        try{
 
-                sourceVideo.onloadedmetadata =
-                    resolve;
+            await new Promise(
+                (
+                    resolve,
+                    reject
+                ) => {
 
-            }
-        );
+                    const loaded =
+                        () => {
+
+                            cleanup();
+
+                            resolve();
+
+                        };
+
+
+                    const failed =
+                        () => {
+
+                            cleanup();
+
+                            reject(
+                                new Error(
+                                    "Unable to read video."
+                                )
+                            );
+
+                        };
+
+
+                    const cleanup =
+                        () => {
+
+                            sourceVideo.removeEventListener(
+                                "loadedmetadata",
+                                loaded
+                            );
+
+
+                            sourceVideo.removeEventListener(
+                                "error",
+                                failed
+                            );
+
+                        };
+
+
+                    sourceVideo.addEventListener(
+                        "loadedmetadata",
+                        loaded
+                    );
+
+
+                    sourceVideo.addEventListener(
+                        "error",
+                        failed
+                    );
+
+                }
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                error
+            );
+
+
+            toast(
+                "Unable to read video."
+            );
+
+
+            this.value =
+                "";
+
+
+            return;
+
+        }
 
 
         const duration =
             sourceVideo.duration;
 
 
-        if(duration < 30){
+        /*
+        ======================================================
+        HARD 30–50 SECOND RULE
+
+        The source video must be at least 30 sec.
+
+        Longer videos can be trimmed to max 50 sec.
+        ======================================================
+        */
+
+        if(
+            !Number.isFinite(
+                duration
+            ) ||
+            duration < 30
+        ){
 
             toast(
                 "Video must be at least 30 seconds."
             );
 
-            this.value = "";
+
+            this.value =
+                "";
+
+
+            editor.style.display =
+                "none";
+
 
             return;
 
@@ -2523,7 +3947,9 @@ videoFile.addEventListener(
             );
 
 
-        trimStart = 0;
+        trimStart =
+            0;
+
 
         trimEnd =
             Math.min(
@@ -2535,20 +3961,39 @@ videoFile.addEventListener(
         startRange.value =
             trimStart;
 
+
         endRange.value =
             trimEnd;
 
 
         updateTrimLabel();
 
-        updateCropOverlay();
+
+        /*
+           Reset crop position.
+        */
+
+        cropX =
+            0;
+
+        cropY =
+            0;
+
+
+        requestAnimationFrame(
+            () => {
+
+                updateCropOverlay();
+
+            }
+        );
 
     }
 );
 
 
 /* =========================================================
-   CROP RATIO
+   CROP RATIO BUTTONS
 ========================================================= */
 
 document.querySelectorAll(
@@ -2581,6 +4026,13 @@ document.querySelectorAll(
                     this.dataset.ratio;
 
 
+                cropX =
+                    0;
+
+                cropY =
+                    0;
+
+
                 updateCropOverlay();
 
             }
@@ -2591,37 +4043,113 @@ document.querySelectorAll(
 
 
 /* =========================================================
-   CROP OVERLAY
+   GET CROP RATIO
 ========================================================= */
 
 function getRatio(){
 
-    if(cropRatio === "9:16")
+    if(
+        cropRatio ===
+        "9:16"
+    ){
+
         return 9 / 16;
 
-    if(cropRatio === "1:1")
+    }
+
+
+    if(
+        cropRatio ===
+        "1:1"
+    ){
+
         return 1;
 
-    if(cropRatio === "4:5")
+    }
+
+
+    if(
+        cropRatio ===
+        "4:5"
+    ){
+
         return 4 / 5;
 
-    if(cropRatio === "16:9")
+    }
+
+
+    if(
+        cropRatio ===
+        "16:9"
+    ){
+
         return 16 / 9;
+
+    }
+
 
     return null;
 
 }
 
 
+/* =========================================================
+   GET VIDEO DISPLAY RECT
+========================================================= */
+
+function getVideoDisplayRect(){
+
+    const wrapRect =
+        editorVideoWrap.getBoundingClientRect();
+
+
+    const videoRect =
+        sourceVideo.getBoundingClientRect();
+
+
+    return {
+
+        wrapLeft:
+            wrapRect.left,
+
+        wrapTop:
+            wrapRect.top,
+
+        width:
+            videoRect.width,
+
+        height:
+            videoRect.height
+
+    };
+
+}
+
+
+/* =========================================================
+   UPDATE CROP OVERLAY
+========================================================= */
+
 function updateCropOverlay(){
 
-    const wrap =
-        document.querySelector(
-            ".editor-video-wrap"
-        );
+    if(
+        !sourceVideo.videoWidth ||
+        !sourceVideo.videoHeight
+    ){
+
+        return;
+
+    }
 
 
-    if(!sourceVideo.videoWidth){
+    const videoRect =
+        getVideoDisplayRect();
+
+
+    if(
+        !videoRect.width ||
+        !videoRect.height
+    ){
 
         return;
 
@@ -2638,78 +4166,457 @@ function updateCropOverlay(){
 
 
     let width =
-        wrap.clientWidth;
+        videoRect.width;
 
 
     let height =
-        width /
-        videoRatio;
+        videoRect.height;
 
 
-    if(
-        ratio &&
-        ratio < videoRatio
-    ){
+    /*
+       Original = whole video.
+    */
 
-        width =
-            height *
-            ratio;
+    if(!ratio){
+
+        cropOverlay.style.width =
+            width + "px";
+
+
+        cropOverlay.style.height =
+            height + "px";
+
+
+        cropOverlay.style.left =
+            "0px";
+
+
+        cropOverlay.style.top =
+            "0px";
+
+
+        return;
 
     }
-    else if(
+
+
+    /*
+       Fit crop rectangle inside
+       displayed video.
+    */
+
+    if(
+        videoRatio >
         ratio
     ){
 
+        /*
+           Video wider than crop.
+        */
+
         height =
-            width /
-            ratio;
+            videoRect.height;
+
+        width =
+            height * ratio;
 
     }
+    else{
 
+        /*
+           Video taller than crop.
+        */
 
-    const maxWidth =
-        wrap.clientWidth;
+        width =
+            videoRect.width;
 
+        height =
+            width / ratio;
 
-    const maxHeight =
-        sourceVideo.clientHeight;
+    }
 
 
     width =
         Math.min(
             width,
-            maxWidth
+            videoRect.width
         );
 
 
     height =
         Math.min(
             height,
-            maxHeight
+            videoRect.height
+        );
+
+
+    /*
+       Center position.
+    */
+
+    let left =
+        (
+            videoRect.width -
+            width
+        ) / 2;
+
+
+    let top =
+        (
+            videoRect.height -
+            height
+        ) / 2;
+
+
+    /*
+       Apply stored movement.
+    */
+
+    left +=
+        cropX;
+
+
+    top +=
+        cropY;
+
+
+    /*
+       Keep inside video.
+    */
+
+    left =
+        Math.max(
+            0,
+            Math.min(
+                left,
+                videoRect.width -
+                width
+            )
+        );
+
+
+    top =
+        Math.max(
+            0,
+            Math.min(
+                top,
+                videoRect.height -
+                height
+            )
         );
 
 
     cropOverlay.style.width =
         width + "px";
 
+
     cropOverlay.style.height =
         height + "px";
 
+
     cropOverlay.style.left =
-        (
-            (maxWidth - width) / 2
-        ) + "px";
+        left + "px";
+
 
     cropOverlay.style.top =
-        (
-            (maxHeight - height) / 2
-        ) + "px";
+        top + "px";
 
 }
 
 
 /* =========================================================
-   TRIM
+   REAL CROP DRAGGING
+========================================================= */
+
+let cropDragging =
+    false;
+
+let cropDragStartX =
+    0;
+
+let cropDragStartY =
+    0;
+
+let cropInitialX =
+    0;
+
+let cropInitialY =
+    0;
+
+
+function startCropDrag(
+    event
+){
+
+    if(
+        !getRatio()
+    ){
+
+        return;
+
+    }
+
+
+    event.preventDefault();
+
+
+    cropDragging =
+        true;
+
+
+    const point =
+        getPointerPosition(
+            event
+        );
+
+
+    cropDragStartX =
+        point.x;
+
+
+    cropDragStartY =
+        point.y;
+
+
+    cropInitialX =
+        cropX;
+
+
+    cropInitialY =
+        cropY;
+
+
+    cropOverlay.setPointerCapture?.(
+        event.pointerId
+    );
+
+}
+
+
+function moveCropDrag(
+    event
+){
+
+    if(
+        !cropDragging
+    ){
+
+        return;
+
+    }
+
+
+    event.preventDefault();
+
+
+    const point =
+        getPointerPosition(
+            event
+        );
+
+
+    cropX =
+        cropInitialX +
+        (
+            point.x -
+            cropDragStartX
+        );
+
+
+    cropY =
+        cropInitialY +
+        (
+            point.y -
+            cropDragStartY
+        );
+
+
+    limitCropPosition();
+
+
+    updateCropOverlay();
+
+}
+
+
+function endCropDrag(){
+
+    cropDragging =
+        false;
+
+}
+
+
+function getPointerPosition(
+    event
+){
+
+    return {
+
+        x:
+            event.clientX,
+
+        y:
+            event.clientY
+
+    };
+
+}
+
+
+function limitCropPosition(){
+
+    if(
+        !getRatio()
+    ){
+
+        cropX =
+            0;
+
+        cropY =
+            0;
+
+        return;
+
+    }
+
+
+    const videoRect =
+        getVideoDisplayRect();
+
+
+    const videoRatio =
+        sourceVideo.videoWidth /
+        sourceVideo.videoHeight;
+
+
+    const ratio =
+        getRatio();
+
+
+    let width;
+    let height;
+
+
+    if(
+        videoRatio >
+        ratio
+    ){
+
+        height =
+            videoRect.height;
+
+        width =
+            height * ratio;
+
+    }
+    else{
+
+        width =
+            videoRect.width;
+
+        height =
+            width / ratio;
+
+    }
+
+
+    const centerLeft =
+        (
+            videoRect.width -
+            width
+        ) / 2;
+
+
+    const centerTop =
+        (
+            videoRect.height -
+            height
+        ) / 2;
+
+
+    const minX =
+        -centerLeft;
+
+
+    const maxX =
+        videoRect.width -
+        width -
+        centerLeft;
+
+
+    const minY =
+        -centerTop;
+
+
+    const maxY =
+        videoRect.height -
+        height -
+        centerTop;
+
+
+    cropX =
+        Math.max(
+            minX,
+            Math.min(
+                cropX,
+                maxX
+            )
+        );
+
+
+    cropY =
+        Math.max(
+            minY,
+            Math.min(
+                cropY,
+                maxY
+            )
+        );
+
+}
+
+
+cropOverlay.addEventListener(
+    "pointerdown",
+    startCropDrag
+);
+
+
+cropOverlay.addEventListener(
+    "pointermove",
+    moveCropDrag
+);
+
+
+cropOverlay.addEventListener(
+    "pointerup",
+    endCropDrag
+);
+
+
+cropOverlay.addEventListener(
+    "pointercancel",
+    endCropDrag
+);
+
+
+/* =========================================================
+   WINDOW RESIZE
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        updateCropOverlay();
+
+    }
+);
+
+
+/* =========================================================
+   TRIM START
 ========================================================= */
 
 startRange.addEventListener(
@@ -2721,6 +4628,10 @@ startRange.addEventListener(
                 this.value
             );
 
+
+        /*
+           Minimum duration 30 seconds.
+        */
 
         if(
             trimEnd -
@@ -2734,6 +4645,7 @@ startRange.addEventListener(
                     trimEnd - 30
                 );
 
+
             this.value =
                 trimStart;
 
@@ -2745,6 +4657,10 @@ startRange.addEventListener(
     }
 );
 
+
+/* =========================================================
+   TRIM END
+========================================================= */
 
 endRange.addEventListener(
     "input",
@@ -2765,6 +4681,7 @@ endRange.addEventListener(
             trimEnd =
                 trimStart + 50;
 
+
             this.value =
                 trimEnd;
 
@@ -2778,7 +4695,11 @@ endRange.addEventListener(
         ){
 
             trimEnd =
-                trimStart + 30;
+                Math.min(
+                    sourceVideo.duration,
+                    trimStart + 30
+                );
+
 
             this.value =
                 trimEnd;
@@ -2791,6 +4712,10 @@ endRange.addEventListener(
     }
 );
 
+
+/* =========================================================
+   UPDATE TRIM LABEL
+========================================================= */
 
 function updateTrimLabel(){
 
@@ -2808,7 +4733,7 @@ function updateTrimLabel(){
 
 
 /* =========================================================
-   RESET
+   RESET EDITOR
 ========================================================= */
 
 document.getElementById(
@@ -2820,18 +4745,23 @@ document.getElementById(
         cropRatio =
             "original";
 
-        cropX = 0;
 
-        cropY = 0;
+        cropX =
+            0;
 
-        zoom = 1;
 
-        trimStart = 0;
+        cropY =
+            0;
+
+
+        trimStart =
+            0;
+
 
         trimEnd =
             Math.min(
                 50,
-                sourceVideo.duration
+                sourceVideo.duration || 30
             );
 
 
@@ -2859,13 +4789,28 @@ document.getElementById(
         startRange.value =
             trimStart;
 
+
         endRange.value =
             trimEnd;
 
 
+        exportedBlob =
+            null;
+
+
         updateTrimLabel();
 
+
         updateCropOverlay();
+
+
+        exportProgress.style.display =
+            "none";
+
+
+        toast(
+            "Editor reset."
+        );
 
     }
 );
@@ -2879,19 +4824,50 @@ document.getElementById(
     "previewCropBtn"
 ).addEventListener(
     "click",
-    function(){
+    async function(){
 
-        sourceVideo.currentTime =
+        const duration =
+            trimEnd -
             trimStart;
 
-        sourceVideo.play();
+
+        if(
+            duration < 30 ||
+            duration > 50
+        ){
+
+            toast(
+                "Final Reel must be 30–50 seconds."
+            );
+
+            return;
+
+        }
+
+
+        try{
+
+            sourceVideo.currentTime =
+                trimStart;
+
+
+            await sourceVideo.play();
+
+        }
+        catch(error){
+
+            console.warn(
+                error
+            );
+
+        }
 
     }
 );
 
 
 /* =========================================================
-   EXPORT REAL CROP
+   EXPORT BUTTON
 ========================================================= */
 
 document.getElementById(
@@ -2927,8 +4903,14 @@ document.getElementById(
         catch(error){
 
             console.error(
+                "Export error:",
                 error
             );
+
+
+            exportProgress.style.display =
+                "none";
+
 
             toast(
                 "Video processing failed: " +
@@ -2942,7 +4924,7 @@ document.getElementById(
 
 
 /* =========================================================
-   REAL VIDEO PROCESSOR
+   EXPORT REAL CROPPED VIDEO
 ========================================================= */
 
 async function exportProcessedVideo(){
@@ -2955,25 +4937,59 @@ async function exportProcessedVideo(){
         "Preparing video processor...";
 
 
-    const canvas =
-        document.createElement(
-            "canvas"
+    if(
+        !sourceVideo.videoWidth
+    ){
+
+        throw new Error(
+            "Video is not ready."
         );
+
+    }
+
+
+    const duration =
+        trimEnd -
+        trimStart;
+
+
+    if(
+        duration < 30 ||
+        duration > 50
+    ){
+
+        throw new Error(
+            "Final video must be 30–50 seconds."
+        );
+
+    }
 
 
     const videoWidth =
         sourceVideo.videoWidth;
 
+
     const videoHeight =
         sourceVideo.videoHeight;
+
+
+    const videoRatio =
+        videoWidth /
+        videoHeight;
 
 
     const ratio =
         getRatio();
 
 
+    /*
+       Calculate actual crop area
+       in source-video pixels.
+    */
+
     let cropWidth =
         videoWidth;
+
 
     let cropHeight =
         videoHeight;
@@ -2982,13 +4998,13 @@ async function exportProcessedVideo(){
     if(ratio){
 
         if(
-            videoWidth /
-            videoHeight >
+            videoRatio >
             ratio
         ){
 
             cropHeight =
                 videoHeight;
+
 
             cropWidth =
                 cropHeight *
@@ -2999,6 +5015,7 @@ async function exportProcessedVideo(){
 
             cropWidth =
                 videoWidth;
+
 
             cropHeight =
                 cropWidth /
@@ -3014,6 +5031,7 @@ async function exportProcessedVideo(){
             cropWidth
         );
 
+
     cropHeight =
         Math.floor(
             cropHeight
@@ -3021,7 +5039,106 @@ async function exportProcessedVideo(){
 
 
     /*
-       Keep output manageable.
+       Convert display crop position
+       to actual source pixels.
+    */
+
+    let sx =
+        (
+            videoWidth -
+            cropWidth
+        ) / 2;
+
+
+    let sy =
+        (
+            videoHeight -
+            cropHeight
+        ) / 2;
+
+
+    if(
+        ratio
+    ){
+
+        const videoRect =
+            getVideoDisplayRect();
+
+
+        if(
+            videoRect.width &&
+            videoRect.height
+        ){
+
+            /*
+               cropX/cropY are display pixels.
+               Convert them to source pixels.
+            */
+
+            const scaleX =
+                videoWidth /
+                videoRect.width;
+
+
+            const scaleY =
+                videoHeight /
+                videoRect.height;
+
+
+            sx +=
+                cropX *
+                scaleX;
+
+
+            sy +=
+                cropY *
+                scaleY;
+
+        }
+
+    }
+
+
+    /*
+       Keep crop fully inside source.
+    */
+
+    sx =
+        Math.max(
+            0,
+            Math.min(
+                sx,
+                videoWidth -
+                cropWidth
+            )
+        );
+
+
+    sy =
+        Math.max(
+            0,
+            Math.min(
+                sy,
+                videoHeight -
+                cropHeight
+            )
+        );
+
+
+    sx =
+        Math.floor(
+            sx
+        );
+
+
+    sy =
+        Math.floor(
+            sy
+        );
+
+
+    /*
+       Output max width 720.
     */
 
     const maxOutput =
@@ -3030,6 +5147,7 @@ async function exportProcessedVideo(){
 
     let outputWidth =
         cropWidth;
+
 
     let outputHeight =
         cropHeight;
@@ -3044,11 +5162,13 @@ async function exportProcessedVideo(){
             maxOutput /
             outputWidth;
 
+
         outputWidth =
             Math.floor(
                 outputWidth *
                 scale
             );
+
 
         outputHeight =
             Math.floor(
@@ -3059,8 +5179,19 @@ async function exportProcessedVideo(){
     }
 
 
+    /*
+       Canvas
+    */
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
     canvas.width =
         outputWidth;
+
 
     canvas.height =
         outputHeight;
@@ -3072,6 +5203,23 @@ async function exportProcessedVideo(){
         );
 
 
+    if(!ctx){
+
+        throw new Error(
+            "Canvas is not available."
+        );
+
+    }
+
+
+    ctx.imageSmoothingEnabled =
+        true;
+
+
+    /*
+       Canvas video stream.
+    */
+
     const stream =
         canvas.captureStream(
             30
@@ -3079,8 +5227,7 @@ async function exportProcessedVideo(){
 
 
     /*
-       Add audio from the video
-       when browser supports it.
+       Audio.
     */
 
     try{
@@ -3097,10 +5244,25 @@ async function exportProcessedVideo(){
             videoStream
                 .getAudioTracks()
                 .forEach(
-                    track =>
-                        stream.addTrack(
-                            track
-                        )
+                    track => {
+
+                        try{
+
+                            stream.addTrack(
+                                track
+                            );
+
+                        }
+                        catch(error){
+
+                            console.warn(
+                                "Audio track error:",
+                                error
+                            );
+
+                        }
+
+                    }
                 );
 
         }
@@ -3109,12 +5271,16 @@ async function exportProcessedVideo(){
     catch(error){
 
         console.warn(
-            "Audio capture unavailable",
+            "Audio capture unavailable:",
             error
         );
 
     }
 
+
+    /*
+       Browser supported formats.
+    */
 
     const mimeTypes = [
 
@@ -3127,7 +5293,8 @@ async function exportProcessedVideo(){
     ];
 
 
-    let mimeType = "";
+    let mimeType =
+        "";
 
 
     for(
@@ -3154,7 +5321,7 @@ async function exportProcessedVideo(){
     if(!mimeType){
 
         throw new Error(
-            "This browser does not support video recording."
+            "This browser cannot export WebM video."
         );
 
     }
@@ -3168,7 +5335,8 @@ async function exportProcessedVideo(){
         new MediaRecorder(
             stream,
             {
-                mimeType
+                mimeType:mimeType,
+                videoBitsPerSecond:2500000
             }
         );
 
@@ -3195,83 +5363,62 @@ async function exportProcessedVideo(){
 
     const finished =
         new Promise(
-            (resolve,reject) => {
+            (
+                resolve,
+                reject
+            ) => {
 
                 recorder.onerror =
-                    reject;
+                    event =>
+                        reject(
+                            event.error ||
+                            new Error(
+                                "Recorder error."
+                            )
+                        );
+
 
                 recorder.onstop =
-                    resolve;
+                    () =>
+                        resolve();
 
             }
         );
 
 
     /*
-       Determine crop position.
-       Current default is center crop.
+       Seek.
     */
 
-    const sx =
-        Math.max(
-            0,
-            Math.floor(
-                (
-                    videoWidth -
-                    cropWidth
-                ) / 2
-            )
-        );
-
-
-    const sy =
-        Math.max(
-            0,
-            Math.floor(
-                (
-                    videoHeight -
-                    cropHeight
-                ) / 2
-            )
-        );
+    sourceVideo.pause();
 
 
     sourceVideo.currentTime =
         trimStart;
 
 
-    await new Promise(
-        resolve => {
-
-            const handler =
-                () => {
-
-                    sourceVideo.removeEventListener(
-                        "seeked",
-                        handler
-                    );
-
-                    resolve();
-
-                };
+    await waitForSeek();
 
 
-            sourceVideo.addEventListener(
-                "seeked",
-                handler
-            );
-
-        }
-    );
-
+    /*
+       Start recording.
+    */
 
     recorder.start(
         250
     );
 
 
+    exportProgress.innerText =
+        "Processing cropped Reel...";
+
+
     const started =
         performance.now();
+
+
+    let animationId =
+        null;
 
 
     function drawFrame(){
@@ -3286,21 +5433,33 @@ async function exportProcessedVideo(){
         }
 
 
-        ctx.drawImage(
+        try{
 
-            sourceVideo,
+            ctx.drawImage(
 
-            sx,
-            sy,
-            cropWidth,
-            cropHeight,
+                sourceVideo,
 
-            0,
-            0,
-            outputWidth,
-            outputHeight
+                sx,
+                sy,
+                cropWidth,
+                cropHeight,
 
-        );
+                0,
+                0,
+                outputWidth,
+                outputHeight
+
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "drawImage error:",
+                error
+            );
+
+        }
 
 
         const elapsed =
@@ -3327,16 +5486,17 @@ async function exportProcessedVideo(){
         }
 
 
-        requestAnimationFrame(
-            drawFrame
-        );
+        animationId =
+            requestAnimationFrame(
+                drawFrame
+            );
 
     }
 
 
-    sourceVideo.currentTime =
-        trimStart;
-
+    /*
+       Start source video.
+    */
 
     await sourceVideo.play();
 
@@ -3347,14 +5507,31 @@ async function exportProcessedVideo(){
     await finished;
 
 
+    if(animationId){
+
+        cancelAnimationFrame(
+            animationId
+        );
+
+    }
+
+
     sourceVideo.pause();
 
 
     stream
         .getTracks()
         .forEach(
-            track =>
-                track.stop()
+            track => {
+
+                try{
+
+                    track.stop();
+
+                }
+                catch(error){}
+
+            }
         );
 
 
@@ -3362,17 +5539,25 @@ async function exportProcessedVideo(){
         new Blob(
             chunks,
             {
-                type:
-                    mimeType
+                type:mimeType
             }
         );
 
 
+    if(
+        !exportedBlob.size
+    ){
+
+        throw new Error(
+            "Exported video is empty."
+        );
+
+    }
+
+
     exportProgress.innerText =
         "✓ Cropped Reel ready — " +
-        (
-            durationText()
-        ) +
+        duration.toFixed(1) +
         " seconds";
 
 
@@ -3384,15 +5569,49 @@ async function exportProcessedVideo(){
 
 
 /* =========================================================
-   DURATION
+   WAIT FOR SEEK
 ========================================================= */
 
-function durationText(){
+function waitForSeek(){
 
-    return (
-        trimEnd -
-        trimStart
-    ).toFixed(1);
+    return new Promise(
+        resolve => {
+
+            if(
+                Math.abs(
+                    sourceVideo.currentTime -
+                    trimStart
+                ) < .05
+            ){
+
+                resolve();
+
+                return;
+
+            }
+
+
+            const handler =
+                () => {
+
+                    sourceVideo.removeEventListener(
+                        "seeked",
+                        handler
+                    );
+
+
+                    resolve();
+
+                };
+
+
+            sourceVideo.addEventListener(
+                "seeked",
+                handler
+            );
+
+        }
+    );
 
 }
 
@@ -3407,10 +5626,9 @@ document.getElementById(
     "click",
     async function(){
 
-        if(!currentUser){
-
-            window.location.href =
-                "/login";
+        if(
+            !requireLogin()
+        ){
 
             return;
 
@@ -3422,6 +5640,7 @@ document.getElementById(
             toast(
                 "Please click Export Crop first."
             );
+
 
             return;
 
@@ -3454,7 +5673,8 @@ document.getElementById(
                             /^#/,
                             ""
                         )
-                );
+                )
+                .filter(Boolean);
 
 
         const duration =
@@ -3470,6 +5690,7 @@ document.getElementById(
             toast(
                 "Reel must be 30–50 seconds."
             );
+
 
             return;
 
@@ -3490,6 +5711,12 @@ document.getElementById(
 
         try{
 
+            /*
+            ==================================================
+            STORAGE PATH
+            ==================================================
+            */
+
             const extension =
                 exportedMime.includes(
                     "webm"
@@ -3506,9 +5733,11 @@ document.getElementById(
                 extension;
 
 
-            /* ---------------------------------------------
-               Upload processed/cropped video
-            --------------------------------------------- */
+            /*
+            ==================================================
+            UPLOAD TO SUPABASE STORAGE
+            ==================================================
+            */
 
             const {
                 error:uploadError
@@ -3522,6 +5751,7 @@ document.getElementById(
                     {
                         contentType:
                             exportedMime,
+
                         upsert:false
                     }
                 );
@@ -3533,6 +5763,12 @@ document.getElementById(
 
             }
 
+
+            /*
+            ==================================================
+            PUBLIC URL
+            ==================================================
+            */
 
             const {
                 data:urlData
@@ -3549,9 +5785,11 @@ document.getElementById(
                 urlData.publicUrl;
 
 
-            /* ---------------------------------------------
-               Create database record
-            --------------------------------------------- */
+            /*
+            ==================================================
+            DATABASE RECORD
+            ==================================================
+            */
 
             const {
                 data:reel,
@@ -3586,10 +5824,14 @@ document.getElementById(
                         cropRatio,
 
                     trim_start:
-                        trimStart,
+                        Number(
+                            trimStart.toFixed(2)
+                        ),
 
                     trim_end:
-                        trimEnd,
+                        Number(
+                            trimEnd.toFixed(2)
+                        ),
 
                     status:
                         "active"
@@ -3601,6 +5843,11 @@ document.getElementById(
 
             if(error){
 
+                /*
+                   Database failed.
+                   Remove uploaded file.
+                */
+
                 await supabaseClient
                     .storage
                     .from("reels")
@@ -3608,9 +5855,16 @@ document.getElementById(
                         path
                     ]);
 
+
                 throw error;
 
             }
+
+
+            console.log(
+                "Published Reel:",
+                reel
+            );
 
 
             toast(
@@ -3618,20 +5872,29 @@ document.getElementById(
             );
 
 
-            /* ---------------------------------------------
-               Reset
-            --------------------------------------------- */
+            /*
+            ==================================================
+            RESET
+            ==================================================
+            */
 
             exportedBlob =
                 null;
 
+
+            selectedFile =
+                null;
+
+
             videoFile.value =
                 "";
+
 
             document.getElementById(
                 "caption"
             ).value =
                 "";
+
 
             document.getElementById(
                 "hashtags"
@@ -3643,6 +5906,23 @@ document.getElementById(
                 "none";
 
 
+            exportProgress.style.display =
+                "none";
+
+
+            if(sourceUrl){
+
+                URL.revokeObjectURL(
+                    sourceUrl
+                );
+
+
+                sourceUrl =
+                    null;
+
+            }
+
+
             uploadPanel.style.display =
                 "none";
 
@@ -3650,6 +5930,14 @@ document.getElementById(
             activateButton(
                 "feedBtn"
             );
+
+
+            feed.style.display =
+                "block";
+
+
+            dashboard.style.display =
+                "none";
 
 
             await loadReels();
@@ -3674,6 +5962,7 @@ document.getElementById(
             button.disabled =
                 false;
 
+
             button.innerText =
                 "🚀 Publish Reel";
 
@@ -3687,9 +5976,7 @@ document.getElementById(
    NAVIGATION
 ========================================================= */
 
-function activateButton(
-    id
-){
+function activateButton(id){
 
     document
         .querySelectorAll(
@@ -3703,12 +5990,19 @@ function activateButton(
         );
 
 
-    document.getElementById(
-        id
-    )
-    .classList.add(
-        "active"
-    );
+    const button =
+        document.getElementById(
+            id
+        );
+
+
+    if(button){
+
+        button.classList.add(
+            "active"
+        );
+
+    }
 
 }
 
@@ -3727,14 +6021,18 @@ document.getElementById(
             "feedBtn"
         );
 
+
         uploadPanel.style.display =
             "none";
+
 
         dashboard.style.display =
             "none";
 
+
         feed.style.display =
             "block";
+
 
         await loadReels();
 
@@ -3752,15 +6050,27 @@ document.getElementById(
     "click",
     function(){
 
+        if(
+            !requireLogin()
+        ){
+
+            return;
+
+        }
+
+
         activateButton(
             "uploadBtn"
         );
 
+
         feed.style.display =
             "none";
 
+
         dashboard.style.display =
             "none";
+
 
         uploadPanel.style.display =
             "block";
@@ -3779,18 +6089,45 @@ document.getElementById(
     "click",
     async function(){
 
+        if(
+            !requireLogin()
+        ){
+
+            return;
+
+        }
+
+
         activateButton(
             "myReelsBtn"
         );
 
+
         uploadPanel.style.display =
             "none";
+
 
         dashboard.style.display =
             "none";
 
+
         feed.style.display =
             "block";
+
+
+        feed.innerHTML = `
+
+            <div class="loading">
+
+                <i class="fas fa-spinner fa-spin"></i>
+
+                <div>
+                    Loading My Reels...
+                </div>
+
+            </div>
+
+        `;
 
 
         const {
@@ -3803,10 +6140,13 @@ document.getElementById(
                 id,
                 user_id,
                 video_url,
+                storage_path,
                 caption,
                 hashtags,
                 duration_seconds,
                 crop_ratio,
+                trim_start,
+                trim_end,
                 status,
                 views_count,
                 likes_count,
@@ -3829,17 +6169,26 @@ document.getElementById(
 
         if(error){
 
-            toast(
-                error.message
-            );
+            feed.innerHTML = `
+
+                <div class="empty">
+
+                    ❌ Unable to load My Reels.
+
+                    <br><br>
+
+                    ${escapeHtml(
+                        error.message
+                    )}
+
+                </div>
+
+            `;
+
 
             return;
 
         }
-
-
-        const previous =
-            allReels;
 
 
         allReels =
@@ -3848,24 +6197,12 @@ document.getElementById(
 
         await attachProfiles();
 
-
-        allReels =
-            allReels.map(
-                reel => ({
-
-                    ...reel,
-
-                    isMine:true
-
-                })
-            );
-
     }
 );
 
 
 /* =========================================================
-   DASHBOARD
+   DASHBOARD BUTTON
 ========================================================= */
 
 document.getElementById(
@@ -3874,15 +6211,27 @@ document.getElementById(
     "click",
     async function(){
 
+        if(
+            !requireLogin()
+        ){
+
+            return;
+
+        }
+
+
         activateButton(
             "dashboardBtn"
         );
 
+
         feed.style.display =
             "none";
 
+
         uploadPanel.style.display =
             "none";
+
 
         dashboard.style.display =
             "block";
@@ -3895,13 +6244,14 @@ document.getElementById(
 
 
 /* =========================================================
-   DASHBOARD DATA
+   DASHBOARD
 ========================================================= */
 
 async function loadDashboard(){
 
     const {
-        data:reels
+        data:reels,
+        error
     } =
     await supabaseClient
         .from("reels")
@@ -3921,14 +6271,39 @@ async function loadDashboard(){
         );
 
 
+    if(error){
+
+        console.error(
+            "Dashboard reels error:",
+            error
+        );
+
+
+        toast(
+            error.message
+        );
+
+
+        return;
+
+    }
+
+
     const rows =
         reels || [];
 
 
-    let views = 0;
-    let likes = 0;
-    let comments = 0;
-    let shares = 0;
+    let views =
+        0;
+
+    let likes =
+        0;
+
+    let comments =
+        0;
+
+    let shares =
+        0;
 
 
     rows.forEach(
@@ -3936,22 +6311,29 @@ async function loadDashboard(){
 
             views +=
                 Number(
-                    reel.views_count || 0
+                    reel.views_count ||
+                    0
                 );
+
 
             likes +=
                 Number(
-                    reel.likes_count || 0
+                    reel.likes_count ||
+                    0
                 );
+
 
             comments +=
                 Number(
-                    reel.comments_count || 0
+                    reel.comments_count ||
+                    0
                 );
+
 
             shares +=
                 Number(
-                    reel.shares_count || 0
+                    reel.shares_count ||
+                    0
                 );
 
         }
@@ -3961,160 +6343,41 @@ async function loadDashboard(){
     document.getElementById(
         "dashViews"
     ).innerText =
-        formatCount(views);
+        formatCount(
+            views
+        );
 
 
     document.getElementById(
         "dashLikes"
     ).innerText =
-        formatCount(likes);
+        formatCount(
+            likes
+        );
 
 
     document.getElementById(
         "dashComments"
     ).innerText =
-        formatCount(comments);
+        formatCount(
+            comments
+        );
 
 
     document.getElementById(
         "dashShares"
     ).innerText =
-        formatCount(shares);
-
-
-    /* -----------------------------------------------------
-       Daily stats
-    ----------------------------------------------------- */
-
-    const {
-        data:daily
-    } =
-    await supabaseClient
-        .from("reel_daily_stats")
-        .select(`
-            stat_date,
-            views_count,
-            likes_count,
-            comments_count,
-            shares_count
-        `)
-        .eq(
-            "user_id",
-            currentUser.id
-        )
-        .gte(
-            "stat_date",
-            new Date(
-                Date.now() -
-                6 *
-                86400000
-            )
-            .toISOString()
-            .slice(0,10)
-        )
-        .order(
-            "stat_date",
-            {
-                ascending:false
-            }
+        formatCount(
+            shares
         );
 
 
-    const dailyContainer =
-        document.getElementById(
-            "dailyStats"
-        );
+    await loadDailyStats();
 
 
-    dailyContainer.innerHTML =
-        "";
-
-
-    if(!daily?.length){
-
-        dailyContainer.innerHTML = `
-
-            <div class="dashboard-reel">
-
-                No daily statistics yet.
-
-                <br>
-
-                Statistics will appear as
-                your Reels receive activity.
-
-            </div>
-
-        `;
-
-    }
-    else{
-
-        daily.forEach(
-            row => {
-
-                const div =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                div.className =
-                    "dashboard-reel";
-
-
-                div.innerHTML = `
-
-                    <div class="dashboard-reel-title">
-
-                        ${escapeHtml(
-                            row.stat_date
-                        )}
-
-                    </div>
-
-                    <div class="dashboard-reel-stats">
-
-                        👁 ${formatCount(
-                            row.views_count
-                        )}
-
-                        &nbsp;&nbsp;
-
-                        ❤️ ${formatCount(
-                            row.likes_count
-                        )}
-
-                        &nbsp;&nbsp;
-
-                        💬 ${formatCount(
-                            row.comments_count
-                        )}
-
-                        &nbsp;&nbsp;
-
-                        ↗ ${formatCount(
-                            row.shares_count
-                        )}
-
-                    </div>
-
-                `;
-
-
-                dailyContainer.appendChild(
-                    div
-                );
-
-            }
-        );
-
-    }
-
-
-    /* -----------------------------------------------------
-       Reel performance
-    ----------------------------------------------------- */
+    /*
+       Reel performance.
+    */
 
     const dashboardReels =
         document.getElementById(
@@ -4126,6 +6389,23 @@ async function loadDashboard(){
         "";
 
 
+    if(!rows.length){
+
+        dashboardReels.innerHTML = `
+
+            <div class="dashboard-reel no-data">
+
+                🎬 No Reels published yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
     rows
         .sort(
             (
@@ -4133,10 +6413,12 @@ async function loadDashboard(){
                 b
             ) =>
                 Number(
-                    b.views_count
+                    b.views_count ||
+                    0
                 ) -
                 Number(
-                    a.views_count
+                    a.views_count ||
+                    0
                 )
         )
         .forEach(
@@ -4156,12 +6438,10 @@ async function loadDashboard(){
 
                     <div class="dashboard-reel-title">
 
-                        ${
-                            escapeHtml(
-                                reel.caption ||
-                                "Untitled Reel"
-                            )
-                        }
+                        ${escapeHtml(
+                            reel.caption ||
+                            "Untitled Reel"
+                        )}
 
                     </div>
 
@@ -4172,28 +6452,36 @@ async function loadDashboard(){
                             reel.views_count
                         )}
 
-                        &nbsp;
+                        &nbsp;&nbsp;
 
                         ❤️ ${formatCount(
                             reel.likes_count
                         )}
 
-                        &nbsp;
+                        &nbsp;&nbsp;
 
                         💬 ${formatCount(
                             reel.comments_count
                         )}
 
-                        &nbsp;
+                        &nbsp;&nbsp;
 
                         ↗ ${formatCount(
                             reel.shares_count
                         )}
 
-                        &nbsp;
+                        &nbsp;&nbsp;
 
                         🟢 ${formatCount(
                             reel.whatsapp_clicks_count
+                        )}
+
+                        <br>
+
+                        📅 ${escapeHtml(
+                            formatDate(
+                                reel.created_at
+                            )
                         )}
 
                     </div>
@@ -4212,20 +6500,344 @@ async function loadDashboard(){
 
 
 /* =========================================================
+   LAST 7 DAYS
+========================================================= */
+
+async function loadDailyStats(){
+
+    const dailyContainer =
+        document.getElementById(
+            "dailyStats"
+        );
+
+
+    dailyContainer.innerHTML = `
+
+        <div class="dashboard-reel">
+
+            Loading daily statistics...
+
+        </div>
+
+    `;
+
+
+    /*
+       Calculate local date for last 7 days.
+
+       We use YYYY-MM-DD strings because
+       stat_date is a date field.
+    */
+
+    const today =
+        new Date();
+
+
+    const start =
+        new Date(
+            today
+        );
+
+
+    start.setDate(
+        start.getDate() -
+        6
+    );
+
+
+    const startDate =
+        localDateString(
+            start
+        );
+
+
+    const {
+        data:daily,
+        error
+    } =
+    await supabaseClient
+        .from("reel_daily_stats")
+        .select(`
+            stat_date,
+            views_count,
+            likes_count,
+            comments_count,
+            shares_count
+        `)
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .gte(
+            "stat_date",
+            startDate
+        )
+        .order(
+            "stat_date",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.warn(
+            "Daily stats error:",
+            error
+        );
+
+
+        dailyContainer.innerHTML = `
+
+            <div class="dashboard-reel">
+
+                Unable to load daily statistics.
+
+                <br><br>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    dailyContainer.innerHTML =
+        "";
+
+
+    if(!daily?.length){
+
+        dailyContainer.innerHTML = `
+
+            <div class="dashboard-reel no-data">
+
+                No daily statistics yet.
+
+                <br><br>
+
+                Statistics will appear as your Reels
+                receive activity.
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    daily.forEach(
+        row => {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "dashboard-reel";
+
+
+            div.innerHTML = `
+
+                <div class="dashboard-reel-title daily-date">
+
+                    📅 ${escapeHtml(
+                        row.stat_date
+                    )}
+
+                </div>
+
+
+                <div class="dashboard-reel-stats">
+
+                    👁 ${formatCount(
+                        row.views_count
+                    )}
+
+                    &nbsp;&nbsp;
+
+                    ❤️ ${formatCount(
+                        row.likes_count
+                    )}
+
+                    &nbsp;&nbsp;
+
+                    💬 ${formatCount(
+                        row.comments_count
+                    )}
+
+                    &nbsp;&nbsp;
+
+                    ↗ ${formatCount(
+                        row.shares_count
+                    )}
+
+                </div>
+
+            `;
+
+
+            dailyContainer.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOCAL DATE
+========================================================= */
+
+function localDateString(date){
+
+    const year =
+        date.getFullYear();
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        )
+        .padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            date.getDate()
+        )
+        .padStart(
+            2,
+            "0"
+        );
+
+
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
+
+}
+
+
+/* =========================================================
+   HASH / DIRECT REEL
+========================================================= */
+
+function openHashReel(){
+
+    const hash =
+        window.location.hash;
+
+
+    if(
+        !hash.startsWith(
+            "#reel-"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const reelId =
+        hash.replace(
+            "#reel-",
+            ""
+        );
+
+
+    if(!reelId)
+        return;
+
+
+    const target =
+        document.getElementById(
+            "reel-" +
+            reelId
+        );
+
+
+    if(target){
+
+        setTimeout(
+            () => {
+
+                target.scrollIntoView({
+                    behavior:"smooth",
+                    block:"start"
+                });
+
+            },
+            300
+        );
+
+    }
+
+}
+
+
+window.addEventListener(
+    "hashchange",
+    openHashReel
+);
+
+
+/* =========================================================
    INITIALIZE
 ========================================================= */
 
 async function initialize(){
 
-    const loggedIn =
-        await loadCurrentUser();
+    console.log(
+        "Initializing Pathukkalam Reels..."
+    );
 
 
-    if(!loggedIn)
-        return;
+    /*
+       Important:
+       loadCurrentUser() does NOT redirect
+       when no session is immediately found.
+    */
 
+    await loadCurrentUser();
+
+
+    /*
+       Feed loads regardless.
+    */
 
     await loadReels();
+
+
+    /*
+       If URL contains #reel-ID,
+       scroll to that Reel.
+    */
+
+    openHashReel();
 
 }
 
