@@ -454,6 +454,170 @@ body{
     display:block;
 }
 
+/* =========================================================
+   POST ENGAGEMENT
+========================================================= */
+
+.post-engagement{
+    margin-top:12px;
+    border-top:1px solid #eee;
+}
+
+.post-engagement-summary{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:9px 3px 6px;
+    color:#777;
+    font-size:13px;
+}
+
+.post-engagement-summary-left{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.like-summary-icon{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#1877f2;
+    color:white;
+    font-size:10px;
+}
+
+.post-actions{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-top:1px solid #eee;
+}
+
+.post-action-btn{
+    border:none;
+    background:transparent;
+    color:#555;
+    padding:11px 5px;
+    cursor:pointer;
+    font-size:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    border-radius:7px;
+    transition:background 0.15s ease;
+}
+
+.post-action-btn:hover{
+    background:#f0f2f5;
+}
+
+.post-action-btn i{
+    font-size:17px;
+}
+
+.post-action-btn.liked{
+    color:#1877f2;
+    font-weight:bold;
+}
+
+.post-action-btn.comment-active{
+    color:#1877f2;
+}
+
+.post-action-btn:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+}
+
+/* =========================================================
+   COMMENT AREA
+========================================================= */
+
+.comment-area{
+    display:none;
+    margin-top:10px;
+    border-top:1px solid #eee;
+    padding-top:10px;
+}
+
+.comment-area.active{
+    display:block;
+}
+
+.comment-input-row{
+    display:flex;
+    gap:8px;
+}
+
+.comment-input{
+    flex:1;
+    border:1px solid #ddd;
+    border-radius:20px;
+    padding:10px 14px;
+    outline:none;
+    font-size:14px;
+    background:#f5f6f7;
+}
+
+.comment-input:focus{
+    border-color:#1877f2;
+    background:white;
+}
+
+.comment-send-btn{
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:50%;
+    background:#1877f2;
+    color:white;
+    cursor:pointer;
+}
+
+.comment-send-btn:disabled{
+    opacity:0.5;
+}
+
+.comments-list{
+    margin-top:10px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.comment-item{
+    background:#f5f6f7;
+    border-radius:12px;
+    padding:9px 12px;
+}
+
+.comment-author{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.comment-text{
+    font-size:13px;
+    color:#444;
+    margin-top:3px;
+    line-height:1.4;
+}
+
+.comment-login-message{
+    color:#888;
+    font-size:13px;
+    text-align:center;
+    padding:8px;
+}
+
+/* =========================================================
+   DOCUMENT
+========================================================= */
+
 .post-document{
     display:flex;
     align-items:center;
@@ -584,6 +748,25 @@ body{
 }
 
 /* =========================================================
+   SHARE STATUS
+========================================================= */
+
+.share-status{
+    display:none;
+    position:fixed;
+    left:50%;
+    bottom:100px;
+    transform:translateX(-50%);
+    background:#222;
+    color:white;
+    padding:10px 16px;
+    border-radius:20px;
+    font-size:13px;
+    z-index:5000;
+    box-shadow:0 5px 20px rgba(0,0,0,0.25);
+}
+
+/* =========================================================
    FLOATING BUTTON
 ========================================================= */
 
@@ -669,6 +852,15 @@ body{
 
     .media-item{
         height:105px;
+    }
+
+    .post-action-btn{
+        font-size:12px;
+        gap:4px;
+    }
+
+    .post-action-btn i{
+        font-size:16px;
     }
 
 }
@@ -874,7 +1066,6 @@ body{
 
 <!-- =========================================================
      MEDIA SECTION
-     PHOTOS + VIDEOS + DOCUMENTS
 ========================================================= -->
 
 <div class="section-title">
@@ -927,6 +1118,16 @@ body{
 
     </div>
 
+</div>
+
+
+<!-- =========================================================
+     SHARE STATUS
+========================================================= -->
+
+<div
+    id="shareStatus"
+    class="share-status">
 </div>
 
 
@@ -1161,6 +1362,9 @@ const mediaGrid =
 const allPostsSection =
     document.getElementById("allPostsSection");
 
+const shareStatus =
+    document.getElementById("shareStatus");
+
 
 /* =========================================================
    CURRENT USER
@@ -1171,6 +1375,16 @@ let currentUser = null;
 let currentProfile = null;
 
 let viewedProfile = null;
+
+
+/* =========================================================
+   LOCAL ENGAGEMENT CACHE
+========================================================= */
+
+const engagementCache = {};
+
+const viewedPosts =
+    new Set();
 
 
 /* =========================================================
@@ -1443,8 +1657,7 @@ async function loadCurrentUser(){
 
 
         /* ======================================
-           NEW:
-           LOAD ALL PROFILE CONTENT
+           LOAD PROFILE CONTENT
         ====================================== */
 
         await loadProfileContent();
@@ -1622,7 +1835,7 @@ async function loadAllPosts(){
 
 
         /* ==========================================
-           GET MEDIA FOR THESE POSTS
+           GET MEDIA
         ========================================== */
 
         const postIds =
@@ -1709,12 +1922,7 @@ async function loadAllPosts(){
                     mediaByPost[post.id] || [];
 
 
-                /*
-                Old image_url support.
-
-                This preserves old posts created
-                before post_media existed.
-                */
+                /* Legacy image */
 
                 if(
                     post.image_url &&
@@ -1819,6 +2027,9 @@ function createPostCard(
 
     card.className =
         "post-card";
+
+    card.dataset.postId =
+        post.id;
 
 
     /* ==========================================
@@ -1990,7 +2201,1763 @@ function createPostCard(
     }
 
 
+    /* ==========================================
+       ENGAGEMENT
+    ========================================== */
+
+    const engagement =
+        createEngagementArea(
+            post
+        );
+
+    card.appendChild(
+        engagement
+    );
+
+
+    /*
+    Count a view when the post becomes visible.
+    */
+
+    setupPostViewObserver(
+        card,
+        post.id
+    );
+
+
     return card;
+
+}
+
+
+/* =========================================================
+   CREATE ENGAGEMENT AREA
+========================================================= */
+
+function createEngagementArea(
+    post
+){
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+    wrapper.className =
+        "post-engagement";
+
+
+    /* ==========================================
+       SUMMARY
+    ========================================== */
+
+    const summary =
+        document.createElement(
+            "div"
+        );
+
+    summary.className =
+        "post-engagement-summary";
+
+
+    const left =
+        document.createElement(
+            "div"
+        );
+
+    left.className =
+        "post-engagement-summary-left";
+
+
+    const likeIcon =
+        document.createElement(
+            "span"
+        );
+
+    likeIcon.className =
+        "like-summary-icon";
+
+    likeIcon.innerHTML =
+        '<i class="fas fa-heart"></i>';
+
+
+    const likesText =
+        document.createElement(
+            "span"
+        );
+
+    likesText.id =
+        "like-count-" +
+        post.id;
+
+    likesText.innerText =
+        "0 Likes";
+
+
+    left.appendChild(
+        likeIcon
+    );
+
+    left.appendChild(
+        likesText
+    );
+
+
+    const right =
+        document.createElement(
+            "span"
+        );
+
+    right.id =
+        "engagement-summary-" +
+        post.id;
+
+    right.innerText =
+        "0 Comments • 0 Shares • 0 Views";
+
+
+    summary.appendChild(
+        left
+    );
+
+    summary.appendChild(
+        right
+    );
+
+
+    wrapper.appendChild(
+        summary
+    );
+
+
+    /* ==========================================
+       ACTION BUTTONS
+    ========================================== */
+
+    const actions =
+        document.createElement(
+            "div"
+        );
+
+    actions.className =
+        "post-actions";
+
+
+    /* LIKE */
+
+    const likeButton =
+        document.createElement(
+            "button"
+        );
+
+    likeButton.className =
+        "post-action-btn";
+
+    likeButton.innerHTML =
+        '<i class="far fa-heart"></i><span>Like</span>';
+
+    likeButton.addEventListener(
+        "click",
+        function(){
+
+            handleLike(
+                post,
+                likeButton
+            );
+
+        }
+    );
+
+
+    /* COMMENT */
+
+    const commentButton =
+        document.createElement(
+            "button"
+        );
+
+    commentButton.className =
+        "post-action-btn";
+
+    commentButton.innerHTML =
+        '<i class="far fa-comment"></i><span>Comment</span>';
+
+    commentButton.addEventListener(
+        "click",
+        function(){
+
+            toggleCommentArea(
+                post.id,
+                commentButton
+            );
+
+        }
+    );
+
+
+    /* SHARE */
+
+    const shareButton =
+        document.createElement(
+            "button"
+        );
+
+    shareButton.className =
+        "post-action-btn";
+
+    shareButton.innerHTML =
+        '<i class="fas fa-share"></i><span>Share</span>';
+
+    shareButton.addEventListener(
+        "click",
+        function(){
+
+            handleShare(
+                post
+            );
+
+        }
+    );
+
+
+    /* VIEWS */
+
+    const viewButton =
+        document.createElement(
+            "button"
+        );
+
+    viewButton.className =
+        "post-action-btn";
+
+    viewButton.innerHTML =
+        '<i class="far fa-eye"></i><span>Views</span>';
+
+    viewButton.addEventListener(
+        "click",
+        function(){
+
+            const count =
+                getLocalViewCount(
+                    post.id
+                );
+
+            showShareStatus(
+                count +
+                " views"
+            );
+
+        }
+    );
+
+
+    actions.appendChild(
+        likeButton
+    );
+
+    actions.appendChild(
+        commentButton
+    );
+
+    actions.appendChild(
+        shareButton
+    );
+
+    actions.appendChild(
+        viewButton
+    );
+
+
+    wrapper.appendChild(
+        actions
+    );
+
+
+    /* ==========================================
+       COMMENTS
+    ========================================== */
+
+    const commentArea =
+        document.createElement(
+            "div"
+        );
+
+    commentArea.className =
+        "comment-area";
+
+    commentArea.id =
+        "comment-area-" +
+        post.id;
+
+
+    if(currentUser){
+
+        const inputRow =
+            document.createElement(
+                "div"
+            );
+
+        inputRow.className =
+            "comment-input-row";
+
+
+        const input =
+            document.createElement(
+                "input"
+            );
+
+        input.type =
+            "text";
+
+        input.className =
+            "comment-input";
+
+        input.placeholder =
+            "Write a comment...";
+
+        input.maxLength =
+            1000;
+
+
+        const sendButton =
+            document.createElement(
+                "button"
+            );
+
+        sendButton.className =
+            "comment-send-btn";
+
+        sendButton.innerHTML =
+            '<i class="fas fa-paper-plane"></i>';
+
+
+        sendButton.addEventListener(
+            "click",
+            function(){
+
+                submitComment(
+                    post,
+                    input,
+                    sendButton
+                );
+
+            }
+        );
+
+
+        input.addEventListener(
+            "keydown",
+            function(event){
+
+                if(
+                    event.key ===
+                    "Enter"
+                ){
+
+                    event.preventDefault();
+
+                    submitComment(
+                        post,
+                        input,
+                        sendButton
+                    );
+
+                }
+
+            }
+        );
+
+
+        inputRow.appendChild(
+            input
+        );
+
+        inputRow.appendChild(
+            sendButton
+        );
+
+
+        commentArea.appendChild(
+            inputRow
+        );
+
+    }
+    else{
+
+        const loginMessage =
+            document.createElement(
+                "div"
+            );
+
+        loginMessage.className =
+            "comment-login-message";
+
+        loginMessage.innerText =
+            "Please login to comment.";
+
+        commentArea.appendChild(
+            loginMessage
+        );
+
+    }
+
+
+    const commentsList =
+        document.createElement(
+            "div"
+        );
+
+    commentsList.className =
+        "comments-list";
+
+    commentsList.id =
+        "comments-list-" +
+        post.id;
+
+
+    commentArea.appendChild(
+        commentsList
+    );
+
+
+    wrapper.appendChild(
+        commentArea
+    );
+
+
+    /*
+    Load existing engagement asynchronously.
+    */
+
+    loadPostEngagement(
+        post,
+        likeButton
+    );
+
+
+    return wrapper;
+
+}
+
+
+/* =========================================================
+   LOAD POST ENGAGEMENT
+========================================================= */
+
+async function loadPostEngagement(
+    post,
+    likeButton
+){
+
+    try{
+
+        /* ==========================================
+           LIKES
+        ========================================== */
+
+        const {
+            data:likes,
+            error:likesError
+        } =
+        await supabaseClient
+
+            .from("likes")
+
+            .select("*")
+
+            .eq(
+                "post_id",
+                post.id
+            );
+
+
+        if(likesError){
+
+            console.warn(
+                "Like loading:",
+                likesError.message
+            );
+
+        }
+
+
+        const likeRows =
+            likes || [];
+
+
+        const likeCount =
+            likeRows.length;
+
+
+        document.getElementById(
+            "like-count-" +
+            post.id
+        ).innerText =
+            formatCount(
+                likeCount
+            ) +
+            " Likes";
+
+
+        /* ==========================================
+           CURRENT USER LIKE
+        ========================================== */
+
+        if(currentUser){
+
+            const hasLiked =
+                likeRows.some(
+                    function(row){
+
+                        return (
+                            String(
+                                row.user_id
+                            ) ===
+                            String(
+                                currentUser.id
+                            )
+                        );
+
+                    }
+                );
+
+
+            if(hasLiked){
+
+                setLikedButton(
+                    likeButton
+                );
+
+            }
+
+        }
+
+
+        /* ==========================================
+           COMMENTS
+        ========================================== */
+
+        const {
+            data:comments,
+            error:commentsError
+        } =
+        await supabaseClient
+
+            .from("comments")
+
+            .select("*")
+
+            .eq(
+                "post_id",
+                post.id
+            );
+
+
+        if(commentsError){
+
+            console.warn(
+                "Comment loading:",
+                commentsError.message
+            );
+
+        }
+
+
+        const commentRows =
+            comments || [];
+
+
+        updateEngagementSummary(
+            post.id,
+            likeCount,
+            commentRows.length,
+            getLocalShareCount(post.id),
+            getLocalViewCount(post.id)
+        );
+
+
+        renderComments(
+            post.id,
+            commentRows
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Engagement loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LIKE
+========================================================= */
+
+async function handleLike(
+    post,
+    button
+){
+
+    if(!currentUser){
+
+        showShareStatus(
+            "Please login to like this post."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        button.dataset.processing ===
+        "true"
+    ){
+
+        return;
+
+    }
+
+
+    button.dataset.processing =
+        "true";
+
+    button.disabled =
+        true;
+
+
+    try{
+
+        /* ======================================
+           CHECK EXISTING LIKE
+        ====================================== */
+
+        const {
+            data:existing,
+            error:checkError
+        } =
+        await supabaseClient
+
+            .from("likes")
+
+            .select("*")
+
+            .eq(
+                "post_id",
+                post.id
+            )
+
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+
+            .maybeSingle();
+
+
+        if(checkError){
+
+            throw checkError;
+
+        }
+
+
+        /* ======================================
+           UNLIKE
+        ====================================== */
+
+        if(existing){
+
+            const {
+                error
+            } =
+            await supabaseClient
+
+                .from("likes")
+
+                .delete()
+
+                .eq(
+                    "post_id",
+                    post.id
+                )
+
+                .eq(
+                    "user_id",
+                    currentUser.id
+                );
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            setUnlikedButton(
+                button
+            );
+
+        }
+
+
+        /* ======================================
+           LIKE
+        ====================================== */
+
+        else{
+
+            const {
+                error
+            } =
+            await supabaseClient
+
+                .from("likes")
+
+                .insert({
+
+                    post_id:
+                        post.id,
+
+                    user_id:
+                        currentUser.id
+
+                });
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            setLikedButton(
+                button
+            );
+
+        }
+
+
+        await refreshEngagementCounts(
+            post.id,
+            button
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Like error:",
+            error
+        );
+
+        showShareStatus(
+            "Unable to update like."
+        );
+
+    }
+    finally{
+
+        button.disabled =
+            false;
+
+        button.dataset.processing =
+            "false";
+
+    }
+
+}
+
+
+/* =========================================================
+   LIKE BUTTON STATE
+========================================================= */
+
+function setLikedButton(
+    button
+){
+
+    button.classList.add(
+        "liked"
+    );
+
+    button.innerHTML =
+        '<i class="fas fa-heart"></i><span>Liked</span>';
+
+}
+
+
+function setUnlikedButton(
+    button
+){
+
+    button.classList.remove(
+        "liked"
+    );
+
+    button.innerHTML =
+        '<i class="far fa-heart"></i><span>Like</span>';
+
+}
+
+
+/* =========================================================
+   REFRESH COUNTS
+========================================================= */
+
+async function refreshEngagementCounts(
+    postId,
+    likeButton
+){
+
+    try{
+
+        const {
+            data:likes
+        } =
+        await supabaseClient
+
+            .from("likes")
+
+            .select("id")
+
+            .eq(
+                "post_id",
+                postId
+            );
+
+
+        const {
+            data:comments
+        } =
+        await supabaseClient
+
+            .from("comments")
+
+            .select("id")
+
+            .eq(
+                "post_id",
+                postId
+            );
+
+
+        const likeCount =
+            likes ?
+            likes.length :
+            0;
+
+
+        const commentCount =
+            comments ?
+            comments.length :
+            0;
+
+
+        const shareCount =
+            getLocalShareCount(
+                postId
+            );
+
+
+        const viewCount =
+            getLocalViewCount(
+                postId
+            );
+
+
+        const likeElement =
+            document.getElementById(
+                "like-count-" +
+                postId
+            );
+
+
+        if(likeElement){
+
+            likeElement.innerText =
+                formatCount(
+                    likeCount
+                ) +
+                " Likes";
+
+        }
+
+
+        updateEngagementSummary(
+            postId,
+            likeCount,
+            commentCount,
+            shareCount,
+            viewCount
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Count refresh error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   COMMENTS
+========================================================= */
+
+function toggleCommentArea(
+    postId,
+    button
+){
+
+    const area =
+        document.getElementById(
+            "comment-area-" +
+            postId
+        );
+
+
+    if(!area){
+
+        return;
+
+    }
+
+
+    const active =
+        area.classList.contains(
+            "active"
+        );
+
+
+    if(active){
+
+        area.classList.remove(
+            "active"
+        );
+
+        button.classList.remove(
+            "comment-active"
+        );
+
+    }
+    else{
+
+        area.classList.add(
+            "active"
+        );
+
+        button.classList.add(
+            "comment-active"
+        );
+
+
+        loadComments(
+            postId
+        );
+
+
+        const input =
+            area.querySelector(
+                ".comment-input"
+            );
+
+
+        if(input){
+
+            setTimeout(
+                function(){
+
+                    input.focus();
+
+                },
+                100
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD COMMENTS
+========================================================= */
+
+async function loadComments(
+    postId
+){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+
+            .from("comments")
+
+            .select("*")
+
+            .eq(
+                "post_id",
+                postId
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending:true
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Comments error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        renderComments(
+            postId,
+            data || []
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Comment loading exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER COMMENTS
+========================================================= */
+
+function renderComments(
+    postId,
+    comments
+){
+
+    const container =
+        document.getElementById(
+            "comments-list-" +
+            postId
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "";
+
+
+    if(
+        !comments ||
+        !comments.length
+    ){
+
+        return;
+
+    }
+
+
+    comments
+        .slice(-10)
+        .forEach(
+            function(comment){
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+                item.className =
+                    "comment-item";
+
+
+                const author =
+                    document.createElement(
+                        "div"
+                    );
+
+                author.className =
+                    "comment-author";
+
+                author.innerText =
+                    comment.user_name ||
+                    comment.username ||
+                    "User";
+
+
+                const text =
+                    document.createElement(
+                        "div"
+                    );
+
+                text.className =
+                    "comment-text";
+
+                text.innerText =
+                    comment.content ||
+                    comment.comment ||
+                    comment.text ||
+                    "";
+
+
+                item.appendChild(
+                    author
+                );
+
+                item.appendChild(
+                    text
+                );
+
+
+                container.appendChild(
+                    item
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   SUBMIT COMMENT
+========================================================= */
+
+async function submitComment(
+    post,
+    input,
+    button
+){
+
+    if(!currentUser){
+
+        showShareStatus(
+            "Please login to comment."
+        );
+
+        return;
+
+    }
+
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+
+        return;
+
+    }
+
+
+    if(
+        button.dataset.processing ===
+        "true"
+    ){
+
+        return;
+
+    }
+
+
+    button.dataset.processing =
+        "true";
+
+    button.disabled =
+        true;
+
+
+    try{
+
+        /*
+        Existing comments table is used.
+
+        The common schema expected by Pathukkalam
+        is post_id + user_id + content.
+        */
+
+        const {
+            error
+        } =
+        await supabaseClient
+
+            .from("comments")
+
+            .insert({
+
+                post_id:
+                    post.id,
+
+                user_id:
+                    currentUser.id,
+
+                content:
+                    text
+
+            });
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        input.value =
+            "";
+
+
+        await loadComments(
+            post.id
+        );
+
+
+        await refreshEngagementCounts(
+            post.id,
+            null
+        );
+
+
+        showShareStatus(
+            "Comment added ✓"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Comment error:",
+            error
+        );
+
+
+        showShareStatus(
+            "Unable to add comment."
+        );
+
+    }
+    finally{
+
+        button.disabled =
+            false;
+
+        button.dataset.processing =
+            "false";
+
+    }
+
+}
+
+
+/* =========================================================
+   SHARE
+========================================================= */
+
+async function handleShare(
+    post
+){
+
+    const shareUrl =
+        window.location.origin +
+        "/post/" +
+        post.id;
+
+
+    try{
+
+        /*
+        Native mobile/browser sharing.
+        */
+
+        if(
+            navigator.share
+        ){
+
+            await navigator.share({
+
+                title:
+                    viewedProfile?.name ||
+                    "Pathukkalam",
+
+                text:
+                    post.caption ||
+                    "Check out this post on Pathukkalam",
+
+                url:
+                    shareUrl
+
+            });
+
+
+            incrementLocalShareCount(
+                post.id
+            );
+
+
+            await refreshEngagementCounts(
+                post.id,
+                null
+            );
+
+
+            showShareStatus(
+                "Post shared ✓"
+            );
+
+        }
+
+        else{
+
+            await navigator.clipboard.writeText(
+                shareUrl
+            );
+
+
+            incrementLocalShareCount(
+                post.id
+            );
+
+
+            await refreshEngagementCounts(
+                post.id,
+                null
+            );
+
+
+            showShareStatus(
+                "Post link copied ✓"
+            );
+
+        }
+
+    }
+    catch(error){
+
+        /*
+        User cancelled native share.
+        Do not show an error.
+        */
+
+        if(
+            error &&
+            error.name ===
+            "AbortError"
+        ){
+
+            return;
+
+        }
+
+
+        try{
+
+            await navigator.clipboard.writeText(
+                shareUrl
+            );
+
+
+            incrementLocalShareCount(
+                post.id
+            );
+
+
+            await refreshEngagementCounts(
+                post.id,
+                null
+            );
+
+
+            showShareStatus(
+                "Post link copied ✓"
+            );
+
+        }
+        catch(copyError){
+
+            console.error(
+                "Share error:",
+                copyError
+            );
+
+            showShareStatus(
+                "Unable to share post."
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   VIEW TRACKING
+========================================================= */
+
+function setupPostViewObserver(
+    card,
+    postId
+){
+
+    if(
+        viewedPosts.has(
+            String(postId)
+        )
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        !("IntersectionObserver" in window)
+    ){
+
+        incrementViewOnce(
+            postId
+        );
+
+        return;
+
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            function(entries){
+
+                entries.forEach(
+                    function(entry){
+
+                        if(
+                            entry.isIntersecting
+                        ){
+
+                            incrementViewOnce(
+                                postId
+                            );
+
+
+                            observer.unobserve(
+                                card
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold:0.5
+            }
+        );
+
+
+    observer.observe(
+        card
+    );
+
+}
+
+
+function incrementViewOnce(
+    postId
+){
+
+    const key =
+        String(postId);
+
+
+    if(
+        viewedPosts.has(
+            key
+        )
+    ){
+
+        return;
+
+    }
+
+
+    viewedPosts.add(
+        key
+    );
+
+
+    const current =
+        getLocalViewCount(
+            postId
+        );
+
+
+    localStorage.setItem(
+
+        "pathukkalam_views_" +
+        postId,
+
+        String(
+            current + 1
+        )
+
+    );
+
+
+    refreshEngagementCounts(
+        postId,
+        null
+    );
+
+}
+
+
+/* =========================================================
+   LOCAL SHARE COUNT
+========================================================= */
+
+function getLocalShareCount(
+    postId
+){
+
+    const value =
+        localStorage.getItem(
+            "pathukkalam_shares_" +
+            postId
+        );
+
+
+    return (
+        parseInt(
+            value,
+            10
+        ) || 0
+    );
+
+}
+
+
+function incrementLocalShareCount(
+    postId
+){
+
+    const current =
+        getLocalShareCount(
+            postId
+        );
+
+
+    localStorage.setItem(
+
+        "pathukkalam_shares_" +
+        postId,
+
+        String(
+            current + 1
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   LOCAL VIEW COUNT
+========================================================= */
+
+function getLocalViewCount(
+    postId
+){
+
+    const value =
+        localStorage.getItem(
+            "pathukkalam_views_" +
+            postId
+        );
+
+
+    return (
+        parseInt(
+            value,
+            10
+        ) || 0
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE SUMMARY
+========================================================= */
+
+function updateEngagementSummary(
+    postId,
+    likes,
+    comments,
+    shares,
+    views
+){
+
+    const element =
+        document.getElementById(
+            "engagement-summary-" +
+            postId
+        );
+
+
+    if(!element){
+
+        return;
+
+    }
+
+
+    element.innerText =
+        formatCount(
+            comments || 0
+        ) +
+        " Comments • " +
+        formatCount(
+            shares || 0
+        ) +
+        " Shares • " +
+        formatCount(
+            views || 0
+        ) +
+        " Views";
+
+}
+
+
+/* =========================================================
+   FORMAT COUNT
+========================================================= */
+
+function formatCount(
+    number
+){
+
+    const value =
+        Number(
+            number
+        ) || 0;
+
+
+    if(
+        value >= 1000000
+    ){
+
+        return (
+            (value / 1000000)
+                .toFixed(1)
+                .replace(".0","")
+            +
+            "M"
+        );
+
+    }
+
+
+    if(
+        value >= 1000
+    ){
+
+        return (
+            (value / 1000)
+                .toFixed(1)
+                .replace(".0","")
+            +
+            "K"
+        );
+
+    }
+
+
+    return String(
+        value
+    );
+
+}
+
+
+/* =========================================================
+   SHARE STATUS
+========================================================= */
+
+let shareStatusTimer =
+    null;
+
+
+function showShareStatus(
+    message
+){
+
+    if(!shareStatus){
+
+        return;
+
+    }
+
+
+    shareStatus.innerText =
+        message;
+
+    shareStatus.style.display =
+        "block";
+
+
+    clearTimeout(
+        shareStatusTimer
+    );
+
+
+    shareStatusTimer =
+        setTimeout(
+            function(){
+
+                shareStatus.style.display =
+                    "none";
+
+            },
+            2200
+        );
 
 }
 
@@ -2090,10 +4057,11 @@ function createPostMediaElement(
         video.playsInline =
             true;
 
+
         /*
-        Clicking the video itself should not
-        unexpectedly navigate while user is
-        trying to play it.
+        Video view is counted when the post
+        itself becomes visible, so existing
+        video behavior is not disturbed.
         */
 
         return video;
@@ -2192,7 +4160,6 @@ function createPostMediaElement(
 
 /* =========================================================
    BUILD MEDIA SECTION
-   LATEST MEDIA ONLY
 ========================================================= */
 
 function buildMediaSection(
@@ -2274,10 +4241,6 @@ function buildMediaSection(
     );
 
 
-    /*
-    Newest post/media first.
-    */
-
     allMedia.sort(
         function(a,b){
 
@@ -2291,10 +4254,6 @@ function buildMediaSection(
         }
     );
 
-
-    /*
-    Show latest 30 media items.
-    */
 
     const latestMedia =
         allMedia.slice(
@@ -2362,9 +4321,7 @@ function createMediaGridItem(
         .toLowerCase();
 
 
-    /* ==========================================
-       IMAGE
-    ========================================== */
+    /* IMAGE */
 
     if(
         type === "image" ||
@@ -2398,9 +4355,7 @@ function createMediaGridItem(
     }
 
 
-    /* ==========================================
-       VIDEO / REEL
-    ========================================== */
+    /* VIDEO */
 
     else if(
         type === "video" ||
@@ -2452,9 +4407,7 @@ function createMediaGridItem(
     }
 
 
-    /* ==========================================
-       DOCUMENT
-    ========================================== */
+    /* DOCUMENT */
 
     else{
 
@@ -2504,10 +4457,6 @@ function createMediaGridItem(
 
     }
 
-
-    /*
-    Click -> original post
-    */
 
     item.addEventListener(
         "click",
@@ -2737,9 +4686,7 @@ followButton.addEventListener(
                 "unfollow";
 
 
-            /* ==================================
-               UNFOLLOW
-            ================================== */
+            /* UNFOLLOW */
 
             if(isCurrentlyFollowing){
 
@@ -2788,9 +4735,7 @@ followButton.addEventListener(
             }
 
 
-            /* ==================================
-               FOLLOW
-            ================================== */
+            /* FOLLOW */
 
             else{
 
@@ -3214,7 +5159,6 @@ function getFileExtension(file){
 
 /* =========================================================
    IMAGE UPLOAD
-   EXISTING SYSTEM PRESERVED
 ========================================================= */
 
 async function uploadImage(
