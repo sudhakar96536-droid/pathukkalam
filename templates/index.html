@@ -789,6 +789,10 @@ body{
    Multiple Images / Video / Document
 ========================================== */
 
+.post-media-container{
+    margin-top:4px;
+}
+
 .post-media-grid{
 
     display:grid;
@@ -2524,118 +2528,24 @@ body{
 
     <!-- ==========================================
          POST MEDIA
-         Existing image support remains.
-         New media_urls support is optional.
+         Existing image_url compatibility remains.
+         New media is loaded from post_media.
     =========================================== -->
 
-    {% if post.media_urls %}
+    <div
+        class="post-media-container"
+        data-post-id="{{ post.id }}">
 
-        <div
-            class="post-media-grid">
+        {% if post.image %}
 
-            {% for media in post.media_urls %}
+            <img
+                class="post-image legacy-post-image"
+                src="{{ post.image }}"
+                alt="Post image">
 
-                {% if media.type == "image" %}
+        {% endif %}
 
-                    <div
-                        class="
-                            post-media-item
-                            {% if post.media_urls|length == 1 %}
-                                single-media
-                            {% endif %}
-                        ">
-
-                        <img
-                            class="post-media-image"
-                            src="{{ media.url }}"
-                            alt="Post image">
-
-                    </div>
-
-                {% elif media.type == "video" %}
-
-                    <div
-                        class="
-                            post-media-item
-                            {% if post.media_urls|length == 1 %}
-                                single-media
-                            {% endif %}
-                        ">
-
-                        <video
-                            class="post-media-video"
-                            src="{{ media.url }}"
-                            controls
-                            playsinline
-                            preload="metadata">
-                        </video>
-
-                    </div>
-
-                {% elif media.type == "document" %}
-
-                    <div
-                        class="
-                            post-media-item
-                            post-document
-                            {% if post.media_urls|length == 1 %}
-                                single-media
-                            {% endif %}
-                        ">
-
-                        <div class="post-document-icon">
-
-                            <i class="fas fa-file-lines"></i>
-
-                        </div>
-
-
-                        <div class="post-document-info">
-
-                            <div class="post-document-name">
-
-                                {{ media.name or "Document" }}
-
-                            </div>
-
-                            <div class="post-document-type">
-
-                                Document
-
-                            </div>
-
-                        </div>
-
-
-                        <a
-                            class="post-document-open"
-                            href="{{ media.url }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title="Open document">
-
-                            <i class="fas fa-arrow-up-right-from-square"></i>
-
-                        </a>
-
-                    </div>
-
-                {% endif %}
-
-            {% endfor %}
-
-        </div>
-
-    {% elif post.image %}
-
-        <!-- Existing single-image compatibility -->
-
-        <img
-            class="post-image"
-            src="{{ post.image }}"
-            alt="Post image">
-
-    {% endif %}
+    </div>
 
 
     <div class="post-actions">
@@ -6123,7 +6033,7 @@ async function performSearch(){
         await supabaseClient
             .from("posts")
             .select(
-                "id, user_id, caption, image, image_url, media_urls, media_type, created_at"
+                "id, user_id, caption, image_url, created_at"
             )
             .ilike(
                 "caption",
@@ -6195,6 +6105,10 @@ async function performSearch(){
                     return {
 
                         ...post,
+
+                        image:
+                            post.image_url ||
+                            null,
 
                         username:
                             profile?.username ||
@@ -6281,6 +6195,8 @@ async function performSearch(){
                 }
             );
 
+
+        await loadSearchPostMedia(searchResultPosts);
 
         renderSearchResults();
 
@@ -6761,195 +6677,272 @@ async function createSearchFollowNotification(
 
 
 /* ==========================================
-   NEW MEDIA SEARCH RENDER ONLY
+   POST MEDIA FROM post_media
 ========================================== */
 
-function getSearchPostMedia(
-    post
-){
+async function loadPostMedia(){
 
-    if(
-        Array.isArray(post.media_urls) &&
-        post.media_urls.length
-    ){
+    const containers =
+        document.querySelectorAll(
+            ".post-media-container[data-post-id]"
+        );
 
-        return post.media_urls;
-
+    if(!containers.length){
+        return;
     }
 
-    /*
-    Some Supabase responses can expose jsonb
-    as a string depending on backend handling.
-    */
+    const postIds =
+        Array.from(containers)
+            .map(function(container){
+                return Number(container.dataset.postId);
+            })
+            .filter(function(id){
+                return Number.isFinite(id);
+            });
 
-    if(
-        typeof post.media_urls ===
-        "string"
-    ){
+    if(!postIds.length){
+        return;
+    }
 
-        try{
+    try{
 
-            const parsed =
-                JSON.parse(
-                    post.media_urls
-                );
+        const {
+            data:mediaRows,
+            error:mediaError
+        } =
+        await supabaseClient
+            .from("post_media")
+            .select(
+                "id, post_id, media_type, media_url, file_name, display_order"
+            )
+            .in("post_id",postIds)
+            .order("display_order",{ascending:true});
 
-            if(
-                Array.isArray(parsed)
-            ){
-
-                return parsed;
-
-            }
-
-        }
-        catch(error){
-
-            console.warn(
-                "Unable to parse media_urls:",
-                error
+        if(mediaError){
+            console.error(
+                "Post media loading error:",
+                mediaError
             );
-
+            return;
         }
 
-    }
+        const grouped = new Map();
 
-    if(post.image){
-
-        return [
-            {
-                type:
-                    "image",
-
-                url:
-                    post.image
-
+        (mediaRows || []).forEach(function(media){
+            if(!grouped.has(media.post_id)){
+                grouped.set(media.post_id,[]);
             }
-        ];
+            grouped.get(media.post_id).push(media);
+        });
 
-    }
+        containers.forEach(function(container){
+            const postId = Number(container.dataset.postId);
+            const media = grouped.get(postId) || [];
 
-    if(post.image_url){
-
-        return [
-            {
-                type:
-                    "image",
-
-                url:
-                    post.image_url
-
+            if(media.length){
+                renderPostMedia(container,media);
             }
-        ];
+        });
 
     }
-
-    return [];
-
+    catch(error){
+        console.error(
+            "Post media exception:",
+            error
+        );
+    }
 }
 
 
-function renderSearchPostMedia(
-    post
-){
+function renderPostMedia(container,media){
+
+    container.innerHTML = "";
+
+    const grid = document.createElement("div");
+    grid.className = "post-media-grid";
+
+    media.forEach(function(item,index){
+
+        const wrapper = document.createElement("div");
+        wrapper.className =
+            "post-media-item" +
+            (media.length === 1 ? " single-media" : "");
+
+        if(item.media_type === "image"){
+
+            const img = document.createElement("img");
+            img.className = "post-media-image";
+            img.src = item.media_url;
+            img.alt = "Post image";
+            img.loading = index === 0 ? "eager" : "lazy";
+            wrapper.appendChild(img);
+
+        }
+        else if(item.media_type === "video"){
+
+            const video = document.createElement("video");
+            video.className = "post-media-video";
+            video.src = item.media_url;
+            video.controls = true;
+            video.playsInline = true;
+            video.preload = "metadata";
+            wrapper.appendChild(video);
+
+        }
+        else if(item.media_type === "document"){
+
+            wrapper.classList.add("post-document");
+
+            const icon = document.createElement("div");
+            icon.className = "post-document-icon";
+            icon.innerHTML = '<i class="fas fa-file-lines"></i>';
+
+            const info = document.createElement("div");
+            info.className = "post-document-info";
+
+            const name = document.createElement("div");
+            name.className = "post-document-name";
+            name.innerText = item.file_name || "Document";
+
+            const type = document.createElement("div");
+            type.className = "post-document-type";
+            type.innerText = "Document";
+
+            info.appendChild(name);
+            info.appendChild(type);
+
+            const open = document.createElement("a");
+            open.className = "post-document-open";
+            open.href = item.media_url;
+            open.target = "_blank";
+            open.rel = "noopener noreferrer";
+            open.title = "Open document";
+            open.innerHTML = '<i class="fas fa-arrow-up-right-from-square"></i>';
+
+            wrapper.appendChild(icon);
+            wrapper.appendChild(info);
+            wrapper.appendChild(open);
+        }
+
+        grid.appendChild(wrapper);
+    });
+
+    container.appendChild(grid);
+}
+
+
+async function loadSearchPostMedia(postRows){
+
+    if(!postRows || !postRows.length){
+        return;
+    }
+
+    const postIds = postRows
+        .map(function(post){ return Number(post.id); })
+        .filter(function(id){ return Number.isFinite(id); });
+
+    if(!postIds.length){
+        return;
+    }
+
+    const {
+        data:mediaRows,
+        error
+    } =
+    await supabaseClient
+        .from("post_media")
+        .select(
+            "id, post_id, media_type, media_url, file_name, display_order"
+        )
+        .in("post_id",postIds)
+        .order("display_order",{ascending:true});
+
+    if(error){
+        throw error;
+    }
+
+    const grouped = new Map();
+
+    (mediaRows || []).forEach(function(media){
+        if(!grouped.has(media.post_id)){
+            grouped.set(media.post_id,[]);
+        }
+        grouped.get(media.post_id).push(media);
+    });
+
+    searchResultPosts = searchResultPosts.map(function(post){
+        return {
+            ...post,
+            post_media: grouped.get(Number(post.id)) || []
+        };
+    });
+}
+
+
+function renderSearchPostMedia(post){
 
     const media =
-        getSearchPostMedia(
-            post
-        );
+        Array.isArray(post.post_media)
+            ? post.post_media
+            : [];
 
+    if(media.length){
 
-    if(!media.length){
+        const first = media[0];
 
-        return "";
+        if(first.media_type === "image"){
+            return `
+                <div class="search-post-media">
+                    <img
+                        class="search-post-media-image"
+                        src="${escapeHtml(first.media_url)}"
+                        alt="Post image">
+                </div>
+            `;
+        }
 
+        if(first.media_type === "video"){
+            return `
+                <div class="search-post-media">
+                    <video
+                        class="search-post-media-video"
+                        src="${escapeHtml(first.media_url)}"
+                        controls
+                        playsinline
+                        preload="metadata">
+                    </video>
+                </div>
+            `;
+        }
+
+        if(first.media_type === "document"){
+            return `
+                <div class="search-post-media">
+                    <div class="search-post-media-document">
+                        <i class="fas fa-file-lines"></i>
+                        <span>${escapeHtml(first.file_name || "Document")}</span>
+                    </div>
+                </div>
+            `;
+        }
     }
 
+    const legacyImage =
+        post.image ||
+        post.image_url;
 
-    const first =
-        media[0];
-
-
-    if(
-        first.type ===
-        "image"
-    ){
-
+    if(legacyImage){
         return `
-
             <div class="search-post-media">
-
                 <img
                     class="search-post-media-image"
-                    src="${escapeHtml(
-                        first.url
-                    )}"
+                    src="${escapeHtml(legacyImage)}"
                     alt="Post image">
-
             </div>
-
         `;
-
     }
-
-
-    if(
-        first.type ===
-        "video"
-    ){
-
-        return `
-
-            <div class="search-post-media">
-
-                <video
-                    class="search-post-media-video"
-                    src="${escapeHtml(
-                        first.url
-                    )}"
-                    controls
-                    playsinline
-                    preload="metadata">
-                </video>
-
-            </div>
-
-        `;
-
-    }
-
-
-    if(
-        first.type ===
-        "document"
-    ){
-
-        return `
-
-            <div class="search-post-media">
-
-                <div class="search-post-media-document">
-
-                    <i class="fas fa-file-lines"></i>
-
-                    <span>
-                        ${escapeHtml(
-                            first.name ||
-                            "Document"
-                        )}
-                    </span>
-
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
 
     return "";
-
 }
 
 
@@ -7261,6 +7254,8 @@ async function initializePage(){
     await loadCommentCounts();
 
     await loadShareCounts();
+
+    await loadPostMedia();
 
     startMessageUnreadMonitoring();
 
