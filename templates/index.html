@@ -785,6 +785,212 @@ body{
 
 
 /* ==========================================
+   NEW POST MEDIA SUPPORT ONLY
+   Multiple Images / Video / Document
+========================================== */
+
+.post-media-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:8px;
+
+    margin-top:4px;
+
+}
+
+.post-media-item{
+
+    position:relative;
+
+    width:100%;
+
+    background:#f0f2f5;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    min-height:120px;
+
+}
+
+.post-media-item.single-media{
+
+    grid-column:
+        1 / -1;
+
+}
+
+.post-media-image{
+
+    width:100%;
+
+    height:300px;
+
+    object-fit:cover;
+
+    display:block;
+
+}
+
+.post-media-item.single-media
+.post-media-image{
+
+    max-height:500px;
+
+    height:auto;
+
+    min-height:180px;
+
+}
+
+.post-media-video{
+
+    width:100%;
+
+    height:300px;
+
+    display:block;
+
+    object-fit:contain;
+
+    background:#000;
+
+}
+
+.post-media-item.single-media
+.post-media-video{
+
+    height:auto;
+
+    max-height:600px;
+
+}
+
+.post-document{
+
+    min-height:120px;
+
+    padding:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    background:#f7f8fa;
+
+}
+
+.post-document-icon{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:14px;
+
+    background:#e8f1ff;
+
+    color:#1877f2;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:25px;
+
+    flex-shrink:0;
+
+}
+
+.post-document-info{
+
+    min-width:0;
+
+    flex:1;
+
+}
+
+.post-document-name{
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#222;
+
+    word-break:break-word;
+
+}
+
+.post-document-type{
+
+    margin-top:5px;
+
+    color:#888;
+
+    font-size:12px;
+
+}
+
+.post-document-open{
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#1877f2;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-decoration:none;
+
+    flex-shrink:0;
+
+}
+
+.post-media-more{
+
+    position:absolute;
+
+    right:10px;
+
+    bottom:10px;
+
+    padding:7px 10px;
+
+    border-radius:16px;
+
+    background:rgba(0,0,0,0.65);
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+}
+
+
+/* ==========================================
    POST ACTIONS
 ========================================== */
 
@@ -1380,6 +1586,7 @@ body{
     font-size:18px;
 
     font-weight:bold;
+
 }
 
 .comment-close{
@@ -1563,6 +1770,7 @@ body{
     padding:12px 15px;
 
     font-size:14px;
+
 }
 
 .comment-submit{
@@ -1621,6 +1829,7 @@ body{
     transition:
         background 0.2s ease,
         transform 0.1s ease;
+
 }
 
 .share-btn:hover{
@@ -1654,6 +1863,7 @@ body{
     opacity:0.6;
 
     pointer-events:none;
+
 }
 
 
@@ -1929,6 +2139,37 @@ body{
     margin-top:6px;
 }
 
+/* NEW: search media */
+.search-post-media{
+    margin-top:8px;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.search-post-media-image{
+    width:100%;
+    max-height:220px;
+    object-fit:cover;
+    display:block;
+}
+
+.search-post-media-video{
+    width:100%;
+    max-height:260px;
+    background:#000;
+    display:block;
+}
+
+.search-post-media-document{
+    padding:12px;
+    background:#f0f2f5;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size:12px;
+    color:#333;
+}
+
 .search-loading{
     text-align:center;
     padding:25px;
@@ -1942,11 +2183,6 @@ body{
 
 
 {% block content %}
-
-
-<!-- ==========================================
-     HEADER
-========================================== -->
 
 <div class="header">
 
@@ -1989,13 +2225,6 @@ body{
 
 </div>
 
-
-
-
-<!-- ==========================================
-     SEARCH OVERLAY
-     NEW SEARCH SYSTEM ONLY
-========================================== -->
 
 <div
     id="searchModal"
@@ -2090,10 +2319,6 @@ body{
 </div>
 
 
-<!-- ==========================================
-     CREATE POST
-========================================== -->
-
 <div class="create-post">
 
     <div class="create-top">
@@ -2112,14 +2337,7 @@ body{
 </div>
 
 
-<!-- ==========================================
-     QUICK MENU
-========================================== -->
-
 <div class="quick-menu">
-
-
-   
 
     <a
         href="/reels"
@@ -2131,7 +2349,8 @@ body{
             Reels Karo
         </div>
 
-    </a>  
+    </a>
+
     <a
         href="/rides"
         class="quick-card">
@@ -2169,9 +2388,6 @@ body{
     </a>
 
 
-
-
-
     <a
         href="/jobs"
         class="quick-card">
@@ -2200,25 +2416,11 @@ body{
 </div>
 
 
-<!-- ==========================================
-     REAL STATUS BAR
-========================================== -->
-
 <div
     class="stories"
     id="storiesContainer">
-
-    <!--
-        Real statuses are loaded here
-        using JavaScript.
-    -->
-
 </div>
 
-
-<!-- ==========================================
-     HIDDEN STATUS PHOTO INPUT
-========================================== -->
 
 <input
     type="file"
@@ -2226,41 +2428,24 @@ body{
     accept="image/*">
 
 
-<!-- ==========================================
-     FULL SCREEN STATUS VIEWER
-========================================== -->
-
 <div
     id="statusViewer"
     class="status-viewer">
 
-
-    <!-- TOP AREA -->
-
     <div class="status-viewer-top">
-
-
-        <!-- PROGRESS -->
 
         <div
             id="statusProgress"
             class="status-progress">
-
         </div>
-
-
-        <!-- CURRENT USER -->
 
         <div
             id="statusViewerUser"
             class="status-viewer-user">
-
         </div>
 
     </div>
 
-
-    <!-- CLOSE -->
 
     <button
         id="statusClose"
@@ -2271,8 +2456,6 @@ body{
     </button>
 
 
-    <!-- IMAGE -->
-
     <img
         id="statusViewerImage"
         class="status-viewer-image"
@@ -2280,36 +2463,23 @@ body{
         alt="Status">
 
 
-    <!-- PREVIOUS AREA -->
-
     <div
         id="statusPrev"
         class="status-prev">
-
     </div>
 
-
-    <!-- NEXT AREA -->
 
     <div
         id="statusNext"
         class="status-next">
-
     </div>
 
 </div>
 
 
-<!-- ==========================================
-     POSTS
-========================================== -->
-
 {% for post in posts %}
 
 <div class="post">
-
-
-    <!-- POST HEADER -->
 
     <div class="post-header">
 
@@ -2332,18 +2502,14 @@ body{
                 ">
 
                 <div class="post-user">
-
                     {{ post.name }}
-
                 </div>
 
             </a>
 
 
             <div class="post-time">
-
                 Trending Now
-
             </div>
 
         </div>
@@ -2351,33 +2517,128 @@ body{
     </div>
 
 
-    <!-- POST TEXT -->
-
     <div class="post-text">
-
         {{ post.caption }}
-
     </div>
 
 
-    <!-- POST IMAGE -->
+    <!-- ==========================================
+         POST MEDIA
+         Existing image support remains.
+         New media_urls support is optional.
+    =========================================== -->
 
-    {% if post.image %}
+    {% if post.media_urls %}
 
-    <img
-        class="post-image"
-        src="{{ post.image }}"
-        alt="Post image">
+        <div
+            class="post-media-grid">
+
+            {% for media in post.media_urls %}
+
+                {% if media.type == "image" %}
+
+                    <div
+                        class="
+                            post-media-item
+                            {% if post.media_urls|length == 1 %}
+                                single-media
+                            {% endif %}
+                        ">
+
+                        <img
+                            class="post-media-image"
+                            src="{{ media.url }}"
+                            alt="Post image">
+
+                    </div>
+
+                {% elif media.type == "video" %}
+
+                    <div
+                        class="
+                            post-media-item
+                            {% if post.media_urls|length == 1 %}
+                                single-media
+                            {% endif %}
+                        ">
+
+                        <video
+                            class="post-media-video"
+                            src="{{ media.url }}"
+                            controls
+                            playsinline
+                            preload="metadata">
+                        </video>
+
+                    </div>
+
+                {% elif media.type == "document" %}
+
+                    <div
+                        class="
+                            post-media-item
+                            post-document
+                            {% if post.media_urls|length == 1 %}
+                                single-media
+                            {% endif %}
+                        ">
+
+                        <div class="post-document-icon">
+
+                            <i class="fas fa-file-lines"></i>
+
+                        </div>
+
+
+                        <div class="post-document-info">
+
+                            <div class="post-document-name">
+
+                                {{ media.name or "Document" }}
+
+                            </div>
+
+                            <div class="post-document-type">
+
+                                Document
+
+                            </div>
+
+                        </div>
+
+
+                        <a
+                            class="post-document-open"
+                            href="{{ media.url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="Open document">
+
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    {% elif post.image %}
+
+        <!-- Existing single-image compatibility -->
+
+        <img
+            class="post-image"
+            src="{{ post.image }}"
+            alt="Post image">
 
     {% endif %}
 
 
-    <!-- POST ACTIONS -->
-
     <div class="post-actions">
-
-
-        <!-- LIKE -->
 
         <div
             class="like-btn"
@@ -2393,8 +2654,6 @@ body{
         </div>
 
 
-        <!-- COMMENT -->
-
         <div
             class="comment-btn"
             data-post-id="{{ post.id }}"
@@ -2408,8 +2667,6 @@ body{
 
         </div>
 
-
-        <!-- SHARE -->
 
         <div
             class="share-btn"
@@ -2430,21 +2687,13 @@ body{
 {% endfor %}
 
 
-<!-- ==========================================
-     COMMENT BOTTOM SHEET
-========================================== -->
-
 <div
     id="commentOverlay"
     class="comment-overlay">
 
-
     <div
         class="comment-sheet"
         onclick="event.stopPropagation()">
-
-
-        <!-- COMMENT HEADER -->
 
         <div class="comment-sheet-header">
 
@@ -2460,9 +2709,7 @@ body{
                         color:#888;
                         font-size:14px;
                     ">
-
                     0
-
                 </span>
 
             </div>
@@ -2479,16 +2726,11 @@ body{
         </div>
 
 
-        <!-- COMMENTS LIST -->
-
         <div
             id="commentSheetList"
             class="comment-sheet-list">
-
         </div>
 
-
-        <!-- COMMENT INPUT -->
 
         <div class="comment-input-area">
 
@@ -2520,22 +2762,13 @@ body{
 </div>
 
 
-<!-- ==========================================
-     CREATE MENU
-     NEW REQUIREMENT ONLY
-========================================== -->
-
 <div
     id="createMenuOverlay"
     class="create-menu-overlay">
 
-
     <div
         class="create-menu"
         onclick="event.stopPropagation()">
-
-
-        <!-- CREATE HEADER -->
 
         <div class="create-menu-header">
 
@@ -2564,14 +2797,7 @@ body{
         </div>
 
 
-        <!-- CREATE OPTIONS -->
-
         <div class="create-options">
-
-
-            <!-- ==================================
-                 NEW POST
-            ================================== -->
 
             <a
                 href="/new-post"
@@ -2604,11 +2830,6 @@ body{
 
             </a>
 
-
-            <!-- ==================================
-                 ADD STATUS
-                 USES EXISTING STATUS SYSTEM
-            ================================== -->
 
             <button
                 type="button"
@@ -2643,10 +2864,6 @@ body{
             </button>
 
 
-            <!-- ==================================
-                 NEW REEL
-            ================================== -->
-
             <a
                 href="/reels"
                 class="create-option">
@@ -2678,10 +2895,6 @@ body{
 
             </a>
 
-
-            <!-- ==================================
-                 NEW LIFT
-            ================================== -->
 
             <a
                 href="/rides"
@@ -2717,10 +2930,6 @@ body{
             </a>
 
 
-            <!-- ==================================
-                 NEW PRODUCT
-            ================================== -->
-
             <a
                 href="/marketplace"
                 class="create-option">
@@ -2753,10 +2962,6 @@ body{
             </a>
 
 
-            <!-- ==================================
-                 NEW JOB
-            ================================== -->
-
             <a
                 href="/jobs"
                 class="create-option">
@@ -2788,18 +2993,12 @@ body{
 
             </a>
 
-
         </div>
 
     </div>
 
 </div>
 
-
-<!-- ==========================================
-     FLOATING BUTTON
-     CHANGED ONLY FROM LINK TO BUTTON
-========================================== -->
 
 <button
     type="button"
@@ -2812,12 +3011,7 @@ body{
 </button>
 
 
-<!-- ==========================================
-     BOTTOM NAVIGATION
-========================================== -->
-
 <div class="bottom-nav">
-
 
     <a
         href="/"
@@ -2876,15 +3070,10 @@ body{
 </div>
 
 
-<!-- ==========================================
-     SUPABASE
-========================================== -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
-
 
 const SUPABASE_URL =
     "https://jxpvkamxtedgzztozonl.supabase.co";
@@ -2901,10 +3090,6 @@ const supabaseClient =
     );
 
 
-/* ==========================================
-   CURRENT USER
-========================================== */
-
 let currentUser = null;
 
 let currentProfile = null;
@@ -2913,7 +3098,6 @@ let currentProfile = null;
 async function loadCurrentUser(){
 
     try{
-
 
         const {
 
@@ -3068,11 +3252,8 @@ async function loadCurrentUser(){
 
 
 /* =========================================================
-   =========================================================
    CREATE MENU
-   NEW REQUIREMENT ONLY
-   =========================================================
-   ========================================================= */
+========================================================= */
 
 const createMenuBtn =
     document.getElementById(
@@ -3098,10 +3279,6 @@ const createStatusOption =
     );
 
 
-/* ==========================================
-   OPEN CREATE MENU
-========================================== */
-
 function openCreateMenu(){
 
     createMenuOverlay.classList.add(
@@ -3114,10 +3291,6 @@ function openCreateMenu(){
 }
 
 
-/* ==========================================
-   CLOSE CREATE MENU
-========================================== */
-
 function closeCreateMenu(){
 
     createMenuOverlay.classList.remove(
@@ -3129,10 +3302,6 @@ function closeCreateMenu(){
 
 }
 
-
-/* ==========================================
-   PLUS BUTTON
-========================================== */
 
 if(createMenuBtn){
 
@@ -3152,10 +3321,6 @@ if(createMenuBtn){
 }
 
 
-/* ==========================================
-   CLOSE BUTTON
-========================================== */
-
 if(createMenuClose){
 
     createMenuClose.addEventListener(
@@ -3171,10 +3336,6 @@ if(createMenuClose){
 
 }
 
-
-/* ==========================================
-   CLICK OUTSIDE
-========================================== */
 
 if(createMenuOverlay){
 
@@ -3197,13 +3358,6 @@ if(createMenuOverlay){
 }
 
 
-/* ==========================================
-   ADD STATUS
-   IMPORTANT:
-   USE EXISTING STATUS INPUT
-   NO STATUS SYSTEM CHANGED
-========================================== */
-
 if(createStatusOption){
 
     createStatusOption.addEventListener(
@@ -3213,12 +3367,6 @@ if(createStatusOption){
             event.preventDefault();
 
             closeCreateMenu();
-
-
-            /*
-            Wait briefly so the
-            Create sheet closes first.
-            */
 
             setTimeout(
                 function(){
@@ -3233,11 +3381,6 @@ if(createStatusOption){
 
                     }
 
-
-                    /*
-                    Existing status system
-                    */
-
                     statusPhotoInput.click();
 
                 },
@@ -3249,11 +3392,6 @@ if(createStatusOption){
 
 }
 
-
-/* ==========================================
-   ESCAPE KEY
-   CREATE MENU ONLY
-========================================== */
 
 document.addEventListener(
     "keydown",
@@ -3282,15 +3420,8 @@ document.addEventListener(
 
 
 /* =========================================================
-   =========================================================
    REAL STATUS SYSTEM
-   =========================================================
-   ========================================================= */
-
-
-/* ==========================================
-   STATUS VARIABLES
-========================================== */
+========================================================= */
 
 let allStatuses = [];
 
@@ -3300,10 +3431,6 @@ let statusTimer = null;
 
 let statusProgressTimer = null;
 
-
-/* ==========================================
-   STATUS ELEMENTS
-========================================== */
 
 const storiesContainer =
     document.getElementById(
@@ -3359,10 +3486,6 @@ const statusPrev =
     );
 
 
-/* ==========================================
-   LOAD REAL STATUSES
-========================================== */
-
 async function loadStatuses(){
 
     if(!currentUser){
@@ -3373,13 +3496,6 @@ async function loadStatuses(){
 
 
     try{
-
-        /*
-        ======================================
-        STEP 1
-        Find people current user follows
-        ======================================
-        */
 
         const {
 
@@ -3423,21 +3539,11 @@ async function loadStatuses(){
                 );
 
 
-        /*
-        ======================================
-        Include own status
-        ======================================
-        */
-
         const userIds = [
             currentUser.id,
             ...followingIds
         ];
 
-
-        /*
-        Remove duplicate IDs
-        */
 
         const uniqueUserIds =
             [
@@ -3446,13 +3552,6 @@ async function loadStatuses(){
                 )
             ];
 
-
-        /*
-        ======================================
-        STEP 2
-        Load statuses from last 24 hours
-        ======================================
-        */
 
         const yesterday =
             new Date(
@@ -3518,13 +3617,6 @@ async function loadStatuses(){
         }
 
 
-        /*
-        ======================================
-        STEP 3
-        Load profiles
-        ======================================
-        */
-
         const statusUserIds =
             [
                 ...new Set(
@@ -3565,13 +3657,6 @@ async function loadStatuses(){
 
         }
 
-
-        /*
-        ======================================
-        STEP 4
-        Combine status + profile
-        ======================================
-        */
 
         allStatuses =
             statusRows.map(
@@ -3637,10 +3722,6 @@ async function loadStatuses(){
 }
 
 
-/* ==========================================
-   RENDER STATUS BAR
-========================================== */
-
 function renderStatusBar(
     statuses
 ){
@@ -3648,12 +3729,6 @@ function renderStatusBar(
     storiesContainer.innerHTML =
         "";
 
-
-    /*
-    ======================================
-    ADD STATUS CARD
-    ======================================
-    */
 
     const addCard =
         document.createElement(
@@ -3735,12 +3810,6 @@ function renderStatusBar(
     );
 
 
-    /*
-    ======================================
-    GROUP STATUS BY USER
-    ======================================
-    */
-
     const grouped =
         new Map();
 
@@ -3773,12 +3842,6 @@ function renderStatusBar(
         }
     );
 
-
-    /*
-    ======================================
-    SORT OWN USER FIRST
-    ======================================
-    */
 
     const groups =
         [
@@ -3815,20 +3878,10 @@ function renderStatusBar(
     );
 
 
-    /*
-    ======================================
-    CREATE USER STATUS CARDS
-    ======================================
-    */
-
     groups.forEach(
         function(
             [userId,userStatuses]
         ){
-
-            /*
-            Latest status first
-            */
 
             userStatuses.sort(
                 function(a,b){
@@ -3922,10 +3975,6 @@ function renderStatusBar(
 }
 
 
-/* ==========================================
-   STATUS PHOTO SELECTED
-========================================== */
-
 statusPhotoInput.addEventListener(
     "change",
     async function(){
@@ -3978,12 +4027,6 @@ statusPhotoInput.addEventListener(
 
         try{
 
-            /*
-            ==================================
-            UNIQUE FILE NAME
-            ==================================
-            */
-
             const extension =
                 file.name
                     .split(".")
@@ -3998,12 +4041,6 @@ statusPhotoInput.addEventListener(
                 "." +
                 extension;
 
-
-            /*
-            ==================================
-            UPLOAD TO EXISTING BUCKET
-            ==================================
-            */
 
             const {
 
@@ -4046,12 +4083,6 @@ statusPhotoInput.addEventListener(
             );
 
 
-            /*
-            ==================================
-            GET PUBLIC URL
-            ==================================
-            */
-
             const {
 
                 data:publicData
@@ -4071,12 +4102,6 @@ statusPhotoInput.addEventListener(
             const publicUrl =
                 publicData.publicUrl;
 
-
-            /*
-            ==================================
-            INSERT STATUS RECORD
-            ==================================
-            */
 
             const {
 
@@ -4120,10 +4145,6 @@ statusPhotoInput.addEventListener(
             );
 
 
-            /*
-            Reload status bar
-            */
-
             await loadStatuses();
 
         }
@@ -4152,10 +4173,6 @@ statusPhotoInput.addEventListener(
 );
 
 
-/* ==========================================
-   OPEN STATUS GROUP
-========================================== */
-
 function openStatusGroup(
     statuses
 ){
@@ -4169,11 +4186,6 @@ function openStatusGroup(
 
     }
 
-
-    /*
-    Sort oldest → newest
-    so viewer can move naturally
-    */
 
     const sortedStatuses =
         [
@@ -4205,10 +4217,6 @@ function openStatusGroup(
 
 }
 
-
-/* ==========================================
-   OPEN STATUS VIEWER
-========================================== */
 
 function openStatusViewer(){
 
@@ -4281,12 +4289,6 @@ function openStatusViewer(){
     renderStatusProgress();
 
 
-    /*
-    ======================================
-    4 SECOND TIMER
-    ======================================
-    */
-
     let progress =
         0;
 
@@ -4357,10 +4359,6 @@ function openStatusViewer(){
 }
 
 
-/* ==========================================
-   STATUS PROGRESS BARS
-========================================== */
-
 function renderStatusProgress(){
 
     statusProgress.innerHTML =
@@ -4416,10 +4414,6 @@ function renderStatusProgress(){
 }
 
 
-/* ==========================================
-   NEXT STATUS
-========================================== */
-
 function showNextStatus(){
 
     clearStatusTimers();
@@ -4444,10 +4438,6 @@ function showNextStatus(){
 }
 
 
-/* ==========================================
-   PREVIOUS STATUS
-========================================== */
-
 function showPreviousStatus(){
 
     clearStatusTimers();
@@ -4471,10 +4461,6 @@ function showPreviousStatus(){
 
 }
 
-
-/* ==========================================
-   CLEAR STATUS TIMERS
-========================================== */
 
 function clearStatusTimers(){
 
@@ -4504,10 +4490,6 @@ function clearStatusTimers(){
 }
 
 
-/* ==========================================
-   CLOSE STATUS VIEWER
-========================================== */
-
 function closeStatusViewer(){
 
     clearStatusTimers();
@@ -4532,10 +4514,6 @@ function closeStatusViewer(){
 }
 
 
-/* ==========================================
-   STATUS NEXT CLICK
-========================================== */
-
 statusNext.addEventListener(
     "click",
     function(event){
@@ -4547,10 +4525,6 @@ statusNext.addEventListener(
     }
 );
 
-
-/* ==========================================
-   STATUS PREVIOUS CLICK
-========================================== */
 
 statusPrev.addEventListener(
     "click",
@@ -4564,10 +4538,6 @@ statusPrev.addEventListener(
 );
 
 
-/* ==========================================
-   STATUS CLOSE CLICK
-========================================== */
-
 statusClose.addEventListener(
     "click",
     function(event){
@@ -4579,10 +4549,6 @@ statusClose.addEventListener(
     }
 );
 
-
-/* ==========================================
-   ESC KEY
-========================================== */
 
 document.addEventListener(
     "keydown",
@@ -4608,10 +4574,6 @@ document.addEventListener(
     }
 );
 
-
-/* ==========================================
-   STATUS SWIPE SUPPORT
-========================================== */
 
 let statusTouchStartX =
     0;
@@ -4692,15 +4654,8 @@ statusViewer.addEventListener(
 
 
 /* =========================================================
-   =========================================================
-   EXISTING LIKE CODE
-   =========================================================
-   ========================================================= */
-
-
-/* ==========================================
-   LOAD LIKE COUNTS
-========================================== */
+   LIKE
+========================================================= */
 
 async function loadLikes(){
 
@@ -4844,10 +4799,6 @@ async function loadLikes(){
 }
 
 
-/* ==========================================
-   LIKE / UNLIKE
-========================================== */
-
 document.addEventListener(
     "click",
     async function(event){
@@ -4895,7 +4846,6 @@ document.addEventListener(
 
 
         try{
-
 
             const {
 
@@ -5012,23 +4962,12 @@ document.addEventListener(
 
 
 /* =========================================================
-   =========================================================
-   EXISTING COMMENT CODE
-   =========================================================
-   ========================================================= */
-
-
-/* ==========================================
    COMMENTS
-========================================== */
+========================================================= */
 
 let activeCommentPostId =
     null;
 
-
-/* ==========================================
-   LOAD COMMENTS
-========================================== */
 
 async function loadComments(
     postId
@@ -5257,10 +5196,6 @@ async function loadComments(
 }
 
 
-/* ==========================================
-   COMMENT COUNTS
-========================================== */
-
 async function loadCommentCounts(){
 
     const buttons =
@@ -5332,10 +5267,6 @@ async function loadCommentCounts(){
 }
 
 
-/* ==========================================
-   OPEN COMMENT SHEET
-========================================== */
-
 document.addEventListener(
     "click",
     async function(event){
@@ -5397,10 +5328,6 @@ document.addEventListener(
 );
 
 
-/* ==========================================
-   CLOSE COMMENT SHEET
-========================================== */
-
 function closeCommentSheet(){
 
     const overlay =
@@ -5450,10 +5377,6 @@ document.getElementById(
     }
 );
 
-
-/* ==========================================
-   SUBMIT COMMENT
-========================================== */
 
 async function submitComment(){
 
@@ -5590,10 +5513,6 @@ document.getElementById(
 );
 
 
-/* ==========================================
-   ENTER TO SEND COMMENT
-========================================== */
-
 document.getElementById(
     "commentInput"
 ).addEventListener(
@@ -5616,15 +5535,8 @@ document.getElementById(
 
 
 /* =========================================================
-   =========================================================
-   EXISTING SHARE CODE
-   =========================================================
-   ========================================================= */
-
-
-/* ==========================================
-   SHARE COUNTS
-========================================== */
+   SHARE
+========================================================= */
 
 async function loadShareCounts(){
 
@@ -5706,10 +5618,6 @@ async function loadShareCounts(){
 }
 
 
-/* ==========================================
-   SHARE POST
-========================================== */
-
 document.addEventListener(
     "click",
     async function(event){
@@ -5760,12 +5668,6 @@ document.addEventListener(
             button.dataset.postId;
 
 
-        /*
-        IMPORTANT:
-        Always use the real Pathukkalam
-        domain for shared links.
-        */
-
         const shareUrl =
             "https://pathukkalam.in/post/" +
             postId;
@@ -5781,21 +5683,9 @@ document.addEventListener(
 
         try{
 
-
-            /*
-            ======================================
-            STEP 1
-            SHARE THE POST
-            ======================================
-            */
-
             let shareCompleted =
                 false;
 
-
-            /*
-            Mobile / supported browsers
-            */
 
             if(
                 navigator.share
@@ -5823,11 +5713,6 @@ document.addEventListener(
                 }
                 catch(error){
 
-                    /*
-                    User cancelled share.
-                    Do NOT count it.
-                    */
-
                     if(
                         error.name ===
                         "AbortError"
@@ -5841,10 +5726,6 @@ document.addEventListener(
 
                     }
 
-                    /*
-                    If native sharing fails,
-                    continue to clipboard fallback.
-                    */
 
                     console.warn(
                         "Native share failed:",
@@ -5855,12 +5736,6 @@ document.addEventListener(
 
             }
 
-
-            /*
-            ======================================
-            DESKTOP / FALLBACK
-            ======================================
-            */
 
             if(
                 !shareCompleted
@@ -5907,13 +5782,6 @@ document.addEventListener(
 
             }
 
-
-            /*
-            ======================================
-            STEP 2
-            RECORD REAL SHARE
-            ======================================
-            */
 
             if(
                 shareCompleted
@@ -5963,13 +5831,6 @@ document.addEventListener(
                 }
 
 
-                /*
-                ==================================
-                STEP 3
-                REFRESH SHARE COUNT
-                ==================================
-                */
-
                 await loadShareCounts();
 
             }
@@ -5995,15 +5856,9 @@ document.addEventListener(
 );
 
 
-
-
-
 /* =========================================================
-   =========================================================
    SEARCH SYSTEM
-   NEW SEARCH ONLY - EXISTING SYSTEMS ARE NOT CHANGED
-   =========================================================
-   ========================================================= */
+========================================================= */
 
 const openSearchBtn =
     document.getElementById(
@@ -6045,10 +5900,6 @@ let searchResultPosts = [];
 let activeSearchFilter = "all";
 
 
-/* ==========================================
-   OPEN SEARCH
-========================================== */
-
 function openSearch(){
 
     searchModal.classList.add("active");
@@ -6074,10 +5925,6 @@ function openSearch(){
     },100);
 }
 
-
-/* ==========================================
-   CLOSE SEARCH
-========================================== */
 
 function closeSearch(){
 
@@ -6116,14 +5963,6 @@ searchCloseBtn.addEventListener(
 );
 
 
-/* Search is now an inline section below the header.
-   No popup/backdrop is used. */
-
-
-/* ==========================================
-   SEARCH BY ENTER
-========================================== */
-
 searchInput.addEventListener(
     "keydown",
     function(event){
@@ -6151,11 +5990,6 @@ searchSubmitBtn.addEventListener(
     performSearch
 );
 
-
-/* ==========================================
-   PERFORM GLOBAL SEARCH
-   SEARCHES THE ENTIRE PATHUKKALAM DATABASE
-========================================== */
 
 async function performSearch(){
 
@@ -6210,19 +6044,6 @@ async function performSearch(){
 
     try{
 
-        /*
-        ======================================
-        STEP 1
-        SEARCH ALL PROFILES GLOBALLY
-
-        Example:
-        "Excel" will match:
-        Excel Kumar
-        My Excel World
-        excel_user
-        ======================================
-        */
-
         const {
             data:namePeople,
             error:nameError
@@ -6263,13 +6084,6 @@ async function performSearch(){
         }
 
 
-        /*
-        ======================================
-        MERGE PEOPLE RESULTS
-        REMOVE DUPLICATES
-        ======================================
-        */
-
         const peopleMap = new Map();
 
         [
@@ -6298,16 +6112,8 @@ async function performSearch(){
 
 
         /*
-        ======================================
-        STEP 2
-        SEARCH ALL POSTS GLOBALLY
-
-        Example:
-        "Excel" matches:
-        "I am teaching Excel..."
-        "Excel automation..."
-        "Advanced Excel..."
-        ======================================
+        NEW MEDIA SUPPORT:
+        Read existing image plus new media fields.
         */
 
         const {
@@ -6317,7 +6123,7 @@ async function performSearch(){
         await supabaseClient
             .from("posts")
             .select(
-                "id, user_id, caption, image, created_at"
+                "id, user_id, caption, image, image_url, media_urls, media_type, created_at"
             )
             .ilike(
                 "caption",
@@ -6335,13 +6141,6 @@ async function performSearch(){
             throw postsError;
         }
 
-
-        /*
-        ======================================
-        STEP 3
-        LOAD POST AUTHORS
-        ======================================
-        */
 
         const postUserIds =
             [
@@ -6382,12 +6181,6 @@ async function performSearch(){
         }
 
 
-        /*
-        ======================================
-        BUILD POST RESULTS
-        ======================================
-        */
-
         searchResultPosts =
             (postRows || [])
                 .map(function(post){
@@ -6420,18 +6213,6 @@ async function performSearch(){
 
                 });
 
-
-        /*
-        ======================================
-        STEP 4
-        GET FOLLOW STATUS FOR SEARCH PEOPLE
-
-        This is also GLOBAL.
-        It does NOT limit the search.
-        It only tells us whether the
-        current user already follows them.
-        ======================================
-        */
 
         const peopleIds =
             searchResultPeople
@@ -6538,10 +6319,6 @@ async function performSearch(){
 }
 
 
-/* ==========================================
-   FILTER BUTTONS
-========================================== */
-
 document
     .querySelectorAll(
         ".search-filter-btn"
@@ -6584,10 +6361,6 @@ function setActiveSearchFilter(filter){
 
 }
 
-
-/* ==========================================
-   RENDER SEARCH RESULTS
-========================================== */
 
 function renderSearchResults(){
 
@@ -6686,10 +6459,6 @@ function renderSearchResults(){
 
 }
 
-
-/* ==========================================
-   RENDER PERSON
-========================================== */
 
 function renderSearchPerson(person){
 
@@ -6803,10 +6572,6 @@ function renderSearchPerson(person){
 }
 
 
-/* ==========================================
-   SEARCH FOLLOW / UNFOLLOW
-========================================== */
-
 async function toggleSearchFollow(
     person,
     button
@@ -6901,11 +6666,6 @@ async function toggleSearchFollow(
 
             person.is_following = true;
 
-            /*
-            Notification only after successful
-            follower insert.
-            */
-
             await createSearchFollowNotification(
                 person
             );
@@ -6937,10 +6697,6 @@ async function toggleSearchFollow(
 
 }
 
-
-/* ==========================================
-   SEARCH FOLLOW NOTIFICATION
-========================================== */
 
 async function createSearchFollowNotification(
     person
@@ -7005,7 +6761,200 @@ async function createSearchFollowNotification(
 
 
 /* ==========================================
-   RENDER POST
+   NEW MEDIA SEARCH RENDER ONLY
+========================================== */
+
+function getSearchPostMedia(
+    post
+){
+
+    if(
+        Array.isArray(post.media_urls) &&
+        post.media_urls.length
+    ){
+
+        return post.media_urls;
+
+    }
+
+    /*
+    Some Supabase responses can expose jsonb
+    as a string depending on backend handling.
+    */
+
+    if(
+        typeof post.media_urls ===
+        "string"
+    ){
+
+        try{
+
+            const parsed =
+                JSON.parse(
+                    post.media_urls
+                );
+
+            if(
+                Array.isArray(parsed)
+            ){
+
+                return parsed;
+
+            }
+
+        }
+        catch(error){
+
+            console.warn(
+                "Unable to parse media_urls:",
+                error
+            );
+
+        }
+
+    }
+
+    if(post.image){
+
+        return [
+            {
+                type:
+                    "image",
+
+                url:
+                    post.image
+
+            }
+        ];
+
+    }
+
+    if(post.image_url){
+
+        return [
+            {
+                type:
+                    "image",
+
+                url:
+                    post.image_url
+
+            }
+        ];
+
+    }
+
+    return [];
+
+}
+
+
+function renderSearchPostMedia(
+    post
+){
+
+    const media =
+        getSearchPostMedia(
+            post
+        );
+
+
+    if(!media.length){
+
+        return "";
+
+    }
+
+
+    const first =
+        media[0];
+
+
+    if(
+        first.type ===
+        "image"
+    ){
+
+        return `
+
+            <div class="search-post-media">
+
+                <img
+                    class="search-post-media-image"
+                    src="${escapeHtml(
+                        first.url
+                    )}"
+                    alt="Post image">
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(
+        first.type ===
+        "video"
+    ){
+
+        return `
+
+            <div class="search-post-media">
+
+                <video
+                    class="search-post-media-video"
+                    src="${escapeHtml(
+                        first.url
+                    )}"
+                    controls
+                    playsinline
+                    preload="metadata">
+                </video>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(
+        first.type ===
+        "document"
+    ){
+
+        return `
+
+            <div class="search-post-media">
+
+                <div class="search-post-media-document">
+
+                    <i class="fas fa-file-lines"></i>
+
+                    <span>
+                        ${escapeHtml(
+                            first.name ||
+                            "Document"
+                        )}
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    return "";
+
+}
+
+
+/* ==========================================
+   RENDER SEARCH POST
 ========================================== */
 
 function renderSearchPost(post){
@@ -7022,15 +6971,18 @@ function renderSearchPost(post){
             post.id
         );
 
-    const imageHtml =
-        post.image
-            ? `
-                <img
-                    class="search-post-image"
-                    src="${escapeHtml(post.image)}"
-                    alt="Post image">
-              `
-            : "";
+
+    /*
+    Existing image rendering is replaced only
+    by the media-aware helper. Old image posts
+    continue to render normally.
+    */
+
+    const mediaHtml =
+        renderSearchPostMedia(
+            post
+        );
+
 
     link.innerHTML = `
 
@@ -7064,7 +7016,7 @@ function renderSearchPost(post){
             )}
         </div>
 
-        ${imageHtml}
+        ${mediaHtml}
 
         <div class="search-post-time">
             ${formatSearchPostTime(
@@ -7078,10 +7030,6 @@ function renderSearchPost(post){
 
 }
 
-
-/* ==========================================
-   SEARCH POST TIME
-========================================== */
 
 function formatSearchPostTime(
     createdAt
@@ -7133,10 +7081,6 @@ function formatSearchPostTime(
 }
 
 
-/* ==========================================
-   HTML SAFETY
-========================================== */
-
 function escapeHtml(value){
 
     const div =
@@ -7154,15 +7098,8 @@ function escapeHtml(value){
 }
 
 
-/* ==========================================
-   START
-========================================== */
-
-
-
 /* =========================================================
    MESSAGE UNREAD INDICATOR
-   NEW ONLY - EXISTING HOME FEATURES ARE NOT CHANGED
 ========================================================= */
 
 const messageUnreadBadge =
@@ -7195,10 +7132,6 @@ function renderMessageUnreadBadge(count){
 }
 
 
-/*
-   Counts only messages received by the current user
-   which are still marked unread.
-*/
 async function loadUnreadMessageCount(){
 
     if(!currentUser){
@@ -7249,10 +7182,6 @@ async function loadUnreadMessageCount(){
 }
 
 
-/*
-   Check every 5 seconds. This also works when
-   Supabase Realtime is not enabled.
-*/
 function startMessageUnreadMonitoring(){
 
     loadUnreadMessageCount();
@@ -7273,11 +7202,6 @@ function startMessageUnreadMonitoring(){
 }
 
 
-/*
-   If Realtime is enabled for public.messages,
-   new messages can update the badge immediately.
-   The 5-second polling remains as a fallback.
-*/
 function startMessageRealtime(){
 
     if(!currentUser || messageUnreadChannel){
@@ -7316,7 +7240,6 @@ function startMessageRealtime(){
 }
 
 
-/* Refresh immediately when coming back from /messages. */
 document.addEventListener(
     "visibilitychange",
     function(){
@@ -7331,16 +7254,7 @@ async function initializePage(){
 
     await loadCurrentUser();
 
-    /*
-    Load real statuses after
-    current user/profile is ready.
-    */
-
     await loadStatuses();
-
-    /*
-    Existing working functions
-    */
 
     await loadLikes();
 
@@ -7348,8 +7262,8 @@ async function initializePage(){
 
     await loadShareCounts();
 
-    /* NEW: message unread badge only. */
     startMessageUnreadMonitoring();
+
     startMessageRealtime();
 
 }
