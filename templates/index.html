@@ -808,7 +808,7 @@ body{
 
 
 /* ==========================================
-   FLOATING BUTTON
+   FLOATING CREATE BUTTON
 ========================================== */
 
 .new-post-btn{
@@ -850,6 +850,381 @@ body{
     z-index:2000;
 
     border:4px solid white;
+
+    cursor:pointer;
+
+    padding:0;
+}
+
+
+/* ==========================================
+   CREATE MENU
+   NEW REQUIREMENT ONLY
+========================================== */
+
+.create-menu-overlay{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,0.45);
+
+    z-index:6000;
+
+    align-items:flex-end;
+
+    justify-content:center;
+
+    padding:0;
+
+}
+
+.create-menu-overlay.active{
+
+    display:flex;
+
+}
+
+
+/* ==========================================
+   CREATE MENU SHEET
+========================================== */
+
+.create-menu{
+
+    width:100%;
+
+    max-width:650px;
+
+    background:white;
+
+    border-radius:
+        24px 24px 0 0;
+
+    padding:
+        18px
+        16px
+        25px;
+
+    box-shadow:
+        0 -8px 30px
+        rgba(0,0,0,0.18);
+
+    animation:
+        createMenuUp
+        0.25s ease;
+
+}
+
+@keyframes createMenuUp{
+
+    from{
+
+        transform:
+            translateY(100%);
+
+    }
+
+    to{
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================
+   CREATE MENU HEADER
+========================================== */
+
+.create-menu-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:14px;
+
+}
+
+.create-menu-title{
+
+    font-size:21px;
+
+    font-weight:bold;
+
+    color:#222;
+
+}
+
+.create-menu-subtitle{
+
+    font-size:12px;
+
+    color:#888;
+
+    margin-top:3px;
+
+}
+
+.create-menu-close{
+
+    width:38px;
+
+    height:38px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f0f2f5;
+
+    color:#444;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+
+/* ==========================================
+   CREATE OPTIONS
+========================================== */
+
+.create-options{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:7px;
+
+}
+
+.create-option{
+
+    width:100%;
+
+    min-height:62px;
+
+    border:none;
+
+    background:white;
+
+    border-radius:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    text-align:left;
+
+    text-decoration:none;
+
+    color:inherit;
+
+    padding:
+        8px
+        10px;
+
+    cursor:pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+
+}
+
+.create-option:hover{
+
+    background:#f5f6f7;
+
+}
+
+.create-option:active{
+
+    transform:scale(0.98);
+
+}
+
+
+/* ==========================================
+   CREATE OPTION ICON
+========================================== */
+
+.create-option-icon{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    margin-right:12px;
+
+    font-size:19px;
+
+}
+
+
+/* ==========================================
+   CREATE OPTION TEXT
+========================================== */
+
+.create-option-text{
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+.create-option-text strong{
+
+    display:block;
+
+    font-size:14px;
+
+    color:#222;
+
+}
+
+.create-option-text span{
+
+    display:block;
+
+    font-size:11px;
+
+    color:#888;
+
+    margin-top:3px;
+
+}
+
+
+/* ==========================================
+   CREATE ARROW
+========================================== */
+
+.create-arrow{
+
+    color:#aaa;
+
+    font-size:13px;
+
+    margin-left:8px;
+
+}
+
+
+/* ==========================================
+   CREATE ICON COLORS
+========================================== */
+
+.post-icon{
+
+    background:#e8f1ff;
+
+    color:#1877f2;
+
+}
+
+.status-icon{
+
+    background:#fff3df;
+
+    color:#f39c12;
+
+}
+
+.reel-icon{
+
+    background:#f0e8ff;
+
+    color:#8e44ad;
+
+}
+
+.lift-icon{
+
+    background:#e8f7ef;
+
+    color:#27ae60;
+
+    gap:2px;
+
+}
+
+.lift-icon i{
+
+    font-size:14px;
+
+}
+
+.product-icon{
+
+    background:#fff0f0;
+
+    color:#e74c3c;
+
+}
+
+.job-icon{
+
+    background:#edf0f5;
+
+    color:#34495e;
+
+}
+
+
+/* ==========================================
+   MOBILE CREATE MENU
+========================================== */
+
+@media(max-width:600px){
+
+    .create-menu{
+
+        padding:
+            16px
+            12px
+            22px;
+
+        border-radius:
+            22px 22px 0 0;
+
+    }
+
+    .create-option{
+
+        min-height:60px;
+
+    }
+
 }
 
 
@@ -2146,16 +2521,295 @@ body{
 
 
 <!-- ==========================================
-     FLOATING BUTTON
+     CREATE MENU
+     NEW REQUIREMENT ONLY
 ========================================== -->
 
-<a
-    href="/new-post"
-    class="new-post-btn">
+<div
+    id="createMenuOverlay"
+    class="create-menu-overlay">
+
+
+    <div
+        class="create-menu"
+        onclick="event.stopPropagation()">
+
+
+        <!-- CREATE HEADER -->
+
+        <div class="create-menu-header">
+
+            <div>
+
+                <div class="create-menu-title">
+                    Create
+                </div>
+
+                <div class="create-menu-subtitle">
+                    What would you like to share?
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="createMenuClose"
+                class="create-menu-close">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- CREATE OPTIONS -->
+
+        <div class="create-options">
+
+
+            <!-- ==================================
+                 NEW POST
+            ================================== -->
+
+            <a
+                href="/new-post"
+                class="create-option">
+
+                <div
+                    class="create-option-icon post-icon">
+
+                    <i class="fas fa-pen"></i>
+
+                </div>
+
+
+                <div class="create-option-text">
+
+                    <strong>
+                        New Post
+                    </strong>
+
+                    <span>
+                        Share something with Pathukkalam
+                    </span>
+
+                </div>
+
+
+                <i
+                    class="fas fa-chevron-right create-arrow">
+                </i>
+
+            </a>
+
+
+            <!-- ==================================
+                 ADD STATUS
+                 USES EXISTING STATUS SYSTEM
+            ================================== -->
+
+            <button
+                type="button"
+                class="create-option"
+                id="createStatusOption">
+
+                <div
+                    class="create-option-icon status-icon">
+
+                    <i class="fas fa-circle-plus"></i>
+
+                </div>
+
+
+                <div class="create-option-text">
+
+                    <strong>
+                        Add Status
+                    </strong>
+
+                    <span>
+                        Share a quick update
+                    </span>
+
+                </div>
+
+
+                <i
+                    class="fas fa-chevron-right create-arrow">
+                </i>
+
+            </button>
+
+
+            <!-- ==================================
+                 NEW REEL
+            ================================== -->
+
+            <a
+                href="/reels"
+                class="create-option">
+
+                <div
+                    class="create-option-icon reel-icon">
+
+                    <i class="fas fa-video"></i>
+
+                </div>
+
+
+                <div class="create-option-text">
+
+                    <strong>
+                        New Reel
+                    </strong>
+
+                    <span>
+                        Create and share a short video
+                    </span>
+
+                </div>
+
+
+                <i
+                    class="fas fa-chevron-right create-arrow">
+                </i>
+
+            </a>
+
+
+            <!-- ==================================
+                 NEW LIFT
+            ================================== -->
+
+            <a
+                href="/rides"
+                class="create-option">
+
+                <div
+                    class="create-option-icon lift-icon">
+
+                    <i class="fas fa-car-side"></i>
+
+                    <i class="fas fa-motorcycle"></i>
+
+                </div>
+
+
+                <div class="create-option-text">
+
+                    <strong>
+                        New Lift
+                    </strong>
+
+                    <span>
+                        Offer or request a lift
+                    </span>
+
+                </div>
+
+
+                <i
+                    class="fas fa-chevron-right create-arrow">
+                </i>
+
+            </a>
+
+
+            <!-- ==================================
+                 NEW PRODUCT
+            ================================== -->
+
+            <a
+                href="/marketplace"
+                class="create-option">
+
+                <div
+                    class="create-option-icon product-icon">
+
+                    <i class="fas fa-store"></i>
+
+                </div>
+
+
+                <div class="create-option-text">
+
+                    <strong>
+                        New Product
+                    </strong>
+
+                    <span>
+                        List something for sale
+                    </span>
+
+                </div>
+
+
+                <i
+                    class="fas fa-chevron-right create-arrow">
+                </i>
+
+            </a>
+
+
+            <!-- ==================================
+                 NEW JOB
+            ================================== -->
+
+            <a
+                href="/jobs"
+                class="create-option">
+
+                <div
+                    class="create-option-icon job-icon">
+
+                    <i class="fas fa-briefcase"></i>
+
+                </div>
+
+
+                <div class="create-option-text">
+
+                    <strong>
+                        New Job
+                    </strong>
+
+                    <span>
+                        Post a job and find candidates
+                    </span>
+
+                </div>
+
+
+                <i
+                    class="fas fa-chevron-right create-arrow">
+                </i>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     FLOATING BUTTON
+     CHANGED ONLY FROM LINK TO BUTTON
+========================================== -->
+
+<button
+    type="button"
+    class="new-post-btn"
+    id="createMenuBtn"
+    aria-label="Create">
 
     <i class="fas fa-plus"></i>
 
-</a>
+</button>
 
 
 <!-- ==========================================
@@ -2411,6 +3065,220 @@ async function loadCurrentUser(){
     }
 
 }
+
+
+/* =========================================================
+   =========================================================
+   CREATE MENU
+   NEW REQUIREMENT ONLY
+   =========================================================
+   ========================================================= */
+
+const createMenuBtn =
+    document.getElementById(
+        "createMenuBtn"
+    );
+
+
+const createMenuOverlay =
+    document.getElementById(
+        "createMenuOverlay"
+    );
+
+
+const createMenuClose =
+    document.getElementById(
+        "createMenuClose"
+    );
+
+
+const createStatusOption =
+    document.getElementById(
+        "createStatusOption"
+    );
+
+
+/* ==========================================
+   OPEN CREATE MENU
+========================================== */
+
+function openCreateMenu(){
+
+    createMenuOverlay.classList.add(
+        "active"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* ==========================================
+   CLOSE CREATE MENU
+========================================== */
+
+function closeCreateMenu(){
+
+    createMenuOverlay.classList.remove(
+        "active"
+    );
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* ==========================================
+   PLUS BUTTON
+========================================== */
+
+if(createMenuBtn){
+
+    createMenuBtn.addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            openCreateMenu();
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   CLOSE BUTTON
+========================================== */
+
+if(createMenuClose){
+
+    createMenuClose.addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+
+            closeCreateMenu();
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   CLICK OUTSIDE
+========================================== */
+
+if(createMenuOverlay){
+
+    createMenuOverlay.addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                createMenuOverlay
+            ){
+
+                closeCreateMenu();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   ADD STATUS
+   IMPORTANT:
+   USE EXISTING STATUS INPUT
+   NO STATUS SYSTEM CHANGED
+========================================== */
+
+if(createStatusOption){
+
+    createStatusOption.addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+
+            closeCreateMenu();
+
+
+            /*
+            Wait briefly so the
+            Create sheet closes first.
+            */
+
+            setTimeout(
+                function(){
+
+                    if(!currentUser){
+
+                        alert(
+                            "Please login first."
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                    Existing status system
+                    */
+
+                    statusPhotoInput.click();
+
+                },
+                200
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   ESCAPE KEY
+   CREATE MENU ONLY
+========================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            if(
+                createMenuOverlay &&
+                createMenuOverlay.classList.contains(
+                    "active"
+                )
+            ){
+
+                closeCreateMenu();
+
+            }
+
+        }
+
+    }
+);
 
 
 /* =========================================================
