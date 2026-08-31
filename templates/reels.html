@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Pathukkalam Reels</title>
 
@@ -15,6 +15,10 @@
 
 <style>
 
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 *{
     margin:0;
     padding:0;
@@ -22,10 +26,16 @@
     font-family:Arial,sans-serif;
 }
 
+html,
 body{
+    width:100%;
+    height:100%;
     background:#000;
-    color:white;
-    padding-bottom:90px;
+    color:#fff;
+}
+
+body{
+    overflow:hidden;
 }
 
 button{
@@ -33,202 +43,601 @@ button{
 }
 
 button:disabled{
-    opacity:.6;
+    opacity:.55;
     cursor:not-allowed;
 }
 
+
+/* =========================================================
+   HEADER
+========================================================= */
+
 .header{
-    position:sticky;
+    position:fixed;
     top:0;
-    z-index:1000;
-    background:#111;
-    padding:15px;
-    text-align:center;
-    font-size:21px;
+    left:0;
+    right:0;
+    height:52px;
+    z-index:5000;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,.75),
+        rgba(0,0,0,0)
+    );
+
+    font-size:18px;
     font-weight:bold;
-    border-bottom:1px solid #333;
+
+    pointer-events:none;
 }
 
+
+/* =========================================================
+   TOP NAVIGATION
+========================================================= */
+
 .top-actions{
+    position:fixed;
+    top:8px;
+    left:10px;
+    right:10px;
+
+    z-index:6000;
+
     display:flex;
-    gap:8px;
-    padding:10px;
-    background:#111;
+    gap:6px;
+
     overflow-x:auto;
+
+    scrollbar-width:none;
+
+    padding-right:45px;
+}
+
+.top-actions::-webkit-scrollbar{
+    display:none;
 }
 
 .top-btn{
     flex-shrink:0;
-    border:none;
-    background:#222;
-    color:white;
-    padding:11px 15px;
-    border-radius:12px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    background:rgba(0,0,0,.55);
+
+    color:#fff;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    font-size:11px;
+
     font-weight:bold;
+
+    backdrop-filter:blur(8px);
 }
 
 .top-btn.active{
     background:#1877f2;
+    border-color:#1877f2;
 }
 
+
+/* =========================================================
+   REEL FEED
+========================================================= */
+
 .feed{
-    max-width:600px;
-    margin:auto;
+    position:fixed;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    scroll-snap-type:y mandatory;
+
+    scrollbar-width:none;
+
+    background:#000;
 }
+
+.feed::-webkit-scrollbar{
+    display:none;
+}
+
+
+/* =========================================================
+   ONE REEL = ONE SCREEN
+========================================================= */
 
 .reel-card{
     position:relative;
-    background:#111;
-    margin-bottom:12px;
+
+    width:100%;
+    height:100dvh;
+    min-height:100dvh;
+
+    background:#000;
+
     overflow:hidden;
+
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
 }
+
+
+/* =========================================================
+   VIDEO
+========================================================= */
 
 .reel-video{
+    position:absolute;
+
+    inset:0;
+
     width:100%;
-    max-height:78vh;
+    height:100%;
+
     display:block;
+
     background:#000;
+
     object-fit:contain;
+
+    z-index:1;
 }
 
-.reel-info{
-    padding:14px;
-    background:#111;
+
+/*
+   If the processed video itself is vertical,
+   it will fill almost the complete screen.
+
+   Keep contain instead of cover so the user's
+   uploaded video is not unexpectedly cut again.
+*/
+
+
+/* =========================================================
+   DARK GRADIENTS
+========================================================= */
+
+.video-top-gradient{
+    position:absolute;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:130px;
+
+    background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,.65),
+        transparent
+    );
+
+    z-index:2;
+
+    pointer-events:none;
 }
+
+.video-bottom-gradient{
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:280px;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.85),
+        rgba(0,0,0,.35),
+        transparent
+    );
+
+    z-index:2;
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   RIGHT ACTION COLUMN
+========================================================= */
+
+.reel-actions{
+    position:absolute;
+
+    right:10px;
+    bottom:125px;
+
+    width:54px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    gap:15px;
+
+    z-index:20;
+}
+
+.reel-action{
+    width:52px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+    padding:0;
+
+    text-shadow:0 2px 5px #000;
+}
+
+.reel-action i{
+    width:43px;
+    height:43px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.42);
+
+    backdrop-filter:blur(5px);
+
+    font-size:21px;
+
+    transition:.15s;
+}
+
+.reel-action:active i{
+    transform:scale(.88);
+}
+
+.reel-action .action-count{
+    margin-top:3px;
+
+    font-size:11px;
+
+    font-weight:bold;
+
+    line-height:12px;
+}
+
+.reel-action.liked i{
+    color:#ff315c;
+    background:rgba(0,0,0,.55);
+}
+
+.reel-action.whatsapp i{
+    color:#25d366;
+}
+
+
+/* =========================================================
+   BOTTOM REEL INFORMATION
+========================================================= */
+
+.reel-info{
+    position:absolute;
+
+    left:14px;
+    right:72px;
+    bottom:20px;
+
+    z-index:20;
+
+    color:#fff;
+}
+
+
+/* =========================================================
+   UPLOADER
+========================================================= */
 
 .poster-row{
     display:flex;
+
     align-items:center;
-    gap:10px;
+
+    gap:8px;
+
+    margin-bottom:7px;
 }
 
 .poster-avatar{
-    width:44px;
-    height:44px;
+    width:38px;
+    height:38px;
+
     border-radius:50%;
+
     object-fit:cover;
+
     background:#222;
+
+    border:1px solid rgba(255,255,255,.4);
 }
 
-.poster-name{
-    font-weight:bold;
-}
-
-.poster-username{
-    color:#999;
-    font-size:12px;
-    margin-top:3px;
-}
-
-.profile-btn{
-    margin-left:auto;
-    background:#1877f2;
-    color:white;
-    border:none;
-    border-radius:10px;
-    padding:8px 10px;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.caption{
-    margin-top:12px;
-    line-height:1.5;
-    white-space:pre-wrap;
-}
-
-.hashtags{
-    margin-top:8px;
-    color:#58a6ff;
-    word-break:break-word;
-}
-
-.stats{
-    display:flex;
-    gap:16px;
-    margin-top:12px;
-    color:#bbb;
-    font-size:13px;
-    flex-wrap:wrap;
-}
-
-.reel-actions{
-    display:flex;
-    gap:7px;
-    margin-top:13px;
-}
-
-.action-btn{
-    flex:1;
-    border:none;
-    padding:11px 5px;
-    border-radius:10px;
-    background:#222;
-    color:white;
-    font-size:13px;
+.poster-details{
     min-width:0;
 }
 
-.action-btn.liked{
-    background:#e91e63;
+.poster-name{
+    font-size:13px;
+
+    font-weight:bold;
+
+    line-height:15px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    text-shadow:0 2px 5px #000;
 }
 
-.action-btn.whatsapp{
-    background:#25d366;
+.poster-username{
+    color:#ddd;
+
+    font-size:10px;
+
+    margin-top:1px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    text-shadow:0 2px 5px #000;
 }
 
-.action-btn.share{
-    background:#1877f2;
+.profile-btn{
+    margin-left:5px;
+
+    border:1px solid rgba(255,255,255,.6);
+
+    background:rgba(0,0,0,.4);
+
+    color:#fff;
+
+    border-radius:15px;
+
+    padding:5px 9px;
+
+    font-size:10px;
+
+    font-weight:bold;
 }
+
+
+/* =========================================================
+   CAPTION
+========================================================= */
+
+.caption{
+    font-size:12px;
+
+    line-height:16px;
+
+    max-width:100%;
+
+    white-space:pre-wrap;
+
+    display:-webkit-box;
+
+    -webkit-line-clamp:2;
+
+    -webkit-box-orient:vertical;
+
+    overflow:hidden;
+
+    text-shadow:0 2px 5px #000;
+}
+
+
+/* =========================================================
+   HASHTAGS
+========================================================= */
+
+.hashtags{
+    margin-top:3px;
+
+    color:#fff;
+
+    font-size:10px;
+
+    line-height:13px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    text-shadow:0 2px 5px #000;
+}
+
+
+/* =========================================================
+   COMMENTS PANEL
+========================================================= */
 
 .comments{
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    max-height:58%;
+
+    background:rgba(15,15,15,.96);
+
+    border-radius:20px 20px 0 0;
+
+    z-index:100;
+
     display:none;
-    margin-top:12px;
+
+    padding:14px;
+
+    box-shadow:0 -5px 30px rgba(0,0,0,.5);
+}
+
+.comments.show{
+    display:block;
+}
+
+.comments-header{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:10px;
+}
+
+.comments-title{
+    font-weight:bold;
+    font-size:15px;
+}
+
+.close-comments{
+    width:30px;
+    height:30px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#333;
+
+    color:#fff;
+}
+
+.comment-scroll{
+    max-height:220px;
+
+    overflow-y:auto;
+
+    padding-right:3px;
 }
 
 .comment-input{
     display:flex;
-    gap:7px;
+
+    gap:6px;
+
+    margin-top:10px;
 }
 
 .comment-input input{
     flex:1;
+
+    min-width:0;
+
     border:none;
-    border-radius:10px;
-    padding:11px;
+
+    border-radius:20px;
+
+    padding:10px 13px;
+
     outline:none;
+
+    background:#292929;
+
+    color:#fff;
 }
 
 .comment-input button{
+    width:42px;
+    height:42px;
+
     border:none;
+
+    border-radius:50%;
+
     background:#1877f2;
+
     color:white;
-    border-radius:10px;
-    padding:0 14px;
 }
 
 .comment-list{
-    margin-top:10px;
+    margin-top:5px;
 }
 
 .comment-item{
-    background:#1c1c1c;
-    padding:9px;
-    border-radius:9px;
-    margin-bottom:5px;
-    font-size:13px;
+    background:#222;
+
+    padding:8px 10px;
+
+    border-radius:10px;
+
+    margin-bottom:6px;
+
+    font-size:12px;
+
+    line-height:16px;
+}
+
+
+/* =========================================================
+   LOADING / EMPTY
+========================================================= */
+
+.loading{
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#aaa;
+
+    gap:12px;
 }
 
 .empty{
-    text-align:center;
-    padding:70px 20px;
-    color:#999;
-}
+    height:100%;
 
-.loading{
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
     text-align:center;
-    padding:60px;
-    color:#aaa;
+
+    color:#999;
+
+    padding:30px;
 }
 
 
@@ -237,17 +646,38 @@ button:disabled{
 ========================================================= */
 
 .upload-panel{
+    position:fixed;
+
+    inset:0;
+
+    z-index:4000;
+
+    overflow-y:auto;
+
+    background:#080808;
+
+    padding:65px 12px 30px;
+
     display:none;
+}
+
+.upload-inner{
     max-width:600px;
-    margin:12px auto;
+
+    margin:auto;
+
     background:#151515;
+
     border-radius:18px;
+
     padding:16px;
 }
 
 .panel-title{
     font-size:20px;
+
     font-weight:bold;
+
     margin-bottom:14px;
 }
 
@@ -257,32 +687,43 @@ button:disabled{
 
 .input-group label{
     display:block;
+
     margin-bottom:6px;
+
     font-size:13px;
+
     font-weight:bold;
+
     color:#ddd;
 }
 
 .input-group input,
 .input-group textarea{
     width:100%;
+
     border:none;
+
     border-radius:10px;
+
     background:#222;
+
     color:white;
+
     padding:12px;
+
     outline:none;
 }
 
 .input-group textarea{
     min-height:80px;
+
     resize:vertical;
 }
 
 .file-input{
-    background:#222;
-    padding:12px;
-    border-radius:10px;
+    background:#222 !important;
+
+    padding:12px !important;
 }
 
 
@@ -292,47 +733,73 @@ button:disabled{
 
 .editor{
     display:none;
+
     background:#0d0d0d;
+
     border-radius:15px;
+
     padding:12px;
+
     margin-top:12px;
 }
 
 .editor-title{
     font-weight:bold;
+
     margin-bottom:10px;
 }
 
 .editor-video-wrap{
     position:relative;
+
     width:100%;
+
     background:#000;
+
     border-radius:12px;
+
     overflow:hidden;
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 }
 
 #sourceVideo{
     width:100%;
+
     max-height:450px;
+
     object-fit:contain;
 }
 
 .crop-overlay{
     position:absolute;
+
     border:2px solid #fff;
+
     box-shadow:
         0 0 0 9999px rgba(0,0,0,.55);
+
     pointer-events:none;
 }
 
+
+/* =========================================================
+   RATIO BUTTONS
+========================================================= */
+
 .ratio-buttons{
     display:flex;
+
     gap:6px;
+
     overflow-x:auto;
+
     margin-top:10px;
+
     scrollbar-width:none;
 }
 
@@ -342,11 +809,17 @@ button:disabled{
 
 .ratio-btn{
     flex-shrink:0;
+
     border:none;
+
     background:#222;
+
     color:white;
+
     padding:8px 11px;
+
     border-radius:9px;
+
     font-size:12px;
 }
 
@@ -354,53 +827,222 @@ button:disabled{
     background:#1877f2;
 }
 
-.editor-controls{
-    margin-top:12px;
+
+/* =========================================================
+   NEW TRIM UI
+========================================================= */
+
+.trim-section{
+    margin-top:15px;
+
+    background:#171717;
+
+    border-radius:13px;
+
+    padding:12px;
 }
 
-.range-row{
-    margin-top:10px;
-}
-
-.range-row label{
-    display:block;
-    color:#bbb;
-    font-size:12px;
-    margin-bottom:5px;
-}
-
-.range-row input{
-    width:100%;
-}
-
-.time-label{
-    color:#58a6ff;
-    font-weight:bold;
+.trim-title{
     font-size:13px;
-    margin-top:8px;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
 }
+
+.trim-times{
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:9px;
+}
+
+.trim-time{
+    flex:1;
+
+    background:#222;
+
+    border-radius:9px;
+
+    padding:8px;
+
+    text-align:center;
+}
+
+.trim-time small{
+    display:block;
+
+    color:#999;
+
+    font-size:9px;
+
+    margin-bottom:2px;
+}
+
+.trim-time strong{
+    font-size:13px;
+
+    color:#fff;
+}
+
+
+/*
+   One timeline.
+   LEFT handle = START.
+   RIGHT handle = END.
+*/
+
+.trim-track{
+    position:relative;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+}
+
+.trim-track-bg{
+    position:absolute;
+
+    left:0;
+    right:0;
+
+    height:5px;
+
+    border-radius:5px;
+
+    background:#444;
+}
+
+.trim-selected{
+    position:absolute;
+
+    height:7px;
+
+    border-radius:7px;
+
+    background:#1877f2;
+
+    pointer-events:none;
+}
+
+.trim-range{
+    position:absolute;
+
+    left:0;
+    right:0;
+
+    width:100%;
+
+    height:42px;
+
+    margin:0;
+
+    background:transparent;
+
+    pointer-events:none;
+
+    appearance:none;
+
+    -webkit-appearance:none;
+}
+
+.trim-range::-webkit-slider-runnable-track{
+    height:5px;
+
+    background:transparent;
+}
+
+.trim-range::-moz-range-track{
+    height:5px;
+
+    background:transparent;
+}
+
+.trim-range::-webkit-slider-thumb{
+    pointer-events:auto;
+
+    appearance:none;
+
+    -webkit-appearance:none;
+
+    width:22px;
+    height:22px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    border:3px solid #1877f2;
+
+    cursor:pointer;
+
+    margin-top:-8px;
+}
+
+.trim-range::-moz-range-thumb{
+    pointer-events:auto;
+
+    width:22px;
+    height:22px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    border:3px solid #1877f2;
+
+    cursor:pointer;
+}
+
+.trim-help{
+    margin-top:8px;
+
+    color:#888;
+
+    font-size:10px;
+
+    text-align:center;
+}
+
+
+/* =========================================================
+   EDITOR BUTTONS
+========================================================= */
 
 .editor-buttons{
     display:flex;
+
     gap:7px;
+
     margin-top:12px;
 }
 
 .editor-buttons button{
     flex:1;
+
     padding:11px;
+
     border:none;
+
     border-radius:10px;
+
     font-weight:bold;
 }
 
 .preview-btn{
     background:#1877f2;
+
     color:white;
 }
 
 .reset-btn{
     background:#333;
+
     color:white;
 }
 
@@ -411,21 +1053,33 @@ button:disabled{
 
 .post-btn{
     width:100%;
+
     border:none;
+
     background:#1877f2;
+
     color:white;
+
     padding:13px;
+
     border-radius:11px;
+
     font-weight:bold;
+
     font-size:15px;
 }
 
 .processing{
     display:none;
+
     margin-top:10px;
+
     color:#58a6ff;
+
     font-size:13px;
+
     text-align:center;
+
     line-height:1.5;
 }
 
@@ -435,45 +1089,72 @@ button:disabled{
 ========================================================= */
 
 .dashboard{
+    position:fixed;
+
+    inset:0;
+
+    z-index:4000;
+
+    overflow-y:auto;
+
+    background:#050505;
+
+    padding:65px 12px 30px;
+
     display:none;
+}
+
+.dashboard-inner{
     max-width:600px;
+
     margin:auto;
-    padding:12px;
 }
 
 .dashboard-title{
     font-size:21px;
+
     font-weight:bold;
+
     margin:10px 0 15px;
 }
 
 .metric-grid{
     display:grid;
+
     grid-template-columns:repeat(2,1fr);
+
     gap:10px;
 }
 
 .metric{
     background:#151515;
+
     padding:18px;
+
     border-radius:14px;
 }
 
 .metric-value{
     font-size:25px;
+
     font-weight:bold;
 }
 
 .metric-label{
     color:#999;
+
     margin-top:5px;
+
     font-size:12px;
 }
 
 .dashboard-reel{
     background:#151515;
+
     margin-top:10px;
+
     padding:13px;
+
     border-radius:14px;
 }
 
@@ -483,7 +1164,9 @@ button:disabled{
 
 .dashboard-reel-stats{
     color:#aaa;
+
     font-size:12px;
+
     margin-top:7px;
 }
 
@@ -494,23 +1177,37 @@ button:disabled{
 
 .toast{
     position:fixed;
+
     left:50%;
+
     bottom:25px;
+
     transform:translate(-50%,20px);
+
     background:#fff;
+
     color:#111;
+
     padding:12px 18px;
+
     border-radius:25px;
+
     opacity:0;
+
     pointer-events:none;
+
     transition:.25s;
+
     z-index:99999;
+
     max-width:90%;
+
     text-align:center;
 }
 
 .toast.show{
     opacity:1;
+
     transform:translate(-50%,0);
 }
 
@@ -521,21 +1218,56 @@ button:disabled{
 
 @media(max-width:500px){
 
-    .reel-video{
-        max-height:70vh;
-    }
-
-    .metric-grid{
-        grid-template-columns:1fr 1fr;
+    .reel-info{
+        left:10px;
+        right:65px;
+        bottom:15px;
     }
 
     .reel-actions{
-        gap:5px;
+        right:7px;
+        bottom:115px;
+
+        gap:12px;
     }
 
-    .action-btn{
-        font-size:12px;
-        padding:10px 3px;
+    .reel-action{
+        width:47px;
+    }
+
+    .reel-action i{
+        width:39px;
+        height:39px;
+
+        font-size:19px;
+    }
+
+    .reel-action .action-count{
+        font-size:10px;
+    }
+
+    .poster-avatar{
+        width:35px;
+        height:35px;
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media(min-width:700px){
+
+    .reel-card{
+        max-width:600px;
+
+        margin:auto;
+    }
+
+    .feed{
+        background:#111;
     }
 
 }
@@ -548,9 +1280,13 @@ button:disabled{
 <body>
 
 
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
 <div class="header">
 
-    🎬 Pathukkalam Reels
+    🎬 Pathukkalam
 
 </div>
 
@@ -597,258 +1333,6 @@ button:disabled{
 
 
 <!-- =======================================================
-     UPLOAD PANEL
-======================================================= -->
-
-<div
-    class="upload-panel"
-    id="uploadPanel">
-
-    <div class="panel-title">
-
-        🎬 Create New Reel
-
-    </div>
-
-
-    <!-- VIDEO -->
-
-    <div class="input-group">
-
-        <label>
-            Select Video
-        </label>
-
-        <input
-            class="file-input"
-            type="file"
-            id="videoFile"
-            accept="video/*">
-
-    </div>
-
-
-    <!-- ===================================================
-         EDITOR
-    =================================================== -->
-
-    <div
-        class="editor"
-        id="editor">
-
-        <div class="editor-title">
-
-            ✂️ Reel Editor
-
-        </div>
-
-
-        <div class="editor-video-wrap">
-
-            <video
-                id="sourceVideo"
-                playsinline
-                controls>
-            </video>
-
-            <div
-                class="crop-overlay"
-                id="cropOverlay">
-            </div>
-
-        </div>
-
-
-        <!-- CROP RATIOS -->
-
-        <div class="ratio-buttons">
-
-            <button
-                class="ratio-btn active"
-                data-ratio="original">
-
-                Original
-
-            </button>
-
-            <button
-                class="ratio-btn"
-                data-ratio="9:16">
-
-                9:16
-
-            </button>
-
-            <button
-                class="ratio-btn"
-                data-ratio="1:1">
-
-                1:1
-
-            </button>
-
-            <button
-                class="ratio-btn"
-                data-ratio="4:5">
-
-                4:5
-
-            </button>
-
-            <button
-                class="ratio-btn"
-                data-ratio="16:9">
-
-                16:9
-
-            </button>
-
-        </div>
-
-
-        <!-- =================================================
-             TRIM
-        ================================================== -->
-
-        <div class="editor-controls">
-
-            <div class="range-row">
-
-                <label>
-                    Start
-                </label>
-
-                <input
-                    type="range"
-                    id="startRange"
-                    min="0"
-                    max="0"
-                    step="0.1"
-                    value="0">
-
-            </div>
-
-
-            <div class="range-row">
-
-                <label>
-                    End
-                </label>
-
-                <input
-                    type="range"
-                    id="endRange"
-                    min="0"
-                    max="50"
-                    step="0.1"
-                    value="0">
-
-            </div>
-
-
-            <div
-                class="time-label"
-                id="trimLabel">
-
-                Selected duration: 0 seconds
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             EDITOR BUTTONS
-        ================================================== -->
-
-        <div class="editor-buttons">
-
-            <button
-                class="reset-btn"
-                id="resetCropBtn">
-
-                🔄 Reset
-
-            </button>
-
-
-            <button
-                class="preview-btn"
-                id="previewCropBtn">
-
-                👁 Preview Crop
-
-            </button>
-
-        </div>
-
-
-        <div
-            class="processing"
-            id="processing">
-
-            ⏳ Processing crop and preparing your Reel...
-
-            <br>
-
-            Please wait.
-
-        </div>
-
-    </div>
-
-
-    <!-- ===================================================
-         CAPTION
-    =================================================== -->
-
-    <div class="input-group">
-
-        <label>
-            Caption
-        </label>
-
-        <textarea
-            id="caption"
-            placeholder="Write something about your Reel..."></textarea>
-
-    </div>
-
-
-    <!-- ===================================================
-         HASHTAGS
-    =================================================== -->
-
-    <div class="input-group">
-
-        <label>
-            Hashtags
-        </label>
-
-        <input
-            type="text"
-            id="hashtags"
-            placeholder="#chennai #technology #travel">
-
-    </div>
-
-
-    <!-- ===================================================
-         POST
-    =================================================== -->
-
-    <button
-        class="post-btn"
-        id="publishBtn">
-
-        🚀 Post Reel
-
-    </button>
-
-</div>
-
-
-<!-- =======================================================
      FEED
 ======================================================= -->
 
@@ -870,6 +1354,318 @@ button:disabled{
 
 
 <!-- =======================================================
+     UPLOAD PANEL
+======================================================= -->
+
+<div
+    class="upload-panel"
+    id="uploadPanel">
+
+    <div class="upload-inner">
+
+        <div class="panel-title">
+
+            🎬 Create New Reel
+
+        </div>
+
+
+        <!-- VIDEO -->
+
+        <div class="input-group">
+
+            <label>
+                Select Video
+            </label>
+
+            <input
+                class="file-input"
+                type="file"
+                id="videoFile"
+                accept="video/*">
+
+        </div>
+
+
+        <!-- =================================================
+             EDITOR
+        ================================================== -->
+
+        <div
+            class="editor"
+            id="editor">
+
+            <div class="editor-title">
+
+                ✂️ Reel Editor
+
+            </div>
+
+
+            <div class="editor-video-wrap">
+
+                <video
+                    id="sourceVideo"
+                    playsinline
+                    controls>
+                </video>
+
+                <div
+                    class="crop-overlay"
+                    id="cropOverlay">
+                </div>
+
+            </div>
+
+
+            <!-- RATIOS -->
+
+            <div class="ratio-buttons">
+
+                <button
+                    class="ratio-btn active"
+                    data-ratio="original">
+
+                    Original
+
+                </button>
+
+                <button
+                    class="ratio-btn"
+                    data-ratio="9:16">
+
+                    9:16
+
+                </button>
+
+                <button
+                    class="ratio-btn"
+                    data-ratio="1:1">
+
+                    1:1
+
+                </button>
+
+                <button
+                    class="ratio-btn"
+                    data-ratio="4:5">
+
+                    4:5
+
+                </button>
+
+                <button
+                    class="ratio-btn"
+                    data-ratio="16:9">
+
+                    16:9
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 NEW SIMPLE TRIM UI
+            ================================================== -->
+
+            <div class="trim-section">
+
+                <div class="trim-title">
+
+                    ✂️ Choose Reel Length
+
+                </div>
+
+
+                <div class="trim-times">
+
+                    <div class="trim-time">
+
+                        <small>
+                            START
+                        </small>
+
+                        <strong
+                            id="startTimeLabel">
+
+                            0:00
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="trim-time">
+
+                        <small>
+                            END
+                        </small>
+
+                        <strong
+                            id="endTimeLabel">
+
+                            0:00
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="trim-track">
+
+                    <div
+                        class="trim-track-bg">
+                    </div>
+
+                    <div
+                        class="trim-selected"
+                        id="trimSelected">
+                    </div>
+
+
+                    <!-- START -->
+
+                    <input
+                        class="trim-range"
+                        type="range"
+                        id="startRange"
+                        min="0"
+                        max="50"
+                        step="0.1"
+                        value="0">
+
+
+                    <!-- END -->
+
+                    <input
+                        class="trim-range"
+                        type="range"
+                        id="endRange"
+                        min="0"
+                        max="50"
+                        step="0.1"
+                        value="50">
+
+                </div>
+
+
+                <div
+                    class="trim-help">
+
+                    Drag the <b>left handle</b> for START
+                    &nbsp;•&nbsp;
+                    Drag the <b>right handle</b> for END
+
+                    <br>
+
+                    Reel length must be 30–50 seconds.
+
+                </div>
+
+
+                <div
+                    class="time-label"
+                    id="trimLabel"
+                    style="
+                        text-align:center;
+                        margin-top:8px;
+                        color:#58a6ff;
+                        font-size:12px;
+                        font-weight:bold;
+                    ">
+
+                    Selected duration: 30.0 seconds
+
+                </div>
+
+            </div>
+
+
+            <!-- EDITOR BUTTONS -->
+
+            <div class="editor-buttons">
+
+                <button
+                    class="reset-btn"
+                    id="resetCropBtn">
+
+                    🔄 Reset
+
+                </button>
+
+
+                <button
+                    class="preview-btn"
+                    id="previewCropBtn">
+
+                    👁 Preview
+
+                </button>
+
+            </div>
+
+
+            <div
+                class="processing"
+                id="processing">
+
+                ⏳ Processing...
+
+            </div>
+
+        </div>
+
+
+        <!-- CAPTION -->
+
+        <div class="input-group">
+
+            <label>
+                Caption
+            </label>
+
+            <textarea
+                id="caption"
+                placeholder="Write something about your Reel..."></textarea>
+
+        </div>
+
+
+        <!-- HASHTAGS -->
+
+        <div class="input-group">
+
+            <label>
+                Hashtags
+            </label>
+
+            <input
+                type="text"
+                id="hashtags"
+                placeholder="#chennai #technology #travel">
+
+        </div>
+
+
+        <!-- POST -->
+
+        <button
+            class="post-btn"
+            id="publishBtn">
+
+            🚀 Post Reel
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
      DASHBOARD
 ======================================================= -->
 
@@ -877,110 +1673,109 @@ button:disabled{
     class="dashboard"
     id="dashboard">
 
-    <div class="dashboard-title">
+    <div class="dashboard-inner">
 
-        📊 My Reel Dashboard
+        <div class="dashboard-title">
 
-    </div>
+            📊 My Reel Dashboard
+
+        </div>
 
 
-    <div class="metric-grid">
+        <div class="metric-grid">
 
-        <div class="metric">
+            <div class="metric">
 
-            <div
-                class="metric-value"
-                id="dashViews">
+                <div
+                    class="metric-value"
+                    id="dashViews">
 
-                0
+                    0
+
+                </div>
+
+                <div class="metric-label">
+                    Total Views
+                </div>
 
             </div>
 
-            <div class="metric-label">
-                Total Views
+
+            <div class="metric">
+
+                <div
+                    class="metric-value"
+                    id="dashLikes">
+
+                    0
+
+                </div>
+
+                <div class="metric-label">
+                    Likes
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div
+                    class="metric-value"
+                    id="dashComments">
+
+                    0
+
+                </div>
+
+                <div class="metric-label">
+                    Comments
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div
+                    class="metric-value"
+                    id="dashShares">
+
+                    0
+
+                </div>
+
+                <div class="metric-label">
+                    Shares
+                </div>
+
             </div>
 
         </div>
 
 
-        <div class="metric">
+        <div
+            class="dashboard-title"
+            style="font-size:17px;margin-top:25px;">
 
-            <div
-                class="metric-value"
-                id="dashLikes">
-
-                0
-
-            </div>
-
-            <div class="metric-label">
-                Likes
-            </div>
+            📅 Last 7 Days
 
         </div>
 
 
-        <div class="metric">
+        <div id="dailyStats"></div>
 
-            <div
-                class="metric-value"
-                id="dashComments">
 
-                0
+        <div
+            class="dashboard-title"
+            style="font-size:17px;margin-top:25px;">
 
-            </div>
-
-            <div class="metric-label">
-                Comments
-
-            </div>
+            🎬 My Reels Performance
 
         </div>
 
 
-        <div class="metric">
-
-            <div
-                class="metric-value"
-                id="dashShares">
-
-                0
-
-            </div>
-
-            <div class="metric-label">
-                Shares
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="dashboard-title"
-        style="font-size:17px;margin-top:25px;">
-
-        📅 Last 7 Days
-
-    </div>
-
-
-    <div id="dailyStats">
-
-    </div>
-
-
-    <div
-        class="dashboard-title"
-        style="font-size:17px;margin-top:25px;">
-
-        🎬 My Reels Performance
-
-    </div>
-
-
-    <div id="dashboardReels">
+        <div id="dashboardReels"></div>
 
     </div>
 
@@ -1042,7 +1837,7 @@ let cropRatio = "original";
 
 let trimStart = 0;
 
-let trimEnd = 0;
+let trimEnd = 30;
 
 let exportedBlob = null;
 
@@ -1083,6 +1878,15 @@ const endRange =
 const trimLabel =
     document.getElementById("trimLabel");
 
+const startTimeLabel =
+    document.getElementById("startTimeLabel");
+
+const endTimeLabel =
+    document.getElementById("endTimeLabel");
+
+const trimSelected =
+    document.getElementById("trimSelected");
+
 const processing =
     document.getElementById("processing");
 
@@ -1104,16 +1908,21 @@ function toast(message){
 
     el.classList.add("show");
 
-    setTimeout(
-        () => {
-
-            el.classList.remove(
-                "show"
-            );
-
-        },
-        3000
+    clearTimeout(
+        el._timer
     );
+
+    el._timer =
+        setTimeout(
+            () => {
+
+                el.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
 
 }
 
@@ -1136,7 +1945,7 @@ function escapeHtml(value){
 
 
 /* =========================================================
-   FORMAT COUNT
+   COUNT
 ========================================================= */
 
 function formatCount(number){
@@ -1175,6 +1984,43 @@ function formatCount(number){
 
 
 /* =========================================================
+   TIME
+========================================================= */
+
+function formatTime(seconds){
+
+    seconds =
+        Math.max(
+            0,
+            Number(seconds || 0)
+        );
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    const secs =
+        Math.floor(
+            seconds % 60
+        );
+
+
+    return (
+        minutes +
+        ":" +
+        String(secs).padStart(
+            2,
+            "0"
+        )
+    );
+
+}
+
+
+/* =========================================================
    DATE
 ========================================================= */
 
@@ -1202,7 +2048,6 @@ function formatDate(value){
 
 /* =========================================================
    HASHTAGS
-   DATABASE COLUMN = TEXT
 ========================================================= */
 
 function formatHashtags(value){
@@ -1211,23 +2056,13 @@ function formatHashtags(value){
         return "";
 
 
-    /*
-       The reels.hashtags column is TEXT.
-
-       Convert stored text into a clean display
-       format without assuming it is an array.
-    */
-
     if(Array.isArray(value)){
 
         return value
             .map(
                 h =>
                     String(h)
-                        .replace(
-                            /^#/,
-                            ""
-                        )
+                        .replace(/^#/,"")
             )
             .filter(Boolean)
             .map(
@@ -1375,33 +2210,6 @@ async function loadReels(){
     `;
 
 
-    /*
-       IMPORTANT:
-
-       Only columns that actually exist in the
-       reels table are selected.
-
-       Existing reels table:
-
-       id
-       user_id
-       video_url
-       video_path
-       thumbnail_url
-       caption
-       hashtags
-       duration_seconds
-       status
-       views_count
-       likes_count
-       comments_count
-       shares_count
-       whatsapp_clicks_count
-       profile_views_count
-       created_at
-       updated_at
-    */
-
     const {
         data,
         error
@@ -1451,7 +2259,7 @@ async function loadReels(){
 
             <div class="empty">
 
-                Unable to load Reels.
+                ❌ Unable to load Reels.
 
                 <br><br>
 
@@ -1585,15 +2393,17 @@ function renderFeed(){
 
             <div class="empty">
 
-                🎬
+                <div style="font-size:45px;">
+                    🎬
+                </div>
 
-                <br><br>
+                <div>
+                    No Reels yet.
+                </div>
 
-                No Reels yet.
-
-                <br><br>
-
-                Be the first to upload!
+                <div style="margin-top:8px;">
+                    Be the first to upload!
+                </div>
 
             </div>
 
@@ -1616,20 +2426,26 @@ function renderFeed(){
         }
     );
 
+
+    setupReelObserver();
+
 }
 
 
 /* =========================================================
-   CREATE REEL CARD
+   REEL CARD
 ========================================================= */
 
 function createReelCard(reel){
 
     const card =
-        document.createElement("div");
+        document.createElement("section");
 
     card.className =
         "reel-card";
+
+    card.dataset.reelId =
+        reel.id;
 
 
     const profile =
@@ -1658,16 +2474,11 @@ function createReelCard(reel){
         );
 
 
-    /*
-       Use thumbnail when available.
-       Otherwise video remains unchanged.
-    */
-
     const posterAttribute =
         reel.thumbnail_url
             ? `poster="${escapeHtml(
                 reel.thumbnail_url
-              )}"`
+            )}"`
             : "";
 
 
@@ -1676,19 +2487,139 @@ function createReelCard(reel){
         <video
             class="reel-video"
             src="${escapeHtml(
-                reel.video_url
+                reel.video_url || ""
             )}"
             ${posterAttribute}
             playsinline
-            controls
             preload="metadata">
         </video>
 
 
+        <div class="video-top-gradient"></div>
+
+        <div class="video-bottom-gradient"></div>
+
+
+        <!-- =================================================
+             RIGHT ACTIONS
+        ================================================== -->
+
+        <div class="reel-actions">
+
+
+            <!-- VIEW -->
+
+            <button
+                class="reel-action"
+                type="button"
+                title="Views">
+
+                <i class="fas fa-eye"></i>
+
+                <span
+                    class="action-count view-count">
+
+                    ${formatCount(
+                        reel.views_count
+                    )}
+
+                </span>
+
+            </button>
+
+
+            <!-- LIKE -->
+
+            <button
+                class="reel-action like-action"
+                type="button"
+                title="Like">
+
+                <i class="fas fa-heart"></i>
+
+                <span
+                    class="action-count like-count">
+
+                    ${formatCount(
+                        reel.likes_count
+                    )}
+
+                </span>
+
+            </button>
+
+
+            <!-- COMMENT -->
+
+            <button
+                class="reel-action comment-action"
+                type="button"
+                title="Comments">
+
+                <i class="fas fa-comment"></i>
+
+                <span
+                    class="action-count comment-count">
+
+                    ${formatCount(
+                        reel.comments_count
+                    )}
+
+                </span>
+
+            </button>
+
+
+            <!-- SHARE -->
+
+            <button
+                class="reel-action share-action"
+                type="button"
+                title="Share">
+
+                <i class="fas fa-share"></i>
+
+                <span
+                    class="action-count share-count">
+
+                    ${formatCount(
+                        reel.shares_count
+                    )}
+
+                </span>
+
+            </button>
+
+
+            <!-- WHATSAPP -->
+
+            <button
+                class="reel-action whatsapp whatsapp-action"
+                type="button"
+                title="WhatsApp">
+
+                <i class="fab fa-whatsapp"></i>
+
+                <span
+                    class="action-count whatsapp-count">
+
+                    ${formatCount(
+                        reel.whatsapp_clicks_count
+                    )}
+
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             BOTTOM INFORMATION
+        ================================================== -->
+
         <div class="reel-info">
 
-
-            <!-- POSTER -->
 
             <div class="poster-row">
 
@@ -1702,7 +2633,7 @@ function createReelCard(reel){
                     ">
 
 
-                <div>
+                <div class="poster-details">
 
                     <div class="poster-name">
 
@@ -1725,7 +2656,8 @@ function createReelCard(reel){
 
 
                 <button
-                    class="profile-btn">
+                    class="profile-btn"
+                    type="button">
 
                     Profile
 
@@ -1733,8 +2665,6 @@ function createReelCard(reel){
 
             </div>
 
-
-            <!-- CAPTION -->
 
             ${
                 reel.caption
@@ -1753,8 +2683,6 @@ function createReelCard(reel){
             }
 
 
-            <!-- HASHTAGS -->
-
             ${
                 hashtags
                     ? `
@@ -1771,130 +2699,56 @@ function createReelCard(reel){
                     : ""
             }
 
-
-            <!-- STATS -->
-
-            <div class="stats">
-
-                <span>
-
-                    👁
-                    ${formatCount(
-                        reel.views_count
-                    )}
-
-                </span>
+        </div>
 
 
-                <span>
+        <!-- =================================================
+             COMMENTS
+        ================================================== -->
 
-                    ❤️
-                    ${formatCount(
-                        reel.likes_count
-                    )}
+        <div class="comments">
 
-                </span>
+            <div class="comments-header">
 
+                <div class="comments-title">
 
-                <span>
-
-                    💬
-                    ${formatCount(
-                        reel.comments_count
-                    )}
-
-                </span>
-
-
-                <span>
-
-                    ↗
-                    ${formatCount(
-                        reel.shares_count
-                    )}
-
-                </span>
-
-
-                <span>
-
-                    📅
-                    ${formatDate(
-                        reel.created_at
-                    )}
-
-                </span>
-
-            </div>
-
-
-            <!-- ACTIONS -->
-
-            <div class="reel-actions">
-
-
-                <button
-                    class="action-btn"
-                    data-action="like">
-
-                    ❤️ Like
-
-                </button>
-
-
-                <button
-                    class="action-btn"
-                    data-action="comment">
-
-                    💬 Comment
-
-                </button>
-
-
-                <button
-                    class="action-btn share"
-                    data-action="share">
-
-                    ↗ Share
-
-                </button>
-
-
-                <button
-                    class="action-btn whatsapp"
-                    data-action="whatsapp">
-
-                    <i class="fab fa-whatsapp"></i>
-
-                </button>
-
-
-            </div>
-
-
-            <!-- COMMENTS -->
-
-            <div class="comments">
-
-                <div class="comment-input">
-
-                    <input
-                        type="text"
-                        placeholder="Write a comment...">
-
-
-                    <button>
-
-                        Send
-
-                    </button>
+                    Comments
 
                 </div>
 
 
-                <div class="comment-list">
+                <button
+                    class="close-comments"
+                    type="button">
 
-                </div>
+                    ✕
+
+                </button>
+
+            </div>
+
+
+            <div class="comment-scroll">
+
+                <div class="comment-list"></div>
+
+            </div>
+
+
+            <div class="comment-input">
+
+                <input
+                    type="text"
+                    placeholder="Write a comment...">
+
+
+                <button
+                    type="button"
+                    title="Send">
+
+                    <i class="fas fa-paper-plane"></i>
+
+                </button>
 
             </div>
 
@@ -1903,15 +2757,15 @@ function createReelCard(reel){
     `;
 
 
-    /* =====================================================
-       VIEW
-    ===================================================== */
-
     const video =
         card.querySelector(
             ".reel-video"
         );
 
+
+    /* =====================================================
+       VIEW
+    ===================================================== */
 
     let viewRecorded =
         false;
@@ -1929,8 +2783,9 @@ function createReelCard(reel){
                 true;
 
 
-            await recordView(
-                reel
+            await recordViewLocal(
+                reel,
+                card
             );
 
         }
@@ -1943,16 +2798,19 @@ function createReelCard(reel){
 
     const likeBtn =
         card.querySelector(
-            '[data-action="like"]'
+            ".like-action"
         );
 
 
     likeBtn.addEventListener(
         "click",
-        async function(){
+        async function(event){
+
+            event.stopPropagation();
 
             await toggleLike(
                 reel,
+                card,
                 likeBtn
             );
 
@@ -1966,7 +2824,7 @@ function createReelCard(reel){
 
     const commentBtn =
         card.querySelector(
-            '[data-action="comment"]'
+            ".comment-action"
         );
 
 
@@ -1978,19 +2836,19 @@ function createReelCard(reel){
 
     commentBtn.addEventListener(
         "click",
-        async function(){
+        async function(event){
 
-            commentsBox.style.display =
-                commentsBox.style.display ===
-                "block"
-                    ? "none"
-                    : "block";
+            event.stopPropagation();
+
+            const opened =
+                commentsBox.classList.toggle(
+                    "show"
+                );
 
 
-            if(
-                commentsBox.style.display ===
-                "block"
-            ){
+            if(opened){
+
+                video.pause();
 
                 await loadComments(
                     reel,
@@ -2003,9 +2861,23 @@ function createReelCard(reel){
     );
 
 
+    card.querySelector(
+        ".close-comments"
+    ).addEventListener(
+        "click",
+        function(){
+
+            commentsBox.classList.remove(
+                "show"
+            );
+
+        }
+    );
+
+
     const sendComment =
         commentsBox.querySelector(
-            "button"
+            ".comment-input button"
         );
 
 
@@ -2022,7 +2894,8 @@ function createReelCard(reel){
             await addComment(
                 reel,
                 commentInput,
-                commentsBox
+                commentsBox,
+                card
             );
 
         }
@@ -2043,7 +2916,8 @@ function createReelCard(reel){
                 await addComment(
                     reel,
                     commentInput,
-                    commentsBox
+                    commentsBox,
+                    card
                 );
 
             }
@@ -2058,13 +2932,15 @@ function createReelCard(reel){
 
     const shareBtn =
         card.querySelector(
-            '[data-action="share"]'
+            ".share-action"
         );
 
 
     shareBtn.addEventListener(
         "click",
-        async function(){
+        async function(event){
+
+            event.stopPropagation();
 
             const url =
                 window.location.origin +
@@ -2140,8 +3016,9 @@ function createReelCard(reel){
 
             if(shared){
 
-                await recordShare(
+                await recordShareLocal(
                     reel,
+                    card,
                     "native"
                 );
 
@@ -2157,13 +3034,16 @@ function createReelCard(reel){
 
     const whatsappBtn =
         card.querySelector(
-            '[data-action="whatsapp"]'
+            ".whatsapp-action"
         );
 
 
     whatsappBtn.addEventListener(
         "click",
-        async function(){
+        async function(event){
+
+            event.stopPropagation();
+
 
             const url =
                 window.location.origin +
@@ -2188,11 +3068,6 @@ function createReelCard(reel){
                 "_blank"
             );
 
-
-            /*
-               Keep your existing WhatsApp
-               tracking table.
-            */
 
             const {
                 error
@@ -2227,6 +3102,15 @@ function createReelCard(reel){
                 "whatsapp_clicks_count"
             );
 
+
+            updateCardCount(
+                card,
+                "whatsapp_clicks_count",
+                Number(
+                    reel.whatsapp_clicks_count || 0
+                ) + 1
+            );
+
         }
     );
 
@@ -2239,7 +3123,10 @@ function createReelCard(reel){
         ".profile-btn"
     ).addEventListener(
         "click",
-        async function(){
+        async function(event){
+
+            event.stopPropagation();
+
 
             const {
                 error
@@ -2272,12 +3159,6 @@ function createReelCard(reel){
             }
 
 
-            /*
-               Profile views are also represented
-               by the reels.profile_views_count
-               column.
-            */
-
             await incrementReelCounter(
                 reel.id,
                 "profile_views_count"
@@ -2294,7 +3175,196 @@ function createReelCard(reel){
     );
 
 
+    /* =====================================================
+       TAP VIDEO = PLAY / PAUSE
+    ===================================================== */
+
+    video.addEventListener(
+        "click",
+        function(){
+
+            if(
+                video.paused
+            ){
+
+                video.play()
+                    .catch(
+                        () => {}
+                    );
+
+            }
+            else{
+
+                video.pause();
+
+            }
+
+        }
+    );
+
+
     return card;
+
+}
+
+
+/* =========================================================
+   REEL OBSERVER
+   Automatically plays only the visible Reel.
+========================================================= */
+
+function setupReelObserver(){
+
+    const cards =
+        document.querySelectorAll(
+            ".reel-card"
+        );
+
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(
+                    entry => {
+
+                        const video =
+                            entry.target.querySelector(
+                                ".reel-video"
+                            );
+
+
+                        if(!video)
+                            return;
+
+
+                        if(
+                            entry.isIntersecting &&
+                            entry.intersectionRatio >= .65
+                        ){
+
+                            cards.forEach(
+                                otherCard => {
+
+                                    if(
+                                        otherCard !==
+                                        entry.target
+                                    ){
+
+                                        const otherVideo =
+                                            otherCard.querySelector(
+                                                ".reel-video"
+                                            );
+
+
+                                        if(otherVideo){
+
+                                            otherVideo.pause();
+
+                                        }
+
+                                    }
+
+                                }
+                            );
+
+
+                            video.muted =
+                                true;
+
+
+                            video.play()
+                                .catch(
+                                    () => {}
+                                );
+
+                        }
+                        else{
+
+                            video.pause();
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold:[
+                    .65
+                ]
+            }
+        );
+
+
+    cards.forEach(
+        card => {
+
+            observer.observe(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE CARD COUNT
+   IMPORTANT:
+   This changes ONLY the affected Reel.
+   No loadReels().
+========================================================= */
+
+function updateCardCount(
+    card,
+    column,
+    value
+){
+
+    const selectors = {
+
+        views_count:
+            ".view-count",
+
+        likes_count:
+            ".like-count",
+
+        comments_count:
+            ".comment-count",
+
+        shares_count:
+            ".share-count",
+
+        whatsapp_clicks_count:
+            ".whatsapp-count"
+
+    };
+
+
+    const selector =
+        selectors[column];
+
+
+    if(!selector)
+        return;
+
+
+    const element =
+        card.querySelector(
+            selector
+        );
+
+
+    if(element){
+
+        element.innerText =
+            formatCount(
+                value
+            );
+
+    }
 
 }
 
@@ -2303,7 +3373,10 @@ function createReelCard(reel){
    RECORD VIEW
 ========================================================= */
 
-async function recordView(reel){
+async function recordViewLocal(
+    reel,
+    card
+){
 
     const {
         error
@@ -2331,9 +3404,30 @@ async function recordView(reel){
     }
 
 
+    const oldValue =
+        Number(
+            reel.views_count || 0
+        );
+
+
+    const newValue =
+        oldValue + 1;
+
+
     await incrementReelCounter(
         reel.id,
         "views_count"
+    );
+
+
+    reel.views_count =
+        newValue;
+
+
+    updateCardCount(
+        card,
+        "views_count",
+        newValue
     );
 
 }
@@ -2345,104 +3439,42 @@ async function recordView(reel){
 
 async function toggleLike(
     reel,
+    card,
     button
 ){
 
-    const {
-        data:existing,
-        error:findError
-    } =
-    await supabaseClient
-        .from("reel_likes")
-        .select("id")
-        .eq(
-            "reel_id",
-            reel.id
-        )
-        .eq(
-            "user_id",
-            currentUser.id
-        )
-        .maybeSingle();
+    button.disabled =
+        true;
 
 
-    if(findError){
-
-        toast(
-            "Unable to check Like."
-        );
-
-        console.error(
-            findError
-        );
-
-        return;
-
-    }
-
-
-    if(existing){
+    try{
 
         const {
-            error
+            data:existing,
+            error:findError
         } =
         await supabaseClient
             .from("reel_likes")
-            .delete()
+            .select("id")
             .eq(
-                "id",
-                existing.id
-            );
+                "reel_id",
+                reel.id
+            )
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .maybeSingle();
 
 
-        if(error){
-
-            toast(
-                "Unable to unlike Reel."
-            );
-
-            return;
-
-        }
-
-
-        await decrementReelCounter(
-            reel.id,
-            "likes_count"
-        );
-
-
-        button.classList.remove(
-            "liked"
-        );
-
-    }
-    else{
-
-        const {
-            error
-        } =
-        await supabaseClient
-            .from("reel_likes")
-            .insert({
-
-                reel_id:
-                    reel.id,
-
-                user_id:
-                    currentUser.id
-
-            });
-
-
-        if(error){
+        if(findError){
 
             toast(
-                "Unable to like Reel."
+                "Unable to check Like."
             );
 
             console.error(
-                error
+                findError
             );
 
             return;
@@ -2450,51 +3482,154 @@ async function toggleLike(
         }
 
 
-        await incrementReelCounter(
-            reel.id,
-            "likes_count"
-        );
+        if(existing){
+
+            const {
+                error
+            } =
+            await supabaseClient
+                .from("reel_likes")
+                .delete()
+                .eq(
+                    "id",
+                    existing.id
+                );
 
 
-        button.classList.add(
-            "liked"
-        );
+            if(error){
+
+                toast(
+                    "Unable to unlike Reel."
+                );
+
+                return;
+
+            }
 
 
-        if(
-            reel.user_id !==
-            currentUser.id
-        ){
+            await decrementReelCounter(
+                reel.id,
+                "likes_count"
+            );
 
-            await createNotification({
 
-                user_id:
-                    reel.user_id,
+            reel.likes_count =
+                Math.max(
+                    0,
+                    Number(
+                        reel.likes_count || 0
+                    ) - 1
+                );
 
-                sender_id:
-                    currentUser.id,
 
-                reel_id:
-                    reel.id,
+            button.classList.remove(
+                "liked"
+            );
 
-                notification_type:
-                    "reel_like",
 
-                message:
-                    (
-                        currentProfile?.name ||
-                        "Someone"
-                    ) +
-                    " liked your Reel."
+            updateCardCount(
+                card,
+                "likes_count",
+                reel.likes_count
+            );
 
-            });
+        }
+        else{
+
+            const {
+                error
+            } =
+            await supabaseClient
+                .from("reel_likes")
+                .insert({
+
+                    reel_id:
+                        reel.id,
+
+                    user_id:
+                        currentUser.id
+
+                });
+
+
+            if(error){
+
+                toast(
+                    "Unable to like Reel."
+                );
+
+                console.error(
+                    error
+                );
+
+                return;
+
+            }
+
+
+            await incrementReelCounter(
+                reel.id,
+                "likes_count"
+            );
+
+
+            reel.likes_count =
+                Number(
+                    reel.likes_count || 0
+                ) + 1;
+
+
+            button.classList.add(
+                "liked"
+            );
+
+
+            updateCardCount(
+                card,
+                "likes_count",
+                reel.likes_count
+            );
+
+
+            if(
+                reel.user_id !==
+                currentUser.id
+            ){
+
+                await createNotification({
+
+                    user_id:
+                        reel.user_id,
+
+                    sender_id:
+                        currentUser.id,
+
+                    reel_id:
+                        reel.id,
+
+                    notification_type:
+                        "reel_like",
+
+                    message:
+                        (
+                            currentProfile?.name ||
+                            "Someone"
+                        ) +
+                        " liked your Reel."
+
+                });
+
+            }
 
         }
 
     }
+    finally{
 
+        button.disabled =
+            false;
 
-    await loadReels();
+    }
 
 }
 
@@ -2590,7 +3725,8 @@ async function loadComments(
     }
 
 
-    list.innerHTML = "";
+    list.innerHTML =
+        "";
 
 
     const ids =
@@ -2702,7 +3838,8 @@ async function loadComments(
 async function addComment(
     reel,
     input,
-    commentsBox
+    commentsBox,
+    card
 ){
 
     const text =
@@ -2753,6 +3890,27 @@ async function addComment(
     );
 
 
+    reel.comments_count =
+        Number(
+            reel.comments_count || 0
+        ) + 1;
+
+
+    /*
+       IMPORTANT:
+
+       No loadReels() here.
+
+       Only the comment count is updated.
+    */
+
+    updateCardCount(
+        card,
+        "comments_count",
+        reel.comments_count
+    );
+
+
     if(
         reel.user_id !==
         currentUser.id
@@ -2784,16 +3942,14 @@ async function addComment(
     }
 
 
-    input.value = "";
+    input.value =
+        "";
 
 
     await loadComments(
         reel,
         commentsBox
     );
-
-
-    await loadReels();
 
 }
 
@@ -2802,8 +3958,9 @@ async function addComment(
    SHARE
 ========================================================= */
 
-async function recordShare(
+async function recordShareLocal(
     reel,
+    card,
     shareType
 ){
 
@@ -2843,6 +4000,19 @@ async function recordShare(
         "shares_count"
     );
 
+
+    reel.shares_count =
+        Number(
+            reel.shares_count || 0
+        ) + 1;
+
+
+    updateCardCount(
+        card,
+        "shares_count",
+        reel.shares_count
+    );
+
 }
 
 
@@ -2854,13 +4024,6 @@ async function incrementReelCounter(
     reelId,
     column
 ){
-
-    /*
-       Safety check.
-
-       Only allow columns that actually exist
-       in the reels table.
-    */
 
     const allowedColumns = [
 
@@ -3214,37 +4377,55 @@ videoFile.addEventListener(
 
 
         /*
-           MAXIMUM 50 SECONDS.
+           DATABASE REQUIREMENT:
 
-           NO MINIMUM.
+           duration_seconds must currently be
+           between 30 and 50.
 
-           If original video is longer than
-           50 seconds, End is limited to 50.
+           Therefore:
+           START + END selection must produce
+           30–50 seconds.
         */
 
-        startRange.max =
-            Math.max(
-                0,
-                Math.min(
-                    duration,
-                    50
-                )
+        if(duration < 30){
+
+            toast(
+                "Video must be at least 30 seconds."
             );
 
+            this.value =
+                "";
 
-        endRange.max =
+            editor.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        const maxEnd =
             Math.min(
-                50,
-                duration
+                duration,
+                50
             );
 
 
         startRange.min =
             0;
 
+        startRange.max =
+            Math.max(
+                0,
+                maxEnd - 30
+            );
+
 
         endRange.min =
-            0;
+            30;
+
+        endRange.max =
+            maxEnd;
 
 
         trimStart =
@@ -3252,10 +4433,7 @@ videoFile.addEventListener(
 
 
         trimEnd =
-            Math.min(
-                50,
-                duration
-            );
+            maxEnd;
 
 
         startRange.value =
@@ -3298,7 +4476,7 @@ videoFile.addEventListener(
             "block";
 
 
-        updateTrimLabel();
+        updateTrimUI();
 
         updateCropOverlay();
 
@@ -3307,7 +4485,7 @@ videoFile.addEventListener(
 
 
 /* =========================================================
-   CROP RATIOS
+   RATIO BUTTONS
 ========================================================= */
 
 document.querySelectorAll(
@@ -3404,7 +4582,7 @@ function getRatio(){
 
 
 /* =========================================================
-   UPDATE CROP OVERLAY
+   CROP OVERLAY
 ========================================================= */
 
 function updateCropOverlay(){
@@ -3522,21 +4700,31 @@ startRange.addEventListener(
             );
 
 
+        const minimumEnd =
+            trimStart + 30;
+
+
         if(
-            trimStart >
-            trimEnd
+            trimEnd <
+            minimumEnd
         ){
 
-            trimStart =
-                trimEnd;
+            trimEnd =
+                Math.min(
+                    minimumEnd,
+                    Number(
+                        endRange.max
+                    )
+                );
 
-            this.value =
-                trimStart;
+
+            endRange.value =
+                trimEnd;
 
         }
 
 
-        updateTrimLabel();
+        updateTrimUI();
 
     }
 );
@@ -3556,6 +4744,24 @@ endRange.addEventListener(
             );
 
 
+        const minimumEnd =
+            trimStart + 30;
+
+
+        if(
+            trimEnd <
+            minimumEnd
+        ){
+
+            trimEnd =
+                minimumEnd;
+
+            this.value =
+                trimEnd;
+
+        }
+
+
         if(
             trimEnd >
             50
@@ -3570,37 +4776,32 @@ endRange.addEventListener(
         }
 
 
-        if(
-            trimEnd <
-            trimStart
-        ){
-
-            trimEnd =
-                trimStart;
-
-            this.value =
-                trimEnd;
-
-        }
-
-
-        updateTrimLabel();
+        updateTrimUI();
 
     }
 );
 
 
 /* =========================================================
-   TRIM LABEL
+   TRIM UI
 ========================================================= */
 
-function updateTrimLabel(){
+function updateTrimUI(){
 
     const duration =
-        Math.max(
-            0,
-            trimEnd -
+        trimEnd -
+        trimStart;
+
+
+    startTimeLabel.innerText =
+        formatTime(
             trimStart
+        );
+
+
+    endTimeLabel.innerText =
+        formatTime(
+            trimEnd
         );
 
 
@@ -3609,11 +4810,56 @@ function updateTrimLabel(){
         duration.toFixed(1) +
         " seconds";
 
+
+    const max =
+        Number(
+            endRange.max || 50
+        );
+
+
+    const startPercent =
+        max > 0
+            ? (
+                trimStart /
+                max
+            ) *
+            100
+            : 0;
+
+
+    const endPercent =
+        max > 0
+            ? (
+                trimEnd /
+                max
+            ) *
+            100
+            : 100;
+
+
+    trimSelected.style.left =
+        startPercent + "%";
+
+
+    trimSelected.style.width =
+        Math.max(
+            0,
+            endPercent -
+            startPercent
+        ) + "%";
+
+
+    trimLabel.style.color =
+        duration >= 30 &&
+        duration <= 50
+            ? "#58a6ff"
+            : "#ff5252";
+
 }
 
 
 /* =========================================================
-   RESET CROP
+   RESET
 ========================================================= */
 
 document.getElementById(
@@ -3640,6 +4886,22 @@ document.getElementById(
             );
 
 
+        if(trimEnd < 30){
+
+            trimEnd =
+                30;
+
+        }
+
+
+        startRange.value =
+            trimStart;
+
+
+        endRange.value =
+            trimEnd;
+
+
         document
             .querySelectorAll(
                 ".ratio-btn"
@@ -3664,15 +4926,7 @@ document.getElementById(
             );
 
 
-        startRange.value =
-            trimStart;
-
-
-        endRange.value =
-            trimEnd;
-
-
-        updateTrimLabel();
+        updateTrimUI();
 
         updateCropOverlay();
 
@@ -3681,7 +4935,7 @@ document.getElementById(
 
 
 /* =========================================================
-   PREVIEW CROP
+   PREVIEW
 ========================================================= */
 
 document.getElementById(
@@ -3708,10 +4962,13 @@ document.getElementById(
             trimStart;
 
 
-        if(duration < 0){
+        if(
+            duration < 30 ||
+            duration > 50
+        ){
 
             toast(
-                "Invalid crop selection."
+                "Reel duration must be 30–50 seconds."
             );
 
             return;
@@ -3767,8 +5024,7 @@ document.getElementById(
 
 
 /* =========================================================
-   REAL CROP PROCESSOR
-   Runs AUTOMATICALLY when Post Reel is clicked.
+   EXPORT PROCESSED VIDEO
 ========================================================= */
 
 async function exportProcessedVideo(){
@@ -3787,12 +5043,12 @@ async function exportProcessedVideo(){
 
 
     if(
-        duration < 0 ||
+        duration < 30 ||
         duration > 50
     ){
 
         throw new Error(
-            "Reel duration cannot exceed 50 seconds."
+            "Reel duration must be between 30 and 50 seconds."
         );
 
     }
@@ -3829,10 +5085,6 @@ async function exportProcessedVideo(){
     let cropHeight =
         videoHeight;
 
-
-    /*
-       Calculate center crop.
-    */
 
     if(ratio){
 
@@ -3878,12 +5130,12 @@ async function exportProcessedVideo(){
         );
 
 
-    /*
-       Keep output manageable.
-    */
-
     const maxOutput =
         720;
+
+
+    const maxOutputHeight =
+        1280;
 
 
     let outputWidth =
@@ -3892,10 +5144,6 @@ async function exportProcessedVideo(){
 
     let outputHeight =
         cropHeight;
-
-
-    const maxOutputHeight =
-        1280;
 
 
     let scale =
@@ -4003,10 +5251,6 @@ async function exportProcessedVideo(){
     }
 
 
-    /*
-       Center crop position.
-    */
-
     const sx =
         Math.max(
             0,
@@ -4033,10 +5277,6 @@ async function exportProcessedVideo(){
         );
 
 
-    /*
-       Seek to selected beginning.
-    */
-
     sourceVideo.pause();
 
 
@@ -4046,19 +5286,11 @@ async function exportProcessedVideo(){
     );
 
 
-    /*
-       Capture canvas video.
-    */
-
     const stream =
         canvas.captureStream(
             30
         );
 
-
-    /*
-       Capture audio from original video.
-    */
 
     let sourceCapture =
         null;
@@ -4099,10 +5331,6 @@ async function exportProcessedVideo(){
 
     }
 
-
-    /*
-       Supported browser MIME types.
-    */
 
     const mimeTypes = [
 
@@ -4203,10 +5431,6 @@ async function exportProcessedVideo(){
     );
 
 
-    /*
-       Playback for processor.
-    */
-
     await seekVideo(
         sourceVideo,
         trimStart
@@ -4218,10 +5442,6 @@ async function exportProcessedVideo(){
 
     const started =
         performance.now();
-
-
-    processing.innerText =
-        "⏳ Processing crop... 0%";
 
 
     let animationFrame =
@@ -4279,16 +5499,14 @@ async function exportProcessedVideo(){
 
 
         const percentage =
-            duration > 0
-                ? Math.min(
-                    100,
-                    (
-                        elapsed /
-                        duration
-                    ) *
-                    100
-                )
-                : 100;
+            Math.min(
+                100,
+                (
+                    elapsed /
+                    duration
+                ) *
+                100
+            );
 
 
         processing.innerText =
@@ -4300,29 +5518,8 @@ async function exportProcessedVideo(){
 
 
         if(
-            duration === 0
-        ){
-
-            stopRecorder();
-
-            return;
-
-        }
-
-
-        if(
             elapsed >=
-            duration
-        ){
-
-            stopRecorder();
-
-            return;
-
-        }
-
-
-        if(
+            duration ||
             sourceVideo.currentTime >=
             trimEnd
         ){
@@ -4342,46 +5539,7 @@ async function exportProcessedVideo(){
     }
 
 
-    /*
-       Zero-duration selection.
-    */
-
-    if(
-        duration === 0
-    ){
-
-        ctx.drawImage(
-
-            sourceVideo,
-
-            sx,
-            sy,
-            cropWidth,
-            cropHeight,
-
-            0,
-            0,
-            outputWidth,
-            outputHeight
-
-        );
-
-
-        setTimeout(
-            () => {
-
-                stopRecorder();
-
-            },
-            500
-        );
-
-    }
-    else{
-
-        drawFrame();
-
-    }
+    drawFrame();
 
 
     await finished;
@@ -4447,7 +5605,7 @@ async function exportProcessedVideo(){
 
 
 /* =========================================================
-   SAFE VIDEO SEEK
+   SAFE SEEK
 ========================================================= */
 
 function seekVideo(
@@ -4575,7 +5733,7 @@ function seekVideo(
 
 
 /* =========================================================
-   PUBLISH REEL
+   PUBLISH
 ========================================================= */
 
 publishBtn.addEventListener(
@@ -4610,13 +5768,22 @@ publishBtn.addEventListener(
             trimStart;
 
 
+        /*
+           FIX FOR YOUR SUPABASE CONSTRAINT:
+
+           CHECK:
+           duration_seconds >= 30
+           AND
+           duration_seconds <= 50
+        */
+
         if(
-            duration < 0 ||
+            duration < 30 ||
             duration > 50
         ){
 
             toast(
-                "Reel duration must not exceed 50 seconds."
+                "Reel duration must be 30–50 seconds."
             );
 
             return;
@@ -4639,13 +5806,6 @@ publishBtn.addEventListener(
             .value
             .trim();
 
-
-        /*
-           reels.hashtags = TEXT
-
-           Store as normal text instead of an
-           array because the database column is TEXT.
-        */
 
         const hashtags =
             hashtagText
@@ -4670,12 +5830,9 @@ publishBtn.addEventListener(
 
         try{
 
-            /*
-               =================================================
+            /* =================================================
                STEP 1
-               Automatically process crop + trim.
-               =================================================
-            */
+            ================================================= */
 
             await exportProcessedVideo();
 
@@ -4689,12 +5846,9 @@ publishBtn.addEventListener(
             }
 
 
-            /*
-               =================================================
+            /* =================================================
                STEP 2
-               Upload processed video
-               =================================================
-            */
+            ================================================= */
 
             processing.innerText =
                 "☁️ Uploading Reel...";
@@ -4742,12 +5896,9 @@ publishBtn.addEventListener(
             }
 
 
-            /*
-               =================================================
+            /* =================================================
                STEP 3
-               Public URL
-               =================================================
-            */
+            ================================================= */
 
             const {
                 data:urlData
@@ -4764,15 +5915,9 @@ publishBtn.addEventListener(
                 urlData.publicUrl;
 
 
-            /*
-               =================================================
+            /* =================================================
                STEP 4
-               Database record
-
-               IMPORTANT:
-               Only existing reels columns are used.
-               =================================================
-            */
+            ================================================= */
 
             processing.innerText =
                 "💾 Publishing Reel...";
@@ -4794,12 +5939,6 @@ publishBtn.addEventListener(
 
                     video_path:
                         path,
-
-                    /*
-                       thumbnail_url intentionally omitted
-                       because no thumbnail file is generated
-                       by the current browser processor.
-                    */
 
                     caption:
                         caption ||
@@ -4826,13 +5965,6 @@ publishBtn.addEventListener(
 
             if(error){
 
-                /*
-                   Database failed.
-
-                   Remove uploaded file so we don't
-                   leave an orphan in Storage.
-                */
-
                 await supabaseClient
                     .storage
                     .from("reels")
@@ -4857,11 +5989,9 @@ publishBtn.addEventListener(
             );
 
 
-            /*
-               =================================================
-               RESET FORM
-               =================================================
-            */
+            /* =================================================
+               RESET
+            ================================================= */
 
             exportedBlob =
                 null;
@@ -5021,7 +6151,7 @@ function activateButton(id){
 
 
 /* =========================================================
-   FEED BUTTON
+   FEED
 ========================================================= */
 
 document.getElementById(
@@ -5054,7 +6184,7 @@ document.getElementById(
 
 
 /* =========================================================
-   UPLOAD BUTTON
+   UPLOAD
 ========================================================= */
 
 document.getElementById(
@@ -5136,10 +6266,6 @@ document.getElementById(
 
         `;
 
-
-        /*
-           Only real reels table columns.
-        */
 
         const {
             data,
@@ -5265,10 +6391,6 @@ document.getElementById(
 ========================================================= */
 
 async function loadDashboard(){
-
-    /*
-       Only columns that exist in reels table.
-    */
 
     const {
         data:reels,
