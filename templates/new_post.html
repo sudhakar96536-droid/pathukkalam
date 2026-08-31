@@ -1500,8 +1500,8 @@ document.getElementById(
             for compatibility with the existing
             Pathukkalam post system.
 
-            New media is additionally stored in
-            media_urls and media_type.
+            New media is stored in the separate
+            post_media table.
 
             ==================================
             */
@@ -1513,8 +1513,8 @@ document.getElementById(
 
 
             const {
-                data,
-                error
+                data: postData,
+                error: postError
             } =
             await supabaseClient
                 .from("posts")
@@ -1526,35 +1526,94 @@ document.getElementById(
                     caption:
                         caption || null,
 
+                    /*
+                    Keep the existing image_url column
+                    working for old Pathukkalam code.
+                    */
                     image_url:
                         firstMedia?.type === "image"
                             ? firstMedia.url
-                            : null,
-
-                    media_urls:
-                        uploadedMedia.length
-                            ? uploadedMedia
-                            : null,
-
-                    media_type:
-                        firstMedia?.type ||
-                        null
+                            : null
 
                 })
                 .select()
                 .single();
 
 
-            if(error){
+            if(postError){
 
-                throw error;
+                throw postError;
+
+            }
+
+
+            /*
+            ==================================
+            SAVE ALL MEDIA IN post_media
+            ==================================
+            */
+
+            if(uploadedMedia.length){
+
+                const mediaRows =
+                    uploadedMedia.map(
+                        function(media,index){
+
+                            return {
+
+                                post_id:
+                                    postData.id,
+
+                                user_id:
+                                    user.id,
+
+                                media_type:
+                                    media.type,
+
+                                media_url:
+                                    media.url,
+
+                                file_name:
+                                    media.name || null,
+
+                                display_order:
+                                    index
+
+                            };
+
+                        }
+                    );
+
+
+                const {
+                    error:mediaError
+                } =
+                await supabaseClient
+                    .from("post_media")
+                    .insert(mediaRows);
+
+
+                if(mediaError){
+
+                    /*
+                    Remove the post if media metadata
+                    could not be saved.
+                    */
+                    await supabaseClient
+                        .from("posts")
+                        .delete()
+                        .eq("id",postData.id);
+
+                    throw mediaError;
+
+                }
 
             }
 
 
             console.log(
                 "Post created:",
-                data
+                postData
             );
 
 
