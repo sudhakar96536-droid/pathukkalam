@@ -15,7 +15,6 @@ content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-
 <style>
 
 *{
@@ -30,7 +29,6 @@ body{
     padding-bottom:80px;
 }
 
-
 /* ==========================================
    HEADER
 ========================================== */
@@ -44,9 +42,7 @@ body{
     position:sticky;
     top:0;
     z-index:1000;
-    box-shadow:
-        0 2px 5px
-        rgba(0,0,0,0.1);
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
 .logo-section{
@@ -74,7 +70,6 @@ body{
     color:#444;
 }
 
-
 /* ==========================================
    COVER
 ========================================== */
@@ -87,41 +82,21 @@ body{
     position:relative;
 }
 
-
-/* ==========================================
-   COVER EDIT BUTTON
-========================================== */
-
 .cover-edit-btn{
-
     display:none;
-
     position:absolute;
-
     right:15px;
-
     bottom:15px;
-
     border:none;
-
     background:rgba(0,0,0,0.65);
-
     color:white;
-
     padding:10px 14px;
-
     border-radius:10px;
-
     font-size:13px;
-
     cursor:pointer;
-
     align-items:center;
-
     gap:7px;
-
     backdrop-filter:blur(5px);
-
     z-index:10;
 }
 
@@ -134,110 +109,58 @@ body{
     cursor:not-allowed;
 }
 
-
 /* ==========================================
    PROFILE CARD
 ========================================== */
 
 .profile-box{
-
     background:white;
-
-    margin:
-        -70px
-        15px
-        15px;
-
+    margin:-70px 15px 15px;
     border-radius:16px;
-
     padding:20px;
-
     text-align:center;
-
     position:relative;
-
-    box-shadow:
-        0 2px 10px
-        rgba(0,0,0,0.08);
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
 }
-
 
 /* ==========================================
    PROFILE PHOTO
 ========================================== */
 
 .profile-avatar-wrapper{
-
     position:relative;
-
     width:130px;
-
     height:130px;
-
-    margin:
-        -90px
-        auto
-        0;
+    margin:-90px auto 0;
 }
 
 .profile-avatar{
-
     width:130px;
-
     height:130px;
-
     border-radius:50%;
-
     border:5px solid white;
-
     object-fit:cover;
-
     display:block;
-
     background:#eee;
 }
 
-
-/* ==========================================
-   PROFILE PHOTO EDIT BUTTON
-========================================== */
-
 .profile-photo-edit-btn{
-
     display:none;
-
     position:absolute;
-
     right:3px;
-
     bottom:5px;
-
     width:40px;
-
     height:40px;
-
     border:none;
-
     border-radius:50%;
-
     background:#1877f2;
-
     color:white;
-
     font-size:16px;
-
     cursor:pointer;
-
     align-items:center;
-
     justify-content:center;
-
     border:3px solid white;
-
-    box-shadow:
-        0 2px 8px
-        rgba(0,0,0,0.25);
-
+    box-shadow:0 2px 8px rgba(0,0,0,0.25);
     z-index:10;
 }
 
@@ -249,7 +172,6 @@ body{
     opacity:0.6;
     cursor:not-allowed;
 }
-
 
 /* ==========================================
    PROFILE NAME
@@ -267,9 +189,8 @@ body{
     font-size:14px;
 }
 
-
 /* ==========================================
-   PROFILE BIO
+   BIO
 ========================================== */
 
 .profile-bio{
@@ -278,34 +199,15 @@ body{
     line-height:1.5;
 }
 
-
-/* ==========================================
-   EDIT BIO BUTTON
-========================================== */
-
 .edit-bio-btn{
-
     display:none;
-
-    margin:
-        12px
-        auto
-        0;
-
-    padding:
-        8px
-        14px;
-
+    margin:12px auto 0;
+    padding:8px 14px;
     border:none;
-
     border-radius:8px;
-
     background:#e4e6eb;
-
     color:#333;
-
     font-size:13px;
-
     cursor:pointer;
 }
 
@@ -313,78 +215,53 @@ body{
     background:#d8dadf;
 }
 
-
 /* ==========================================
    BUTTONS
 ========================================== */
 
 .profile-buttons{
-
     display:flex;
-
     justify-content:center;
-
     gap:10px;
-
     margin-top:18px;
 }
 
 .profile-buttons button{
-
-    padding:
-        10px
-        18px;
-
+    padding:10px 18px;
     border:none;
-
     border-radius:8px;
-
     font-size:14px;
-
     cursor:pointer;
 }
 
 .follow-btn{
-
     background:#1877f2;
-
     color:white;
 }
 
 .follow-btn.unfollow{
-
     background:#e4e6eb;
-
     color:#333;
 }
 
 .follow-btn:disabled{
-
     opacity:0.6;
-
     cursor:not-allowed;
 }
 
 .message-btn{
-
     background:#e4e6eb;
 }
-
 
 /* ==========================================
    STATS
 ========================================== */
 
 .profile-stats{
-
     display:flex;
-
     justify-content:space-around;
-
     margin-top:25px;
-
     border-top:1px solid #eee;
-
     padding-top:20px;
 }
 
@@ -393,347 +270,382 @@ body{
 }
 
 .profile-stats p{
-
     color:gray;
-
     margin-top:5px;
 }
 
-
 /* ==========================================
-   POSTS
+   STATUS
 ========================================== */
 
-.section-title{
-
-    margin:
-        20px
-        15px
-        10px;
-
-    font-size:20px;
-
+.upload-status{
+    display:none;
+    margin-top:10px;
+    font-size:13px;
+    color:#1877f2;
     font-weight:bold;
 }
 
-.post-grid{
+/* =========================================================
+   MEDIA SECTION
+========================================================= */
 
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:5px;
-
-    padding:
-        0
-        10px
-        20px;
+.section-title{
+    margin:20px 15px 10px;
+    font-size:20px;
+    font-weight:bold;
 }
 
-.post-grid img{
+.media-section{
+    background:white;
+    margin:0 15px 20px;
+    border-radius:14px;
+    padding:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
 
+.media-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+}
+
+.media-item{
+    position:relative;
     width:100%;
-
-    height:120px;
-
-    object-fit:cover;
-
+    height:130px;
+    overflow:hidden;
     border-radius:8px;
-
-    display:block;
-
+    background:#eee;
     cursor:pointer;
 }
 
-
-/* ==========================================
-   NO RECENT PHOTOS
-========================================== */
-
-.no-recent-photos{
-
-    padding:
-        30px
-        15px
-        40px;
-
-    text-align:center;
-
-    color:#888;
-
-    font-size:14px;
-}
-
-.no-recent-photos i{
-
-    font-size:35px;
-
-    color:#bbb;
-
-    margin-bottom:10px;
-
+.media-item img,
+.media-item video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
     display:block;
 }
 
+.media-item video{
+    pointer-events:none;
+}
 
-/* ==========================================
-   BIO EDIT MODAL
-========================================== */
+.media-video-icon{
+    position:absolute;
+    top:8px;
+    right:8px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:rgba(0,0,0,0.65);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.media-document{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:#f7f7f7;
+    color:#444;
+    padding:10px;
+    text-align:center;
+}
+
+.media-document i{
+    font-size:38px;
+    margin-bottom:8px;
+}
+
+.media-document-name{
+    font-size:12px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    width:100%;
+}
+
+.empty-media{
+    padding:35px 15px;
+    text-align:center;
+    color:#888;
+}
+
+.empty-media i{
+    font-size:35px;
+    color:#bbb;
+    display:block;
+    margin-bottom:10px;
+}
+
+/* =========================================================
+   ALL POSTS
+========================================================= */
+
+.posts-section{
+    margin:0 15px 25px;
+}
+
+.post-card{
+    background:white;
+    border-radius:14px;
+    margin-bottom:15px;
+    padding:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.post-header{
+    display:flex;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.post-avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    object-fit:cover;
+    margin-right:10px;
+}
+
+.post-author{
+    font-weight:bold;
+    font-size:15px;
+}
+
+.post-date{
+    color:#888;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.post-caption{
+    font-size:15px;
+    line-height:1.5;
+    margin-bottom:12px;
+    white-space:pre-wrap;
+}
+
+.post-media-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.post-media-image{
+    width:100%;
+    max-height:500px;
+    object-fit:cover;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.post-media-video{
+    width:100%;
+    max-height:600px;
+    border-radius:10px;
+    background:#000;
+    display:block;
+}
+
+.post-document{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    background:#f5f5f5;
+    border-radius:10px;
+    text-decoration:none;
+    color:#333;
+}
+
+.post-document i{
+    font-size:30px;
+}
+
+.post-document-info{
+    min-width:0;
+}
+
+.post-document-name{
+    font-size:14px;
+    font-weight:bold;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.post-document-type{
+    color:#888;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.no-posts{
+    background:white;
+    border-radius:14px;
+    padding:40px 20px;
+    text-align:center;
+    color:#888;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.no-posts i{
+    font-size:40px;
+    color:#bbb;
+    margin-bottom:10px;
+    display:block;
+}
+
+/* =========================================================
+   BIO MODAL
+========================================================= */
 
 .bio-modal{
-
     display:none;
-
     position:fixed;
-
     inset:0;
-
-    background:
-        rgba(0,0,0,0.45);
-
+    background:rgba(0,0,0,0.45);
     z-index:10000;
-
     align-items:center;
-
     justify-content:center;
-
     padding:20px;
 }
 
 .bio-modal.active{
-
     display:flex;
 }
 
 .bio-modal-box{
-
     width:100%;
-
     max-width:500px;
-
     background:white;
-
     border-radius:16px;
-
     padding:20px;
-
-    box-shadow:
-        0 10px 40px
-        rgba(0,0,0,0.25);
+    box-shadow:0 10px 40px rgba(0,0,0,0.25);
 }
 
 .bio-modal-title{
-
     font-size:20px;
-
     font-weight:bold;
-
     margin-bottom:15px;
 }
 
 .bio-textarea{
-
     width:100%;
-
     min-height:130px;
-
     resize:vertical;
-
     border:1px solid #ddd;
-
     border-radius:10px;
-
     padding:12px;
-
     outline:none;
-
     font-size:15px;
-
     line-height:1.5;
 }
 
 .bio-textarea:focus{
-
     border-color:#1877f2;
 }
 
 .bio-modal-buttons{
-
     display:flex;
-
     justify-content:flex-end;
-
     gap:10px;
-
     margin-top:15px;
 }
 
 .bio-modal-buttons button{
-
     border:none;
-
     border-radius:8px;
-
-    padding:
-        10px
-        18px;
-
+    padding:10px 18px;
     cursor:pointer;
-
     font-size:14px;
 }
 
 .bio-cancel{
-
     background:#e4e6eb;
-
     color:#333;
 }
 
 .bio-save{
-
     background:#1877f2;
-
     color:white;
 }
 
 .bio-save:disabled{
-
     opacity:0.6;
-
     cursor:not-allowed;
 }
 
-
-/* ==========================================
-   UPLOAD STATUS
-========================================== */
-
-.upload-status{
-
-    display:none;
-
-    margin-top:10px;
-
-    font-size:13px;
-
-    color:#1877f2;
-
-    font-weight:bold;
-}
-
-
-/* ==========================================
+/* =========================================================
    FLOATING BUTTON
-========================================== */
+========================================================= */
 
 .new-post-btn{
-
     position:fixed;
-
     bottom:28px;
-
     left:50%;
-
-    transform:
-        translateX(-50%);
-
+    transform:translateX(-50%);
     width:62px;
-
     height:62px;
-
     border-radius:50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #1877f2,
-            #42a5ff
-        );
-
+    background:linear-gradient(135deg,#1877f2,#42a5ff);
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     color:white;
-
     font-size:28px;
-
     text-decoration:none;
-
-    box-shadow:
-        0 5px 15px
-        rgba(24,119,242,0.4);
-
+    box-shadow:0 5px 15px rgba(24,119,242,0.4);
     z-index:2000;
-
     border:4px solid white;
 }
 
-
-/* ==========================================
+/* =========================================================
    BOTTOM NAVIGATION
-========================================== */
+========================================================= */
 
 .bottom-nav{
-
     position:fixed;
-
     bottom:0;
-
     left:0;
-
     width:100%;
-
     background:white;
-
     display:flex;
-
     justify-content:space-evenly;
-
     align-items:center;
-
     padding:10px 0;
-
     border-top:1px solid #ddd;
-
     z-index:1000;
 }
 
 .nav-item{
-
     text-decoration:none;
-
     color:gray;
-
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
-
     font-size:12px;
 }
 
 .nav-item i{
-
     font-size:22px;
-
     margin-bottom:4px;
 }
 
 .active{
-
     color:#1877f2;
 }
 
-
-/* ==========================================
+/* =========================================================
    MOBILE
-========================================== */
+========================================================= */
 
 @media(max-width:600px){
 
@@ -746,17 +658,17 @@ body{
     }
 
     .profile-avatar-wrapper{
-
         width:120px;
-
         height:120px;
     }
 
     .profile-avatar{
-
         width:120px;
-
         height:120px;
+    }
+
+    .media-item{
+        height:105px;
     }
 
 }
@@ -765,13 +677,11 @@ body{
 
 </head>
 
-
 <body>
 
-
-<!-- ==========================================
+<!-- =========================================================
      HEADER
-========================================== -->
+========================================================= -->
 
 <div class="header">
 
@@ -782,13 +692,10 @@ body{
             src="{{ url_for('static', filename='icon-192.png') }}">
 
         <div class="logo-text">
-
             Pathukkalam
-
         </div>
 
     </div>
-
 
     <div class="header-icons">
 
@@ -801,15 +708,14 @@ body{
 </div>
 
 
-<!-- ==========================================
+<!-- =========================================================
      COVER
-========================================== -->
+========================================================= -->
 
 <div
     class="profile-cover"
     id="profileCover"
     style="background:url('{{ user.cover }}') center/cover;">
-
 
     <button
         type="button"
@@ -828,14 +734,11 @@ body{
 </div>
 
 
-<!-- ==========================================
+<!-- =========================================================
      PROFILE
-========================================== -->
+========================================================= -->
 
 <div class="profile-box">
-
-
-    <!-- PROFILE PHOTO -->
 
     <div class="profile-avatar-wrapper">
 
@@ -844,7 +747,6 @@ body{
             id="profileAvatar"
             src="{{ user.profile }}"
             alt="Profile Photo">
-
 
         <button
             type="button"
@@ -862,8 +764,6 @@ body{
     </div>
 
 
-    <!-- PROFILE NAME -->
-
     <div class="profile-name">
 
         {{ user.name }}
@@ -871,16 +771,12 @@ body{
     </div>
 
 
-    <!-- USERNAME -->
-
     <div class="profile-id">
 
         @{{ username }}
 
     </div>
 
-
-    <!-- BIO -->
 
     <div
         class="profile-bio"
@@ -890,8 +786,6 @@ body{
 
     </div>
 
-
-    <!-- EDIT BIO -->
 
     <button
         type="button"
@@ -908,15 +802,12 @@ body{
     </button>
 
 
-    <!-- FOLLOW / MESSAGE -->
-
     <div
         id="profileActionButtons"
         class="profile-buttons"
         {% if is_own_profile %}
         style="display:none;"
         {% endif %}>
-
 
         <button
             id="followButton"
@@ -925,7 +816,6 @@ body{
             Follow
 
         </button>
-
 
         <button
             class="message-btn">
@@ -937,30 +827,21 @@ body{
     </div>
 
 
-    <!-- UPLOAD STATUS -->
-
     <div
         id="uploadStatus"
         class="upload-status">
-
     </div>
 
-
-    <!-- STATS -->
 
     <div class="profile-stats">
 
         <div>
 
             <h3 id="postCount">
-
                 {{ user.posts }}
-
             </h3>
 
-            <p>
-                Posts
-            </p>
+            <p>Posts</p>
 
         </div>
 
@@ -968,14 +849,10 @@ body{
         <div>
 
             <h3 id="followersCount">
-
                 {{ user.followers }}
-
             </h3>
 
-            <p>
-                Followers
-            </p>
+            <p>Followers</p>
 
         </div>
 
@@ -983,14 +860,10 @@ body{
         <div>
 
             <h3 id="followingCount">
-
                 {{ user.following }}
-
             </h3>
 
-            <p>
-                Following
-            </p>
+            <p>Following</p>
 
         </div>
 
@@ -999,42 +872,73 @@ body{
 </div>
 
 
-<!-- ==========================================
-     RECENT PHOTOS
-========================================== -->
+<!-- =========================================================
+     MEDIA SECTION
+     PHOTOS + VIDEOS + DOCUMENTS
+========================================================= -->
 
 <div class="section-title">
 
-    Recent Photos
+    Media
+
+</div>
+
+
+<div class="media-section">
+
+    <div
+        class="media-grid"
+        id="mediaGrid">
+
+        <div class="empty-media"
+             style="grid-column:1/-1;">
+
+            <i class="far fa-images"></i>
+
+            Loading media...
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ALL POSTS
+========================================================= -->
+
+<div class="section-title">
+
+    Posts
 
 </div>
 
 
 <div
-    class="post-grid"
-    id="recentPhotosGrid">
+    class="posts-section"
+    id="allPostsSection">
 
-    {% for photo in user.photos %}
+    <div class="no-posts">
 
-    <img
-        src="{{ photo }}"
-        alt="Recent Photo">
+        <i class="fas fa-spinner fa-spin"></i>
 
-    {% endfor %}
+        Loading posts...
+
+    </div>
 
 </div>
 
 
-<!-- ==========================================
+<!-- =========================================================
      HIDDEN FILE INPUTS
-========================================== -->
+========================================================= -->
 
 <input
     type="file"
     id="profilePhotoInput"
     accept="image/*"
     style="display:none;">
-
 
 <input
     type="file"
@@ -1043,9 +947,9 @@ body{
     style="display:none;">
 
 
-<!-- ==========================================
-     BIO EDIT MODAL
-========================================== -->
+<!-- =========================================================
+     BIO MODAL
+========================================================= -->
 
 <div
     id="bioModal"
@@ -1055,20 +959,17 @@ body{
         class="bio-modal-box"
         onclick="event.stopPropagation()">
 
-
         <div class="bio-modal-title">
 
             Edit Bio
 
         </div>
 
-
         <textarea
             id="bioTextarea"
             class="bio-textarea"
             maxlength="500"
             placeholder="Write something about yourself..."></textarea>
-
 
         <div class="bio-modal-buttons">
 
@@ -1080,7 +981,6 @@ body{
                 Cancel
 
             </button>
-
 
             <button
                 type="button"
@@ -1098,9 +998,9 @@ body{
 </div>
 
 
-<!-- ==========================================
+<!-- =========================================================
      FLOATING BUTTON
-========================================== -->
+========================================================= -->
 
 <a
     href="/new-post"
@@ -1111,12 +1011,11 @@ body{
 </a>
 
 
-<!-- ==========================================
+<!-- =========================================================
      BOTTOM NAVIGATION
-========================================== -->
+========================================================= -->
 
 <div class="bottom-nav">
-
 
     <a
         href="/"
@@ -1124,9 +1023,7 @@ body{
 
         <i class="fas fa-house"></i>
 
-        <span>
-            Home
-        </span>
+        <span>Home</span>
 
     </a>
 
@@ -1137,9 +1034,7 @@ body{
 
         <i class="fas fa-compass"></i>
 
-        <span>
-            Explore
-        </span>
+        <span>Explore</span>
 
     </a>
 
@@ -1150,23 +1045,10 @@ body{
 
         <i class="fas fa-bell"></i>
 
-        <span>
-            Alerts
-        </span>
+        <span>Alerts</span>
 
     </a>
 
-
-    <!--
-    IMPORTANT:
-    Do NOT use /profile/{{ username }} here.
-
-    That username belongs to the profile currently
-    being viewed.
-
-    JavaScript changes this link to the logged-in
-    user's own profile.
-    -->
 
     <a
         href="#"
@@ -1175,36 +1057,30 @@ body{
 
         <i class="fas fa-user"></i>
 
-        <span>
-            Profile
-        </span>
+        <span>Profile</span>
 
     </a>
 
 </div>
 
 
-<!-- ==========================================
+<!-- =========================================================
      SUPABASE
-========================================== -->
+========================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <script>
 
-
-/* ==========================================
+/* =========================================================
    SUPABASE CONFIG
-========================================== */
+========================================================= */
 
 const SUPABASE_URL =
     "https://jxpvkamxtedgzztozonl.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
-    "sb_publishable_DCI0qvAlYNBpWi8DZkZF2g_frSEW_OX";
-
+    "sb_publishable_DCI0qvAlYNBi8DZkZF2g_frSEW_OX";
 
 const supabaseClient =
     supabase.createClient(
@@ -1213,135 +1089,82 @@ const supabaseClient =
     );
 
 
-/* ==========================================
+/* =========================================================
    CURRENT PROFILE USERNAME
-========================================== */
+========================================================= */
 
 const profileUsername =
     "{{ username }}";
 
 
-/* ==========================================
+/* =========================================================
    ELEMENTS
-========================================== */
+========================================================= */
 
 const changeProfileBtn =
-    document.getElementById(
-        "changeProfileBtn"
-    );
-
+    document.getElementById("changeProfileBtn");
 
 const changeCoverBtn =
-    document.getElementById(
-        "changeCoverBtn"
-    );
-
+    document.getElementById("changeCoverBtn");
 
 const profilePhotoInput =
-    document.getElementById(
-        "profilePhotoInput"
-    );
-
+    document.getElementById("profilePhotoInput");
 
 const coverPhotoInput =
-    document.getElementById(
-        "coverPhotoInput"
-    );
-
+    document.getElementById("coverPhotoInput");
 
 const profileAvatar =
-    document.getElementById(
-        "profileAvatar"
-    );
-
+    document.getElementById("profileAvatar");
 
 const profileCover =
-    document.getElementById(
-        "profileCover"
-    );
-
+    document.getElementById("profileCover");
 
 const uploadStatus =
-    document.getElementById(
-        "uploadStatus"
-    );
-
+    document.getElementById("uploadStatus");
 
 const profileActionButtons =
-    document.getElementById(
-        "profileActionButtons"
-    );
-
+    document.getElementById("profileActionButtons");
 
 const followButton =
-    document.getElementById(
-        "followButton"
-    );
-
+    document.getElementById("followButton");
 
 const followersCount =
-    document.getElementById(
-        "followersCount"
-    );
-
+    document.getElementById("followersCount");
 
 const followingCount =
-    document.getElementById(
-        "followingCount"
-    );
-
+    document.getElementById("followingCount");
 
 const editBioBtn =
-    document.getElementById(
-        "editBioBtn"
-    );
-
+    document.getElementById("editBioBtn");
 
 const profileBio =
-    document.getElementById(
-        "profileBio"
-    );
-
+    document.getElementById("profileBio");
 
 const bioModal =
-    document.getElementById(
-        "bioModal"
-    );
-
+    document.getElementById("bioModal");
 
 const bioTextarea =
-    document.getElementById(
-        "bioTextarea"
-    );
-
+    document.getElementById("bioTextarea");
 
 const bioCancelBtn =
-    document.getElementById(
-        "bioCancelBtn"
-    );
-
+    document.getElementById("bioCancelBtn");
 
 const bioSaveBtn =
-    document.getElementById(
-        "bioSaveBtn"
-    );
-
-
-const recentPhotosGrid =
-    document.getElementById(
-        "recentPhotosGrid"
-    );
-
+    document.getElementById("bioSaveBtn");
 
 const myProfileNav =
-    document.getElementById(
-        "myProfileNav"
-    );
+    document.getElementById("myProfileNav");
+
+const mediaGrid =
+    document.getElementById("mediaGrid");
+
+const allPostsSection =
+    document.getElementById("allPostsSection");
 
 
-/* ==========================================
+/* =========================================================
    CURRENT USER
-========================================== */
+========================================================= */
 
 let currentUser = null;
 
@@ -1356,25 +1179,11 @@ let viewedProfile = null;
 
 function setupMyProfileNavigation(){
 
-    if(
-        !myProfileNav
-    ){
+    if(!myProfileNav){
 
         return;
 
     }
-
-
-    /*
-    IMPORTANT:
-
-    currentProfile = logged-in user's
-    real Supabase profile.
-
-    Therefore this always goes to
-    MY profile, even when currently
-    viewing another person's profile.
-    */
 
     if(
         currentProfile &&
@@ -1393,14 +1202,8 @@ function setupMyProfileNavigation(){
 
 
 /* =========================================================
-   NOTIFICATION SYSTEM
-   FOLLOW ONLY
+   FOLLOW NOTIFICATION
 ========================================================= */
-
-
-/* ==========================================
-   CREATE FOLLOW NOTIFICATION
-========================================== */
 
 async function createFollowNotification(){
 
@@ -1415,30 +1218,19 @@ async function createFollowNotification(){
 
         }
 
-
-        /*
-        Never notify yourself.
-        */
-
         if(
-            String(
-                currentUser.id
-            ) ===
-            String(
-                viewedProfile.id
-            )
+            String(currentUser.id) ===
+            String(viewedProfile.id)
         ){
 
             return;
 
         }
 
-
         const senderName =
             currentProfile?.name ||
             currentProfile?.username ||
             "Someone";
-
 
         const notificationData = {
 
@@ -1460,28 +1252,17 @@ async function createFollowNotification(){
 
         };
 
-
         const {
             data,
             error
         } =
         await supabaseClient
-
             .from("notifications")
-
-            .insert(
-                notificationData
-            )
+            .insert(notificationData)
             .select()
             .single();
 
-
         if(error){
-
-            /*
-            Notification failure must NEVER
-            break Follow functionality.
-            */
 
             console.error(
                 "Follow notification error:",
@@ -1491,7 +1272,6 @@ async function createFollowNotification(){
             return;
 
         }
-
 
         console.log(
             "Follow notification created:",
@@ -1529,7 +1309,6 @@ async function loadCurrentUser(){
             .auth
             .getUser();
 
-
         if(error){
 
             console.error(
@@ -1541,38 +1320,26 @@ async function loadCurrentUser(){
 
         }
 
-
         if(!user){
 
             console.log(
                 "No logged in user."
             );
 
-
             profileActionButtons.style.display =
                 "none";
-
 
             return;
 
         }
 
-
         currentUser =
             user;
 
 
-        console.log(
-            "Logged in user:",
-            currentUser
-        );
-
-
-        /*
-        ======================================
-        LOAD LOGGED-IN USER PROFILE
-        ======================================
-        */
+        /* ======================================
+           LOGGED-IN PROFILE
+        ====================================== */
 
         const {
             data:profile,
@@ -1621,21 +1388,12 @@ async function loadCurrentUser(){
             profile;
 
 
-        /*
-        ======================================
-        IMPORTANT:
-        SET MY PROFILE NAVIGATION NOW
-        ======================================
-        */
-
         setupMyProfileNavigation();
 
 
-        /*
-        ======================================
-        LOAD VIEWED PROFILE
-        ======================================
-        */
+        /* ======================================
+           VIEWED PROFILE
+        ====================================== */
 
         const {
             data:viewed,
@@ -1684,77 +1442,37 @@ async function loadCurrentUser(){
             viewed;
 
 
-        console.log(
-            "Viewed profile:",
-            viewedProfile
-        );
+        /* ======================================
+           NEW:
+           LOAD ALL PROFILE CONTENT
+        ====================================== */
+
+        await loadProfileContent();
 
 
-        /*
-        ======================================
-        LOAD RECENT PHOTOS
-        ======================================
-        */
-
-        await loadRecentPhotos();
-
-
-        /*
-        ======================================
-        CHECK OWNER
-        ======================================
-        */
+        /* ======================================
+           OWNER CHECK
+        ====================================== */
 
         const isOwnProfile =
-            String(
-                currentUser.id
-            ) ===
-            String(
-                viewedProfile.id
-            );
+            String(currentUser.id) ===
+            String(viewedProfile.id);
 
 
-        console.log(
-            "Own profile:",
-            isOwnProfile
-        );
-
-
-        /*
-        ======================================
-        OWNER VIEW
-        ======================================
-        */
+        /* ======================================
+           OWNER VIEW
+        ====================================== */
 
         if(isOwnProfile){
-
-            /*
-            Profile photo editing
-            */
 
             changeProfileBtn.style.display =
                 "flex";
 
-
-            /*
-            Cover editing
-            */
-
             changeCoverBtn.style.display =
                 "flex";
 
-
-            /*
-            Bio editing
-            */
-
             editBioBtn.style.display =
                 "block";
-
-
-            /*
-            Hide Follow + Message
-            */
 
             profileActionButtons.style.display =
                 "none";
@@ -1762,41 +1480,23 @@ async function loadCurrentUser(){
         }
 
 
-        /*
-        ======================================
-        OTHER USER VIEW
-        ======================================
-        */
+        /* ======================================
+           OTHER USER VIEW
+        ====================================== */
 
         else{
-
-            /*
-            Hide profile editing
-            */
 
             changeProfileBtn.style.display =
                 "none";
 
-
             changeCoverBtn.style.display =
                 "none";
-
 
             editBioBtn.style.display =
                 "none";
 
-
-            /*
-            Show Follow + Message
-            */
-
             profileActionButtons.style.display =
                 "flex";
-
-
-            /*
-            Check existing follow state
-            */
 
             await loadFollowStatus();
 
@@ -1816,36 +1516,43 @@ async function loadCurrentUser(){
 
 
 /* =========================================================
-   RECENT PHOTOS
+   LOAD PROFILE CONTENT
 ========================================================= */
 
+async function loadProfileContent(){
 
-/* ==========================================
-   LOAD RECENT PHOTOS
-========================================== */
-
-async function loadRecentPhotos(){
-
-    if(
-        !viewedProfile ||
-        !recentPhotosGrid
-    ){
+    if(!viewedProfile){
 
         return;
 
     }
 
+    await loadAllPosts();
+
+}
+
+
+/* =========================================================
+   LOAD ALL POSTS
+========================================================= */
+
+async function loadAllPosts(){
+
+    if(!viewedProfile){
+
+        return;
+
+    }
 
     try{
 
-        /*
-        Load real posts from Supabase
-        belonging to the viewed profile.
-        */
+        /* ==========================================
+           GET POSTS
+        ========================================== */
 
         const {
             data:posts,
-            error
+            error:postsError
         } =
         await supabaseClient
 
@@ -1866,25 +1573,28 @@ async function loadRecentPhotos(){
             );
 
 
-        if(error){
+        if(postsError){
 
             console.error(
-                "Recent photos loading error:",
-                error
+                "Posts loading error:",
+                postsError
             );
+
+            allPostsSection.innerHTML = `
+
+                <div class="no-posts">
+
+                    Unable to load posts.
+
+                </div>
+
+            `;
+
+            showEmptyMedia();
 
             return;
 
         }
-
-
-        /*
-        Remove any old Flask-rendered
-        photos before inserting real data.
-        */
-
-        recentPhotosGrid.innerHTML =
-            "";
 
 
         if(
@@ -1892,152 +1602,945 @@ async function loadRecentPhotos(){
             !posts.length
         ){
 
-            showNoRecentPhotos();
+            allPostsSection.innerHTML = `
+
+                <div class="no-posts">
+
+                    <i class="far fa-newspaper"></i>
+
+                    No posts yet
+
+                </div>
+
+            `;
+
+            showEmptyMedia();
 
             return;
 
         }
 
 
-        let photoCount =
-            0;
+        /* ==========================================
+           GET MEDIA FOR THESE POSTS
+        ========================================== */
+
+        const postIds =
+            posts.map(
+                post => post.id
+            );
 
 
-        /*
-        ======================================
-        FIND IMAGE URL
-        ======================================
+        const {
+            data:media,
+            error:mediaError
+        } =
+        await supabaseClient
 
-        Supports the possible existing
-        column names without changing
-        your posts system.
-        */
+            .from("post_media")
 
-        posts.forEach(
-            function(post){
+            .select("*")
 
-                let imageUrl =
-                    null;
+            .in(
+                "post_id",
+                postIds
+            )
 
+            .order(
+                "display_order",
+                {
+                    ascending:true
+                }
+            );
+
+
+        if(mediaError){
+
+            console.error(
+                "Post media loading error:",
+                mediaError
+            );
+
+        }
+
+
+        const mediaRows =
+            media || [];
+
+
+        /* ==========================================
+           GROUP MEDIA BY POST
+        ========================================== */
+
+        const mediaByPost = {};
+
+
+        mediaRows.forEach(
+            function(item){
 
                 if(
-                    post.image_url
+                    !mediaByPost[item.post_id]
                 ){
 
-                    imageUrl =
-                        post.image_url;
-
-                }
-                else if(
-                    post.image
-                ){
-
-                    imageUrl =
-                        post.image;
-
-                }
-                else if(
-                    post.photo_url
-                ){
-
-                    imageUrl =
-                        post.photo_url;
+                    mediaByPost[item.post_id] = [];
 
                 }
 
-
-                /*
-                Text-only posts are skipped.
-                */
-
-                if(!imageUrl){
-
-                    return;
-
-                }
-
-
-                photoCount++;
-
-
-                const image =
-                    document.createElement(
-                        "img"
-                    );
-
-
-                image.src =
-                    imageUrl;
-
-
-                image.alt =
-                    "Recent Photo";
-
-
-                image.loading =
-                    "lazy";
-
-
-                /*
-                Click photo -> post page
-                */
-
-                image.addEventListener(
-                    "click",
-                    function(){
-
-                        window.location.href =
-                            "/post/" +
-                            post.id;
-
-                    }
-                );
-
-
-                recentPhotosGrid.appendChild(
-                    image
+                mediaByPost[item.post_id].push(
+                    item
                 );
 
             }
         );
 
 
-        if(
-            photoCount === 0
-        ){
+        /* ==========================================
+           BUILD ALL POSTS
+        ========================================== */
 
-            showNoRecentPhotos();
+        allPostsSection.innerHTML =
+            "";
 
-        }
+
+        posts.forEach(
+            function(post){
+
+                const postMedia =
+                    mediaByPost[post.id] || [];
+
+
+                /*
+                Old image_url support.
+
+                This preserves old posts created
+                before post_media existed.
+                */
+
+                if(
+                    post.image_url &&
+                    !postMedia.some(
+                        item =>
+                            item.media_url ===
+                            post.image_url
+                    )
+                ){
+
+                    postMedia.unshift({
+
+                        id:
+                            "legacy-" +
+                            post.id,
+
+                        post_id:
+                            post.id,
+
+                        user_id:
+                            post.user_id,
+
+                        media_type:
+                            "image",
+
+                        media_url:
+                            post.image_url,
+
+                        file_name:
+                            "Image",
+
+                        display_order:
+                            -1
+
+                    });
+
+                }
+
+
+                const card =
+                    createPostCard(
+                        post,
+                        postMedia
+                    );
+
+
+                allPostsSection.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+        /* ==========================================
+           BUILD MEDIA SECTION
+        ========================================== */
+
+        buildMediaSection(
+            posts,
+            mediaByPost
+        );
 
     }
     catch(error){
 
         console.error(
-            "Recent photos exception:",
+            "All posts exception:",
             error
         );
+
+        allPostsSection.innerHTML = `
+
+            <div class="no-posts">
+
+                Unable to load posts.
+
+            </div>
+
+        `;
+
+        showEmptyMedia();
 
     }
 
 }
 
 
-/* ==========================================
-   NO RECENT PHOTOS
-========================================== */
+/* =========================================================
+   CREATE POST CARD
+========================================================= */
 
-function showNoRecentPhotos(){
+function createPostCard(
+    post,
+    postMedia
+){
 
-    recentPhotosGrid.innerHTML = `
+    const card =
+        document.createElement(
+            "div"
+        );
+
+    card.className =
+        "post-card";
+
+
+    /* ==========================================
+       HEADER
+    ========================================== */
+
+    const header =
+        document.createElement(
+            "div"
+        );
+
+    header.className =
+        "post-header";
+
+
+    const avatar =
+        document.createElement(
+            "img"
+        );
+
+    avatar.className =
+        "post-avatar";
+
+    avatar.src =
+        viewedProfile.profile_url ||
+        "{{ user.profile }}";
+
+    avatar.alt =
+        viewedProfile.name;
+
+
+    const authorBox =
+        document.createElement(
+            "div"
+        );
+
+
+    const author =
+        document.createElement(
+            "div"
+        );
+
+    author.className =
+        "post-author";
+
+    author.innerText =
+        viewedProfile.name ||
+        viewedProfile.username;
+
+
+    const date =
+        document.createElement(
+            "div"
+        );
+
+    date.className =
+        "post-date";
+
+    date.innerText =
+        formatPostDate(
+            post.created_at
+        );
+
+
+    authorBox.appendChild(
+        author
+    );
+
+    authorBox.appendChild(
+        date
+    );
+
+
+    header.appendChild(
+        avatar
+    );
+
+    header.appendChild(
+        authorBox
+    );
+
+
+    card.appendChild(
+        header
+    );
+
+
+    /* ==========================================
+       CAPTION
+    ========================================== */
+
+    if(
+        post.caption &&
+        post.caption.trim()
+    ){
+
+        const caption =
+            document.createElement(
+                "div"
+            );
+
+        caption.className =
+            "post-caption";
+
+        caption.innerText =
+            post.caption;
+
+        card.appendChild(
+            caption
+        );
+
+    }
+
+
+    /* ==========================================
+       MEDIA
+    ========================================== */
+
+    if(
+        postMedia &&
+        postMedia.length
+    ){
+
+        const mediaList =
+            document.createElement(
+                "div"
+            );
+
+        mediaList.className =
+            "post-media-list";
+
+
+        postMedia
+            .sort(
+                function(a,b){
+
+                    return (
+                        (a.display_order ?? 0) -
+                        (b.display_order ?? 0)
+                    );
+
+                }
+            )
+            .forEach(
+                function(media){
+
+                    const element =
+                        createPostMediaElement(
+                            media,
+                            post.id
+                        );
+
+                    if(element){
+
+                        mediaList.appendChild(
+                            element
+                        );
+
+                    }
+
+                }
+            );
+
+
+        card.appendChild(
+            mediaList
+        );
+
+    }
+
+
+    return card;
+
+}
+
+
+/* =========================================================
+   CREATE POST MEDIA ELEMENT
+========================================================= */
+
+function createPostMediaElement(
+    media,
+    postId
+){
+
+    const type =
+        String(
+            media.media_type || ""
+        )
+        .toLowerCase();
+
+
+    /* ==========================================
+       IMAGE
+    ========================================== */
+
+    if(
+        type === "image" ||
+        type === "photo" ||
+        type === "jpg" ||
+        type === "jpeg" ||
+        type === "png" ||
+        type === "webp"
+    ){
+
+        const image =
+            document.createElement(
+                "img"
+            );
+
+        image.className =
+            "post-media-image";
+
+        image.src =
+            media.media_url;
+
+        image.alt =
+            media.file_name ||
+            "Post image";
+
+        image.loading =
+            "lazy";
+
+        image.addEventListener(
+            "click",
+            function(){
+
+                window.location.href =
+                    "/post/" +
+                    postId;
+
+            }
+        );
+
+        return image;
+
+    }
+
+
+    /* ==========================================
+       VIDEO / REEL
+    ========================================== */
+
+    if(
+        type === "video" ||
+        type === "reel" ||
+        type === "mp4" ||
+        type === "mov" ||
+        type === "webm"
+    ){
+
+        const video =
+            document.createElement(
+                "video"
+            );
+
+        video.className =
+            "post-media-video";
+
+        video.src =
+            media.media_url;
+
+        video.controls =
+            true;
+
+        video.preload =
+            "metadata";
+
+        video.playsInline =
+            true;
+
+        /*
+        Clicking the video itself should not
+        unexpectedly navigate while user is
+        trying to play it.
+        */
+
+        return video;
+
+    }
+
+
+    /* ==========================================
+       DOCUMENT
+    ========================================== */
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+    link.className =
+        "post-document";
+
+    link.href =
+        media.media_url;
+
+    link.target =
+        "_blank";
+
+    link.rel =
+        "noopener noreferrer";
+
+
+    const icon =
+        document.createElement(
+            "i"
+        );
+
+    icon.className =
+        "fas fa-file";
+
+
+    const info =
+        document.createElement(
+            "div"
+        );
+
+    info.className =
+        "post-document-info";
+
+
+    const name =
+        document.createElement(
+            "div"
+        );
+
+    name.className =
+        "post-document-name";
+
+    name.innerText =
+        media.file_name ||
+        "Document";
+
+
+    const mediaType =
+        document.createElement(
+            "div"
+        );
+
+    mediaType.className =
+        "post-document-type";
+
+    mediaType.innerText =
+        media.media_type ||
+        "Document";
+
+
+    info.appendChild(
+        name
+    );
+
+    info.appendChild(
+        mediaType
+    );
+
+
+    link.appendChild(
+        icon
+    );
+
+    link.appendChild(
+        info
+    );
+
+
+    return link;
+
+}
+
+
+/* =========================================================
+   BUILD MEDIA SECTION
+   LATEST MEDIA ONLY
+========================================================= */
+
+function buildMediaSection(
+    posts,
+    mediaByPost
+){
+
+    const allMedia = [];
+
+
+    posts.forEach(
+        function(post){
+
+            const postMedia =
+                mediaByPost[post.id] || [];
+
+
+            postMedia.forEach(
+                function(media){
+
+                    allMedia.push({
+
+                        ...media,
+
+                        postCreatedAt:
+                            post.created_at
+
+                    });
+
+                }
+            );
+
+
+            /*
+            Legacy image support
+            */
+
+            if(
+                post.image_url &&
+                !postMedia.some(
+                    item =>
+                        item.media_url ===
+                        post.image_url
+                )
+            ){
+
+                allMedia.push({
+
+                    id:
+                        "legacy-" +
+                        post.id,
+
+                    post_id:
+                        post.id,
+
+                    user_id:
+                        post.user_id,
+
+                    media_type:
+                        "image",
+
+                    media_url:
+                        post.image_url,
+
+                    file_name:
+                        "Image",
+
+                    display_order:
+                        -1,
+
+                    postCreatedAt:
+                        post.created_at
+
+                });
+
+            }
+
+        }
+    );
+
+
+    /*
+    Newest post/media first.
+    */
+
+    allMedia.sort(
+        function(a,b){
+
+            return new Date(
+                b.postCreatedAt
+            ) -
+            new Date(
+                a.postCreatedAt
+            );
+
+        }
+    );
+
+
+    /*
+    Show latest 30 media items.
+    */
+
+    const latestMedia =
+        allMedia.slice(
+            0,
+            30
+        );
+
+
+    mediaGrid.innerHTML =
+        "";
+
+
+    if(!latestMedia.length){
+
+        showEmptyMedia();
+
+        return;
+
+    }
+
+
+    latestMedia.forEach(
+        function(media){
+
+            const item =
+                createMediaGridItem(
+                    media
+                );
+
+            if(item){
+
+                mediaGrid.appendChild(
+                    item
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   MEDIA GRID ITEM
+========================================================= */
+
+function createMediaGridItem(
+    media
+){
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+    item.className =
+        "media-item";
+
+
+    const type =
+        String(
+            media.media_type || ""
+        )
+        .toLowerCase();
+
+
+    /* ==========================================
+       IMAGE
+    ========================================== */
+
+    if(
+        type === "image" ||
+        type === "photo" ||
+        type === "jpg" ||
+        type === "jpeg" ||
+        type === "png" ||
+        type === "webp"
+    ){
+
+        const image =
+            document.createElement(
+                "img"
+            );
+
+        image.src =
+            media.media_url;
+
+        image.alt =
+            media.file_name ||
+            "Photo";
+
+        image.loading =
+            "lazy";
+
+
+        item.appendChild(
+            image
+        );
+
+    }
+
+
+    /* ==========================================
+       VIDEO / REEL
+    ========================================== */
+
+    else if(
+        type === "video" ||
+        type === "reel" ||
+        type === "mp4" ||
+        type === "mov" ||
+        type === "webm"
+    ){
+
+        const video =
+            document.createElement(
+                "video"
+            );
+
+        video.src =
+            media.media_url;
+
+        video.muted =
+            true;
+
+        video.playsInline =
+            true;
+
+        video.preload =
+            "metadata";
+
+
+        item.appendChild(
+            video
+        );
+
+
+        const icon =
+            document.createElement(
+                "div"
+            );
+
+        icon.className =
+            "media-video-icon";
+
+        icon.innerHTML =
+            '<i class="fas fa-play"></i>';
+
+
+        item.appendChild(
+            icon
+        );
+
+    }
+
+
+    /* ==========================================
+       DOCUMENT
+    ========================================== */
+
+    else{
+
+        const documentBox =
+            document.createElement(
+                "div"
+            );
+
+        documentBox.className =
+            "media-document";
+
+
+        const icon =
+            document.createElement(
+                "i"
+            );
+
+        icon.className =
+            "fas fa-file-lines";
+
+
+        const name =
+            document.createElement(
+                "div"
+            );
+
+        name.className =
+            "media-document-name";
+
+        name.innerText =
+            media.file_name ||
+            "Document";
+
+
+        documentBox.appendChild(
+            icon
+        );
+
+        documentBox.appendChild(
+            name
+        );
+
+
+        item.appendChild(
+            documentBox
+        );
+
+    }
+
+
+    /*
+    Click -> original post
+    */
+
+    item.addEventListener(
+        "click",
+        function(){
+
+            window.location.href =
+                "/post/" +
+                media.post_id;
+
+        }
+    );
+
+
+    return item;
+
+}
+
+
+/* =========================================================
+   EMPTY MEDIA
+========================================================= */
+
+function showEmptyMedia(){
+
+    mediaGrid.innerHTML = `
 
         <div
-            class="no-recent-photos"
+            class="empty-media"
             style="grid-column:1/-1;">
 
             <i class="far fa-images"></i>
 
-            No recent photos
+            No media yet
 
         </div>
 
@@ -2047,13 +2550,50 @@ function showNoRecentPhotos(){
 
 
 /* =========================================================
-   FOLLOW STATUS
+   DATE FORMAT
 ========================================================= */
 
+function formatPostDate(
+    dateString
+){
 
-/* ==========================================
-   LOAD FOLLOW STATUS
-========================================== */
+    if(!dateString){
+
+        return "";
+
+    }
+
+    try{
+
+        const date =
+            new Date(
+                dateString
+            );
+
+        return date.toLocaleString(
+            undefined,
+            {
+                day:"numeric",
+                month:"short",
+                year:"numeric",
+                hour:"numeric",
+                minute:"2-digit"
+            }
+        );
+
+    }
+    catch(error){
+
+        return "";
+
+    }
+
+}
+
+
+/* =========================================================
+   FOLLOW STATUS
+========================================================= */
 
 async function loadFollowStatus(){
 
@@ -2116,10 +2656,6 @@ async function loadFollowStatus(){
 }
 
 
-/* ==========================================
-   FOLLOW BUTTON STATE
-========================================== */
-
 function setFollowButton(){
 
     followButton.innerText =
@@ -2131,10 +2667,6 @@ function setFollowButton(){
 
 }
 
-
-/* ==========================================
-   UNFOLLOW BUTTON STATE
-========================================== */
 
 function setUnfollowButton(){
 
@@ -2170,17 +2702,9 @@ followButton.addEventListener(
         }
 
 
-        /*
-        Never follow yourself.
-        */
-
         if(
-            String(
-                currentUser.id
-            ) ===
-            String(
-                viewedProfile.id
-            )
+            String(currentUser.id) ===
+            String(viewedProfile.id)
         ){
 
             return;
@@ -2201,7 +2725,6 @@ followButton.addEventListener(
         followButton.dataset.processing =
             "true";
 
-
         followButton.disabled =
             true;
 
@@ -2214,15 +2737,11 @@ followButton.addEventListener(
                 "unfollow";
 
 
-            /*
-            ==================================
-            UNFOLLOW
-            ==================================
-            */
+            /* ==================================
+               UNFOLLOW
+            ================================== */
 
-            if(
-                isCurrentlyFollowing
-            ){
+            if(isCurrentlyFollowing){
 
                 const {
                     error
@@ -2269,11 +2788,9 @@ followButton.addEventListener(
             }
 
 
-            /*
-            ==================================
-            FOLLOW
-            ==================================
-            */
+            /* ==================================
+               FOLLOW
+            ================================== */
 
             else{
 
@@ -2315,12 +2832,6 @@ followButton.addEventListener(
                     currentCount + 1;
 
 
-                /*
-                ==================================
-                CREATE FOLLOW NOTIFICATION
-                ==================================
-                */
-
                 await createFollowNotification();
 
             }
@@ -2358,13 +2869,8 @@ followButton.addEventListener(
 
 
 /* =========================================================
-   BIO EDIT SYSTEM
+   BIO EDIT
 ========================================================= */
-
-
-/* ==========================================
-   OPEN BIO MODAL
-========================================== */
 
 editBioBtn.addEventListener(
     "click",
@@ -2380,18 +2886,9 @@ editBioBtn.addEventListener(
         }
 
 
-        /*
-        Safety:
-        only owner can edit.
-        */
-
         if(
-            String(
-                currentUser.id
-            ) !==
-            String(
-                viewedProfile.id
-            )
+            String(currentUser.id) !==
+            String(viewedProfile.id)
         ){
 
             return;
@@ -2421,10 +2918,6 @@ editBioBtn.addEventListener(
 );
 
 
-/* ==========================================
-   CANCEL BIO
-========================================== */
-
 bioCancelBtn.addEventListener(
     "click",
     function(){
@@ -2436,10 +2929,6 @@ bioCancelBtn.addEventListener(
     }
 );
 
-
-/* ==========================================
-   CLOSE BIO MODAL
-========================================== */
 
 bioModal.addEventListener(
     "click",
@@ -2460,9 +2949,9 @@ bioModal.addEventListener(
 );
 
 
-/* ==========================================
+/* =========================================================
    SAVE BIO
-========================================== */
+========================================================= */
 
 bioSaveBtn.addEventListener(
     "click",
@@ -2478,18 +2967,9 @@ bioSaveBtn.addEventListener(
         }
 
 
-        /*
-        Safety:
-        only owner can edit.
-        */
-
         if(
-            String(
-                currentUser.id
-            ) !==
-            String(
-                viewedProfile.id
-            )
+            String(currentUser.id) !==
+            String(viewedProfile.id)
         ){
 
             return;
@@ -2548,17 +3028,9 @@ bioSaveBtn.addEventListener(
             }
 
 
-            /*
-            Update page immediately.
-            */
-
             profileBio.innerText =
                 newBio;
 
-
-            /*
-            Update local objects.
-            */
 
             if(currentProfile){
 
@@ -2622,14 +3094,8 @@ bioSaveBtn.addEventListener(
 
 
 /* =========================================================
-   IMAGE UPLOAD SYSTEM
-   EXISTING SYSTEM
+   STATUS
 ========================================================= */
-
-
-/* ==========================================
-   SHOW STATUS
-========================================== */
 
 function showUploadStatus(message){
 
@@ -2642,10 +3108,6 @@ function showUploadStatus(message){
 }
 
 
-/* ==========================================
-   HIDE STATUS
-========================================== */
-
 function hideUploadStatus(){
 
     uploadStatus.style.display =
@@ -2657,9 +3119,9 @@ function hideUploadStatus(){
 }
 
 
-/* ==========================================
-   VALIDATE IMAGE
-========================================== */
+/* =========================================================
+   IMAGE VALIDATION
+========================================================= */
 
 function validateImage(file){
 
@@ -2704,9 +3166,9 @@ function validateImage(file){
 }
 
 
-/* ==========================================
-   GET FILE EXTENSION
-========================================== */
+/* =========================================================
+   FILE EXTENSION
+========================================================= */
 
 function getFileExtension(file){
 
@@ -2750,9 +3212,10 @@ function getFileExtension(file){
 }
 
 
-/* ==========================================
-   UPLOAD IMAGE
-========================================== */
+/* =========================================================
+   IMAGE UPLOAD
+   EXISTING SYSTEM PRESERVED
+========================================================= */
 
 async function uploadImage(
     file,
@@ -2807,12 +3270,6 @@ async function uploadImage(
             extension;
 
 
-        console.log(
-            "Uploading:",
-            fileName
-        );
-
-
         const {
             data:uploadData,
             error:uploadError
@@ -2827,14 +3284,9 @@ async function uploadImage(
                 fileName,
                 file,
                 {
-                    cacheControl:
-                        "3600",
-
-                    upsert:
-                        false,
-
-                    contentType:
-                        file.type
+                    cacheControl:"3600",
+                    upsert:false,
+                    contentType:file.type
                 }
             );
 
@@ -2844,12 +3296,6 @@ async function uploadImage(
             throw uploadError;
 
         }
-
-
-        console.log(
-            "Upload successful:",
-            uploadData
-        );
 
 
         const {
@@ -2868,12 +3314,6 @@ async function uploadImage(
 
         const publicUrl =
             publicData.publicUrl;
-
-
-        console.log(
-            "Public image URL:",
-            publicUrl
-        );
 
 
         const updateData =
@@ -2911,12 +3351,6 @@ async function uploadImage(
 
         }
 
-
-        /*
-        ======================================
-        UPDATE PAGE IMMEDIATELY
-        ======================================
-        */
 
         if(
             type === "profile"
@@ -2986,9 +3420,9 @@ async function uploadImage(
 }
 
 
-/* ==========================================
+/* =========================================================
    CHANGE PROFILE PHOTO
-========================================== */
+========================================================= */
 
 changeProfileBtn.addEventListener(
     "click",
@@ -3005,19 +3439,10 @@ changeProfileBtn.addEventListener(
         }
 
 
-        /*
-        Extra safety:
-        only owner can change profile photo.
-        */
-
         if(
             !viewedProfile ||
-            String(
-                currentUser.id
-            ) !==
-            String(
-                viewedProfile.id
-            )
+            String(currentUser.id) !==
+            String(viewedProfile.id)
         ){
 
             return;
@@ -3030,10 +3455,6 @@ changeProfileBtn.addEventListener(
     }
 );
 
-
-/* ==========================================
-   PROFILE PHOTO SELECTED
-========================================== */
 
 profilePhotoInput.addEventListener(
     "change",
@@ -3063,9 +3484,9 @@ profilePhotoInput.addEventListener(
 );
 
 
-/* ==========================================
-   CHANGE COVER PHOTO
-========================================== */
+/* =========================================================
+   CHANGE COVER
+========================================================= */
 
 changeCoverBtn.addEventListener(
     "click",
@@ -3082,19 +3503,10 @@ changeCoverBtn.addEventListener(
         }
 
 
-        /*
-        Extra safety:
-        only owner can change cover.
-        */
-
         if(
             !viewedProfile ||
-            String(
-                currentUser.id
-            ) !==
-            String(
-                viewedProfile.id
-            )
+            String(currentUser.id) !==
+            String(viewedProfile.id)
         ){
 
             return;
@@ -3107,10 +3519,6 @@ changeCoverBtn.addEventListener(
     }
 );
 
-
-/* ==========================================
-   COVER PHOTO SELECTED
-========================================== */
 
 coverPhotoInput.addEventListener(
     "change",
@@ -3147,7 +3555,6 @@ coverPhotoInput.addEventListener(
 loadCurrentUser();
 
 </script>
-
 
 </body>
 
