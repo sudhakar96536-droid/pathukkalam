@@ -95,33 +95,98 @@ body{
     color:#222;
 }
 
-/* IMAGE PREVIEW */
+/* MEDIA PREVIEW */
 
-.image-preview{
+.media-preview{
     display:none;
     margin-top:15px;
+}
+
+.media-preview.active{
+    display:block;
+}
+
+.media-preview-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:10px;
+}
+
+.media-item{
     position:relative;
-}
-
-.image-preview img{
-    width:100%;
-    max-height:400px;
-    object-fit:cover;
+    background:#f0f2f5;
     border-radius:12px;
+    overflow:hidden;
+    min-height:120px;
 }
 
-.remove-image{
+.media-item img,
+.media-item video{
+    width:100%;
+    height:220px;
+    display:block;
+    object-fit:cover;
+    background:#000;
+}
+
+.media-item.document-item{
+    min-height:110px;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.document-icon{
+    width:50px;
+    height:50px;
+    border-radius:12px;
+    background:#e8f1ff;
+    color:#1877f2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    flex-shrink:0;
+}
+
+.document-info{
+    min-width:0;
+    flex:1;
+}
+
+.document-name{
+    font-size:14px;
+    font-weight:bold;
+    color:#222;
+    word-break:break-word;
+}
+
+.document-type{
+    margin-top:5px;
+    font-size:12px;
+    color:#888;
+}
+
+.remove-media{
     position:absolute;
-    top:10px;
-    right:10px;
-    width:36px;
-    height:36px;
+    top:8px;
+    right:8px;
+    width:34px;
+    height:34px;
     border:none;
     border-radius:50%;
     background:rgba(0,0,0,0.65);
     color:white;
-    font-size:18px;
+    font-size:16px;
     cursor:pointer;
+    z-index:5;
+}
+
+.media-count{
+    margin-top:10px;
+    font-size:12px;
+    color:#777;
 }
 
 /* BOTTOM TOOLS */
@@ -184,6 +249,19 @@ body{
     display:none;
 }
 
+@media(max-width:600px){
+
+    .media-preview-grid{
+        grid-template-columns:1fr;
+    }
+
+    .media-item img,
+    .media-item video{
+        height:280px;
+    }
+
+}
+
 </style>
 
 </head>
@@ -235,33 +313,51 @@ body{
         placeholder="What's happening in Pathukkalam?"></textarea>
 
 
-    <!-- IMAGE PREVIEW -->
+    <!-- MEDIA PREVIEW -->
 
     <div
-        id="imagePreview"
-        class="image-preview">
+        id="mediaPreview"
+        class="media-preview">
 
-        <img
-            id="previewImage"
-            src="">
+        <div
+            id="mediaPreviewGrid"
+            class="media-preview-grid">
+        </div>
 
-        <button
-            type="button"
-            id="removeImage"
-            class="remove-image">
-
-            <i class="fas fa-times"></i>
-
-        </button>
+        <div
+            id="mediaCount"
+            class="media-count">
+        </div>
 
     </div>
 
+
+    <!-- IMAGE INPUT -->
 
     <input
         type="file"
         id="imageInput"
         class="hidden-input"
-        accept="image/jpeg,image/png,image/webp">
+        accept="image/jpeg,image/png,image/webp"
+        multiple>
+
+
+    <!-- VIDEO INPUT -->
+
+    <input
+        type="file"
+        id="videoInput"
+        class="hidden-input"
+        accept="video/*">
+
+
+    <!-- DOCUMENT INPUT -->
+
+    <input
+        type="file"
+        id="documentInput"
+        class="hidden-input"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip">
 
 
     <div
@@ -278,6 +374,9 @@ body{
 
     <div class="tool-options">
 
+
+        <!-- PHOTO -->
+
         <label
             class="tool-btn"
             for="imageInput">
@@ -289,22 +388,30 @@ body{
         </label>
 
 
-        <div class="tool-btn">
+        <!-- VIDEO -->
+
+        <label
+            class="tool-btn"
+            for="videoInput">
 
             <i class="fas fa-video"></i>
 
             <span>Video</span>
 
-        </div>
+        </label>
 
 
-        <div class="tool-btn">
+        <!-- DOCUMENT -->
+
+        <label
+            class="tool-btn"
+            for="documentInput">
 
             <i class="fas fa-file"></i>
 
             <span>Document</span>
 
-        </div>
+        </label>
 
     </div>
 
@@ -339,6 +446,29 @@ const supabaseClient =
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
+
+
+/* -----------------------------------------
+   MEDIA SETTINGS
+----------------------------------------- */
+
+const MAX_IMAGE_SIZE =
+    5 * 1024 * 1024;
+
+const MAX_VIDEO_SIZE =
+    50 * 1024 * 1024;
+
+const MAX_DOCUMENT_SIZE =
+    20 * 1024 * 1024;
+
+
+/*
+   Selected media are kept separately from
+   the existing posting logic.
+*/
+let selectedImages = [];
+let selectedVideo = null;
+let selectedDocument = null;
 
 
 /* -----------------------------------------
@@ -431,6 +561,81 @@ document.getElementById(
     "change",
     function(){
 
+        const files =
+            Array.from(this.files || []);
+
+
+        if(!files.length){
+
+            return;
+
+        }
+
+
+        /*
+        Images can be selected multiple times.
+        Existing selected images are retained.
+        */
+
+        for(const file of files){
+
+            if(
+                !file.type.startsWith("image/")
+            ){
+
+                alert(
+                    "Only image files are allowed."
+                );
+
+                continue;
+
+            }
+
+
+            if(
+                file.size >
+                MAX_IMAGE_SIZE
+            ){
+
+                alert(
+                    file.name +
+                    " must be smaller than 5 MB."
+                );
+
+                continue;
+
+            }
+
+
+            selectedImages.push(file);
+
+        }
+
+
+        renderMediaPreview();
+
+
+        /*
+        Reset the input so the same image can
+        be selected again later if required.
+        */
+
+        this.value = "";
+
+    }
+);
+
+
+/* -----------------------------------------
+   VIDEO SELECT
+----------------------------------------- */
+
+document.getElementById(
+    "videoInput"
+).addEventListener(
+    "change",
+    function(){
+
         const file =
             this.files[0];
 
@@ -442,12 +647,12 @@ document.getElementById(
         }
 
 
-        /* Maximum 5 MB */
-
-        if(file.size > 5 * 1024 * 1024){
+        if(
+            !file.type.startsWith("video/")
+        ){
 
             alert(
-                "Image must be smaller than 5 MB."
+                "Please select a video file."
             );
 
             this.value = "";
@@ -457,60 +662,478 @@ document.getElementById(
         }
 
 
-        const reader =
-            new FileReader();
+        if(
+            file.size >
+            MAX_VIDEO_SIZE
+        ){
+
+            alert(
+                "Video must be smaller than 50 MB."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
 
 
-        reader.onload =
-            function(event){
+        /*
+        One video per post.
+        Selecting another video replaces
+        the previously selected video.
+        */
 
-                document.getElementById(
-                    "previewImage"
-                ).src =
-                    event.target.result;
-
-
-                document.getElementById(
-                    "imagePreview"
-                ).style.display =
-                    "block";
-
-            };
+        selectedVideo =
+            file;
 
 
-        reader.readAsDataURL(file);
+        /*
+        Video and document are mutually
+        exclusive media types.
+        */
+
+        selectedDocument =
+            null;
+
+
+        renderMediaPreview();
+
+
+        this.value = "";
 
     }
 );
 
 
 /* -----------------------------------------
-   REMOVE IMAGE
+   DOCUMENT SELECT
 ----------------------------------------- */
 
 document.getElementById(
-    "removeImage"
+    "documentInput"
 ).addEventListener(
-    "click",
+    "change",
     function(){
 
-        document.getElementById(
-            "imageInput"
-        ).value = "";
+        const file =
+            this.files[0];
 
 
-        document.getElementById(
-            "previewImage"
-        ).src = "";
+        if(!file){
+
+            return;
+
+        }
 
 
-        document.getElementById(
-            "imagePreview"
-        ).style.display =
-            "none";
+        if(
+            file.size >
+            MAX_DOCUMENT_SIZE
+        ){
+
+            alert(
+                "Document must be smaller than 20 MB."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+
+        selectedDocument =
+            file;
+
+
+        /*
+        Document and video are mutually
+        exclusive media types.
+        */
+
+        selectedVideo =
+            null;
+
+
+        renderMediaPreview();
+
+
+        this.value = "";
 
     }
 );
+
+
+/* -----------------------------------------
+   RENDER MEDIA PREVIEW
+----------------------------------------- */
+
+function renderMediaPreview(){
+
+    const preview =
+        document.getElementById(
+            "mediaPreview"
+        );
+
+    const grid =
+        document.getElementById(
+            "mediaPreviewGrid"
+        );
+
+    const count =
+        document.getElementById(
+            "mediaCount"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    /*
+    ======================================
+    IMAGES
+    ======================================
+    */
+
+    selectedImages.forEach(
+        function(file,index){
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "media-item";
+
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+            img.src =
+                URL.createObjectURL(
+                    file
+                );
+
+            img.alt =
+                "Selected image";
+
+
+            const remove =
+                document.createElement(
+                    "button"
+                );
+
+            remove.type =
+                "button";
+
+            remove.className =
+                "remove-media";
+
+            remove.innerHTML =
+                '<i class="fas fa-times"></i>';
+
+
+            remove.addEventListener(
+                "click",
+                function(){
+
+                    selectedImages.splice(
+                        index,
+                        1
+                    );
+
+                    renderMediaPreview();
+
+                }
+            );
+
+
+            item.appendChild(img);
+
+            item.appendChild(remove);
+
+            grid.appendChild(item);
+
+        }
+    );
+
+
+    /*
+    ======================================
+    VIDEO
+    ======================================
+    */
+
+    if(selectedVideo){
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+        item.className =
+            "media-item";
+
+
+        const video =
+            document.createElement(
+                "video"
+            );
+
+        video.src =
+            URL.createObjectURL(
+                selectedVideo
+            );
+
+        video.controls =
+            true;
+
+        video.preload =
+            "metadata";
+
+
+        const remove =
+            document.createElement(
+                "button"
+            );
+
+        remove.type =
+            "button";
+
+        remove.className =
+            "remove-media";
+
+        remove.innerHTML =
+            '<i class="fas fa-times"></i>';
+
+
+        remove.addEventListener(
+            "click",
+            function(){
+
+                selectedVideo =
+                    null;
+
+                renderMediaPreview();
+
+            }
+        );
+
+
+        item.appendChild(video);
+
+        item.appendChild(remove);
+
+        grid.appendChild(item);
+
+    }
+
+
+    /*
+    ======================================
+    DOCUMENT
+    ======================================
+    */
+
+    if(selectedDocument){
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+        item.className =
+            "media-item document-item";
+
+
+        const icon =
+            document.createElement(
+                "div"
+            );
+
+        icon.className =
+            "document-icon";
+
+        icon.innerHTML =
+            '<i class="fas fa-file-lines"></i>';
+
+
+        const info =
+            document.createElement(
+                "div"
+            );
+
+        info.className =
+            "document-info";
+
+
+        const name =
+            document.createElement(
+                "div"
+            );
+
+        name.className =
+            "document-name";
+
+        name.innerText =
+            selectedDocument.name;
+
+
+        const type =
+            document.createElement(
+                "div"
+            );
+
+        type.className =
+            "document-type";
+
+        type.innerText =
+            formatFileSize(
+                selectedDocument.size
+            );
+
+
+        info.appendChild(name);
+
+        info.appendChild(type);
+
+
+        const remove =
+            document.createElement(
+                "button"
+            );
+
+        remove.type =
+            "button";
+
+        remove.className =
+            "remove-media";
+
+        remove.innerHTML =
+            '<i class="fas fa-times"></i>';
+
+
+        remove.addEventListener(
+            "click",
+            function(){
+
+                selectedDocument =
+                    null;
+
+                renderMediaPreview();
+
+            }
+        );
+
+
+        item.appendChild(icon);
+
+        item.appendChild(info);
+
+        item.appendChild(remove);
+
+        grid.appendChild(item);
+
+    }
+
+
+    const total =
+        selectedImages.length +
+        (selectedVideo ? 1 : 0) +
+        (selectedDocument ? 1 : 0);
+
+
+    if(total > 0){
+
+        preview.classList.add(
+            "active"
+        );
+
+
+        if(
+            selectedVideo &&
+            selectedImages.length
+        ){
+
+            count.innerText =
+                selectedImages.length +
+                " image(s) + 1 video";
+
+        }
+        else if(selectedVideo){
+
+            count.innerText =
+                "1 video selected";
+
+        }
+        else if(selectedDocument){
+
+            count.innerText =
+                "1 document selected";
+
+        }
+        else{
+
+            count.innerText =
+                selectedImages.length +
+                (
+                    selectedImages.length === 1
+                        ? " image selected"
+                        : " images selected"
+                );
+
+        }
+
+    }
+    else{
+
+        preview.classList.remove(
+            "active"
+        );
+
+        count.innerText =
+            "";
+
+    }
+
+}
+
+
+/* -----------------------------------------
+   FILE SIZE
+----------------------------------------- */
+
+function formatFileSize(bytes){
+
+    if(bytes < 1024){
+
+        return bytes +
+            " B";
+
+    }
+
+
+    if(bytes < 1024 * 1024){
+
+        return (
+            bytes / 1024
+        ).toFixed(1) +
+        " KB";
+
+    }
+
+
+    return (
+        bytes /
+        (1024 * 1024)
+    ).toFixed(1) +
+    " MB";
+
+}
 
 
 /* -----------------------------------------
@@ -541,19 +1164,19 @@ document.getElementById(
             ).value.trim();
 
 
-        const imageFile =
-            document.getElementById(
-                "imageInput"
-            ).files[0];
+        const hasMedia =
+            selectedImages.length > 0 ||
+            !!selectedVideo ||
+            !!selectedDocument;
 
 
-        if(!caption && !imageFile){
+        if(!caption && !hasMedia){
 
             message.style.color =
                 "red";
 
             message.innerText =
-                "Please write something or select a photo.";
+                "Please write something or select a photo, video or document.";
 
             return;
 
@@ -592,14 +1215,25 @@ document.getElementById(
             }
 
 
-            let imageUrl = null;
+            /*
+            ==================================
+            UPLOAD ALL SELECTED MEDIA
+            ==================================
+            */
+
+            const uploadedMedia = [];
 
 
-            /* ---------------------------------
-               UPLOAD IMAGE
-            --------------------------------- */
+            /*
+            ----------------------------------
+            UPLOAD IMAGES
+            ----------------------------------
+            */
 
-            if(imageFile){
+            for(
+                const imageFile
+                of selectedImages
+            ){
 
                 const extension =
                     imageFile.name
@@ -610,14 +1244,18 @@ document.getElementById(
 
                 const fileName =
                     user.id +
-                    "/" +
+                    "/post_" +
                     Date.now() +
+                    "_" +
+                    Math.random()
+                        .toString(36)
+                        .substring(2,8) +
                     "." +
                     extension;
 
 
                 console.log(
-                    "Uploading:",
+                    "Uploading image:",
                     fileName
                 );
 
@@ -651,9 +1289,90 @@ document.getElementById(
                 }
 
 
-                /* ---------------------------------
-                   GET PUBLIC URL
-                --------------------------------- */
+                const {
+                    data: publicUrlData
+                } =
+                supabaseClient
+                    .storage
+                    .from("post-images")
+                    .getPublicUrl(
+                        fileName
+                    );
+
+
+                uploadedMedia.push({
+
+                    type:
+                        "image",
+
+                    url:
+                        publicUrlData.publicUrl,
+
+                    name:
+                        imageFile.name
+
+                });
+
+            }
+
+
+            /*
+            ----------------------------------
+            UPLOAD VIDEO
+            ----------------------------------
+            */
+
+            if(selectedVideo){
+
+                const extension =
+                    selectedVideo.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+                const fileName =
+                    user.id +
+                    "/video_" +
+                    Date.now() +
+                    "." +
+                    extension;
+
+
+                console.log(
+                    "Uploading video:",
+                    fileName
+                );
+
+
+                const {
+                    error: uploadError
+                } =
+                await supabaseClient
+                    .storage
+                    .from("post-images")
+                    .upload(
+                        fileName,
+                        selectedVideo,
+                        {
+                            cacheControl:
+                                "3600",
+
+                            upsert:
+                                false,
+
+                            contentType:
+                                selectedVideo.type
+                        }
+                    );
+
+
+                if(uploadError){
+
+                    throw uploadError;
+
+                }
+
 
                 const {
                     data: publicUrlData
@@ -666,21 +1385,132 @@ document.getElementById(
                     );
 
 
-                imageUrl =
-                    publicUrlData.publicUrl;
+                uploadedMedia.push({
 
+                    type:
+                        "video",
 
-                console.log(
-                    "Image URL:",
-                    imageUrl
-                );
+                    url:
+                        publicUrlData.publicUrl,
+
+                    name:
+                        selectedVideo.name
+
+                });
 
             }
 
 
-            /* ---------------------------------
-               INSERT POST
-            --------------------------------- */
+            /*
+            ----------------------------------
+            UPLOAD DOCUMENT
+            ----------------------------------
+            */
+
+            if(selectedDocument){
+
+                const extension =
+                    selectedDocument.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+                const fileName =
+                    user.id +
+                    "/document_" +
+                    Date.now() +
+                    "_" +
+                    Math.random()
+                        .toString(36)
+                        .substring(2,8) +
+                    "." +
+                    extension;
+
+
+                console.log(
+                    "Uploading document:",
+                    fileName
+                );
+
+
+                const {
+                    error: uploadError
+                } =
+                await supabaseClient
+                    .storage
+                    .from("post-images")
+                    .upload(
+                        fileName,
+                        selectedDocument,
+                        {
+                            cacheControl:
+                                "3600",
+
+                            upsert:
+                                false,
+
+                            contentType:
+                                selectedDocument.type ||
+                                "application/octet-stream"
+                        }
+                    );
+
+
+                if(uploadError){
+
+                    throw uploadError;
+
+                }
+
+
+                const {
+                    data: publicUrlData
+                } =
+                supabaseClient
+                    .storage
+                    .from("post-images")
+                    .getPublicUrl(
+                        fileName
+                    );
+
+
+                uploadedMedia.push({
+
+                    type:
+                        "document",
+
+                    url:
+                        publicUrlData.publicUrl,
+
+                    name:
+                        selectedDocument.name
+
+                });
+
+            }
+
+
+            /*
+            ==================================
+            INSERT POST
+            ==================================
+
+            The old image_url column is retained
+            for compatibility with the existing
+            Pathukkalam post system.
+
+            New media is additionally stored in
+            media_urls and media_type.
+
+            ==================================
+            */
+
+            const firstMedia =
+                uploadedMedia.length
+                    ? uploadedMedia[0]
+                    : null;
+
 
             const {
                 data,
@@ -697,7 +1527,18 @@ document.getElementById(
                         caption || null,
 
                     image_url:
-                        imageUrl
+                        firstMedia?.type === "image"
+                            ? firstMedia.url
+                            : null,
+
+                    media_urls:
+                        uploadedMedia.length
+                            ? uploadedMedia
+                            : null,
+
+                    media_type:
+                        firstMedia?.type ||
+                        null
 
                 })
                 .select()
