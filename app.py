@@ -183,6 +183,10 @@ def jobs():
 def news():
     return render_template('news.html')
 
+@app.route('/health')
+def health():
+    return 'OK', 200
+
 @app.route("/profile/<username>")
 def user_profile(username):
 
