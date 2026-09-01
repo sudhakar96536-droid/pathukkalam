@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -6,7 +7,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+   content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Pathukkalam Reels</title>
 
@@ -195,15 +196,6 @@ button:disabled{
 
     z-index:1;
 }
-
-
-/*
-   If the processed video itself is vertical,
-   it will fill almost the complete screen.
-
-   Keep contain instead of cover so the user's
-   uploaded video is not unexpectedly cut again.
-*/
 
 
 /* =========================================================
@@ -829,7 +821,7 @@ button:disabled{
 
 
 /* =========================================================
-   NEW TRIM UI
+   TRIM UI
 ========================================================= */
 
 .trim-section{
@@ -887,13 +879,6 @@ button:disabled{
 
     color:#fff;
 }
-
-
-/*
-   One timeline.
-   LEFT handle = START.
-   RIGHT handle = END.
-*/
 
 .trim-track{
     position:relative;
@@ -1276,9 +1261,7 @@ button:disabled{
 
 </head>
 
-
 <body>
-
 
 <!-- =======================================================
      HEADER
@@ -1286,10 +1269,11 @@ button:disabled{
 
 <div class="header">
 
-    🎬 Pathukkalam
+```
+🎬 Pathukkalam
+```
 
 </div>
-
 
 <!-- =======================================================
      TOP BUTTONS
@@ -1297,40 +1281,41 @@ button:disabled{
 
 <div class="top-actions">
 
-    <button
-        class="top-btn active"
-        id="feedBtn">
+```
+<button
+    class="top-btn active"
+    id="feedBtn">
 
-        🎬 Reels
+    🎬 Reels
 
-    </button>
+</button>
 
-    <button
-        class="top-btn"
-        id="uploadBtn">
+<button
+    class="top-btn"
+    id="uploadBtn">
 
-        ➕ Upload
+    ➕ Upload
 
-    </button>
+</button>
 
-    <button
-        class="top-btn"
-        id="myReelsBtn">
+<button
+    class="top-btn"
+    id="myReelsBtn">
 
-        👤 My Reels
+    👤 My Reels
 
-    </button>
+</button>
 
-    <button
-        class="top-btn"
-        id="dashboardBtn">
+<button
+    class="top-btn"
+    id="dashboardBtn">
 
-        📊 Dashboard
+    📊 Dashboard
 
-    </button>
+</button>
+```
 
 </div>
-
 
 <!-- =======================================================
      FEED
@@ -1340,18 +1325,19 @@ button:disabled{
     class="feed"
     id="feed">
 
-    <div class="loading">
+```
+<div class="loading">
 
-        <i class="fas fa-spinner fa-spin"></i>
+    <i class="fas fa-spinner fa-spin"></i>
 
-        <div>
-            Loading Reels...
-        </div>
-
+    <div>
+        Loading Reels...
     </div>
 
 </div>
+```
 
+</div>
 
 <!-- =======================================================
      UPLOAD PANEL
@@ -1361,309 +1347,310 @@ button:disabled{
     class="upload-panel"
     id="uploadPanel">
 
-    <div class="upload-inner">
+```
+<div class="upload-inner">
 
-        <div class="panel-title">
+    <div class="panel-title">
 
-            🎬 Create New Reel
+        🎬 Create New Reel
+
+    </div>
+
+
+    <!-- VIDEO -->
+
+    <div class="input-group">
+
+        <label>
+            Select Video
+        </label>
+
+        <input
+            class="file-input"
+            type="file"
+            id="videoFile"
+            accept="video/*">
+
+    </div>
+
+
+    <!-- =================================================
+         EDITOR
+    ================================================== -->
+
+    <div
+        class="editor"
+        id="editor">
+
+        <div class="editor-title">
+
+            ✂️ Reel Editor
 
         </div>
 
 
-        <!-- VIDEO -->
+        <div class="editor-video-wrap">
 
-        <div class="input-group">
+            <video
+                id="sourceVideo"
+                playsinline
+                controls>
+            </video>
 
-            <label>
-                Select Video
-            </label>
+            <div
+                class="crop-overlay"
+                id="cropOverlay">
+            </div>
 
-            <input
-                class="file-input"
-                type="file"
-                id="videoFile"
-                accept="video/*">
+        </div>
+
+
+        <!-- RATIOS -->
+
+        <div class="ratio-buttons">
+
+            <button
+                class="ratio-btn active"
+                data-ratio="original">
+
+                Original
+
+            </button>
+
+            <button
+                class="ratio-btn"
+                data-ratio="9:16">
+
+                9:16
+
+            </button>
+
+            <button
+                class="ratio-btn"
+                data-ratio="1:1">
+
+                1:1
+
+            </button>
+
+            <button
+                class="ratio-btn"
+                data-ratio="4:5">
+
+                4:5
+
+            </button>
+
+            <button
+                class="ratio-btn"
+                data-ratio="16:9">
+
+                16:9
+
+            </button>
 
         </div>
 
 
         <!-- =================================================
-             EDITOR
+             TRIM UI
         ================================================== -->
 
-        <div
-            class="editor"
-            id="editor">
+        <div class="trim-section">
 
-            <div class="editor-title">
+            <div class="trim-title">
 
-                ✂️ Reel Editor
+                ✂️ Choose Reel Length
 
             </div>
 
 
-            <div class="editor-video-wrap">
+            <div class="trim-times">
 
-                <video
-                    id="sourceVideo"
-                    playsinline
-                    controls>
-                </video>
+                <div class="trim-time">
+
+                    <small>
+                        START
+                    </small>
+
+                    <strong
+                        id="startTimeLabel">
+
+                        0:00
+
+                    </strong>
+
+                </div>
+
+
+                <div class="trim-time">
+
+                    <small>
+                        END
+                    </small>
+
+                    <strong
+                        id="endTimeLabel">
+
+                        0:00
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="trim-track">
 
                 <div
-                    class="crop-overlay"
-                    id="cropOverlay">
+                    class="trim-track-bg">
                 </div>
-
-            </div>
-
-
-            <!-- RATIOS -->
-
-            <div class="ratio-buttons">
-
-                <button
-                    class="ratio-btn active"
-                    data-ratio="original">
-
-                    Original
-
-                </button>
-
-                <button
-                    class="ratio-btn"
-                    data-ratio="9:16">
-
-                    9:16
-
-                </button>
-
-                <button
-                    class="ratio-btn"
-                    data-ratio="1:1">
-
-                    1:1
-
-                </button>
-
-                <button
-                    class="ratio-btn"
-                    data-ratio="4:5">
-
-                    4:5
-
-                </button>
-
-                <button
-                    class="ratio-btn"
-                    data-ratio="16:9">
-
-                    16:9
-
-                </button>
-
-            </div>
-
-
-            <!-- =================================================
-                 NEW SIMPLE TRIM UI
-            ================================================== -->
-
-            <div class="trim-section">
-
-                <div class="trim-title">
-
-                    ✂️ Choose Reel Length
-
-                </div>
-
-
-                <div class="trim-times">
-
-                    <div class="trim-time">
-
-                        <small>
-                            START
-                        </small>
-
-                        <strong
-                            id="startTimeLabel">
-
-                            0:00
-
-                        </strong>
-
-                    </div>
-
-
-                    <div class="trim-time">
-
-                        <small>
-                            END
-                        </small>
-
-                        <strong
-                            id="endTimeLabel">
-
-                            0:00
-
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="trim-track">
-
-                    <div
-                        class="trim-track-bg">
-                    </div>
-
-                    <div
-                        class="trim-selected"
-                        id="trimSelected">
-                    </div>
-
-
-                    <!-- START -->
-
-                    <input
-                        class="trim-range"
-                        type="range"
-                        id="startRange"
-                        min="0"
-                        max="50"
-                        step="0.1"
-                        value="0">
-
-
-                    <!-- END -->
-
-                    <input
-                        class="trim-range"
-                        type="range"
-                        id="endRange"
-                        min="0"
-                        max="50"
-                        step="0.1"
-                        value="50">
-
-                </div>
-
 
                 <div
-                    class="trim-help">
-
-                    Drag the <b>left handle</b> for START
-                    &nbsp;•&nbsp;
-                    Drag the <b>right handle</b> for END
-
-                    <br>
-
-                    Reel length must be 30–50 seconds.
-
+                    class="trim-selected"
+                    id="trimSelected">
                 </div>
 
 
-                <div
-                    class="time-label"
-                    id="trimLabel"
-                    style="
-                        text-align:center;
-                        margin-top:8px;
-                        color:#58a6ff;
-                        font-size:12px;
-                        font-weight:bold;
-                    ">
+                <!-- START -->
 
-                    Selected duration: 30.0 seconds
-
-                </div>
-
-            </div>
+                <input
+                    class="trim-range"
+                    type="range"
+                    id="startRange"
+                    min="0"
+                    max="50"
+                    step="0.1"
+                    value="0">
 
 
-            <!-- EDITOR BUTTONS -->
+                <!-- END -->
 
-            <div class="editor-buttons">
-
-                <button
-                    class="reset-btn"
-                    id="resetCropBtn">
-
-                    🔄 Reset
-
-                </button>
-
-
-                <button
-                    class="preview-btn"
-                    id="previewCropBtn">
-
-                    👁 Preview
-
-                </button>
+                <input
+                    class="trim-range"
+                    type="range"
+                    id="endRange"
+                    min="0"
+                    max="50"
+                    step="0.1"
+                    value="50">
 
             </div>
 
 
             <div
-                class="processing"
-                id="processing">
+                class="trim-help">
 
-                ⏳ Processing...
+                Drag the <b>left handle</b> for START
+                &nbsp;•&nbsp;
+                Drag the <b>right handle</b> for END
+
+                <br>
+
+                Final Reel can be up to 50 seconds.
+
+            </div>
+
+
+            <div
+                class="time-label"
+                id="trimLabel"
+                style="
+                    text-align:center;
+                    margin-top:8px;
+                    color:#58a6ff;
+                    font-size:12px;
+                    font-weight:bold;
+                ">
+
+                Selected duration: 0.0 seconds
 
             </div>
 
         </div>
 
 
-        <!-- CAPTION -->
+        <!-- EDITOR BUTTONS -->
 
-        <div class="input-group">
+        <div class="editor-buttons">
 
-            <label>
-                Caption
-            </label>
+            <button
+                class="reset-btn"
+                id="resetCropBtn">
 
-            <textarea
-                id="caption"
-                placeholder="Write something about your Reel..."></textarea>
+                🔄 Reset
 
-        </div>
+            </button>
 
 
-        <!-- HASHTAGS -->
+            <button
+                class="preview-btn"
+                id="previewCropBtn">
 
-        <div class="input-group">
+                👁 Preview
 
-            <label>
-                Hashtags
-            </label>
-
-            <input
-                type="text"
-                id="hashtags"
-                placeholder="#chennai #technology #travel">
+            </button>
 
         </div>
 
 
-        <!-- POST -->
+        <div
+            class="processing"
+            id="processing">
 
-        <button
-            class="post-btn"
-            id="publishBtn">
+            ⏳ Processing...
 
-            🚀 Post Reel
-
-        </button>
+        </div>
 
     </div>
 
-</div>
 
+    <!-- CAPTION -->
+
+    <div class="input-group">
+
+        <label>
+            Caption
+        </label>
+
+        <textarea
+            id="caption"
+            placeholder="Write something about your Reel..."></textarea>
+
+    </div>
+
+
+    <!-- HASHTAGS -->
+
+    <div class="input-group">
+
+        <label>
+            Hashtags
+        </label>
+
+        <input
+            type="text"
+            id="hashtags"
+            placeholder="#chennai #technology #travel">
+
+    </div>
+
+
+    <!-- POST -->
+
+    <button
+        class="post-btn"
+        id="publishBtn">
+
+        🚀 Post Reel
+
+    </button>
+
+</div>
+```
+
+</div>
 
 <!-- =======================================================
      DASHBOARD
@@ -1673,114 +1660,117 @@ button:disabled{
     class="dashboard"
     id="dashboard">
 
-    <div class="dashboard-inner">
+```
+<div class="dashboard-inner">
 
-        <div class="dashboard-title">
+    <div class="dashboard-title">
 
-            📊 My Reel Dashboard
-
-        </div>
-
-
-        <div class="metric-grid">
-
-            <div class="metric">
-
-                <div
-                    class="metric-value"
-                    id="dashViews">
-
-                    0
-
-                </div>
-
-                <div class="metric-label">
-                    Total Views
-                </div>
-
-            </div>
-
-
-            <div class="metric">
-
-                <div
-                    class="metric-value"
-                    id="dashLikes">
-
-                    0
-
-                </div>
-
-                <div class="metric-label">
-                    Likes
-                </div>
-
-            </div>
-
-
-            <div class="metric">
-
-                <div
-                    class="metric-value"
-                    id="dashComments">
-
-                    0
-
-                </div>
-
-                <div class="metric-label">
-                    Comments
-                </div>
-
-            </div>
-
-
-            <div class="metric">
-
-                <div
-                    class="metric-value"
-                    id="dashShares">
-
-                    0
-
-                </div>
-
-                <div class="metric-label">
-                    Shares
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="dashboard-title"
-            style="font-size:17px;margin-top:25px;">
-
-            📅 Last 7 Days
-
-        </div>
-
-
-        <div id="dailyStats"></div>
-
-
-        <div
-            class="dashboard-title"
-            style="font-size:17px;margin-top:25px;">
-
-            🎬 My Reels Performance
-
-        </div>
-
-
-        <div id="dashboardReels"></div>
+        📊 My Reel Dashboard
 
     </div>
 
-</div>
 
+    <div class="metric-grid">
+
+        <div class="metric">
+
+            <div
+                class="metric-value"
+                id="dashViews">
+
+                0
+
+            </div>
+
+            <div class="metric-label">
+                Total Views
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div
+                class="metric-value"
+                id="dashLikes">
+
+                0
+
+            </div>
+
+            <div class="metric-label">
+                Likes
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div
+                class="metric-value"
+                id="dashComments">
+
+                0
+
+            </div>
+
+            <div class="metric-label">
+                Comments
+
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div
+                class="metric-value"
+                id="dashShares">
+
+                0
+
+            </div>
+
+            <div class="metric-label">
+                Shares
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="dashboard-title"
+        style="font-size:17px;margin-top:25px;">
+
+        📅 Last 7 Days
+
+    </div>
+
+
+    <div id="dailyStats"></div>
+
+
+    <div
+        class="dashboard-title"
+        style="font-size:17px;margin-top:25px;">
+
+        🎬 My Reels Performance
+
+    </div>
+
+
+    <div id="dashboardReels"></div>
+
+</div>
+```
+
+</div>
 
 <!-- =======================================================
      TOAST
@@ -1791,13 +1781,11 @@ button:disabled{
     id="toast">
 </div>
 
-
 <!-- =======================================================
      SUPABASE
 ======================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
@@ -1837,7 +1825,7 @@ let cropRatio = "original";
 
 let trimStart = 0;
 
-let trimEnd = 30;
+let trimEnd = 0;
 
 let exportedBlob = null;
 
@@ -2500,14 +2488,8 @@ function createReelCard(reel){
         <div class="video-bottom-gradient"></div>
 
 
-        <!-- =================================================
-             RIGHT ACTIONS
-        ================================================== -->
-
         <div class="reel-actions">
 
-
-            <!-- VIEW -->
 
             <button
                 class="reel-action"
@@ -2528,8 +2510,6 @@ function createReelCard(reel){
             </button>
 
 
-            <!-- LIKE -->
-
             <button
                 class="reel-action like-action"
                 type="button"
@@ -2548,8 +2528,6 @@ function createReelCard(reel){
 
             </button>
 
-
-            <!-- COMMENT -->
 
             <button
                 class="reel-action comment-action"
@@ -2570,8 +2548,6 @@ function createReelCard(reel){
             </button>
 
 
-            <!-- SHARE -->
-
             <button
                 class="reel-action share-action"
                 type="button"
@@ -2590,8 +2566,6 @@ function createReelCard(reel){
 
             </button>
 
-
-            <!-- WHATSAPP -->
 
             <button
                 class="reel-action whatsapp whatsapp-action"
@@ -2613,10 +2587,6 @@ function createReelCard(reel){
 
         </div>
 
-
-        <!-- =================================================
-             BOTTOM INFORMATION
-        ================================================== -->
 
         <div class="reel-info">
 
@@ -2702,10 +2672,6 @@ function createReelCard(reel){
         </div>
 
 
-        <!-- =================================================
-             COMMENTS
-        ================================================== -->
-
         <div class="comments">
 
             <div class="comments-header">
@@ -2763,10 +2729,6 @@ function createReelCard(reel){
         );
 
 
-    /* =====================================================
-       VIEW
-    ===================================================== */
-
     let viewRecorded =
         false;
 
@@ -2792,10 +2754,6 @@ function createReelCard(reel){
     );
 
 
-    /* =====================================================
-       LIKE
-    ===================================================== */
-
     const likeBtn =
         card.querySelector(
             ".like-action"
@@ -2817,10 +2775,6 @@ function createReelCard(reel){
         }
     );
 
-
-    /* =====================================================
-       COMMENTS
-    ===================================================== */
 
     const commentBtn =
         card.querySelector(
@@ -2926,10 +2880,6 @@ function createReelCard(reel){
     );
 
 
-    /* =====================================================
-       SHARE
-    ===================================================== */
-
     const shareBtn =
         card.querySelector(
             ".share-action"
@@ -3028,10 +2978,6 @@ function createReelCard(reel){
     );
 
 
-    /* =====================================================
-       WHATSAPP
-    ===================================================== */
-
     const whatsappBtn =
         card.querySelector(
             ".whatsapp-action"
@@ -3115,10 +3061,6 @@ function createReelCard(reel){
     );
 
 
-    /* =====================================================
-       PROFILE
-    ===================================================== */
-
     card.querySelector(
         ".profile-btn"
     ).addEventListener(
@@ -3175,10 +3117,6 @@ function createReelCard(reel){
     );
 
 
-    /* =====================================================
-       TAP VIDEO = PLAY / PAUSE
-    ===================================================== */
-
     video.addEventListener(
         "click",
         function(){
@@ -3210,7 +3148,6 @@ function createReelCard(reel){
 
 /* =========================================================
    REEL OBSERVER
-   Automatically plays only the visible Reel.
 ========================================================= */
 
 function setupReelObserver(){
@@ -3312,9 +3249,6 @@ function setupReelObserver(){
 
 /* =========================================================
    UPDATE CARD COUNT
-   IMPORTANT:
-   This changes ONLY the affected Reel.
-   No loadReels().
 ========================================================= */
 
 function updateCardCount(
@@ -3896,14 +3830,6 @@ async function addComment(
         ) + 1;
 
 
-    /*
-       IMPORTANT:
-
-       No loadReels() here.
-
-       Only the comment count is updated.
-    */
-
     updateCardCount(
         card,
         "comments_count",
@@ -4263,6 +4189,7 @@ async function createNotification(
 
 /* =========================================================
    VIDEO FILE SELECT
+   UPDATED ONLY FOR NEW 0–50 SECOND REQUIREMENT
 ========================================================= */
 
 videoFile.addEventListener(
@@ -4377,32 +4304,32 @@ videoFile.addEventListener(
 
 
         /*
-           DATABASE REQUIREMENT:
+           NEW REQUIREMENT:
 
-           duration_seconds must currently be
-           between 30 and 50.
+           ANY VIDEO LENGTH CAN BE UPLOADED.
 
-           Therefore:
-           START + END selection must produce
-           30–50 seconds.
+           Examples:
+
+           5 sec  -> accepted
+           20 sec -> accepted
+           29 sec -> accepted
+           30 sec -> accepted
+           50 sec -> accepted
+           2 min  -> accepted
+           10 min -> accepted
+
+           Final published Reel:
+           > 0 seconds AND <= 50 seconds.
         */
 
-        if(duration < 30){
 
-            toast(
-                "Video must be at least 30 seconds."
-            );
+        /*
+           If source video is shorter than or equal to 50 sec,
+           the entire video becomes the initial selection.
 
-            this.value =
-                "";
-
-            editor.style.display =
-                "none";
-
-            return;
-
-        }
-
+           If source video is longer than 50 sec,
+           the initial selection is the first 50 sec.
+        */
 
         const maxEnd =
             Math.min(
@@ -4411,26 +4338,47 @@ videoFile.addEventListener(
             );
 
 
+        /*
+           START can move anywhere as long as
+           the final selected section remains <= 50 sec.
+        */
+
         startRange.min =
             0;
 
         startRange.max =
             Math.max(
                 0,
-                maxEnd - 30
+                duration - 0.1
             );
 
 
+        /*
+           END represents the actual video end.
+
+           For a long video the maximum visible END
+           is the full source duration.
+        */
+
         endRange.min =
-            30;
+            0.1;
 
         endRange.max =
-            maxEnd;
+            duration;
 
+
+        /*
+           Initial selection:
+           
+           Short video:
+           0 -> duration
+
+           Long video:
+           0 -> 50
+        */
 
         trimStart =
             0;
-
 
         trimEnd =
             maxEnd;
@@ -4438,7 +4386,6 @@ videoFile.addEventListener(
 
         startRange.value =
             trimStart;
-
 
         endRange.value =
             trimEnd;
@@ -4688,6 +4635,7 @@ function updateCropOverlay(){
 
 /* =========================================================
    TRIM START
+   UPDATED ONLY FOR 0–50 SECOND LOGIC
 ========================================================= */
 
 startRange.addEventListener(
@@ -4700,28 +4648,85 @@ startRange.addEventListener(
             );
 
 
-        const minimumEnd =
-            trimStart + 30;
+        /*
+           Final Reel cannot exceed 50 sec.
 
+           Therefore END must be:
+
+           >= START + tiny minimum duration
+           <= START + 50
+           <= source duration
+        */
+
+        const sourceDuration =
+            Number(
+                sourceVideo.duration || 0
+            );
+
+
+        const minimumDuration =
+            0.1;
+
+
+        const maximumAllowedEnd =
+            Math.min(
+                sourceDuration,
+                trimStart + 50
+            );
+
+
+        let currentEnd =
+            Number(
+                endRange.value
+            );
+
+
+        /*
+           If END is now too far away,
+           move END automatically to START + 50
+           or the source video's actual end.
+        */
 
         if(
-            trimEnd <
-            minimumEnd
+            currentEnd >
+            maximumAllowedEnd
         ){
 
-            trimEnd =
+            currentEnd =
+                maximumAllowedEnd;
+
+            endRange.value =
+                currentEnd;
+
+        }
+
+
+        /*
+           If END somehow became <= START,
+           give the selection the smallest valid duration.
+        */
+
+        if(
+            currentEnd <=
+            trimStart
+        ){
+
+            currentEnd =
                 Math.min(
-                    minimumEnd,
-                    Number(
-                        endRange.max
-                    )
+                    sourceDuration,
+                    trimStart +
+                    minimumDuration
                 );
 
 
             endRange.value =
-                trimEnd;
+                currentEnd;
 
         }
+
+
+        trimEnd =
+            currentEnd;
 
 
         updateTrimUI();
@@ -4732,11 +4737,18 @@ startRange.addEventListener(
 
 /* =========================================================
    TRIM END
+   UPDATED ONLY FOR 0–50 SECOND LOGIC
 ========================================================= */
 
 endRange.addEventListener(
     "input",
     function(){
+
+        const sourceDuration =
+            Number(
+                sourceVideo.duration || 0
+            );
+
 
         trimEnd =
             Number(
@@ -4744,17 +4756,21 @@ endRange.addEventListener(
             );
 
 
-        const minimumEnd =
-            trimStart + 30;
-
+        /*
+           END must always be after START.
+        */
 
         if(
-            trimEnd <
-            minimumEnd
+            trimEnd <=
+            trimStart
         ){
 
             trimEnd =
-                minimumEnd;
+                Math.min(
+                    sourceDuration,
+                    trimStart +
+                    0.1
+                );
 
             this.value =
                 trimEnd;
@@ -4762,16 +4778,25 @@ endRange.addEventListener(
         }
 
 
+        /*
+           Maximum final Reel duration = 50 seconds.
+        */
+
         if(
-            trimEnd >
+            trimEnd -
+            trimStart >
             50
         ){
 
             trimEnd =
-                50;
+                Math.min(
+                    sourceDuration,
+                    trimStart +
+                    50
+                );
 
             this.value =
-                50;
+                trimEnd;
 
         }
 
@@ -4787,6 +4812,61 @@ endRange.addEventListener(
 ========================================================= */
 
 function updateTrimUI(){
+
+    /*
+       Safety normalization.
+
+       This function does not change the user's
+       selected range unless it violates the
+       final Reel rules.
+    */
+
+    const sourceDuration =
+        Number(
+            sourceVideo.duration || 0
+        );
+
+
+    if(
+        sourceDuration > 0
+    ){
+
+        trimStart =
+            Math.max(
+                0,
+                Math.min(
+                    trimStart,
+                    sourceDuration
+                )
+            );
+
+
+        trimEnd =
+            Math.max(
+                trimStart + 0.1,
+                Math.min(
+                    trimEnd,
+                    sourceDuration
+                )
+            );
+
+
+        if(
+            trimEnd -
+            trimStart >
+            50
+        ){
+
+            trimEnd =
+                Math.min(
+                    sourceDuration,
+                    trimStart + 50
+                );
+
+        }
+
+    }
+
 
     const duration =
         trimEnd -
@@ -4811,9 +4891,20 @@ function updateTrimUI(){
         " seconds";
 
 
+    /*
+       IMPORTANT:
+
+       Timeline represents the FULL SOURCE VIDEO.
+
+       This means users can see/select any position
+       even when the original video is longer than 50 sec.
+    */
+
     const max =
         Number(
-            endRange.max || 50
+            sourceVideo.duration ||
+            endRange.max ||
+            1
         );
 
 
@@ -4849,8 +4940,13 @@ function updateTrimUI(){
         ) + "%";
 
 
+    /*
+       Any duration greater than 0 and <= 50 sec
+       is valid for Pathukkalam.
+    */
+
     trimLabel.style.color =
-        duration >= 30 &&
+        duration > 0 &&
         duration <= 50
             ? "#58a6ff"
             : "#ff5252";
@@ -4860,6 +4956,7 @@ function updateTrimUI(){
 
 /* =========================================================
    RESET
+   UPDATED ONLY FOR 0–50 SECOND LOGIC
 ========================================================= */
 
 document.getElementById(
@@ -4872,6 +4969,12 @@ document.getElementById(
             "original";
 
 
+        const duration =
+            Number(
+                sourceVideo.duration || 0
+            );
+
+
         trimStart =
             0;
 
@@ -4879,19 +4982,8 @@ document.getElementById(
         trimEnd =
             Math.min(
                 50,
-                Number(
-                    sourceVideo.duration ||
-                    0
-                )
+                duration
             );
-
-
-        if(trimEnd < 30){
-
-            trimEnd =
-                30;
-
-        }
 
 
         startRange.value =
@@ -4936,6 +5028,7 @@ document.getElementById(
 
 /* =========================================================
    PREVIEW
+   UPDATED ONLY FOR 0–50 SECOND LOGIC
 ========================================================= */
 
 document.getElementById(
@@ -4963,12 +5056,12 @@ document.getElementById(
 
 
         if(
-            duration < 30 ||
+            duration <= 0 ||
             duration > 50
         ){
 
             toast(
-                "Reel duration must be 30–50 seconds."
+                "Reel duration must be greater than 0 and up to 50 seconds."
             );
 
             return;
@@ -5025,6 +5118,7 @@ document.getElementById(
 
 /* =========================================================
    EXPORT PROCESSED VIDEO
+   UPDATED ONLY FOR 0–50 SECOND LOGIC
 ========================================================= */
 
 async function exportProcessedVideo(){
@@ -5042,13 +5136,20 @@ async function exportProcessedVideo(){
         trimStart;
 
 
+    /*
+       FINAL REEL RULE:
+
+       > 0 seconds
+       <= 50 seconds
+    */
+
     if(
-        duration < 30 ||
+        duration <= 0 ||
         duration > 50
     ){
 
         throw new Error(
-            "Reel duration must be between 30 and 50 seconds."
+            "Reel duration must be greater than 0 and up to 50 seconds."
         );
 
     }
@@ -5734,6 +5835,7 @@ function seekVideo(
 
 /* =========================================================
    PUBLISH
+   UPDATED ONLY FOR 0–50 SECOND FINAL CRITERIA
 ========================================================= */
 
 publishBtn.addEventListener(
@@ -5769,21 +5871,28 @@ publishBtn.addEventListener(
 
 
         /*
-           FIX FOR YOUR SUPABASE CONSTRAINT:
+           FINAL PUBLISH CRITERIA:
 
-           CHECK:
-           duration_seconds >= 30
-           AND
-           duration_seconds <= 50
+           Any final duration greater than 0
+           and up to 50 seconds is valid.
+
+           Therefore:
+
+           5 sec  -> valid
+           10 sec -> valid
+           20 sec -> valid
+           30 sec -> valid
+           49 sec -> valid
+           50 sec -> valid
         */
 
         if(
-            duration < 30 ||
+            duration <= 0 ||
             duration > 50
         ){
 
             toast(
-                "Reel duration must be 30–50 seconds."
+                "Final Reel must be greater than 0 and up to 50 seconds."
             );
 
             return;
@@ -6921,7 +7030,6 @@ async function initialize(){
 initialize();
 
 </script>
-
 
 </body>
 
