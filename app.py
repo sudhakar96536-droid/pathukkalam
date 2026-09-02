@@ -110,6 +110,10 @@ def home():
 def explore():
     return render_template('explore.html')
 
+@app.route('/free-tools')
+def free_tools():
+    return render_template('free-tools.html')
+
 @app.route('/new-post')
 def new_post():
     return render_template('new_post.html')
