@@ -2990,72 +2990,258 @@ function createReelCard(reel){
 
             event.stopPropagation();
 
+            /* =================================================
+               WHATSAPP VIDEO STATUS SHARE
 
-            const url =
-                window.location.origin +
-                "/reels#reel-" +
-                reel.id;
+               IMPORTANT:
+               The existing WhatsApp button now shares the
+               actual Reel video file instead of only sharing
+               the Pathukkalam URL.
 
+               The browser cannot force WhatsApp to publish a
+               Status automatically. WhatsApp/Android keeps the
+               final confirmation in the user's hands.
+            ================================================== */
 
-            const text =
-                (
-                    reel.caption ||
-                    "Check this Reel on Pathukkalam"
-                ) +
-                "\n" +
-                url;
+            let selectedApp = "";
 
-
-            window.open(
-                "https://wa.me/?text=" +
-                encodeURIComponent(
-                    text
-                ),
-                "_blank"
-            );
-
-
-            const {
-                error
-            } =
-            await supabaseClient
-                .from(
-                    "reel_whatsapp_clicks"
-                )
-                .insert({
-
-                    reel_id:
-                        reel.id,
-
-                    user_id:
-                        currentUser.id
-
-                });
-
-
-            if(error){
-
-                console.warn(
-                    "WhatsApp tracking error:",
-                    error
+            const choice =
+                window.prompt(
+                    "Share Reel to:\n\n1 = WhatsApp\n2 = WhatsApp Business\n\nEnter 1 or 2"
                 );
+
+            if(choice === null)
+                return;
+
+            if(choice === "1"){
+
+                selectedApp =
+                    "WhatsApp";
+
+            }
+            else if(choice === "2"){
+
+                selectedApp =
+                    "WhatsApp Business";
+
+            }
+            else{
+
+                toast(
+                    "Please select WhatsApp or WhatsApp Business."
+                );
+
+                return;
 
             }
 
 
-            await incrementReelCounter(
-                reel.id,
-                "whatsapp_clicks_count"
-            );
+            try{
+
+                toast(
+                    "Preparing Reel for " +
+                    selectedApp + "..."
+                );
 
 
-            updateCardCount(
-                card,
-                "whatsapp_clicks_count",
-                Number(
-                    reel.whatsapp_clicks_count || 0
-                ) + 1
-            );
+                /* =============================================
+                   GET THE ACTUAL REEL VIDEO
+                ============================================== */
+
+                const videoUrl =
+                    reel.video_url;
+
+
+                if(!videoUrl){
+
+                    throw new Error(
+                        "Reel video is unavailable."
+                    );
+
+                }
+
+
+                const response =
+                    await fetch(
+                        videoUrl
+                    );
+
+
+                if(!response.ok){
+
+                    throw new Error(
+                        "Unable to download the Reel video."
+                    );
+
+                }
+
+
+                const blob =
+                    await response.blob();
+
+
+                if(!blob || !blob.size){
+
+                    throw new Error(
+                        "Reel video is empty."
+                    );
+
+                }
+
+
+                let extension =
+                    "webm";
+
+
+                if(
+                    blob.type.includes(
+                        "mp4"
+                    )
+                ){
+
+                    extension =
+                        "mp4";
+
+                }
+
+
+                const videoFileForShare =
+                    new File(
+                        [blob],
+                        "Pathukkalam-Reel-" +
+                        reel.id +
+                        "." +
+                        extension,
+                        {
+                            type:
+                                blob.type ||
+                                "video/webm"
+                        }
+                    );
+
+
+                /* =============================================
+                   CHECK FILE-SHARING SUPPORT
+                ============================================== */
+
+                if(
+                    !navigator.share ||
+                    !navigator.canShare ||
+                    !navigator.canShare({
+                        files:[
+                            videoFileForShare
+                        ]
+                    })
+                ){
+
+                    toast(
+                        "This device/browser cannot share the Reel video file to WhatsApp. Please open Pathukkalam in Android Chrome and try again."
+                    );
+
+                    return;
+
+                }
+
+
+                /* =============================================
+                   SHARE ACTUAL VIDEO FILE
+
+                   No Pathukkalam link is added here.
+                   Android will show compatible share targets.
+                   The user then chooses WhatsApp / WhatsApp
+                   Business and completes WhatsApp's own Status
+                   confirmation.
+                ============================================== */
+
+                await navigator.share({
+
+                    title:
+                        "Pathukkalam Reel",
+
+                    files:[
+                        videoFileForShare
+                    ]
+
+                });
+
+
+                /* =============================================
+                   EXISTING WHATSAPP TRACKING
+                   KEPT INTACT
+                ============================================== */
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                    .from(
+                        "reel_whatsapp_clicks"
+                    )
+                    .insert({
+
+                        reel_id:
+                            reel.id,
+
+                        user_id:
+                            currentUser.id
+
+                    });
+
+
+                if(error){
+
+                    console.warn(
+                        "WhatsApp tracking error:",
+                        error
+                    );
+
+                }
+
+
+                await incrementReelCounter(
+                    reel.id,
+                    "whatsapp_clicks_count"
+                );
+
+
+                updateCardCount(
+                    card,
+                    "whatsapp_clicks_count",
+                    Number(
+                        reel.whatsapp_clicks_count || 0
+                    ) + 1
+                );
+
+
+            }
+            catch(error){
+
+                console.warn(
+                    "WhatsApp video share:",
+                    error
+                );
+
+                /*
+                   navigator.share() rejects when the user
+                   cancels the Android/WhatsApp share sheet.
+                   Do not show an error for a normal cancel.
+                */
+
+                if(
+                    error?.name ===
+                    "AbortError"
+                ){
+
+                    return;
+
+                }
+
+                toast(
+                    error?.message ||
+                    "Unable to share Reel video."
+                );
+
+            }
 
         }
     );
