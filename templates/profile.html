@@ -64,11 +64,28 @@ body{
     color:#1877f2;
 }
 
+.header-icons{
+    display:flex;
+    align-items:center;
+}
+
 .header-icons i{
     font-size:22px;
     margin-left:18px;
     color:#444;
+    cursor:pointer;
 }
+
+/* =========================================================
+   NEW SETTINGS ICON
+   Hidden initially.
+   JavaScript shows it only for own profile.
+========================================================= */
+
+#settingsIcon{
+    display:none;
+}
+
 
 /* ==========================================
    COVER
@@ -766,6 +783,193 @@ body{
     box-shadow:0 5px 20px rgba(0,0,0,0.25);
 }
 
+
+/* =========================================================
+   SETTINGS MENU
+   NEW - ONLY FOR OWN PROFILE
+========================================================= */
+
+.settings-menu{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+    z-index:15000;
+    align-items:flex-start;
+    justify-content:flex-end;
+    padding:72px 15px 20px;
+}
+
+.settings-menu.active{
+    display:flex;
+}
+
+.settings-box{
+    width:100%;
+    max-width:320px;
+    background:white;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 10px 35px rgba(0,0,0,0.25);
+    animation:settingsOpen 0.18s ease;
+}
+
+@keyframes settingsOpen{
+
+    from{
+        opacity:0;
+        transform:translateY(-8px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.settings-title{
+    padding:18px;
+    font-size:19px;
+    font-weight:bold;
+    border-bottom:1px solid #eee;
+}
+
+.settings-option{
+    width:100%;
+    border:none;
+    background:white;
+    padding:15px 18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-align:left;
+    font-size:14px;
+    color:#333;
+    cursor:pointer;
+    border-bottom:1px solid #f0f0f0;
+}
+
+.settings-option:hover{
+    background:#f5f6f7;
+}
+
+.settings-option i{
+    width:22px;
+    text-align:center;
+    font-size:17px;
+    color:#555;
+}
+
+.settings-option.logout-option{
+    color:#d93025;
+}
+
+.settings-option.logout-option i{
+    color:#d93025;
+}
+
+.settings-close{
+    width:100%;
+    border:none;
+    background:#e4e6eb;
+    color:#333;
+    padding:13px;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.settings-close:hover{
+    background:#d8dadf;
+}
+
+
+/* =========================================================
+   LOGOUT CONFIRMATION
+   NEW
+========================================================= */
+
+.logout-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    z-index:20000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.logout-modal.active{
+    display:flex;
+}
+
+.logout-box{
+    width:100%;
+    max-width:330px;
+    background:white;
+    border-radius:16px;
+    padding:22px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.25);
+    text-align:center;
+}
+
+.logout-icon{
+    width:52px;
+    height:52px;
+    margin:0 auto 14px;
+    border-radius:50%;
+    background:#fce8e6;
+    color:#d93025;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.logout-title{
+    font-size:19px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.logout-message{
+    color:#666;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.logout-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.logout-buttons button{
+    flex:1;
+    border:none;
+    border-radius:9px;
+    padding:11px;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.logout-cancel{
+    background:#e4e6eb;
+    color:#333;
+}
+
+.logout-confirm{
+    background:#d93025;
+    color:white;
+}
+
+.logout-confirm:disabled{
+    opacity:0.6;
+    cursor:not-allowed;
+}
+
+
 /* =========================================================
    FLOATING BUTTON
 ========================================================= */
@@ -893,7 +1097,17 @@ body{
 
         <i class="fas fa-search"></i>
 
-        <i class="fas fa-gear"></i>
+        <!-- =================================================
+             SETTINGS ICON
+             NEW
+             Hidden until JavaScript confirms own profile
+        ================================================== -->
+
+        <i
+            class="fas fa-gear"
+            id="settingsIcon"
+            title="Settings">
+        </i>
 
     </div>
 
@@ -1200,6 +1414,160 @@ body{
 
 
 <!-- =========================================================
+     SETTINGS MENU
+     NEW
+========================================================= -->
+
+<div
+    id="settingsMenu"
+    class="settings-menu">
+
+    <div
+        class="settings-box"
+        onclick="event.stopPropagation()">
+
+        <div class="settings-title">
+            Settings
+        </div>
+
+
+        <button
+            type="button"
+            class="settings-option"
+            id="aboutPathukkalamBtn">
+
+            <i class="fas fa-circle-info"></i>
+
+            <span>About Pathukkalam</span>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="settings-option"
+            id="blockedListsBtn">
+
+            <i class="fas fa-ban"></i>
+
+            <span>Blocked Lists</span>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="settings-option"
+            id="helpBtn">
+
+            <i class="fas fa-circle-question"></i>
+
+            <span>Help</span>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="settings-option"
+            id="feedbackBtn">
+
+            <i class="fas fa-comment-dots"></i>
+
+            <span>Feedback</span>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="settings-option logout-option"
+            id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            <span>Log Out</span>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="settings-close"
+            id="settingsCloseBtn">
+
+            Close
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     LOGOUT CONFIRMATION
+     NEW
+========================================================= -->
+
+<div
+    id="logoutModal"
+    class="logout-modal">
+
+    <div
+        class="logout-box"
+        onclick="event.stopPropagation()">
+
+        <div class="logout-icon">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+        </div>
+
+
+        <div class="logout-title">
+
+            Log Out?
+
+        </div>
+
+
+        <div class="logout-message">
+
+            Are you sure you want to log out of Pathukkalam?
+
+        </div>
+
+
+        <div class="logout-buttons">
+
+            <button
+                type="button"
+                id="logoutCancelBtn"
+                class="logout-cancel">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                type="button"
+                id="logoutConfirmBtn"
+                class="logout-confirm">
+
+                Confirm Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
      FLOATING BUTTON
 ========================================================= -->
 
@@ -1367,6 +1735,44 @@ const shareStatus =
 
 
 /* =========================================================
+   NEW SETTINGS ELEMENTS
+========================================================= */
+
+const settingsIcon =
+    document.getElementById("settingsIcon");
+
+const settingsMenu =
+    document.getElementById("settingsMenu");
+
+const settingsCloseBtn =
+    document.getElementById("settingsCloseBtn");
+
+const aboutPathukkalamBtn =
+    document.getElementById("aboutPathukkalamBtn");
+
+const blockedListsBtn =
+    document.getElementById("blockedListsBtn");
+
+const helpBtn =
+    document.getElementById("helpBtn");
+
+const feedbackBtn =
+    document.getElementById("feedbackBtn");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const logoutModal =
+    document.getElementById("logoutModal");
+
+const logoutCancelBtn =
+    document.getElementById("logoutCancelBtn");
+
+const logoutConfirmBtn =
+    document.getElementById("logoutConfirmBtn");
+
+
+/* =========================================================
    CURRENT USER
 ========================================================= */
 
@@ -1411,6 +1817,414 @@ function setupMyProfileNavigation(){
             );
 
     }
+
+}
+
+
+/* =========================================================
+   NEW SETTINGS VISIBILITY
+========================================================= */
+
+function updateSettingsVisibility(){
+
+    if(
+        !settingsIcon ||
+        !currentUser ||
+        !viewedProfile
+    ){
+
+        if(settingsIcon){
+
+            settingsIcon.style.display =
+                "none";
+
+        }
+
+        return;
+
+    }
+
+
+    const isOwnProfile =
+        String(currentUser.id) ===
+        String(viewedProfile.id);
+
+
+    if(isOwnProfile){
+
+        settingsIcon.style.display =
+            "inline-block";
+
+    }
+    else{
+
+        settingsIcon.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================================
+   SETTINGS MENU OPEN
+========================================================= */
+
+function openSettingsMenu(){
+
+    if(!settingsMenu){
+
+        return;
+
+    }
+
+
+    /*
+    Extra safety:
+    settings menu can only open for own profile.
+    */
+
+    if(
+        !currentUser ||
+        !viewedProfile ||
+        String(currentUser.id) !==
+        String(viewedProfile.id)
+    ){
+
+        return;
+
+    }
+
+
+    settingsMenu.classList.add(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   SETTINGS MENU CLOSE
+========================================================= */
+
+function closeSettingsMenu(){
+
+    if(!settingsMenu){
+
+        return;
+
+    }
+
+
+    settingsMenu.classList.remove(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   SETTINGS ICON CLICK
+========================================================= */
+
+if(settingsIcon){
+
+    settingsIcon.addEventListener(
+        "click",
+        function(){
+
+            openSettingsMenu();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SETTINGS CLOSE
+========================================================= */
+
+if(settingsCloseBtn){
+
+    settingsCloseBtn.addEventListener(
+        "click",
+        function(){
+
+            closeSettingsMenu();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE SETTINGS WHEN CLICKING OUTSIDE
+========================================================= */
+
+if(settingsMenu){
+
+    settingsMenu.addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                settingsMenu
+            ){
+
+                closeSettingsMenu();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ABOUT PATHUKKALAM
+   CURRENTLY DISPLAY ONLY
+========================================================= */
+
+if(aboutPathukkalamBtn){
+
+    aboutPathukkalamBtn.addEventListener(
+        "click",
+        function(){
+
+            showShareStatus(
+                "About Pathukkalam — coming soon."
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BLOCKED LISTS
+   CURRENTLY DISPLAY ONLY
+========================================================= */
+
+if(blockedListsBtn){
+
+    blockedListsBtn.addEventListener(
+        "click",
+        function(){
+
+            showShareStatus(
+                "Blocked Lists — coming soon."
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   HELP
+   CURRENTLY DISPLAY ONLY
+========================================================= */
+
+if(helpBtn){
+
+    helpBtn.addEventListener(
+        "click",
+        function(){
+
+            showShareStatus(
+                "Help — coming soon."
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FEEDBACK
+   CURRENTLY DISPLAY ONLY
+========================================================= */
+
+if(feedbackBtn){
+
+    feedbackBtn.addEventListener(
+        "click",
+        function(){
+
+            showShareStatus(
+                "Feedback — coming soon."
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   OPEN LOGOUT CONFIRMATION
+========================================================= */
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener(
+        "click",
+        function(){
+
+            closeSettingsMenu();
+
+
+            if(logoutModal){
+
+                logoutModal.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CANCEL LOGOUT
+========================================================= */
+
+if(logoutCancelBtn){
+
+    logoutCancelBtn.addEventListener(
+        "click",
+        function(){
+
+            if(logoutModal){
+
+                logoutModal.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CLICK OUTSIDE LOGOUT CONFIRMATION
+========================================================= */
+
+if(logoutModal){
+
+    logoutModal.addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                logoutModal
+            ){
+
+                logoutModal.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   REAL LOGOUT
+========================================================= */
+
+if(logoutConfirmBtn){
+
+    logoutConfirmBtn.addEventListener(
+        "click",
+        async function(){
+
+            if(
+                logoutConfirmBtn.disabled
+            ){
+
+                return;
+
+            }
+
+
+            logoutConfirmBtn.disabled =
+                true;
+
+            logoutConfirmBtn.innerText =
+                "Logging out...";
+
+
+            try{
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                    .auth
+                    .signOut();
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                /*
+                Supabase session is now removed.
+
+                Redirect to the existing application
+                root page. The application can then
+                show its login/authentication state.
+                */
+
+                window.location.href =
+                    "/";
+
+            }
+            catch(error){
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+
+                logoutConfirmBtn.disabled =
+                    false;
+
+                logoutConfirmBtn.innerText =
+                    "Confirm Logout";
+
+
+                alert(
+                    "Unable to log out:\n\n" +
+                    error.message
+                );
+
+            }
+
+        }
+    );
 
 }
 
@@ -1543,6 +2357,13 @@ async function loadCurrentUser(){
             profileActionButtons.style.display =
                 "none";
 
+            /*
+            Make sure settings is hidden
+            when there is no authenticated user.
+            */
+
+            updateSettingsVisibility();
+
             return;
 
         }
@@ -1656,6 +2477,15 @@ async function loadCurrentUser(){
             viewed;
 
 
+        /*
+        NEW:
+        Determine Settings icon visibility
+        immediately after both users are known.
+        */
+
+        updateSettingsVisibility();
+
+
         /* ======================================
            LOAD PROFILE CONTENT
         ====================================== */
@@ -1690,6 +2520,15 @@ async function loadCurrentUser(){
             profileActionButtons.style.display =
                 "none";
 
+
+            /*
+            NEW:
+            Settings visible only here.
+            */
+
+            settingsIcon.style.display =
+                "inline-block";
+
         }
 
 
@@ -1710,6 +2549,17 @@ async function loadCurrentUser(){
 
             profileActionButtons.style.display =
                 "flex";
+
+
+            /*
+            NEW:
+            Settings must be hidden when
+            viewing another user's profile.
+            */
+
+            settingsIcon.style.display =
+                "none";
+
 
             await loadFollowStatus();
 
