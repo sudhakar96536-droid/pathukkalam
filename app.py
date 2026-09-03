@@ -129,35 +129,8 @@ def messages():
 @app.route('/profile')
 def profile():
 
-    users = {
+    return redirect('/login')
 
-        "sudhakar": {
-            "name": "Sudhakar",
-            "bio": "Welcome to my Pathukkalam profile 🚀 Web App Developer • Tech Lover",
-            "profile": "https://i.pravatar.cc/300?img=10",
-            "cover": "https://picsum.photos/800/300?1",
-            "posts": 120,
-            "followers": "5K",
-            "following": 500,
-
-            "photos": [
-                "https://picsum.photos/300/300?1",
-                "https://picsum.photos/300/300?2",
-                "https://picsum.photos/300/300?3",
-                "https://picsum.photos/300/300?4",
-                "https://picsum.photos/300/300?5",
-                "https://picsum.photos/300/300?6"
-            ]
-        }
-
-    }
-
-    return render_template(
-        "profile.html",
-        user=users["sudhakar"],
-        username="sudhakar",
-        is_own_profile=True
-    )
 
 @app.route('/register')
 def register():
@@ -456,6 +429,8 @@ def get_user_email(username):
         return {
             "error": str(e)
         }, 500
+
+
 @app.route("/post/<int:post_id>")
 def view_post(post_id):
 
