@@ -14,17 +14,80 @@
    PATHUKKALAM FREE TOOLS
    Uses base.html for the global app shell/navigation.
 ========================================================= */
+
+/* MOBILE OVERFLOW FIX */
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*,
+*::before,
+*::after{
+    box-sizing:border-box;
+}
+
 .free-tools-page{background:#f0f2f5;min-height:calc(100vh - 1px);padding:14px 0 100px;color:#111}
 .free-tools-wrap{width:min(1120px,94%);margin:auto}
 .tools-hero{background:linear-gradient(135deg,#fff,#f7f9fc);border:1px solid #e2e5e9;border-radius:22px;padding:28px 24px;margin:12px 0 18px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
 .hero-top{display:flex;align-items:center;gap:14px}.hero-icon{width:54px;height:54px;border-radius:16px;background:#1877f2;color:#fff;display:grid;place-items:center;font-size:25px;flex:none}.tools-hero h1{font-size:30px;line-height:1.15;margin:0}.tools-hero p{margin:8px 0 0;color:#667085;line-height:1.55;font-size:14px}.hero-badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:17px}.hero-badge{background:#eef4ff;color:#1877f2;border-radius:20px;padding:7px 10px;font-size:11px;font-weight:700}
-.search-box{position:relative;margin:0 0 18px}.search-box i{position:absolute;left:16px;top:15px;color:#888}.search-box input{width:100%;height:48px;border:1px solid #ddd;border-radius:25px;background:#fff;padding:0 18px 0 44px;outline:none;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+
+.search-box{
+    position:relative;
+    margin:0 0 18px;
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+.search-box i{position:absolute;left:16px;top:15px;color:#888}
+
+.search-box input{
+    width:100%;
+    max-width:100%;
+    height:48px;
+    border:1px solid #ddd;
+    border-radius:25px;
+    background:#fff;
+    padding:0 18px 0 44px;
+    outline:none;
+    font-size:14px;
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+    box-sizing:border-box;
+}
+
 .category-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:18px}.category-row::-webkit-scrollbar{display:none}.cat-btn{flex:none;border:1px solid #ddd;background:#fff;color:#333;padding:8px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer}.cat-btn.active{background:#1877f2;color:#fff;border-color:#1877f2}
 .tools-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.tool-card{background:#fff;border:1px solid #e3e5e8;border-radius:17px;padding:18px;min-height:168px;cursor:pointer;transition:.18s;position:relative;overflow:hidden}.tool-card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.08)}.tool-card .tool-icon{width:44px;height:44px;border-radius:13px;background:#f0f2f5;display:grid;place-items:center;font-size:21px;margin-bottom:13px}.tool-card h3{font-size:15px;margin-bottom:6px}.tool-card p{font-size:12px;color:#70757d;line-height:1.45}.tool-card .free-tag{position:absolute;right:10px;top:10px;font-size:9px;font-weight:800;color:#16803c;background:#e9f8ef;padding:4px 7px;border-radius:10px}.tool-card.hidden{display:none}
 .tool-panel{display:none;background:#fff;border:1px solid #ddd;border-radius:20px;padding:22px;margin:20px 0 30px;box-shadow:0 5px 20px rgba(0,0,0,.05)}.tool-panel.active{display:block}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}.panel-head h2{font-size:21px}.panel-head p{color:#6b7280;font-size:13px;margin-top:5px;line-height:1.5}.close-tool{border:0;background:#f0f2f5;color:#333;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;flex:none}.field{margin:11px 0}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#444}.field input[type=text],.field input[type=number],.field input[type=url],.field input[type=password],.field textarea,.field select{width:100%;padding:11px 12px;border:1px solid #ccc;border-radius:10px;outline:none;background:#fff;font-size:14px}.field textarea{min-height:150px;resize:vertical}.file-input{width:100%;padding:13px;border:2px dashed #ccc;border-radius:11px;background:#fafafa}.btn-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.action-btn{border:0;background:#111;color:#fff;padding:10px 15px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer}.action-btn.primary{background:#1877f2}.action-btn.secondary{background:#eee;color:#111}.action-btn.danger{background:#d93025}.result{margin-top:15px;padding:14px;border-radius:12px;background:#f6f7f9;border:1px solid #e5e7eb}.preview{max-width:100%;max-height:420px;display:block;margin:12px auto;border-radius:10px}.download-link{display:inline-block;background:#111;color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;margin:4px;font-size:13px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.muted{font-size:12px;color:#777;line-height:1.5}.status-canvas-wrap{text-align:center}.status-canvas-wrap canvas{max-width:100%;height:auto;border-radius:12px;background:#111}.collage-preview{max-width:100%;display:block;margin:12px auto;border-radius:10px}.stats-box{font-size:13px;line-height:1.8}.output-pre{white-space:pre-wrap;word-break:break-word;background:#111;color:#eee;padding:14px;border-radius:10px;max-height:450px;overflow:auto;font-size:12px}.color-result{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.swatch{width:110px;height:72px;border-radius:10px;padding:8px;color:#fff;display:flex;align-items:flex-end;font-size:11px;font-weight:bold;text-shadow:0 1px 3px #000}.drop-zone{border:2px dashed #bbb;border-radius:14px;padding:28px;text-align:center;color:#777}.tool-count{text-align:center;color:#777;font-size:12px;margin:18px 0}
+
 @media(max-width:950px){.tools-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:700px){.tools-grid{grid-template-columns:repeat(2,1fr)}.tools-hero h1{font-size:25px}.row{grid-template-columns:1fr}}
-@media(max-width:480px){.tools-grid{grid-template-columns:1fr}.tool-card{min-height:145px}.tools-hero{padding:22px 17px}.free-tools-page{padding-top:8px}}
+
+@media(max-width:700px){
+    .tools-grid{grid-template-columns:repeat(2,1fr)}
+    .tools-hero h1{font-size:25px}
+    .row{grid-template-columns:1fr}
+}
+
+@media(max-width:480px){
+    .tools-grid{grid-template-columns:1fr}
+    .tool-card{min-height:145px}
+    .tools-hero{padding:22px 17px}
+    .free-tools-page{padding-top:8px}
+
+    /* SEARCH MOBILE WIDTH FIX */
+    .search-box{
+        width:100%;
+        max-width:100%;
+        padding:0;
+    }
+
+    .search-box input{
+        width:100%;
+        max-width:100%;
+    }
+}
 </style>
 {% endblock %}
 
