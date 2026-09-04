@@ -3086,8 +3086,8 @@ body{
 
 
     <a
-        href="/profile"
-        class="nav-item current-user-profile-link"
+        href="#"
+        class="nav-item"
         id="bottomOwnProfileLink">
    
         <i class="fas fa-user"></i>
@@ -3205,6 +3205,24 @@ async function loadCurrentUser(){
         currentProfile =
             profile;
 
+        const bottomProfileLink =
+            document.getElementById(
+                "bottomOwnProfileLink"
+            );
+         
+        if(
+            bottomProfileLink &&
+            profile.username
+        ){
+         
+            bottomProfileLink.href =
+                "/profile/" +
+                encodeURIComponent(
+                    profile.username
+                );
+         
+        }
+
 
         console.log(
             "Current Pathukkalam profile:",
@@ -3291,7 +3309,48 @@ async function loadCurrentUser(){
 
 }
 
+const bottomOwnProfileLink =
+    document.getElementById(
+        "bottomOwnProfileLink"
+    );
 
+
+if(bottomOwnProfileLink){
+
+    bottomOwnProfileLink.addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+
+            if(
+                currentProfile &&
+                currentProfile.username
+            ){
+
+                window.location.href =
+                    "/profile/" +
+                    encodeURIComponent(
+                        currentProfile.username
+                    );
+
+            }
+            else{
+
+                alert(
+                    "Unable to load your profile. Please refresh the page."
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+
+   
 /* =========================================================
    CREATE MENU
 ========================================================= */
@@ -7581,81 +7640,9 @@ function startAlertRealtime(){
 
 
 /* =========================================================
-   POST MEDIA
+   POST MEDIA removed 
 ========================================================= */
 
-async function loadPostMedia(){
-
-    const containers =
-        document.querySelectorAll(
-            ".post-media-container[data-post-id]"
-        );
-
-    if(!containers.length){
-        return;
-    }
-
-    const postIds =
-        Array.from(containers)
-            .map(function(container){
-                return Number(container.dataset.postId);
-            })
-            .filter(function(id){
-                return Number.isFinite(id);
-            });
-
-    if(!postIds.length){
-        return;
-    }
-
-    try{
-
-        const {
-            data:mediaRows,
-            error:mediaError
-        } =
-        await supabaseClient
-            .from("post_media")
-            .select(
-                "id, post_id, media_type, media_url, file_name, display_order"
-            )
-            .in("post_id",postIds)
-            .order("display_order",{ascending:true});
-
-        if(mediaError){
-            console.error(
-                "Post media loading error:",
-                mediaError
-            );
-            return;
-        }
-
-        const grouped = new Map();
-
-        (mediaRows || []).forEach(function(media){
-            if(!grouped.has(media.post_id)){
-                grouped.set(media.post_id,[]);
-            }
-            grouped.get(media.post_id).push(media);
-        });
-
-        containers.forEach(function(container){
-            const postId = Number(container.dataset.postId);
-            const media = grouped.get(postId) || [];
-
-            if(media.length){
-                renderPostMedia(container,media);
-            }
-        });
-
-    }
-    catch(error){
-        console.error(
-            "Post media exception:",
-            error
-        );
-    }
-}
 
 
 function renderPostMedia(container,media){
@@ -7979,16 +7966,9 @@ function formatSearchPostTime(
 
 
 /* =========================================================
-   MESSAGE UNREAD INDICATOR
+   MESSAGE UNREAD INDICATOR removed
 ========================================================= */
 
-const messageUnreadBadge =
-    document.getElementById(
-        "messageUnreadBadge"
-    );
-
-let messageUnreadTimer = null;
-let messageUnreadChannel = null;
 
 
 function renderMessageUnreadBadge(count){
@@ -8132,13 +8112,10 @@ document.addEventListener(
 
 /* =========================================================
    ALERT / NOTIFICATION UNREAD INDICATOR
-   NEW REQUIREMENT ONLY
+   NEW REQUIREMENT ONLY removed
 ========================================================= */
 
-const alertUnreadBadge =
-    document.getElementById(
-        "alertUnreadBadge"
-    );
+
 
 let alertUnreadTimer = null;
 let alertUnreadChannel = null;
