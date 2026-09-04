@@ -360,6 +360,71 @@ def db_test():
 
         return f"Database connection failed: {e}"
 
+@app.route('/api/profile-by-id/<user_id>')
+def get_profile_by_id(user_id):
+
+    try:
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            SELECT
+                id,
+                username,
+                name,
+                mobile,
+                bio,
+                profile_url,
+                cover_url
+            FROM public.profiles
+            WHERE id = %s
+            """,
+            (user_id,)
+        )
+
+        result = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        if not result:
+
+            return {
+                "error": "Profile not found"
+            }, 404
+
+        return {
+
+            "id": str(result[0]),
+
+            "username": result[1],
+
+            "name": result[2],
+
+            "mobile": result[3],
+
+            "bio": result[4],
+
+            "profile_url": result[5],
+
+            "cover_url": result[6]
+
+        }
+
+    except Exception as e:
+
+        print(
+            "Profile by ID API error:",
+            e
+        )
+
+        return {
+            "error": str(e)
+        }, 500
+
+
 @app.route('/api/user-email/<username>')
 def get_user_email(username):
 
