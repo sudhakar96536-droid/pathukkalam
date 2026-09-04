@@ -3168,42 +3168,107 @@ async function loadCurrentUser(){
         );
 
 
-        const {
-
-            data:profile,
-            error:profileError
-
-        } =
-        await supabaseClient
-
-            .from("profiles")
-
-            .select(
-                "id, username, name, mobile, bio, profile_url, cover_url"
-            )
-
-            .eq(
-                "id",
-                user.id
-            )
-
-            .single();
-
-
-        if(profileError){
-
-            console.error(
-                "Profile loading error:",
-                profileError
-            );
-
-            return true;
-
-        }
-
-
-        currentProfile =
-            profile;
+         let profile = null;
+         
+         
+         /* =====================================================
+            FIRST TRY SUPABASE
+         ===================================================== */
+         
+         const {
+             data:supabaseProfile,
+             error:profileError
+         } =
+         await supabaseClient
+         
+             .from("profiles")
+         
+             .select(
+                 "id, username, name, mobile, bio, profile_url, cover_url"
+             )
+         
+             .eq(
+                 "id",
+                 user.id
+             )
+         
+             .single();
+         
+         
+         if(
+             !profileError &&
+             supabaseProfile
+         ){
+         
+             profile =
+                 supabaseProfile;
+         
+         }
+         else{
+         
+             console.warn(
+                 "Supabase profile loading failed. Trying Flask API...",
+                 profileError
+             );
+         
+         
+             /* =================================================
+                FALLBACK TO FLASK / POSTGRESQL
+             ================================================= */
+         
+             try{
+         
+                 const response =
+                     await fetch(
+                         "/api/profile-by-id/" +
+                         encodeURIComponent(
+                             user.id
+                         )
+                     );
+         
+         
+                 if(
+                     response.ok
+                 ){
+         
+                     profile =
+                         await response.json();
+         
+                 }
+         
+             }
+             catch(apiError){
+         
+                 console.error(
+                     "Flask profile API error:",
+                     apiError
+                 );
+         
+             }
+         
+         }
+         
+         
+         /* =====================================================
+            PROFILE STILL NOT FOUND
+         ===================================================== */
+         
+         if(
+             !profile ||
+             !profile.username
+         ){
+         
+             console.error(
+                 "Unable to load current user profile."
+             );
+         
+             return true;
+         
+         }
+         
+         
+         currentProfile =
+             profile;
 
         const bottomProfileLink =
             document.getElementById(
