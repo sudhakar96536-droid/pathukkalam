@@ -594,7 +594,69 @@ document.getElementById(
     }
 );
 
-\n\n/* =========================================================\n   GOOGLE LOGIN\n========================================================= */\n\nasync function ensureGoogleProfile(user){\n\n    if(!user || !user.id){ return; }\n\n    const metadata = user.user_metadata || {};\n\n    const { data: existing, error: existingError } =\n        await supabaseClient\n            .from("profiles")\n            .select("id,username")\n            .eq("id", user.id)\n            .maybeSingle();\n\n    if(existing){ return; }\n    if(existingError){\n        console.warn("Profile lookup warning:", existingError.message);\n    }\n\n    const fullName =\n        metadata.full_name ||\n        metadata.name ||\n        (user.email || "Pathukkalam User").split("@")[0];\n\n    const base = ((user.email || "user").split("@")[0])\n        .toLowerCase()\n        .replace(/[^a-z0-9_]/g, "")\n        .slice(0,20) || "user";\n\n    let username = base;\n\n    for(let i=0;i<100;i++){\n        const candidate = i === 0 ? base : base + i;\n        const { data: taken } = await supabaseClient\n            .from("profiles")\n            .select("id")\n            .eq("username", candidate)\n            .maybeSingle();\n        if(!taken){ username=candidate; break; }\n    }\n\n    const { error } = await supabaseClient\n        .from("profiles")\n        .insert({\n            id:user.id,\n            username:username,\n            name:fullName,\n            mobile:metadata.mobile || null,\n            bio:"",\n            profile_url:null,\n            cover_url:null\n        });\n\n    if(error){\n        console.warn("Google profile creation note:", error.message);\n    }\n}\n\nasync function handleOAuthReturn(){\n    const { data:{ session }, error } =\n        await supabaseClient.auth.getSession();\n\n    if(error || !session || !session.user){ return; }\n\n    const isOAuthReturn =\n        window.location.hash.includes("access_token") ||\n        window.location.hash.includes("refresh_token") ||\n        new URLSearchParams(window.location.search).has("code");\n\n    if(!isOAuthReturn){ return; }\n\n    try{ await ensureGoogleProfile(session.user); }\n    catch(e){ console.warn("Google profile setup:",e); }\n\n    window.history.replaceState({}, document.title, window.location.pathname);\n    window.location.replace(getNextPage());\n}\n\nhandleOAuthReturn();\n\ndocument.getElementById("googleBtn").addEventListener("click", async function(){\n    const button=this;\n    const message=document.getElementById("loginMessage");\n    button.disabled=true;\n    button.innerHTML='<i class="fab fa-google"></i> Connecting...';\n    message.innerText="";\n\n    try{\n        const next=encodeURIComponent(getNextPage());\n        const redirectTo=window.location.origin + "/login?next=" + next;\n        const { error } = await supabaseClient.auth.signInWithOAuth({\n            provider:"google",\n            options:{ redirectTo:redirectTo }\n        });\n        if(error){ throw error; }\n    }catch(error){\n        console.error("Google login error:",error);\n        message.style.color="red";\n        message.innerText=error.message || "Google login failed.";\n        button.disabled=false;\n        button.innerHTML='<i class="fab fa-google"></i> Continue with Google';\n    }\n});\n</script>
+
+
+
+/* =========================================================
+   GOOGLE LOGIN
+========================================================= */
+
+document.getElementById("googleBtn").addEventListener(
+    "click",
+    async function(){
+
+        const button =
+            document.getElementById("googleBtn");
+
+        const message =
+            document.getElementById("loginMessage");
+
+        button.disabled = true;
+        button.innerHTML =
+            '<i class="fab fa-google"></i> Connecting...';
+
+        message.style.color = "#555";
+        message.innerText = "";
+
+        try{
+
+            const nextPage = getNextPage();
+
+            const redirectTo =
+                window.location.origin +
+                "/login?next=" +
+                encodeURIComponent(nextPage);
+
+            const { error } =
+                await supabaseClient.auth.signInWithOAuth({
+                    provider: "google",
+                    options: {
+                        redirectTo: redirectTo
+                    }
+                });
+
+            if(error){
+                throw error;
+            }
+
+        }
+        catch(error){
+
+            console.error("Google login error:", error);
+
+            message.style.color = "red";
+            message.innerText =
+                error.message ||
+                "Google login failed.";
+
+            button.disabled = false;
+            button.innerHTML =
+                '<i class="fab fa-google"></i> Continue with Google';
+        }
+    }
+);
+
+</script>
 
 
 {% endblock %}
