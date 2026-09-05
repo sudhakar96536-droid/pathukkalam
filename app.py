@@ -164,6 +164,11 @@ def news():
 def health():
     return 'OK', 200
 
+
+@app.route('/forgot-password')
+def forgot_password():
+    return render_template('forgot-password.html')
+
 @app.route("/profile/<username>")
 def user_profile(username):
 
